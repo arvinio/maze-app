@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:injectable/injectable.dart';
-
-import '../../../feature/login/login_page.dart';
+import 'package:maze_app/feature/versioning/presentation/versioning_page.dart';
 
 part 'app_router.gr.dart';
 
@@ -14,7 +13,7 @@ class AppRouter extends _$AppRouter {
   RouteType get defaultRouteType => const RouteType.adaptive();
   @override
   final List<AutoRoute> routes = [
-    AutoRoute(path:'/', page: LoginPageRoute.page)
+    AutoRoute(path:'/', page: VersioningPageRoute.page)
 
   ];
 }
