@@ -39,15 +39,15 @@ class AppTheme{
         bodyLarge: context.body1Medium,
         bodyMedium: context.body2Medium,
       ),
-      radioTheme: defaultTheme.radioTheme.copyWith(fillColor: MaterialStateProperty.all(appColors.primary.light)),
+      radioTheme: defaultTheme.radioTheme.copyWith(fillColor: WidgetStateProperty.all(appColors.primary.light)),
       switchTheme: SwitchThemeData(
-          thumbColor: MaterialStateProperty.resolveWith(
-                  (states) => states.contains(MaterialState.selected) ? appColors.primary.light : null),
-          trackColor: MaterialStateProperty.resolveWith(
-                  (states) => states.contains(MaterialState.selected) ? appColors.primary.light.withOpacity(0.2) : null)),
+          thumbColor: WidgetStateProperty.resolveWith(
+                  (states) => states.contains(WidgetState.selected) ? appColors.primary.light : null),
+          trackColor: WidgetStateProperty.resolveWith(
+                  (states) => states.contains(WidgetState.selected) ? appColors.primary.light.withOpacity(0.2) : null)),
       checkboxTheme: CheckboxThemeData(
-        fillColor: MaterialStateProperty.resolveWith(
-                (states) => states.contains(MaterialState.selected) ? appColors.primary.light : null),
+        fillColor: WidgetStateProperty.resolveWith(
+                (states) => states.contains(WidgetState.selected) ? appColors.primary.light : null),
       ),
       inputDecorationTheme: defaultTheme.inputDecorationTheme.copyWith(
         border: OutlineInputBorder(
@@ -118,15 +118,15 @@ class AppTheme{
         bodyLarge: context.body1Medium,
         bodyMedium: context.body2Medium,
       ),
-      radioTheme: defaultTheme.radioTheme.copyWith(fillColor: MaterialStateProperty.all(appColors.primary.dark)),
+      radioTheme: defaultTheme.radioTheme.copyWith(fillColor: WidgetStateProperty.all(appColors.primary.dark)),
       switchTheme: SwitchThemeData(
-          thumbColor: MaterialStateProperty.resolveWith(
-                  (states) => states.contains(MaterialState.selected) ? appColors.primary.dark : null),
-          trackColor: MaterialStateProperty.resolveWith(
-                  (states) => states.contains(MaterialState.selected) ? appColors.primary.dark.withOpacity(0.2) : null)),
+          thumbColor: WidgetStateProperty.resolveWith(
+                  (states) => states.contains(WidgetState.selected) ? appColors.primary.dark : null),
+          trackColor: WidgetStateProperty.resolveWith(
+                  (states) => states.contains(WidgetState.selected) ? appColors.primary.dark.withOpacity(0.2) : null)),
       checkboxTheme: CheckboxThemeData(
-        fillColor: MaterialStateProperty.resolveWith(
-                (states) => states.contains(MaterialState.selected) ? appColors.primary.dark : null),
+        fillColor: WidgetStateProperty.resolveWith(
+                (states) => states.contains(WidgetState.selected) ? appColors.primary.dark : null),
       ),
       inputDecorationTheme: defaultTheme.inputDecorationTheme.copyWith(
         border: OutlineInputBorder(

@@ -10,7 +10,7 @@ class VersioningRepositoryImpl implements VersioningRepository {
   VersioningRepositoryImpl(this.versioningRemoteDataSource);
 
   @override
-  Future<ApiResponse> getVersion() async{
+  Future<ApiResponse> getVersion() async {
     return await versioningRemoteDataSource.getVersion();
   }
 }

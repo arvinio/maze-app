@@ -1,7 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maze_app/di/injection_container.dart';
+import 'package:maze_app/core/di/injection_container.dart';
+
 import 'package:maze_app/feature/versioning/presentation/bloc/versioning_bloc.dart';
 
 @RoutePage()
@@ -36,12 +37,13 @@ class _VersioningPageState extends State<VersioningPage> {
         if (state.versioningStatus.isLoading) {
           return Container();
         } else if (state.versioningStatus.isSuccess) {
-          return Container(color:Colors.white,
+          return Container(
+              color: Colors.white,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text ( "update Exist:"),
-                  Text (state.versionResponse!.updateExist.toString()),
+                  const Text("update Exist:"),
+                  Text(state.versionResponse!.updateExist.toString()),
                 ],
               ));
         } else {

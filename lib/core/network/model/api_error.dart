@@ -19,44 +19,44 @@ class InternetError extends ApiError {
 
 //HttpCode: 400
 class BadRequest extends ApiError {
-  const BadRequest(String message, String? code) : super(message, code: code);
+  const BadRequest(super.message, String? code) : super(code: code);
 }
 
 //HttpCode: 401
 class Unauthorized extends ApiError {
-  const Unauthorized(String message, String? code) : super(message, code: code);
+  const Unauthorized(super.message, String? code) : super(code: code);
 }
 
 //HttpCode: 403
 class Forbidden extends ApiError {
-  const Forbidden(String message, String? code) : super(message, code: code);
+  const Forbidden(super.message, String? code) : super(code: code);
 }
 
 //HttpCode: 404
 class NotFound extends ApiError {
-  const NotFound(String message) : super(message);
+  const NotFound(super.message);
 }
 
 //HttpCode: 423
 class UnavailableForThisOperation extends ApiError {
-  const UnavailableForThisOperation(String message, String? code) : super(message, code: code);
+  const UnavailableForThisOperation(super.message, String? code) : super(code: code);
 }
 
 //HttpCode: 451
 class UnavailableForLegalReasons extends ApiError {
-  const UnavailableForLegalReasons(String message, String? code) : super(message, code: code);
+  const UnavailableForLegalReasons(super.message, String? code) : super(code: code);
 }
 
 //HttpCode: 500
 class ServerError extends ApiError {
-  const ServerError(String message) : super(message);
+  const ServerError(super.message);
 }
 
 //HttpCode: 503
 class ServiceUnavailable extends ApiError {
-  const ServiceUnavailable(String message, String? code) : super(message, code: code);
+  const ServiceUnavailable(super.message, String? code) : super(code: code);
 }
 
 class UncaughtError extends ApiError {
-  const UncaughtError(String message) : super(message);
+  const UncaughtError(super.message);
 }

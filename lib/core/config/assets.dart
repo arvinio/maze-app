@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:injectable/injectable.dart';
 
-
-import '../../di/injection_container.dart';
+import '../di/injection_container.dart';
 import '../presentation/route/app_router.dart';
 
 abstract class AssetsBase {
@@ -23,21 +22,22 @@ abstract class AssetsBase {
 
 @LazySingleton(as: AssetsBase, env: ['dev'])
 class Assets extends AssetsBase {
-  bool isLight =
-      Theme.of(inject<AppRouter>().navigatorKey.currentContext!).colorScheme.brightness == Brightness.light;
+  bool isLight = Theme.of(inject<AppRouter>().navigatorKey.currentContext!)
+          .colorScheme
+          .brightness ==
+      Brightness.light;
 
   @override
-  AssetImage get mazeLogoText => const AssetImage('assets/icons/maze_logo_text.png');
+  AssetImage get mazeLogoText =>
+      const AssetImage('assets/icons/maze_logo_text.png');
 
   @override
-  AssetImage get splashLogoText => const AssetImage('assets/images/maze_splash_logo.png');
+  AssetImage get splashLogoText =>
+      const AssetImage('assets/images/maze_splash_logo.png');
 
   @override
   AssetImage get logoIcon => const AssetImage('assets/images/maze_logo.png');
-
 }
-
-
 
 class AssetImage {
   const AssetImage(this._assetName);

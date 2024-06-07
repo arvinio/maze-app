@@ -5,15 +5,12 @@ class LoggingInterceptorHelper {
   static void requestLogger(RequestOptions options) async {
     if (kDebugMode) {
     print(
-        '--> ${options.method != null ? options.method.toUpperCase() : 'METHOD'} ${'' + (options.baseUrl ?? '') +
-            (options.path ?? '')}');
+        '--> ${options.method != null ? options.method.toUpperCase() : 'METHOD'} ${'${options.baseUrl ?? ''}${options.path ?? ''}'}');
     print('Headers:');
     options.headers.forEach((k, v) => print('$k: $v'));
-    if (options.queryParameters != null) {
-      print('queryParameters:');
-      options.queryParameters.forEach((k, v) => print('$k: $v'));
-    }
-    if (options.data != null) {
+    print('queryParameters:');
+    options.queryParameters.forEach((k, v) => print('$k: $v'));
+      if (options.data != null) {
       print('Body: ${options.data}');
     }
     print('--> END ${options.method != null ? options.method.toUpperCase() : 'METHOD'}');
@@ -31,7 +28,7 @@ class LoggingInterceptorHelper {
     }
   }
 
-  static void errorLogger(DioError dioError) {
+  static void errorLogger(DioException dioError) {
     if(kDebugMode){
     print(
         '<-- ${dioError.message} ${(dioError.response?.requestOptions != null ? (dioError.response!.requestOptions.baseUrl + dioError.response!.requestOptions.path) : 'URL')}');
