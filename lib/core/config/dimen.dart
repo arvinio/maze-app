@@ -20,6 +20,8 @@ abstract class Dimen {
   static const double selectedBorderWidth = 2;
 
   static const double iconSmallSize = 24;
+  
+  static const double textFieldHeight = 54;
 
 
 }
