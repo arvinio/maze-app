@@ -1,43 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:injectable/injectable.dart';
+import 'package:maze_app/di/injection_container.dart';
 
+@LazySingleton()
+class AssetsBase  {
 
-import '../../di/injection_container.dart';
-import '../presentation/route/app_router.dart';
+  static const String fontFamily = 'Urbanist';
 
-abstract class AssetsBase {
-  static const String fontFamily = 'Yekan';
-
-  AssetSvg get arrowLeft => const AssetSvg('assets/icons/arrow_left.svg');
-
-  /// Images
-  AssetImage get mazeLogo => const AssetImage('assets/images/.png');
-
-  AssetImage get mazeLogoText;
-
-  AssetImage get splashLogoText;
-
-  AssetImage get logoIcon;
+  AssetSvg get appIcon => const AssetSvg('assets/icons/app.png');
 }
-
-@LazySingleton(as: AssetsBase, env: ['dev'])
-class Assets extends AssetsBase {
-  bool isLight =
-      Theme.of(inject<AppRouter>().navigatorKey.currentContext!).colorScheme.brightness == Brightness.light;
-
-  @override
-  AssetImage get mazeLogoText => const AssetImage('assets/icons/maze_logo_text.png');
-
-  @override
-  AssetImage get splashLogoText => const AssetImage('assets/images/maze_splash_logo.png');
-
-  @override
-  AssetImage get logoIcon => const AssetImage('assets/images/maze_logo.png');
-
-}
-
-
 
 class AssetImage {
   const AssetImage(this._assetName);
@@ -90,7 +62,7 @@ class AssetImage {
       matchTextDirection: matchTextDirection,
       gaplessPlayback: gaplessPlayback,
       isAntiAlias: isAntiAlias,
-      package: package ?? "kernel_plugin",
+      package: package,
       filterQuality: filterQuality,
       cacheWidth: cacheWidth,
       cacheHeight: cacheHeight,
@@ -101,9 +73,11 @@ class AssetImage {
 }
 
 class AssetSvg {
+  //const AssetSvg(this._assetName, {this.assetNameDark});
   const AssetSvg(this._assetName);
 
   final String _assetName;
+  //final String? assetNameDark;
 
   SvgPicture svg({
     Key? key,
@@ -123,22 +97,27 @@ class AssetSvg {
     Clip clipBehavior = Clip.hardEdge,
     bool cacheColorFilter = false,
     SvgTheme? theme,
+    bool? isDark,
   }) {
     return SvgPicture.asset(
       _assetName,
+     // ((isDark ?? inject<ThemeService>().isDark) ? (assetNameDark ?? _assetName) : _assetName),
       key: key,
       matchTextDirection: matchTextDirection,
       bundle: bundle,
-      package: package ?? "kernel_plugin",
+      package: package,
       width: width,
       height: height,
       fit: fit,
       alignment: alignment,
       allowDrawingOutsideViewBox: allowDrawingOutsideViewBox,
       placeholderBuilder: placeholderBuilder,
+      color: color,
+      colorBlendMode: colorBlendMode,
       semanticsLabel: semanticsLabel,
       excludeFromSemantics: excludeFromSemantics,
       clipBehavior: clipBehavior,
+      cacheColorFilter: cacheColorFilter,
       theme: theme,
     );
   }
@@ -146,5 +125,4 @@ class AssetSvg {
   String get path => _assetName;
 }
 
-/// as = Asset s
-AssetsBase as = inject<AssetsBase>();
+AssetsBase appAssets = inject<AssetsBase>();

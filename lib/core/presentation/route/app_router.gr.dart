@@ -15,13 +15,33 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    PreLoginPageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const PreLoginPage(),
+      );
+    },
     VersioningPageRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(child: const VersioningPage()),
       );
-    }
+    },
   };
+}
+
+/// generated route for
+/// [PreLoginPage]
+class PreLoginPageRoute extends PageRouteInfo<void> {
+  const PreLoginPageRoute({List<PageRouteInfo>? children})
+      : super(
+          PreLoginPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PreLoginPageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
