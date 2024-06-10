@@ -5,6 +5,7 @@ import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 
 import '../../config/dimen.dart';
+import 'custom_outline_input_border.dart';
 import 'custom_text.dart';
 
 enum TextFieldType {
@@ -21,6 +22,8 @@ class CustomTextField extends StatefulWidget {
       {super.key,
       this.textEditingController,
       this.label,
+      this.labelTextColor,
+      this.labelStyle,
       this.hint,
       this.bottomText,
       this.textColor,
@@ -78,6 +81,8 @@ class CustomTextField extends StatefulWidget {
     super.key,
     this.textEditingController,
     this.label,
+    this.labelTextColor,
+    this.labelStyle,
     this.hint,
     this.bottomText,
     this.textColor,
@@ -134,6 +139,8 @@ class CustomTextField extends StatefulWidget {
   final TextFieldType _textFieldType;
   final TextEditingController? textEditingController;
   final String? label;
+  final Color? labelTextColor;
+  final TextStyle? labelStyle;
   final String? hint;
   final String? bottomText;
   final Color? textColor;
@@ -250,7 +257,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                             expands: widget.expands ?? false,
                             autofocus: widget.autoFocus,
                             style: widget.textStyle ??
-                                context.bodyBodyMedium.copyWith(
+                                context.bodyBody.copyWith(
                                   color: widget.textColor ?? context.scheme().primaryText,
                                   height: widget.textHeight ?? 1.5,
                                 ),
@@ -274,8 +281,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                           //  onChanged: onChanged,
                             textAlign: TextAlign.left,
                             decoration: InputDecoration(
-                              contentPadding:
-                                  widget.padding ,
+                              contentPadding: widget.padding ?? const EdgeInsets.only(top: 5, bottom: 16, right: 16, left: 16),
                               border: widget._textFieldType.isBorderLess
                                   ? InputBorder.none
                                   : getBorder(BorderType.regularBorder),
@@ -298,6 +304,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
                               suffix: widget.suffix,
                               prefixIcon: widget.prefixIcon,
                               labelText: widget.label,
+                              labelStyle:widget.labelStyle??
+                                  context.bodyBody.copyWith(
+                                    color:(widget.focusNode!=null && widget.focusNode!.hasFocus)
+                                      ?context.scheme().primary
+                                      :widget.labelTextColor?? context.scheme().primaryText
+                                  ),
                               hintText: widget.hint,
                               fillColor:  (widget.focusNode!=null && widget.focusNode!.hasFocus)
                              ? context.scheme().primariesShade03
@@ -478,9 +490,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
         borderColor = context.scheme().neutralsBorderDivider;
         break;
     }
-    return OutlineInputBorder(
+    return CustomOutlineInputBorder(
+      borderRadius: BorderRadius.circular(Dimen.defaultRadius),
         borderSide: BorderSide(color: widget.borderColor ?? borderColor, width: widget.borderWidth ?? width),
-        borderRadius: BorderRadius.circular(Dimen.defaultRadius));
+       );
+
+    /* OutlineInputBorder(
+        borderSide: BorderSide(color: widget.borderColor ?? borderColor, width: widget.borderWidth ?? width),
+        borderRadius: BorderRadius.circular(Dimen.defaultRadius));*/
   }
 
 

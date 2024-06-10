@@ -1,7 +1,7 @@
 
 abstract class Dimen {
 
-  static const double buttonMinHeight = 50;
+  static const double buttonMinHeight = 56;
 
   static const double appBarHeight = 58;
 
