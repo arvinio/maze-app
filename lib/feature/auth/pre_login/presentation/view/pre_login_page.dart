@@ -1,15 +1,13 @@
-import 'dart:io';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maze_app/core/config/strings.dart';
+import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
 import 'package:maze_app/core/presentation/widget/custom_button.dart';
 import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
 import 'package:maze_app/core/presentation/widget/custom_text_span.dart';
-import 'package:maze_app/core/style/app_color.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 
@@ -72,6 +70,7 @@ class _PreLoginPageState extends State<PreLoginPage> {
                 padding: EdgeInsets.only(
                     top: (!_keyboardVisibilityValueNotifier.value) ? 139 : 53,
                     bottom: 12),
+                 // child:appAssets.appIcon.svg()
                   child: Image.asset(
                     'assets/icons/app.png',
                       width:(!_keyboardVisibilityValueNotifier.value)?150:100
@@ -97,18 +96,22 @@ class _PreLoginPageState extends State<PreLoginPage> {
               ),
               const SizedBox(height: 16,),
               CustomButton.submit(
-                text: appStrings.continueSteps, onPressed: () {
-        
-              },),
+                text: appStrings.continueSteps,
+                onPressed: () {
+                 context.pushRoute(const VerificationCodePageRoute());
+
+                },),
               const SizedBox(height: 16,),
               Visibility(
                 visible: !_keyboardVisibilityValueNotifier.value,
                 child: CustomButton.outline(
-                  text: appStrings.loginAsGuest, onPressed: () {},),
+                  text: appStrings.loginAsGuest, onPressed: () {
+                    context.pushRoute(const LoginPageRoute());
+                },),
               ),
               (!_keyboardVisibilityValueNotifier.value)
                   ? const Spacer()
-                  : Center(),
+                  : const Center(),
               Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: Text.rich(textAlign: TextAlign.center,

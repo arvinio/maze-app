@@ -23,6 +23,8 @@ abstract class Dimen {
   
   static const double textFieldHeight = 54;
 
+  static const double multiInputRadius = 12;
+
 
 }
 
