@@ -98,7 +98,8 @@ class _PreLoginPageState extends State<PreLoginPage> {
               CustomButton.submit(
                 text: appStrings.continueSteps,
                 onPressed: () {
-                 context.pushRoute(const VerificationCodePageRoute());
+                // context.pushRoute(const VerificationCodePageRoute());
+                 context.pushRoute(const LoginPageRoute());
 
                 },),
               const SizedBox(height: 16,),
@@ -106,7 +107,6 @@ class _PreLoginPageState extends State<PreLoginPage> {
                 visible: !_keyboardVisibilityValueNotifier.value,
                 child: CustomButton.outline(
                   text: appStrings.loginAsGuest, onPressed: () {
-                    context.pushRoute(const LoginPageRoute());
                 },),
               ),
               (!_keyboardVisibilityValueNotifier.value)

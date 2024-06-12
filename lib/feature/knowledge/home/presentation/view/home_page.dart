@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return  BasePageWidget(child: Center (
       child:CustomButton.submit(
-      text: "Go Back To Login", onPressed: () {
+      text: "Account SetUp", onPressed: () {
         context.pushRoute(const PreLoginPageRoute());
       },),
     ),);

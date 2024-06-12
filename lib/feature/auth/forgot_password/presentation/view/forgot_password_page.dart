@@ -69,6 +69,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             CustomTextField.outline(textEditingController: _controller,
                 label: appStrings.password,
                 focusNode: _focusNode,
+                autoFocus: true,
                 obscureText: true,
                 suffix: appAssets.eye.svg()
 
