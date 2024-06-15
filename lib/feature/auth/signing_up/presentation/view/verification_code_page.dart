@@ -68,6 +68,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
               filled: true,
               autoFocus: true,
               textStyle: context.titleTitle2,
+              contentPadding: const EdgeInsets.all(10),
               fillColor: context
                   .scheme()
                   .neutralsFieldsTags,

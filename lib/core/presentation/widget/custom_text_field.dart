@@ -306,12 +306,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
                               labelText: widget.label,
                               labelStyle:widget.labelStyle??
                                   context.bodyBody.copyWith(
-                                    color:(widget.focusNode!=null && widget.focusNode!.hasFocus)
+                                    color:(widget.focusNode!=null && widget.focusNode!.hasFocus)|| (widget.autoFocus)
                                       ?context.scheme().primary
                                       :widget.labelTextColor?? context.scheme().primaryText
                                   ),
                               hintText: widget.hint,
-                              fillColor:  (widget.focusNode!=null && widget.focusNode!.hasFocus)
+                              fillColor:  (widget.focusNode!=null && widget.focusNode!.hasFocus)|| (widget.autoFocus)
                              ? context.scheme().primariesShade03
                              : context.scheme().neutralsFieldsTags,
                               filled: true,
