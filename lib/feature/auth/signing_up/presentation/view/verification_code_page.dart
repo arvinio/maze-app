@@ -7,10 +7,10 @@ import 'package:maze_app/core/config/dimen.dart';
 import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
-import 'package:maze_app/core/presentation/widget/custom_button.dart';
 import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
+import 'package:timer_button_fork/timer_button_fork.dart';
 
 
 @RoutePage()
@@ -24,7 +24,9 @@ class VerificationCodePage extends StatefulWidget {
 
 class _VerificationCodePageState extends State<VerificationCodePage> {
 
-  bool autoFocus=false;
+  @override
+  void initState() {
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,22 +84,57 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                   .neutralsFieldsTags,
               fieldHeight: 56,
               fieldWidth: 56,
-              onCodeChanged: (String code) {
-              },
+              onCodeChanged: (String code) {},
               onSubmit: (String verificationCode) {
-               // context.pushRoute(const AccountCreationPageRoute());
+                // context.pushRoute(const AccountCreationPageRoute());
                 context.pushRoute(const ForgotPasswordPageRoute());
               }, // end onSubmit
             ),
-
             const Spacer(),
             Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: CustomButton.outline(
-                text: appStrings.reSend, onPressed: () {
-                context.pushRoute(const AccountCreationPageRoute());
-              },),
+                padding: const EdgeInsets.only(bottom: 16),
+                child:TimerButton.builder(
+                  onPressed: () {
+                          //resend api
+                          },
+                  timeOutInSeconds: 60,
+                  timeBuilder: (BuildContext context, int sec) {
+                    return Container(
+                      padding: const EdgeInsets.all(10.0),
+                      width:  MediaQuery
+                          .of(context)
+                          .size
+                          .width,
+                      height:56 ,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                        BorderRadius.circular(16),
+                        border: Border.all(color: context
+                            .scheme()
+                            .neutralsBorderDivider,),
+                        color: context
+                            .scheme()
+                            .neutralsBackground,
+
+                      ),
+                      child: CustomText(
+                        textAlign: TextAlign.center,sec > 0
+                            ? "${appStrings.resendCode}${sec<10 ? "0$sec ": sec }"
+                            : appStrings.resend,
+                        style: context.titleHeadline.copyWith(
+                            color: sec > 0
+                                ? context
+                                .scheme()
+                                .disabledText
+                                : context
+                                .scheme()
+                                .primary),
+                      ),
+                    );
+                  },
+                ),
             ),
+
           ],)
 
     );

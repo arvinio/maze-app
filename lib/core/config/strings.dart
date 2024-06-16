@@ -16,7 +16,8 @@ class StringsBase {
   //Login
   String get verificationCode => ' Verification code';
   String get codeSend => ' Enter the code sent to';
-  String get reSend => ' Resend';
+  String get resend => ' Resend';
+  String get resendCode => ' Resend Code in 00:';
 
   //Account Creation
 
