@@ -1,7 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
 import 'package:maze_app/core/presentation/widget/custom_button.dart';
@@ -20,7 +19,7 @@ class _HomePageState extends State<HomePage> {
     return  BasePageWidget(child: Center (
       child:CustomButton.submit(
       text: "Account SetUp", onPressed: () {
-        context.pushRoute(const PreLoginPageRoute());
+        context.pushRoute(const SignupPageRoute());
       },),
     ),);
   }

@@ -18,6 +18,8 @@ class StringsBase {
   String get codeSend => ' Enter the code sent to';
   String get resend => ' Resend';
   String get resendCode => ' Resend Code in 00:';
+  String get resendMsg => ' The code has been sent to your email';
+  String get invalidCode => 'Invalid code';
 
   //Account Creation
 
@@ -35,8 +37,8 @@ class StringsBase {
    String get welcomeSubTitle => 'Let’s get back into it!';
 
   //Forgot Password
-  String get forgotPasswordTitle => ' New Password';
-  String get forgotPasswordSubTitle => ' Enter your password to log into\n';
+  String get newPasswordTitle => ' New Password';
+  String get newPasswordSubTitle => ' Enter your password to log into\n';
   String get confirmPassword => ' Confirm new password';
 
 

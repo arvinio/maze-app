@@ -1,7 +1,9 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/dimen.dart';
 import 'package:maze_app/core/config/strings.dart';
@@ -10,16 +12,29 @@ import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
 import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
+import 'package:maze_app/di/injection_container.dart';
+import 'package:maze_app/feature/auth/signing_up/data/model/entry_mode.dart';
+import 'package:maze_app/feature/auth/signing_up/presentation/bloc/verify_bloc.dart';
 import 'package:timer_button_fork/timer_button_fork.dart';
 
 
 @RoutePage()
-class VerificationCodePage extends StatefulWidget {
+class VerificationCodePage extends StatefulWidget implements AutoRouteWrapper{
 
-   const VerificationCodePage({super.key});
+  final String userName;
+  final String userId;
+  final String code;
+  final EntryMode entryMode;
+
+  const VerificationCodePage({super.key, required this.userId,required this.userName,  required this.code,required this.entryMode});
 
   @override
   State<VerificationCodePage> createState() => _VerificationCodePageState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(create: (_) => inject<VerifyBloc>(), child: this);
+  }
 }
 
 class _VerificationCodePageState extends State<VerificationCodePage> {
@@ -45,7 +60,46 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
           ),
         ),
 
-        child: Column(
+        child:BlocConsumer<VerifyBloc, VerifyState>(
+    listener: (context, state) {
+      if (state.verifyStatus.isFailure) {
+        //toast
+      }
+      else
+      if(state.verifyStatus.isSuccess) {
+        if(state.verifyResponse!.success!) {
+          context.pushRoute(
+              CreatePasswordPageRoute(entryMode: widget.entryMode,email:widget.userName));
+        }
+        else
+          {
+            Fluttertoast.showToast(
+              msg:appStrings.invalidCode,
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+          }
+      }
+      else if(state.verifyStatus.isResendSuccess)
+      {
+        Fluttertoast.showToast(
+          msg:appStrings.resendMsg,
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+
+      }
+    },
+    builder: (context, state) {
+    return Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             ListTile(
@@ -55,7 +109,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
               subtitle: Padding(
                 padding: const EdgeInsets.only(left: 10.0, top: 5),
                 child: CustomText(
-                    "${appStrings.codeSend}\n zahra.tafazoli@gmail.com",
+                    "${appStrings.codeSend}\n ${widget.userName}",
                     style: context.bodyBody),
               ),
               contentPadding: EdgeInsets.zero,
@@ -64,7 +118,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
             const SizedBox(height: 35,),
 
             OtpTextField(
-              numberOfFields: 5,
+              numberOfFields: 6,
               showFieldAsBox: true,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               filled: true,
@@ -82,21 +136,29 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
               enabledBorderColor: context
                   .scheme()
                   .neutralsFieldsTags,
-              fieldHeight: 56,
-              fieldWidth: 56,
+             /* fieldHeight: 54,
+              fieldWidth: 54,*/
+              fieldHeight: 50,
+              fieldWidth: 50,
               onCodeChanged: (String code) {},
-              onSubmit: (String verificationCode) {
-                // context.pushRoute(const AccountCreationPageRoute());
-                context.pushRoute(const ForgotPasswordPageRoute());
+              onSubmit: (String code) {
+
+          context.read<VerifyBloc>().add(
+          VerifyEvent.verifyCode(userId: widget.userId, code: code));
+
               }, // end onSubmit
             ),
+            Text(widget.code),
             const Spacer(),
             Padding(
                 padding: const EdgeInsets.only(bottom: 16),
                 child:TimerButton.builder(
                   onPressed: () {
                           //resend api
-                          },
+                    context.read<VerifyBloc>().add(
+                        VerifyEvent.resend(userId: widget.userId));
+                    },
+
                   timeOutInSeconds: 60,
                   timeBuilder: (BuildContext context, int sec) {
                     return Container(
@@ -134,8 +196,9 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                   },
                 ),
             ),
-
-          ],)
+          ],);
+  },
+)
 
     );
   }
