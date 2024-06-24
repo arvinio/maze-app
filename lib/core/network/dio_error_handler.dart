@@ -20,28 +20,28 @@ ApiError handleDioError({DioException? dioError, Response? response}) {
 
     switch (response.statusCode) {
       case 400:
-        return BadRequest(errorModel.message, errorModel.code);
+        return BadRequest(errorModel.message!.firstOrNull!.error!, errorModel.statusCode.toString());
 
       case 401:
-        return Unauthorized(errorModel.message, errorModel.code);
+        return Unauthorized(errorModel.message!.firstOrNull!.error!, errorModel.statusCode.toString());
 
       case 403:
-        return Forbidden(errorModel.message, errorModel.code);
+        return Forbidden(errorModel.message!.firstOrNull!.error!, errorModel.statusCode.toString());
 
       case 404:
         return const NotFound(Strings.serverError);
 
       case 423:
-        return UnavailableForThisOperation(errorModel.message, errorModel.code);
+        return UnavailableForThisOperation(errorModel.message!.firstOrNull!.error!, errorModel.statusCode.toString());
 
       case 451:
-        return UnavailableForLegalReasons(errorModel.message, errorModel.code);
+        return UnavailableForLegalReasons(errorModel.message!.firstOrNull!.error!, errorModel.statusCode.toString());
 
       case 500:
         return const ServerError(Strings.serverError);
 
       case 503:
-        return ServiceUnavailable(errorModel.message, errorModel.code);
+        return ServiceUnavailable(errorModel.message!.firstOrNull!.error!, errorModel.statusCode.toString());
 
       default:
         return const UncaughtError(Strings.serverError);

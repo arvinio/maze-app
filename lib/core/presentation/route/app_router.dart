@@ -1,22 +1,31 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
-import 'package:maze_app/feature/versioning/presentation/versioning_page.dart';
-import 'package:maze_app/feature/pre_login/presentation/view/pre_login_page.dart';
+import 'package:maze_app/feature/auth/create_password/presentation/view/create_password_page.dart';
+import 'package:maze_app/feature/auth/signing_up/data/model/entry_mode.dart';
+import 'package:maze_app/feature/auth/signing_up/presentation/view/verification_code_page.dart';
+import 'package:maze_app/feature/auth/login/presentation/view/login_page.dart';
+import 'package:maze_app/feature/auth/login/presentation/view/welcome_page.dart';
+import 'package:maze_app/feature/auth/signup/presentation/view/signup_page.dart';
+import 'package:maze_app/feature/knowledge/home/presentation/view/home_page.dart';
 
 part 'app_router.gr.dart';
 
 @AutoRouterConfig(
-  replaceInRouteName: 'Page,Route,Screen',
-)
+  replaceInRouteName: 'Page,Route,Screen',)
 @lazySingleton
 class AppRouter extends _$AppRouter {
   @override
   RouteType get defaultRouteType => const RouteType.adaptive();
   @override
   final List<AutoRoute> routes = [
-    AutoRoute(path:'/VersioningPage', page: VersioningPageRoute.page),
-    //AutoRoute(path:'/PreLoginPage', page: PreLoginPageRoute.page)
-    AutoRoute(path:'/', page: PreLoginPageRoute.page)
+    //AutoRoute(path:'/SignupPage', page: SignupPageRoute.page)
+    AutoRoute(path:'/', page: SignupPageRoute.page),
+    AutoRoute(path:'/VerificationCodePage', page: VerificationCodePageRoute.page),
+    AutoRoute(path:'/LoginPage', page: LoginPageRoute.page),
+    AutoRoute(path:'/WelcomePage', page: WelcomePageRoute.page),
+    AutoRoute(path:'/CreatePasswordPage', page: CreatePasswordPageRoute.page),
+    AutoRoute(path:'/HomePage', page: HomePageRoute.page),
 
   ];
 }

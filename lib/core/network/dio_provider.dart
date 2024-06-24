@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:maze_app/core/network/util/expire_token_interceptor.dart';
 
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -8,7 +9,8 @@ import 'config/const.dart';
 Dio provideDio(
     {
     required String baseUrl,
-    Map<String, String>? customHeaders}) {
+      bool isAddTokenToHeaders = false,
+      Map<String, String>? customHeaders}) {
   Map<String, String>? headers = customHeaders ?? {};
 
 
@@ -22,6 +24,10 @@ Dio provideDio(
         headers: headers),
   );
 
+  if(isAddTokenToHeaders){
+    ExpireTokenInterceptor expireTokenInterceptor=inject();
+    dio.interceptors.add(expireTokenInterceptor);
+  }
 
   dio.interceptors.add(inject<PrettyDioLogger>());
 

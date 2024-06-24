@@ -13,6 +13,36 @@ class StringsBase {
   String get privacyPolicy => ' Privacy Policy';
   String get email => ' Email';
 
+  //Login
+  String get verificationCode => ' Verification code';
+  String get codeSend => ' Enter the code sent to';
+  String get resend => ' Resend';
+  String get resendCode => ' Resend Code in 00:';
+  String get resendMsg => ' The code has been sent to your email';
+  String get invalidCode => 'Invalid code';
+
+  //Account Creation
+
+  String get createPasswordTitle => ' Create a Password';
+  String get createPasswordSubTitle => ' Let’s create your password for\n';
+  String get password => 'Password';
+
+  //Login
+  String get loginTitle => 'Welcome Back';
+  String get loginSubTitle => 'Enter your password to log back into\n';
+  String get forgotPassword => 'Forgot password';
+
+  //WellcomPage
+   String get welcomeTitle => 'Welcome Wilson51';
+   String get welcomeSubTitle => 'Let’s get back into it!';
+
+  //Forgot Password
+  String get newPasswordTitle => ' New Password';
+  String get newPasswordSubTitle => ' Enter your password to log into\n';
+  String get confirmPassword => ' Confirm new password';
+
+
+
 }
 
 StringsBase appStrings = inject<StringsBase>();

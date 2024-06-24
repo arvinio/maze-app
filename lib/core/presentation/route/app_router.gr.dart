@@ -15,45 +15,238 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    PreLoginPageRoute.name: (routeData) {
+    CreatePasswordPageRoute.name: (routeData) {
+      final args = routeData.argsAs<CreatePasswordPageRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const PreLoginPage(),
+        child: WrappedRoute(
+            child: CreatePasswordPage(
+          key: args.key,
+          entryMode: args.entryMode,
+          email: args.email,
+        )),
       );
     },
-    VersioningPageRoute.name: (routeData) {
+    HomePageRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: const VersioningPage()),
+        child: const HomePage(),
+      );
+    },
+    LoginPageRoute.name: (routeData) {
+      final args = routeData.argsAs<LoginPageRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: LoginPage(
+          key: args.key,
+          userName: args.userName,
+        )),
+      );
+    },
+    SignupPageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const SignupPage()),
+      );
+    },
+    VerificationCodePageRoute.name: (routeData) {
+      final args = routeData.argsAs<VerificationCodePageRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: VerificationCodePage(
+          key: args.key,
+          userId: args.userId,
+          userName: args.userName,
+          code: args.code,
+          entryMode: args.entryMode,
+        )),
+      );
+    },
+    WelcomePageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const WelcomePage(),
       );
     },
   };
 }
 
 /// generated route for
-/// [PreLoginPage]
-class PreLoginPageRoute extends PageRouteInfo<void> {
-  const PreLoginPageRoute({List<PageRouteInfo>? children})
-      : super(
-          PreLoginPageRoute.name,
+/// [CreatePasswordPage]
+class CreatePasswordPageRoute
+    extends PageRouteInfo<CreatePasswordPageRouteArgs> {
+  CreatePasswordPageRoute({
+    Key? key,
+    required EntryMode entryMode,
+    required String email,
+    List<PageRouteInfo>? children,
+  }) : super(
+          CreatePasswordPageRoute.name,
+          args: CreatePasswordPageRouteArgs(
+            key: key,
+            entryMode: entryMode,
+            email: email,
+          ),
           initialChildren: children,
         );
 
-  static const String name = 'PreLoginPageRoute';
+  static const String name = 'CreatePasswordPageRoute';
+
+  static const PageInfo<CreatePasswordPageRouteArgs> page =
+      PageInfo<CreatePasswordPageRouteArgs>(name);
+}
+
+class CreatePasswordPageRouteArgs {
+  const CreatePasswordPageRouteArgs({
+    this.key,
+    required this.entryMode,
+    required this.email,
+  });
+
+  final Key? key;
+
+  final EntryMode entryMode;
+
+  final String email;
+
+  @override
+  String toString() {
+    return 'CreatePasswordPageRouteArgs{key: $key, entryMode: $entryMode, email: $email}';
+  }
+}
+
+/// generated route for
+/// [HomePage]
+class HomePageRoute extends PageRouteInfo<void> {
+  const HomePageRoute({List<PageRouteInfo>? children})
+      : super(
+          HomePageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HomePageRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
-/// [VersioningPage]
-class VersioningPageRoute extends PageRouteInfo<void> {
-  const VersioningPageRoute({List<PageRouteInfo>? children})
-      : super(
-          VersioningPageRoute.name,
+/// [LoginPage]
+class LoginPageRoute extends PageRouteInfo<LoginPageRouteArgs> {
+  LoginPageRoute({
+    Key? key,
+    required String userName,
+    List<PageRouteInfo>? children,
+  }) : super(
+          LoginPageRoute.name,
+          args: LoginPageRouteArgs(
+            key: key,
+            userName: userName,
+          ),
           initialChildren: children,
         );
 
-  static const String name = 'VersioningPageRoute';
+  static const String name = 'LoginPageRoute';
+
+  static const PageInfo<LoginPageRouteArgs> page =
+      PageInfo<LoginPageRouteArgs>(name);
+}
+
+class LoginPageRouteArgs {
+  const LoginPageRouteArgs({
+    this.key,
+    required this.userName,
+  });
+
+  final Key? key;
+
+  final String userName;
+
+  @override
+  String toString() {
+    return 'LoginPageRouteArgs{key: $key, userName: $userName}';
+  }
+}
+
+/// generated route for
+/// [SignupPage]
+class SignupPageRoute extends PageRouteInfo<void> {
+  const SignupPageRoute({List<PageRouteInfo>? children})
+      : super(
+          SignupPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SignupPageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [VerificationCodePage]
+class VerificationCodePageRoute
+    extends PageRouteInfo<VerificationCodePageRouteArgs> {
+  VerificationCodePageRoute({
+    Key? key,
+    required String userId,
+    required String userName,
+    required String code,
+    required EntryMode entryMode,
+    List<PageRouteInfo>? children,
+  }) : super(
+          VerificationCodePageRoute.name,
+          args: VerificationCodePageRouteArgs(
+            key: key,
+            userId: userId,
+            userName: userName,
+            code: code,
+            entryMode: entryMode,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'VerificationCodePageRoute';
+
+  static const PageInfo<VerificationCodePageRouteArgs> page =
+      PageInfo<VerificationCodePageRouteArgs>(name);
+}
+
+class VerificationCodePageRouteArgs {
+  const VerificationCodePageRouteArgs({
+    this.key,
+    required this.userId,
+    required this.userName,
+    required this.code,
+    required this.entryMode,
+  });
+
+  final Key? key;
+
+  final String userId;
+
+  final String userName;
+
+  final String code;
+
+  final EntryMode entryMode;
+
+  @override
+  String toString() {
+    return 'VerificationCodePageRouteArgs{key: $key, userId: $userId, userName: $userName, code: $code, entryMode: $entryMode}';
+  }
+}
+
+/// generated route for
+/// [WelcomePage]
+class WelcomePageRoute extends PageRouteInfo<void> {
+  const WelcomePageRoute({List<PageRouteInfo>? children})
+      : super(
+          WelcomePageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'WelcomePageRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
