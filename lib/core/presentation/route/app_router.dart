@@ -7,12 +7,14 @@ import 'package:maze_app/feature/auth/signing_up/presentation/view/verification_
 import 'package:maze_app/feature/auth/login/presentation/view/login_page.dart';
 import 'package:maze_app/feature/auth/login/presentation/view/welcome_page.dart';
 import 'package:maze_app/feature/auth/signup/presentation/view/signup_page.dart';
+import 'package:maze_app/feature/intro/presentation/intro_page.dart';
 import 'package:maze_app/feature/knowledge/home/presentation/view/home_page.dart';
 
 part 'app_router.gr.dart';
 
 @AutoRouterConfig(
-  replaceInRouteName: 'Page,Route,Screen',)
+  replaceInRouteName: 'Page,Route,Screen',
+)
 @lazySingleton
 class AppRouter extends _$AppRouter {
   @override
@@ -20,12 +22,13 @@ class AppRouter extends _$AppRouter {
   @override
   final List<AutoRoute> routes = [
     //AutoRoute(path:'/SignupPage', page: SignupPageRoute.page)
-    AutoRoute(path:'/', page: SignupPageRoute.page),
-    AutoRoute(path:'/VerificationCodePage', page: VerificationCodePageRoute.page),
-    AutoRoute(path:'/LoginPage', page: LoginPageRoute.page),
-    AutoRoute(path:'/WelcomePage', page: WelcomePageRoute.page),
-    AutoRoute(path:'/CreatePasswordPage', page: CreatePasswordPageRoute.page),
-    AutoRoute(path:'/HomePage', page: HomePageRoute.page),
-
+    AutoRoute(path: '/', page: IntroPageRoute.page),
+    AutoRoute(path: '/SignupPage', page: SignupPageRoute.page),
+    AutoRoute(
+        path: '/VerificationCodePage', page: VerificationCodePageRoute.page),
+    AutoRoute(path: '/LoginPage', page: LoginPageRoute.page),
+    AutoRoute(path: '/WelcomePage', page: WelcomePageRoute.page),
+    AutoRoute(path: '/CreatePasswordPage', page: CreatePasswordPageRoute.page),
+    AutoRoute(path: '/HomePage', page: HomePageRoute.page),
   ];
 }
