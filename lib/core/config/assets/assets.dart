@@ -4,8 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:maze_app/di/injection_container.dart';
 
 @LazySingleton()
-class AssetsBase  {
-
+class AssetsBase {
   static const String fontFamily = 'Urbanist';
 
   //AssetSvg get appIcon => const AssetSvg('assets/icons/app.png');
@@ -15,6 +14,14 @@ class AssetsBase  {
   AssetSvg get eyeOff => const AssetSvg('assets/icons/eye-off.svg');
   AssetSvg get profile1 => const AssetSvg('assets/images/profile.svg');
   AssetSvg get profile => const AssetSvg('assets/icons/profile.png');
+
+  AssetSvg get profileIcon => const AssetSvg('assets/icons/profile-icon.svg',  );
+  AssetSvg get knowledgeIcon =>
+      const AssetSvg('assets/icons/knowledge-icon.svg');
+  AssetSvg get trackerIcon => const AssetSvg('assets/icons/tracker-icon.svg');
+  AssetSvg get liveChatIcon => const AssetSvg('assets/icons/question-icon.svg');
+  AssetSvg get communityIcon =>
+      const AssetSvg('assets/icons/communities-icon.svg');
 }
 
 class AssetImage {
@@ -107,7 +114,7 @@ class AssetSvg {
   }) {
     return SvgPicture.asset(
       _assetName,
-     // ((isDark ?? inject<ThemeService>().isDark) ? (assetNameDark ?? _assetName) : _assetName),
+      // ((isDark ?? inject<ThemeService>().isDark) ? (assetNameDark ?? _assetName) : _assetName),
       key: key,
       matchTextDirection: matchTextDirection,
       bundle: bundle,

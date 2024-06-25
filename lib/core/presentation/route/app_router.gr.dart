@@ -15,6 +15,12 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    BottomNavigationRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const BottomNavigation(),
+      );
+    },
     CreatePasswordPageRoute.name: (routeData) {
       final args = routeData.argsAs<CreatePasswordPageRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -71,6 +77,20 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [BottomNavigation]
+class BottomNavigationRoute extends PageRouteInfo<void> {
+  const BottomNavigationRoute({List<PageRouteInfo>? children})
+      : super(
+          BottomNavigationRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'BottomNavigationRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
