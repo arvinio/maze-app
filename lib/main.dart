@@ -7,7 +7,7 @@ import 'di/injection_container.dart';
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Globals.setSharedPreferences();
 
   configureDependencies(environment: 'dev');

@@ -15,6 +15,32 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    ArticlePageRoute.name: (routeData) {
+      final args = routeData.argsAs<ArticlePageRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ArticlePage(
+          key: args.key,
+          article: args.article,
+        ),
+      );
+    },
+    BookmarksPageRoute.name: (routeData) {
+      final args = routeData.argsAs<BookmarksPageRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: BookmarksPage(
+          key: args.key,
+          bookMarks: args.bookMarks,
+        ),
+      );
+    },
+    BottomNavigationRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const BottomNavigation(),
+      );
+    },
     CreatePasswordPageRoute.name: (routeData) {
       final args = routeData.argsAs<CreatePasswordPageRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -77,6 +103,96 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [ArticlePage]
+class ArticlePageRoute extends PageRouteInfo<ArticlePageRouteArgs> {
+  ArticlePageRoute({
+    Key? key,
+    required Article article,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ArticlePageRoute.name,
+          args: ArticlePageRouteArgs(
+            key: key,
+            article: article,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ArticlePageRoute';
+
+  static const PageInfo<ArticlePageRouteArgs> page =
+      PageInfo<ArticlePageRouteArgs>(name);
+}
+
+class ArticlePageRouteArgs {
+  const ArticlePageRouteArgs({
+    this.key,
+    required this.article,
+  });
+
+  final Key? key;
+
+  final Article article;
+
+  @override
+  String toString() {
+    return 'ArticlePageRouteArgs{key: $key, article: $article}';
+  }
+}
+
+/// generated route for
+/// [BookmarksPage]
+class BookmarksPageRoute extends PageRouteInfo<BookmarksPageRouteArgs> {
+  BookmarksPageRoute({
+    Key? key,
+    required List<Article> bookMarks,
+    List<PageRouteInfo>? children,
+  }) : super(
+          BookmarksPageRoute.name,
+          args: BookmarksPageRouteArgs(
+            key: key,
+            bookMarks: bookMarks,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'BookmarksPageRoute';
+
+  static const PageInfo<BookmarksPageRouteArgs> page =
+      PageInfo<BookmarksPageRouteArgs>(name);
+}
+
+class BookmarksPageRouteArgs {
+  const BookmarksPageRouteArgs({
+    this.key,
+    required this.bookMarks,
+  });
+
+  final Key? key;
+
+  final List<Article> bookMarks;
+
+  @override
+  String toString() {
+    return 'BookmarksPageRouteArgs{key: $key, bookMarks: $bookMarks}';
+  }
+}
+
+/// generated route for
+/// [BottomNavigation]
+class BottomNavigationRoute extends PageRouteInfo<void> {
+  const BottomNavigationRoute({List<PageRouteInfo>? children})
+      : super(
+          BottomNavigationRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'BottomNavigationRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

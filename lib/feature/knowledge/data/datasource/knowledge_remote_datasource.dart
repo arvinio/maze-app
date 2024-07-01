@@ -17,6 +17,7 @@ class KnowledgeRemoteDataSourceImpl implements KnowledgeRemoteDatasource {
   }) : _dioCaller = dioCaller;
   @override
   ResultFuture<List<ArticleModel>> getArticles() async {
+    //TODO: complete this section
     return await _dioCaller.get('api/blog', fromJson: ArticleModel.fromJson);
   }
 }
