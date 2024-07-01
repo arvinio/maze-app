@@ -8,7 +8,7 @@ import 'package:maze_app/feature/auth/login/presentation/view/login_page.dart';
 import 'package:maze_app/feature/auth/login/presentation/view/welcome_page.dart';
 import 'package:maze_app/feature/auth/signup/presentation/view/signup_page.dart';
 import 'package:maze_app/feature/intro/presentation/intro_page.dart';
-import 'package:maze_app/feature/knowledge/home/presentation/view/home_page.dart';
+import 'package:maze_app/feature/knowledge/presentation/view/knowledge_page.dart';
 
 part 'app_router.gr.dart';
 
@@ -29,6 +29,6 @@ class AppRouter extends _$AppRouter {
     AutoRoute(path: '/LoginPage', page: LoginPageRoute.page),
     AutoRoute(path: '/WelcomePage', page: WelcomePageRoute.page),
     AutoRoute(path: '/CreatePasswordPage', page: CreatePasswordPageRoute.page),
-    AutoRoute(path: '/HomePage', page: HomePageRoute.page),
+    AutoRoute(path: '/KnowledgePage', page: KnowledgePageRoute.page),
   ];
 }

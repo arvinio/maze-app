@@ -27,16 +27,16 @@ abstract class _$AppRouter extends RootStackRouter {
         )),
       );
     },
-    HomePageRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const HomePage(),
-      );
-    },
     IntroPageRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(child: const IntroPage()),
+      );
+    },
+    KnowledgePageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const KnowledgePage(),
       );
     },
     LoginPageRoute.name: (routeData) {
@@ -124,20 +124,6 @@ class CreatePasswordPageRouteArgs {
 }
 
 /// generated route for
-/// [HomePage]
-class HomePageRoute extends PageRouteInfo<void> {
-  const HomePageRoute({List<PageRouteInfo>? children})
-      : super(
-          HomePageRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'HomePageRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [IntroPage]
 class IntroPageRoute extends PageRouteInfo<void> {
   const IntroPageRoute({List<PageRouteInfo>? children})
@@ -147,6 +133,20 @@ class IntroPageRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'IntroPageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [KnowledgePage]
+class KnowledgePageRoute extends PageRouteInfo<void> {
+  const KnowledgePageRoute({List<PageRouteInfo>? children})
+      : super(
+          KnowledgePageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'KnowledgePageRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

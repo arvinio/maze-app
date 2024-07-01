@@ -15,12 +15,12 @@ import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/auth/create_password/presentation/bloc/create_pass_bloc.dart';
 import 'package:maze_app/feature/auth/signing_up/data/model/entry_mode.dart';
 
-
 @RoutePage()
 class CreatePasswordPage extends StatefulWidget implements AutoRouteWrapper {
   final EntryMode entryMode;
   final String email;
-  const CreatePasswordPage({super.key, required this.entryMode, required this.email});
+  const CreatePasswordPage(
+      {super.key, required this.entryMode, required this.email});
 
   @override
   State<CreatePasswordPage> createState() => _CreatePasswordPageState();
@@ -32,7 +32,6 @@ class CreatePasswordPage extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _CreatePasswordPageState extends State<CreatePasswordPage> {
-
   final TextEditingController _controller = TextEditingController();
 
   final FocusNode _focusNode = FocusNode();
@@ -53,17 +52,15 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
             ],
           ),
         ),
-
-        child:BlocConsumer<CreatePassBloc, CreatePassState>(
+        child: BlocConsumer<CreatePassBloc, CreatePassState>(
           listener: (context, state) {
-            if(state.createPassStatus.isSuccess) {
-              if(state.createPassResponse!.success!) {
+            if (state.createPassStatus.isSuccess) {
+              if (state.createPassResponse!.success!) {
                 (widget.entryMode.isAccountCreation)
-                    ? context.pushRoute(const HomePageRoute())
-                    :context.pushRoute(const HomePageRoute());
+                    ? context.pushRoute(const KnowledgePageRoute())
+                    : context.pushRoute(const KnowledgePageRoute());
               }
-            }
-            else if (state.createPassStatus.isFailure) {
+            } else if (state.createPassStatus.isFailure) {
               //toast
             }
           },
@@ -73,53 +70,54 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
               children: [
                 ListTile(
                   title: CustomText(
-                      (widget.entryMode.isAccountCreation)? appStrings.createPasswordTitle:appStrings.newPasswordTitle,
+                      (widget.entryMode.isAccountCreation)
+                          ? appStrings.createPasswordTitle
+                          : appStrings.newPasswordTitle,
                       style: context.titleTitle1),
                   subtitle: Padding(
                     padding: const EdgeInsets.only(left: 10.0, top: 5),
-                    child: Text.rich(
-                        CustomTextSpan(
-                            textData:  (widget.entryMode.isAccountCreation)? appStrings.createPasswordSubTitle:appStrings.newPasswordSubTitle,
-                            style: context.bodyBody,
-                            children: [
-                              CustomTextSpan(
-                                textData:widget.email ?? '',
-                                style: context.bodyBodyMedium,
-
-                              ),
-
-                            ])),
+                    child: Text.rich(CustomTextSpan(
+                        textData: (widget.entryMode.isAccountCreation)
+                            ? appStrings.createPasswordSubTitle
+                            : appStrings.newPasswordSubTitle,
+                        style: context.bodyBody,
+                        children: [
+                          CustomTextSpan(
+                            textData: widget.email ?? '',
+                            style: context.bodyBodyMedium,
+                          ),
+                        ])),
                   ),
                   contentPadding: EdgeInsets.zero,
                   minVerticalPadding: 5,
                 ),
-
-                const SizedBox(height: 35,),
-                CustomTextField.outline(textEditingController: _controller,
+                const SizedBox(
+                  height: 35,
+                ),
+                CustomTextField.outline(
+                    textEditingController: _controller,
                     label: appStrings.password,
                     focusNode: _focusNode,
                     autoFocus: true,
                     obscureText: true,
-                    suffix: appAssets.eye.svg()
-
-                ),
-
+                    suffix: appAssets.eye.svg()),
                 const Spacer(),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: CustomButton.submit(
-                    text: (widget.entryMode.isAccountCreation)?  appStrings.continueSteps:appStrings.confirmPassword,
+                    text: (widget.entryMode.isAccountCreation)
+                        ? appStrings.continueSteps
+                        : appStrings.confirmPassword,
                     onPressed: () {
                       context.read<CreatePassBloc>().add(
-                          CreatePassEvent.confirmPassword(password:_controller.text.trim() ));
-                    },),
+                          CreatePassEvent.confirmPassword(
+                              password: _controller.text.trim()));
+                    },
+                  ),
                 ),
-
-
-              ],);
+              ],
+            );
           },
-        )
-
-    );
+        ));
   }
 }

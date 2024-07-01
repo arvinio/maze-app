@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/network/model/api_response.dart';
+import 'package:maze_app/core/util/typedef.dart';
 import 'package:maze_app/feature/intro/data/datasource/intro_local_datasource.dart';
 import 'package:maze_app/feature/intro/domain/entity/intro.dart';
 import 'package:maze_app/feature/intro/domain/repo/intro_repo.dart';
@@ -17,7 +18,13 @@ class IntroRepoImpl implements IntroRepo {
   }
 
   @override
-  Future<void> setIsFirstRun() async {
+  ResultVoid setIsFirstRun() async {
     await _datasource.setIsFirstRun();
+    return const ApiResponse.completed(data: null);
   }
+
+  // @override
+  // Future<void> setIsFirstRun() async {
+  //   await _datasource.setIsFirstRun();
+  // }
 }
