@@ -69,7 +69,6 @@ class _SignupPageState extends State<SignupPage> {
                 ? context.pushRoute(VerificationCodePageRoute(
                 userName: _textController.text,
                 userId: state.signupResponse!.userId!,
-                code: state.signupResponse!.code!,
                 entryMode: EntryMode.accountCreation
             ))
                 : context.pushRoute(LoginPageRoute(

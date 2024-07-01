@@ -131,8 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                   listener: (context, state) {
                     if (state.forgotPassStatus.isSuccess) {
                       if (state.forgotPassResponse!.success!) {
-                        context.pushRoute( VerificationCodePageRoute(userId:state.forgotPassResponse!.userId!,userName: widget.userName,
-                            code: state.forgotPassResponse!.code!,entryMode: EntryMode.forgetPassword ));
+                        context.pushRoute( VerificationCodePageRoute(userId:state.forgotPassResponse!.userId!,userName: widget.userName,entryMode: EntryMode.forgetPassword ));
                       }else
                       {
                         Fluttertoast.showToast(msg: state.errorMessage!,
