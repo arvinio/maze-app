@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/util/shared_preferences_helper.dart';
+import 'package:maze_app/feature/auth/login/data/model/enum/role.dart';
 
 @injectable
 class SettingsManager {
@@ -11,6 +12,7 @@ class SettingsManager {
   final String _passwordKey = 'p_w_K';
   final String _jwTokenKey = 'j_w_t_K';
   final String _refreshTokenKey = 'refresh_t_K';
+  final String _role = 'role';
 
   setUserName(String userName) {
     prefs.setStringAndEncrypt(_userNameKey, userName);
@@ -44,4 +46,12 @@ class SettingsManager {
     return prefs.getEncryptedString(_refreshTokenKey);
   }
 
+  setRole(String role) {
+    prefs.setString(_role, role);
+  }
+
+  Role getRole() {
+    String role=prefs.getString(_role);
+    return RoleExtension.getRoleByName(role);
+  }
 }

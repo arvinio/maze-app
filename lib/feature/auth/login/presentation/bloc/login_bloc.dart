@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:maze_app/core/local/setting_manager.dart';
+import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/auth/login/data/model/login_response.dart';
 import 'package:maze_app/feature/auth/login/domain/repository/login_repository.dart';
 
@@ -29,6 +31,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final apiResponse=await repository.login(email: event.email, password: event.password);
     apiResponse.when(completed: (data,int? statusCode){
       LoginResponse response=data;
+      if(response.success!) {
+        inject<SettingsManager>().setBearerToken(response.token!);
+        inject<SettingsManager>().setRefreshToken(response.refreshToken!);
+        inject<SettingsManager>().setRole(response.role!);
+      }
       emit(state.copyWith(loginResponse: response,loginStatus: LoginStatus.success));
 
     },
