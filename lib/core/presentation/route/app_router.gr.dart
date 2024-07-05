@@ -91,7 +91,6 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           userId: args.userId,
           userName: args.userName,
-          code: args.code,
           entryMode: args.entryMode,
         )),
       );
@@ -327,7 +326,6 @@ class VerificationCodePageRoute
     Key? key,
     required String userId,
     required String userName,
-    required String code,
     required EntryMode entryMode,
     List<PageRouteInfo>? children,
   }) : super(
@@ -336,7 +334,6 @@ class VerificationCodePageRoute
             key: key,
             userId: userId,
             userName: userName,
-            code: code,
             entryMode: entryMode,
           ),
           initialChildren: children,
@@ -353,7 +350,6 @@ class VerificationCodePageRouteArgs {
     this.key,
     required this.userId,
     required this.userName,
-    required this.code,
     required this.entryMode,
   });
 
@@ -363,13 +359,11 @@ class VerificationCodePageRouteArgs {
 
   final String userName;
 
-  final String code;
-
   final EntryMode entryMode;
 
   @override
   String toString() {
-    return 'VerificationCodePageRouteArgs{key: $key, userId: $userId, userName: $userName, code: $code, entryMode: $entryMode}';
+    return 'VerificationCodePageRouteArgs{key: $key, userId: $userId, userName: $userName, entryMode: $entryMode}';
   }
 }
 

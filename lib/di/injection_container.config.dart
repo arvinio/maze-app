@@ -11,19 +11,19 @@
 import 'package:dio/dio.dart' as _i14;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:logger/logger.dart' as _i4;
-import 'package:maze_app/core/config/assets/assets.dart' as _i7;
-import 'package:maze_app/core/config/strings.dart' as _i6;
+import 'package:logger/logger.dart' as _i9;
+import 'package:maze_app/core/config/assets/assets.dart' as _i4;
+import 'package:maze_app/core/config/strings.dart' as _i5;
 import 'package:maze_app/core/local/setting_manager.dart' as _i13;
 import 'package:maze_app/core/local/user/user_manager.dart' as _i16;
 import 'package:maze_app/core/network/dio_caller.dart' as _i17;
 import 'package:maze_app/core/network/util/expire_token_interceptor.dart'
     as _i10;
-import 'package:maze_app/core/presentation/route/app_router.dart' as _i9;
-import 'package:maze_app/core/style/app_color.dart' as _i8;
+import 'package:maze_app/core/presentation/route/app_router.dart' as _i6;
+import 'package:maze_app/core/style/app_color.dart' as _i7;
 import 'package:maze_app/core/style/app_theme.dart' as _i15;
 import 'package:maze_app/core/util/app_log.dart' as _i11;
-import 'package:maze_app/core/util/crypto/encrypt_helper.dart' as _i5;
+import 'package:maze_app/core/util/crypto/encrypt_helper.dart' as _i8;
 import 'package:maze_app/core/util/shared_preferences_helper.dart' as _i12;
 import 'package:maze_app/data_provider/refresh_token/data/data_source/token_remote_data_source.dart'
     as _i39;
@@ -89,9 +89,9 @@ import 'package:maze_app/feature/intro/data/datasource/intro_local_datasource.da
 import 'package:maze_app/feature/intro/data/repo/intro_repo_impl.dart' as _i28;
 import 'package:maze_app/feature/intro/domain/repo/intro_repo.dart' as _i27;
 import 'package:maze_app/feature/intro/domain/usecase/get_is_first_run.dart'
-    as _i42;
-import 'package:maze_app/feature/intro/domain/usecase/set_is_first_run.dart'
     as _i41;
+import 'package:maze_app/feature/intro/domain/usecase/set_is_first_run.dart'
+    as _i42;
 import 'package:maze_app/feature/intro/presentation/cubit/intro_cubit.dart'
     as _i53;
 import 'package:maze_app/feature/knowledge/data/datasource/knowledge_remote_datasource.dart'
@@ -119,17 +119,17 @@ extension GetItInjectableX on _i1.GetIt {
     );
     final networkModule = _$NetworkModule();
     gh.factory<_i3.PrettyDioLogger>(() => networkModule.prettyDioLogger);
-    gh.lazySingleton<_i4.Logger>(() => networkModule.logger);
-    gh.lazySingleton<_i5.EncryptHelper>(() => _i5.EncryptHelper());
-    gh.lazySingleton<_i6.StringsBase>(() => _i6.StringsBase());
-    gh.lazySingleton<_i7.AssetsBase>(() => _i7.AssetsBase());
-    gh.lazySingleton<_i8.AppColorsBase>(() => _i8.AppColorsBase());
-    gh.lazySingleton<_i9.AppRouter>(() => _i9.AppRouter());
+    gh.lazySingleton<_i4.AssetsBase>(() => _i4.AssetsBase());
+    gh.lazySingleton<_i5.StringsBase>(() => _i5.StringsBase());
+    gh.lazySingleton<_i6.AppRouter>(() => _i6.AppRouter());
+    gh.lazySingleton<_i7.AppColorsBase>(() => _i7.AppColorsBase());
+    gh.lazySingleton<_i8.EncryptHelper>(() => _i8.EncryptHelper());
+    gh.lazySingleton<_i9.Logger>(() => networkModule.logger);
     gh.lazySingleton<_i10.ExpireTokenInterceptor>(
-        () => _i10.ExpireTokenInterceptor(gh<_i5.EncryptHelper>()));
-    gh.lazySingleton<_i11.AppLog>(() => _i11.AppLog(gh<_i4.Logger>()));
+        () => _i10.ExpireTokenInterceptor(gh<_i8.EncryptHelper>()));
+    gh.lazySingleton<_i11.AppLog>(() => _i11.AppLog(gh<_i9.Logger>()));
     gh.factory<_i12.SharedPreferencesHelper>(() =>
-        _i12.SharedPreferencesHelper(encryptHelper: gh<_i5.EncryptHelper>()));
+        _i12.SharedPreferencesHelper(encryptHelper: gh<_i8.EncryptHelper>()));
     gh.factory<_i13.SettingsManager>(
         () => _i13.SettingsManager(gh<_i12.SharedPreferencesHelper>()));
     gh.lazySingleton<_i14.Dio>(
@@ -141,7 +141,7 @@ extension GetItInjectableX on _i1.GetIt {
       instanceName: 'versioning0',
     );
     gh.factory<_i15.AppTheme>(
-        () => _i15.AppTheme(appColors: gh<_i8.AppColorsBase>()));
+        () => _i15.AppTheme(appColors: gh<_i7.AppColorsBase>()));
     gh.lazySingleton<_i14.Dio>(
       () => networkModule.provideTokenDio(gh<_i3.PrettyDioLogger>()),
       instanceName: 'token',
@@ -195,10 +195,10 @@ extension GetItInjectableX on _i1.GetIt {
         gh<_i17.DioCaller>(instanceName: 'maze')));
     gh.factory<_i40.VerifyBloc>(
         () => _i40.VerifyBloc(gh<_i37.VerifyRepository>()));
-    gh.factory<_i41.SetIsFirstRun>(
-        () => _i41.SetIsFirstRun(repo: gh<_i27.IntroRepo>()));
-    gh.factory<_i42.GetIsFirstRun>(
-        () => _i42.GetIsFirstRun(repo: gh<_i27.IntroRepo>()));
+    gh.factory<_i41.GetIsFirstRun>(
+        () => _i41.GetIsFirstRun(repo: gh<_i27.IntroRepo>()));
+    gh.factory<_i42.SetIsFirstRun>(
+        () => _i42.SetIsFirstRun(repo: gh<_i27.IntroRepo>()));
     gh.factory<_i43.GetArticles>(
         () => _i43.GetArticles(repo: gh<_i32.KnowledgeRepo>()));
     gh.factory<_i44.SignupRemoteDataSource>(() =>
@@ -215,12 +215,12 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i51.CreatePassBloc(gh<_i48.CreatePasswordRepository>()));
     gh.factory<_i52.KnowledgeCubit>(() => _i52.KnowledgeCubit(
           getArticles: gh<_i43.GetArticles>(),
-          router: gh<_i9.AppRouter>(),
+          router: gh<_i6.AppRouter>(),
         ));
     gh.factory<_i53.IntroCubit>(() => _i53.IntroCubit(
-          getIsFirstRun: gh<_i42.GetIsFirstRun>(),
-          setIsFirstRun: gh<_i41.SetIsFirstRun>(),
-          router: gh<_i9.AppRouter>(),
+          getIsFirstRun: gh<_i41.GetIsFirstRun>(),
+          setIsFirstRun: gh<_i42.SetIsFirstRun>(),
+          router: gh<_i6.AppRouter>(),
         ));
     gh.factory<_i54.SignupRepository>(
         () => _i55.SignupRepositoryImpl(gh<_i44.SignupRemoteDataSource>()));
