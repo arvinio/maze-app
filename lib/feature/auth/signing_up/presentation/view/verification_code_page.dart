@@ -23,10 +23,9 @@ class VerificationCodePage extends StatefulWidget implements AutoRouteWrapper{
 
   final String userName;
   final String userId;
-  final String code;
   final EntryMode entryMode;
 
-  const VerificationCodePage({super.key, required this.userId,required this.userName,  required this.code,required this.entryMode});
+  const VerificationCodePage({super.key, required this.userId,required this.userName, required this.entryMode});
 
   @override
   State<VerificationCodePage> createState() => _VerificationCodePageState();
@@ -118,7 +117,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
             const SizedBox(height: 35,),
 
             OtpTextField(
-              numberOfFields: 6,
+              numberOfFields: 5,
               showFieldAsBox: true,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               filled: true,
@@ -148,7 +147,6 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
 
               }, // end onSubmit
             ),
-            Text(widget.code),
             const Spacer(),
             Padding(
                 padding: const EdgeInsets.only(bottom: 16),

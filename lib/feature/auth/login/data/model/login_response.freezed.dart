@@ -24,6 +24,8 @@ mixin _$LoginResponse {
   bool? get success => throw _privateConstructorUsedError;
   @JsonKey(name: "userId")
   String? get userId => throw _privateConstructorUsedError;
+  @JsonKey(name: "role")
+  String? get role => throw _privateConstructorUsedError;
   @JsonKey(name: "token")
   String? get token => throw _privateConstructorUsedError;
   @JsonKey(name: "refreshToken")
@@ -46,6 +48,7 @@ abstract class $LoginResponseCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "success") bool? success,
       @JsonKey(name: "userId") String? userId,
+      @JsonKey(name: "role") String? role,
       @JsonKey(name: "token") String? token,
       @JsonKey(name: "refreshToken") String? refreshToken,
       @JsonKey(name: "message") String? message});
@@ -66,6 +69,7 @@ class _$LoginResponseCopyWithImpl<$Res, $Val extends LoginResponse>
   $Res call({
     Object? success = freezed,
     Object? userId = freezed,
+    Object? role = freezed,
     Object? token = freezed,
     Object? refreshToken = freezed,
     Object? message = freezed,
@@ -78,6 +82,10 @@ class _$LoginResponseCopyWithImpl<$Res, $Val extends LoginResponse>
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      role: freezed == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
               as String?,
       token: freezed == token
           ? _value.token
@@ -106,6 +114,7 @@ abstract class _$$LoginResponseImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: "success") bool? success,
       @JsonKey(name: "userId") String? userId,
+      @JsonKey(name: "role") String? role,
       @JsonKey(name: "token") String? token,
       @JsonKey(name: "refreshToken") String? refreshToken,
       @JsonKey(name: "message") String? message});
@@ -124,6 +133,7 @@ class __$$LoginResponseImplCopyWithImpl<$Res>
   $Res call({
     Object? success = freezed,
     Object? userId = freezed,
+    Object? role = freezed,
     Object? token = freezed,
     Object? refreshToken = freezed,
     Object? message = freezed,
@@ -136,6 +146,10 @@ class __$$LoginResponseImplCopyWithImpl<$Res>
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      role: freezed == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
               as String?,
       token: freezed == token
           ? _value.token
@@ -159,6 +173,7 @@ class _$LoginResponseImpl implements _LoginResponse {
   const _$LoginResponseImpl(
       {@JsonKey(name: "success") this.success,
       @JsonKey(name: "userId") this.userId,
+      @JsonKey(name: "role") this.role,
       @JsonKey(name: "token") this.token,
       @JsonKey(name: "refreshToken") this.refreshToken,
       @JsonKey(name: "message") this.message});
@@ -173,6 +188,9 @@ class _$LoginResponseImpl implements _LoginResponse {
   @JsonKey(name: "userId")
   final String? userId;
   @override
+  @JsonKey(name: "role")
+  final String? role;
+  @override
   @JsonKey(name: "token")
   final String? token;
   @override
@@ -184,7 +202,7 @@ class _$LoginResponseImpl implements _LoginResponse {
 
   @override
   String toString() {
-    return 'LoginResponse(success: $success, userId: $userId, token: $token, refreshToken: $refreshToken, message: $message)';
+    return 'LoginResponse(success: $success, userId: $userId, role: $role, token: $token, refreshToken: $refreshToken, message: $message)';
   }
 
   @override
@@ -194,6 +212,7 @@ class _$LoginResponseImpl implements _LoginResponse {
             other is _$LoginResponseImpl &&
             (identical(other.success, success) || other.success == success) &&
             (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.role, role) || other.role == role) &&
             (identical(other.token, token) || other.token == token) &&
             (identical(other.refreshToken, refreshToken) ||
                 other.refreshToken == refreshToken) &&
@@ -202,8 +221,8 @@ class _$LoginResponseImpl implements _LoginResponse {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, success, userId, token, refreshToken, message);
+  int get hashCode => Object.hash(
+      runtimeType, success, userId, role, token, refreshToken, message);
 
   @JsonKey(ignore: true)
   @override
@@ -223,6 +242,7 @@ abstract class _LoginResponse implements LoginResponse {
   const factory _LoginResponse(
       {@JsonKey(name: "success") final bool? success,
       @JsonKey(name: "userId") final String? userId,
+      @JsonKey(name: "role") final String? role,
       @JsonKey(name: "token") final String? token,
       @JsonKey(name: "refreshToken") final String? refreshToken,
       @JsonKey(name: "message") final String? message}) = _$LoginResponseImpl;
@@ -236,6 +256,9 @@ abstract class _LoginResponse implements LoginResponse {
   @override
   @JsonKey(name: "userId")
   String? get userId;
+  @override
+  @JsonKey(name: "role")
+  String? get role;
   @override
   @JsonKey(name: "token")
   String? get token;

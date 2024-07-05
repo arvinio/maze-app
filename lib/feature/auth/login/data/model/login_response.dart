@@ -15,6 +15,8 @@ class LoginResponse with _$LoginResponse {
     bool? success,
     @JsonKey(name: "userId")
     String? userId,
+    @JsonKey(name: "role")
+    String? role,
     @JsonKey(name: "token")
     String? token,
     @JsonKey(name: "refreshToken")
