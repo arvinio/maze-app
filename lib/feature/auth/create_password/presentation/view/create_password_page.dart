@@ -57,8 +57,8 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
             if (state.createPassStatus.isSuccess) {
               if (state.createPassResponse!.success!) {
                 (widget.entryMode.isAccountCreation)
-                    ? context.pushRoute(const KnowledgePageRoute())
-                    : context.pushRoute(const KnowledgePageRoute());
+                    ? context.pushRoute(const BottomNavigationRoute())
+                    : context.pushRoute(const BottomNavigationRoute());
               }
             } else if (state.createPassStatus.isFailure) {
               //toast

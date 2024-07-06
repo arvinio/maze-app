@@ -19,26 +19,23 @@ abstract class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<ArticlePageRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: ArticlePage(
+        child: WrappedRoute(
+            child: ArticlePage(
           key: args.key,
           article: args.article,
-        ),
+        )),
       );
     },
     BookmarksPageRoute.name: (routeData) {
-      final args = routeData.argsAs<BookmarksPageRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: BookmarksPage(
-          key: args.key,
-          bookMarks: args.bookMarks,
-        ),
+        child: WrappedRoute(child: const BookmarksPage()),
       );
     },
     BottomNavigationRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const BottomNavigation(),
+        child: WrappedRoute(child: const BottomNavigation()),
       );
     },
     CreatePasswordPageRoute.name: (routeData) {
@@ -144,40 +141,16 @@ class ArticlePageRouteArgs {
 
 /// generated route for
 /// [BookmarksPage]
-class BookmarksPageRoute extends PageRouteInfo<BookmarksPageRouteArgs> {
-  BookmarksPageRoute({
-    Key? key,
-    required List<Article> bookMarks,
-    List<PageRouteInfo>? children,
-  }) : super(
+class BookmarksPageRoute extends PageRouteInfo<void> {
+  const BookmarksPageRoute({List<PageRouteInfo>? children})
+      : super(
           BookmarksPageRoute.name,
-          args: BookmarksPageRouteArgs(
-            key: key,
-            bookMarks: bookMarks,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'BookmarksPageRoute';
 
-  static const PageInfo<BookmarksPageRouteArgs> page =
-      PageInfo<BookmarksPageRouteArgs>(name);
-}
-
-class BookmarksPageRouteArgs {
-  const BookmarksPageRouteArgs({
-    this.key,
-    required this.bookMarks,
-  });
-
-  final Key? key;
-
-  final List<Article> bookMarks;
-
-  @override
-  String toString() {
-    return 'BookmarksPageRouteArgs{key: $key, bookMarks: $bookMarks}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

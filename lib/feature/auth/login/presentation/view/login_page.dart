@@ -19,7 +19,6 @@ import 'package:maze_app/feature/auth/signing_up/data/model/entry_mode.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget implements AutoRouteWrapper {
-
   final String userName;
 
   const LoginPage({super.key, required this.userName});
@@ -40,7 +39,6 @@ class LoginPage extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   final TextEditingController _controller = TextEditingController();
 
   final FocusNode _focusNode = FocusNode();
@@ -61,16 +59,18 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
         ),
-
         child: BlocConsumer<LoginBloc, LoginState>(
-          listener: (context, state) {
+          listener: (context, state) async {
             if (state.loginStatus.isSuccess) {
               if (state.loginResponse!.success!) {
                 context.pushRoute(const WelcomePageRoute());
-              }
-              else
-              {
-                Fluttertoast.showToast(msg: state.loginResponse!.message!,
+                await Future.delayed(const Duration(seconds: 2));
+                if (context.mounted) {
+                  context.pushRoute(const BottomNavigationRoute(),);
+                }
+              } else {
+                Fluttertoast.showToast(
+                    msg: state.loginResponse!.message!,
                     toastLength: Toast.LENGTH_LONG,
                     gravity: ToastGravity.CENTER,
                     timeInSecForIosWeb: 1,
@@ -78,10 +78,9 @@ class _LoginPageState extends State<LoginPage> {
                     textColor: Colors.white,
                     fontSize: 16.0);
               }
-
-            }
-           else if (state.loginStatus.isFailure) {
-              Fluttertoast.showToast(msg: state.errorMessage!,
+            } else if (state.loginStatus.isFailure) {
+              Fluttertoast.showToast(
+                  msg: state.errorMessage!,
                   toastLength: Toast.LENGTH_LONG,
                   gravity: ToastGravity.CENTER,
                   timeInSecForIosWeb: 1,
@@ -95,46 +94,45 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 ListTile(
-                  title: CustomText(
-                      appStrings.loginTitle,
+                  title: CustomText(appStrings.loginTitle,
                       style: context.titleTitle1),
                   subtitle: Padding(
                     padding: const EdgeInsets.only(left: 10.0, top: 5),
-                    child: Text.rich(
-                        CustomTextSpan(
-                            textData: appStrings.loginSubTitle,
-                            style: context.bodyBody,
-                            children: [
-                              CustomTextSpan(textData: widget.userName,
-                                style: context.bodyBodyMedium,
-
-                              ),
-
-                            ])),
+                    child: Text.rich(CustomTextSpan(
+                        textData: appStrings.loginSubTitle,
+                        style: context.bodyBody,
+                        children: [
+                          CustomTextSpan(
+                            textData: widget.userName,
+                            style: context.bodyBodyMedium,
+                          ),
+                        ])),
                   ),
                   contentPadding: EdgeInsets.zero,
                   minVerticalPadding: 5,
                 ),
-
-                const SizedBox(height: 35,),
-                CustomTextField.outline(textEditingController: _controller,
+                const SizedBox(
+                  height: 35,
+                ),
+                CustomTextField.outline(
+                    textEditingController: _controller,
                     label: appStrings.password,
                     focusNode: _focusNode,
                     obscureText: true,
                     autoFocus: true,
-                    suffix: appAssets.eye.svg()
-
-                ),
-
+                    suffix: appAssets.eye.svg()),
                 const Spacer(),
                 BlocConsumer<ForgotPassBloc, ForgotPassState>(
                   listener: (context, state) {
                     if (state.forgotPassStatus.isSuccess) {
                       if (state.forgotPassResponse!.success!) {
-                        context.pushRoute( VerificationCodePageRoute(userId:state.forgotPassResponse!.userId!,userName: widget.userName,entryMode: EntryMode.forgetPassword ));
-                      }else
-                      {
-                        Fluttertoast.showToast(msg: state.errorMessage!,
+                        context.pushRoute(VerificationCodePageRoute(
+                            userId: state.forgotPassResponse!.userId!,
+                            userName: widget.userName,
+                            entryMode: EntryMode.forgetPassword));
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: state.errorMessage!,
                             toastLength: Toast.LENGTH_LONG,
                             gravity: ToastGravity.CENTER,
                             timeInSecForIosWeb: 1,
@@ -150,7 +148,8 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         context.read<ForgotPassBloc>().add(
                             ForgotPassEvent.forgotPass(email: widget.userName));
-                      },);
+                      },
+                    );
                   },
                 ),
                 Padding(
@@ -158,17 +157,15 @@ class _LoginPageState extends State<LoginPage> {
                   child: CustomButton.submit(
                     text: appStrings.continueSteps,
                     onPressed: () {
-                      context.read<LoginBloc>().add(
-                          LoginEvent.loginUser(email: widget.userName,password: _controller.text));
-
-                    },),
+                      context.read<LoginBloc>().add(LoginEvent.loginUser(
+                          email: widget.userName, password: _controller.text));
+                    },
+                  ),
                 ),
-
-
-              ],);
+              ],
+            );
           },
-        )
-
-    );;
+        ));
+    ;
   }
 }

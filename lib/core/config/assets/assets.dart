@@ -14,14 +14,22 @@ class AssetsBase {
   AssetSvg get eyeOff => const AssetSvg('assets/icons/eye-off.svg');
   AssetSvg get profile1 => const AssetSvg('assets/images/profile.svg');
   AssetSvg get profile => const AssetSvg('assets/icons/profile.png');
-
-  AssetSvg get profileIcon => const AssetSvg('assets/icons/profile-icon.svg',  );
+  // Bottom nav icons
+  AssetSvg get profileIcon => const AssetSvg(
+        'assets/icons/profile-icon.svg',
+      );
   AssetSvg get knowledgeIcon =>
       const AssetSvg('assets/icons/knowledge-icon.svg');
   AssetSvg get trackerIcon => const AssetSvg('assets/icons/tracker-icon.svg');
   AssetSvg get liveChatIcon => const AssetSvg('assets/icons/question-icon.svg');
   AssetSvg get communityIcon =>
       const AssetSvg('assets/icons/communities-icon.svg');
+  // KnowledgePage icons
+  AssetSvg get bookmarkIcon => const AssetSvg('assets/icons/bookmark-icon.svg');
+  AssetSvg get bookmarkSelectedIcon =>
+      const AssetSvg('assets/icons/bookmark-selected-icon.svg');
+  AssetSvg get searchNormalIcon =>
+      const AssetSvg('assets/icons/search-normal-icon.svg');
 }
 
 class AssetImage {

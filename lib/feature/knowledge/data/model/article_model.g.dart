@@ -8,10 +8,25 @@ part of 'article_model.dart';
 
 _$ArticleModelImpl _$$ArticleModelImplFromJson(Map<String, dynamic> json) =>
     _$ArticleModelImpl(
-      id: (json['id'] as num).toInt(),
+      id: json['_id'] as String,
+      title: json['title'] as String,
+      content: json['content'] as String,
+      createdDate: json['createdDate'] as String,
+      editedDate: json['editedDate'] as String,
+      category:
+          CategoryModel.fromJson(json['category'] as Map<String, dynamic>),
+      cover: json['cover'] as String,
+      required: json['required'],
     );
 
 Map<String, dynamic> _$$ArticleModelImplToJson(_$ArticleModelImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      '_id': instance.id,
+      'title': instance.title,
+      'content': instance.content,
+      'createdDate': instance.createdDate,
+      'editedDate': instance.editedDate,
+      'category': instance.category,
+      'cover': instance.cover,
+      'required': instance.required,
     };

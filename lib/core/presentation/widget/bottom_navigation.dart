@@ -1,15 +1,24 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/style/app_theme.dart';
-import 'package:maze_app/feature/knowledge/presentation/view/knowledge_page.dart';
+import 'package:maze_app/di/injection_container.dart';
+import 'package:maze_app/feature/knowledge/presentation/knowledge/cubit/knowledge_cubit.dart';
+import 'package:maze_app/feature/knowledge/presentation/knowledge/view/knowledge_page.dart';
 
 @RoutePage()
-class BottomNavigation extends StatefulWidget {
+class BottomNavigation extends StatefulWidget implements AutoRouteWrapper {
   const BottomNavigation({super.key});
 
   @override
   State<BottomNavigation> createState() => _BottomNavigationState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(create: (_) => inject<KnowledgeCubit>(), child: this);
+  }
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {

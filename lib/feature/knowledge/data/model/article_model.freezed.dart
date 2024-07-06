@@ -20,7 +20,15 @@ ArticleModel _$ArticleModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ArticleModel {
-  int get id => throw _privateConstructorUsedError;
+  @JsonKey(name: "_id")
+  String get id => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get content => throw _privateConstructorUsedError;
+  String get createdDate => throw _privateConstructorUsedError;
+  String get editedDate => throw _privateConstructorUsedError;
+  CategoryModel get category => throw _privateConstructorUsedError;
+  String get cover => throw _privateConstructorUsedError;
+  dynamic get required => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +42,17 @@ abstract class $ArticleModelCopyWith<$Res> {
           ArticleModel value, $Res Function(ArticleModel) then) =
       _$ArticleModelCopyWithImpl<$Res, ArticleModel>;
   @useResult
-  $Res call({int id});
+  $Res call(
+      {@JsonKey(name: "_id") String id,
+      String title,
+      String content,
+      String createdDate,
+      String editedDate,
+      CategoryModel category,
+      String cover,
+      dynamic required});
+
+  $CategoryModelCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -51,13 +69,56 @@ class _$ArticleModelCopyWithImpl<$Res, $Val extends ArticleModel>
   @override
   $Res call({
     Object? id = null,
+    Object? title = null,
+    Object? content = null,
+    Object? createdDate = null,
+    Object? editedDate = null,
+    Object? category = null,
+    Object? cover = null,
+    Object? required = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdDate: null == createdDate
+          ? _value.createdDate
+          : createdDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      editedDate: null == editedDate
+          ? _value.editedDate
+          : editedDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as CategoryModel,
+      cover: null == cover
+          ? _value.cover
+          : cover // ignore: cast_nullable_to_non_nullable
+              as String,
+      required: freezed == required
+          ? _value.required
+          : required // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryModelCopyWith<$Res> get category {
+    return $CategoryModelCopyWith<$Res>(_value.category, (value) {
+      return _then(_value.copyWith(category: value) as $Val);
+    });
   }
 }
 
@@ -69,7 +130,18 @@ abstract class _$$ArticleModelImplCopyWith<$Res>
       __$$ArticleModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id});
+  $Res call(
+      {@JsonKey(name: "_id") String id,
+      String title,
+      String content,
+      String createdDate,
+      String editedDate,
+      CategoryModel category,
+      String cover,
+      dynamic required});
+
+  @override
+  $CategoryModelCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -84,12 +156,44 @@ class __$$ArticleModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? title = null,
+    Object? content = null,
+    Object? createdDate = null,
+    Object? editedDate = null,
+    Object? category = null,
+    Object? cover = null,
+    Object? required = freezed,
   }) {
     return _then(_$ArticleModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _value.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdDate: null == createdDate
+          ? _value.createdDate
+          : createdDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      editedDate: null == editedDate
+          ? _value.editedDate
+          : editedDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as CategoryModel,
+      cover: null == cover
+          ? _value.cover
+          : cover // ignore: cast_nullable_to_non_nullable
+              as String,
+      required: freezed == required ? _value.required! : required,
     ));
   }
 }
@@ -97,17 +201,40 @@ class __$$ArticleModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ArticleModelImpl implements _ArticleModel {
-  const _$ArticleModelImpl({required this.id});
+  const _$ArticleModelImpl(
+      {@JsonKey(name: "_id") required this.id,
+      required this.title,
+      required this.content,
+      required this.createdDate,
+      required this.editedDate,
+      required this.category,
+      required this.cover,
+      this.required});
 
   factory _$ArticleModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ArticleModelImplFromJson(json);
 
   @override
-  final int id;
+  @JsonKey(name: "_id")
+  final String id;
+  @override
+  final String title;
+  @override
+  final String content;
+  @override
+  final String createdDate;
+  @override
+  final String editedDate;
+  @override
+  final CategoryModel category;
+  @override
+  final String cover;
+  @override
+  final dynamic required;
 
   @override
   String toString() {
-    return 'ArticleModel(id: $id)';
+    return 'ArticleModel(id: $id, title: $title, content: $content, createdDate: $createdDate, editedDate: $editedDate, category: $category, cover: $cover, required: $required)';
   }
 
   @override
@@ -115,12 +242,31 @@ class _$ArticleModelImpl implements _ArticleModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ArticleModelImpl &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.content, content) || other.content == content) &&
+            (identical(other.createdDate, createdDate) ||
+                other.createdDate == createdDate) &&
+            (identical(other.editedDate, editedDate) ||
+                other.editedDate == editedDate) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
+            (identical(other.cover, cover) || other.cover == cover) &&
+            const DeepCollectionEquality().equals(other.required, required));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      title,
+      content,
+      createdDate,
+      editedDate,
+      category,
+      cover,
+      const DeepCollectionEquality().hash(required));
 
   @JsonKey(ignore: true)
   @override
@@ -137,13 +283,36 @@ class _$ArticleModelImpl implements _ArticleModel {
 }
 
 abstract class _ArticleModel implements ArticleModel {
-  const factory _ArticleModel({required final int id}) = _$ArticleModelImpl;
+  const factory _ArticleModel(
+      {@JsonKey(name: "_id") required final String id,
+      required final String title,
+      required final String content,
+      required final String createdDate,
+      required final String editedDate,
+      required final CategoryModel category,
+      required final String cover,
+      final dynamic required}) = _$ArticleModelImpl;
 
   factory _ArticleModel.fromJson(Map<String, dynamic> json) =
       _$ArticleModelImpl.fromJson;
 
   @override
-  int get id;
+  @JsonKey(name: "_id")
+  String get id;
+  @override
+  String get title;
+  @override
+  String get content;
+  @override
+  String get createdDate;
+  @override
+  String get editedDate;
+  @override
+  CategoryModel get category;
+  @override
+  String get cover;
+  @override
+  dynamic get required;
   @override
   @JsonKey(ignore: true)
   _$$ArticleModelImplCopyWith<_$ArticleModelImpl> get copyWith =>

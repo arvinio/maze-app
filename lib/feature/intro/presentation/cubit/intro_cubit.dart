@@ -1,12 +1,10 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
-import 'package:maze_app/core/util/app_log.dart';
-import 'package:maze_app/feature/intro/domain/entity/intro.dart';
+
 import 'package:maze_app/feature/intro/domain/usecase/get_is_first_run.dart';
 import 'package:maze_app/feature/intro/domain/usecase/set_is_first_run.dart';
 

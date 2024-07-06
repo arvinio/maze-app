@@ -1,7 +1,9 @@
+import 'package:maze_app/feature/knowledge/domain/entity/app_category.dart';
+
 class Article {
-  final int id;
+  final String id;
   final String text;
-  final Difficulty difficulty;
+  final AppCategory category;
   final String imageUrl;
   final String title;
   final bool isBookmark;
@@ -9,15 +11,16 @@ class Article {
   const Article({
     required this.id,
     required this.text,
-    required this.difficulty,
+    required this.category,
     required this.imageUrl,
     required this.title,
-    required this.isBookmark,
+    this.isBookmark = false,
   });
 }
 
-enum Difficulty {
-  beginer,
-  intermidate,
-  advanced,
-}
+
+// enum Difficulty {
+//   beginer,
+//   intermidate,
+//   advanced,
+// }
