@@ -37,7 +37,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         inject<SettingsManager>().setRole(response.role!);
       }
       emit(state.copyWith(loginResponse: response,loginStatus: LoginStatus.success));
-
+  
     },
         error: (apiError){
           emit(state.copyWith(loginStatus: LoginStatus.failure,errorMessage: apiError.message,errorCode: apiError.code));

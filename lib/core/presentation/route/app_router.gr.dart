@@ -15,6 +15,29 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    ArticlePageRoute.name: (routeData) {
+      final args = routeData.argsAs<ArticlePageRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: ArticlePage(
+          key: args.key,
+          article: args.article,
+        )),
+      );
+    },
+    BookmarksPageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const BookmarksPage()),
+      );
+    },
+    BottomNavigationRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const BottomNavigation()),
+      );
+    },
     CreatePasswordPageRoute.name: (routeData) {
       final args = routeData.argsAs<CreatePasswordPageRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -27,10 +50,16 @@ abstract class _$AppRouter extends RootStackRouter {
         )),
       );
     },
-    HomePageRoute.name: (routeData) {
+    IntroPageRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const HomePage(),
+        child: WrappedRoute(child: const IntroPage()),
+      );
+    },
+    KnowledgePageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const KnowledgePage(),
       );
     },
     LoginPageRoute.name: (routeData) {
@@ -59,7 +88,6 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           userId: args.userId,
           userName: args.userName,
-          code: args.code,
           entryMode: args.entryMode,
         )),
       );
@@ -71,6 +99,72 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [ArticlePage]
+class ArticlePageRoute extends PageRouteInfo<ArticlePageRouteArgs> {
+  ArticlePageRoute({
+    Key? key,
+    required Article article,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ArticlePageRoute.name,
+          args: ArticlePageRouteArgs(
+            key: key,
+            article: article,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ArticlePageRoute';
+
+  static const PageInfo<ArticlePageRouteArgs> page =
+      PageInfo<ArticlePageRouteArgs>(name);
+}
+
+class ArticlePageRouteArgs {
+  const ArticlePageRouteArgs({
+    this.key,
+    required this.article,
+  });
+
+  final Key? key;
+
+  final Article article;
+
+  @override
+  String toString() {
+    return 'ArticlePageRouteArgs{key: $key, article: $article}';
+  }
+}
+
+/// generated route for
+/// [BookmarksPage]
+class BookmarksPageRoute extends PageRouteInfo<void> {
+  const BookmarksPageRoute({List<PageRouteInfo>? children})
+      : super(
+          BookmarksPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'BookmarksPageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [BottomNavigation]
+class BottomNavigationRoute extends PageRouteInfo<void> {
+  const BottomNavigationRoute({List<PageRouteInfo>? children})
+      : super(
+          BottomNavigationRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'BottomNavigationRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -118,15 +212,29 @@ class CreatePasswordPageRouteArgs {
 }
 
 /// generated route for
-/// [HomePage]
-class HomePageRoute extends PageRouteInfo<void> {
-  const HomePageRoute({List<PageRouteInfo>? children})
+/// [IntroPage]
+class IntroPageRoute extends PageRouteInfo<void> {
+  const IntroPageRoute({List<PageRouteInfo>? children})
       : super(
-          HomePageRoute.name,
+          IntroPageRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'HomePageRoute';
+  static const String name = 'IntroPageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [KnowledgePage]
+class KnowledgePageRoute extends PageRouteInfo<void> {
+  const KnowledgePageRoute({List<PageRouteInfo>? children})
+      : super(
+          KnowledgePageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'KnowledgePageRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -191,7 +299,6 @@ class VerificationCodePageRoute
     Key? key,
     required String userId,
     required String userName,
-    required String code,
     required EntryMode entryMode,
     List<PageRouteInfo>? children,
   }) : super(
@@ -200,7 +307,6 @@ class VerificationCodePageRoute
             key: key,
             userId: userId,
             userName: userName,
-            code: code,
             entryMode: entryMode,
           ),
           initialChildren: children,
@@ -217,7 +323,6 @@ class VerificationCodePageRouteArgs {
     this.key,
     required this.userId,
     required this.userName,
-    required this.code,
     required this.entryMode,
   });
 
@@ -227,13 +332,11 @@ class VerificationCodePageRouteArgs {
 
   final String userName;
 
-  final String code;
-
   final EntryMode entryMode;
 
   @override
   String toString() {
-    return 'VerificationCodePageRouteArgs{key: $key, userId: $userId, userName: $userName, code: $code, entryMode: $entryMode}';
+    return 'VerificationCodePageRouteArgs{key: $key, userId: $userId, userName: $userName, entryMode: $entryMode}';
   }
 }
 

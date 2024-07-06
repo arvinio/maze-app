@@ -5,26 +5,21 @@ import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'crypto/encrypt_helper.dart';
 
-
 @injectable
 class SharedPreferencesHelper {
-
   final EncryptHelper encryptHelper;
 
-  SharedPreferencesHelper(
-      {required this.encryptHelper});
+  SharedPreferencesHelper({required this.encryptHelper});
 
- /* static Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
+  /* static Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
 
   static Future<bool> getBool(String key, {bool defaultValue}) async {
     final p = await prefs;
     return p.getBool(key) ?? defaultValue;
   }*/
 
-
-
-  bool getBool(String key, {bool? defaultValue}) {
-    return Globals.sharePrefs!.getBool(key) ?? defaultValue ?? false;
+  bool? getBool(String key, {bool? defaultValue}) {
+    Globals.sharePrefs!.getBool(key) ?? defaultValue ?? false;
   }
 
   Future<bool> setBool(String key, bool value) async {
@@ -44,8 +39,8 @@ class SharedPreferencesHelper {
   }
 
   String getEncryptedString(String key, {String? defaultValue}) {
-    var clearValue = encryptHelper.decryptCbcByPasswordKey(
-        Globals.sharePrefs!.getString(key));
+    var clearValue = encryptHelper
+        .decryptCbcByPasswordKey(Globals.sharePrefs!.getString(key));
     return clearValue ?? defaultValue ?? '';
   }
 
@@ -63,8 +58,8 @@ class SharedPreferencesHelper {
   }
 
   Future<bool> setStringAndEncrypt(String key, String value) async {
-    return Globals.sharePrefs!.setString(
-        key, encryptHelper.encryptCbcByPasswordKey(value)!);
+    return Globals.sharePrefs!
+        .setString(key, encryptHelper.encryptCbcByPasswordKey(value)!);
   }
 
   Future<double> getDouble(String key, {double? defaultValue}) async {
@@ -80,11 +75,9 @@ class SharedPreferencesHelper {
   }
 }
 
-
-class Globals{
+class Globals {
   static SharedPreferences? sharePrefs;
-  static setSharedPreferences() async{
-    sharePrefs=await SharedPreferences.getInstance();
+  static setSharedPreferences() async {
+    sharePrefs = await SharedPreferences.getInstance();
   }
-
 }
