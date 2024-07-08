@@ -126,7 +126,7 @@ class _SignupPageState extends State<SignupPage> {
                 showLoading: state.signupStatus.isLoading,
                 onPressed: () {
                   context.read<SignupBloc>().add(
-                      SignupEvent.init(userName: _textController.text.trim()));
+                      SignupEvent.signup(userName: _textController.text.trim()));
                 },),
               const SizedBox(height: 16,),
               Visibility(
