@@ -30,15 +30,23 @@ class IntroCubit extends Cubit<IntroState> {
   }
 
   Future<void> checkIsFirstRun() async {
+    // inject<SettingsManager>()
+    //     .setBearerToken('''eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiO
+    //     iI2NjgxNmJlNWU2N2ZhZTM0MGNiNWJhMDAiLCJpYXQiOjE3MjA0NT
+    //     M5NzYsImV4cCI6MTcyMDQ2ODM3Nn0.mTX0cH5jy3jSY_DEhulJGfc
+    //     KKNcvujsv52tMhng8hEo''');
     int isFirstRun = inject<SettingsManager>().getIsFirstRun() ?? 0;
-    inject<SettingsManager>().getBearerToken();
-    FlutterNativeSplash.remove();
+
     if (isFirstRun == 1) {
       _goToNextPage();
+      FlutterNativeSplash.remove();
+    } else {
+      FlutterNativeSplash.remove();
     }
   }
 
   void _goToNextPage() {
     _router.popAndPush(const SignupPageRoute());
+    // _router.popAndPush(const BottomNavigationRoute());
   }
 }

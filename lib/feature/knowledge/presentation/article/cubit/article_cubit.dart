@@ -6,60 +6,57 @@ import 'package:maze_app/core/network/model/api_error.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/article.dart';
-import 'package:maze_app/feature/knowledge/domain/usecase/get_bookmarks.dart';
+import 'package:maze_app/feature/knowledge/domain/usecase/get_article.dart';
 import 'package:maze_app/feature/knowledge/domain/usecase/remove_bookmark.dart';
 import 'package:maze_app/feature/knowledge/domain/usecase/set_bookmark.dart';
 
-part 'bookmarks_state.dart';
+part 'article_state.dart';
 
 @injectable
-class BookmarksCubit extends Cubit<BookmarksState> {
-  final AppRouter _router;
-  final GetBookmarks _getBookmarks;
-  final RemoveBookmark _removeBookmark;
+class ArticleCubit extends Cubit<ArticleState> {
   final SetBookmark _setBookmark;
-  BookmarksCubit({
-    required GetBookmarks getBookmarks,
-    required AppRouter router,
-    required RemoveBookmark removeBookmark,
+  final RemoveBookmark _removeBookmark;
+  final GetArticle _getArticle;
+  final AppRouter _router;
+
+  ArticleCubit({
     required SetBookmark setBookmark,
-  })  : _getBookmarks = getBookmarks,
+    required RemoveBookmark removeBookmark,
+    required GetArticle getArticle,
+    required AppRouter router,
+  })  : _getArticle = getArticle,
         _removeBookmark = removeBookmark,
         _setBookmark = setBookmark,
         _router = router,
-        super(BookmarksInitial()) {
-    _loadBookmarks();
+        super(ArticleInitial()) {
+    loadArticle();
   }
 
-  final List<Article> _bookMarks = [];
-  Future<void> _loadBookmarks() async {
-    emit(LoadingBookmarks());
-    final result = await _getBookmarks();
-
+  Future<void> loadArticle() async {
+    emit(LoadingArticle());
+    final String id = inject<SettingsManager>().getArticleId();
+    final result = await _getArticle(id);
     result.when(
       completed: (data, statusCode) {
-        _bookMarks.isEmpty ? null : _bookMarks.clear();
-        _bookMarks.addAll(data);
-
-        emit(
-          BookmarksLoaded(
-            articles: data,
-          ),
-        );
+        emit(ArticleLoaded(article: data));
       },
       error: (apiError) {
-        emit(ErrorLoadingBookmarks(error: apiError));
+        emit(LoadingFailed(error: apiError));
       },
     );
-  }
-
-  void loadArticle(String id) {
-    inject<SettingsManager>().setArticleId(id);
-    _router.push(ArticlePageRoute());
   }
 
   Future<void> setBookmark({required bool bookmark, required String id}) async {
     final result =
         bookmark == true ? await _removeBookmark(id) : await _setBookmark(id);
+
+    result.when(
+      completed: (data, statusCode) {
+        //TODO : show toast
+      },
+      error: (apiError) {
+        //TODO : show toast
+      },
+    );
   }
 }

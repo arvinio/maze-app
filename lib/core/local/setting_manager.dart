@@ -15,6 +15,7 @@ class SettingsManager {
   final String _role = 'role';
 
   final _isFirstRun = "IS_FIRST_RUNK";
+  final _articleId = 'Article_ID';
 
   setUserName(String userName) {
     prefs.setStringAndEncrypt(_userNameKey, userName);
@@ -57,12 +58,20 @@ class SettingsManager {
     return RoleExtension.getRoleByName(role);
   }
 
- Future<bool> setIsFirstRun() async {
-  return await prefs.setInt(_isFirstRun, 1);
+  Future<bool> setIsFirstRun() async {
+    return await prefs.setInt(_isFirstRun, 1);
   }
 
   int? getIsFirstRun() {
     final test = prefs.getInt(_isFirstRun);
     return test;
+  }
+
+  void setArticleId(String id) {
+    prefs.setString(_articleId, id);
+  }
+
+  String getArticleId() {
+    return prefs.getString(_articleId);
   }
 }

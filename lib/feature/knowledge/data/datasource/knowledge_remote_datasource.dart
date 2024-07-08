@@ -14,7 +14,7 @@ abstract interface class KnowledgeRemoteDatasource {
   ResultFuture<RespModelArticles> getBookmarks();
   ResultFuture<bool> removeBookmark(String id);
   ResultFuture<bool> setBookmark(String id);
-  ResultFuture<ArticleModel> getArticle(String params);
+  ResultFuture<RespModelArticle> getArticle(String params);
   ResultFuture<RespModelArticles> searchArticles(String params);
   ResultFuture<RespModelCategory> getCategories();
 
@@ -79,7 +79,7 @@ class KnowledgeRemoteDataSourceImpl implements KnowledgeRemoteDatasource {
   }
 
   @override
-  ResultFuture<ArticleModel> getArticle(String params) async {
+  ResultFuture<RespModelArticle> getArticle(String params) async {
     return await _dioCaller.get('api/blog/$params',
         fromJson: RespModelArticle.fromJson);
   }

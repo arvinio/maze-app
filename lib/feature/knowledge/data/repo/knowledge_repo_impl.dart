@@ -99,9 +99,25 @@ class KnowledgeRepoImpl implements KnowledgeRepo {
   }
 
   @override
-  Future<ApiResponse<Article>> getArticle(String id) {
-    // TODO: implement getArticle
-    throw UnimplementedError();
+  Future<ApiResponse<Article>> getArticle(String id) async {
+    final result = await _remoteDatasource.getArticle(id);
+    return result.when(
+      completed: (data, statusCode) {
+        return ApiResponse.completed(
+          data: Article(
+            id: data.result.id,
+            text: data.result.content!,
+            category: AppCategory(
+                id: data.result.category!.id, name: data.result.category!.name),
+            imageUrl: data.result.cover!,
+            title: data.result.title!,
+          ),
+        );
+      },
+      error: (apiError) {
+        return ApiResponse.error(apiError: apiError);
+      },
+    );
   }
 
   @override
@@ -129,14 +145,20 @@ class KnowledgeRepoImpl implements KnowledgeRepo {
   }
 
   @override
-  Future<ApiResponse<bool>> removeBookmark(String id) {
-    // TODO: implement removeBookmark
-    throw UnimplementedError();
+  Future<ApiResponse<bool>> removeBookmark(String id) async {
+    final result = await _remoteDatasource.removeBookmark(id);
+    return result.when(
+      completed: (data, statusCode) => ApiResponse.completed(data: data),
+      error: (apiError) => ApiResponse.error(apiError: apiError),
+    );
   }
 
   @override
-  Future<ApiResponse<bool>> setBookmark(String id) {
-    // TODO: implement setBookmark
-    throw UnimplementedError();
+  Future<ApiResponse<bool>> setBookmark(String id) async {
+    final result = await _remoteDatasource.setBookmark(id);
+    return result.when(
+      completed: (data, statusCode) => ApiResponse.completed(data: data),
+      error: (apiError) => ApiResponse.error(apiError: apiError),
+    );
   }
 }

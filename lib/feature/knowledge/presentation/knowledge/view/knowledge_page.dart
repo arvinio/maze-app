@@ -60,13 +60,10 @@ class _KnowledgePageState extends State<KnowledgePage> {
                 itemCount: loaded.articles.length,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    child: AriclePostWidget(article: loaded.articles[index]),
-                    onTap: () {
-                      context.read<KnowledgeCubit>().loadArticle(
-                            article: loaded.articles[index],
-                          );
-                    },
-                  );
+                      child: AriclePostWidget(article: loaded.articles[index]),
+                      onTap: () => context
+                          .read<KnowledgeCubit>()
+                          .loadArticle(loaded.articles[index].id));
                 },
               );
 

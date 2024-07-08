@@ -8,10 +8,13 @@ import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/auth/login/data/model/enum/role.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/app_category.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/article.dart';
+import 'package:maze_app/feature/knowledge/domain/usecase/get_article.dart';
 import 'package:maze_app/feature/knowledge/domain/usecase/get_articles.dart';
 import 'package:maze_app/feature/knowledge/domain/usecase/get_bookmarks.dart';
 import 'package:maze_app/feature/knowledge/domain/usecase/get_categories.dart';
+import 'package:maze_app/feature/knowledge/domain/usecase/remove_bookmark.dart';
 import 'package:maze_app/feature/knowledge/domain/usecase/search_articles.dart';
+import 'package:maze_app/feature/knowledge/domain/usecase/set_bookmark.dart';
 
 part 'knowledge_state.dart';
 
@@ -21,15 +24,20 @@ class KnowledgeCubit extends Cubit<KnowledgeState> {
   final AppRouter _router;
   final GetCategories _getCategories;
   final SearchArticles _searchArticles;
+
   final bool isAdmin = inject<SettingsManager>().getRole() == Role.admin;
 
   final List<Article> _articles = [];
+  final List<AppCategory> _categories = [];
 
   KnowledgeCubit({
     required GetArticles getArticles,
     required AppRouter router,
     required SearchArticles searchArticles,
     required GetCategories getCategories,
+    required SetBookmark setBookmark,
+    required RemoveBookmark removeBookmark,
+    required GetArticle getArticle,
   })  : _getArticles = getArticles,
         _router = router,
         _getCategories = getCategories,
@@ -51,13 +59,13 @@ class KnowledgeCubit extends Cubit<KnowledgeState> {
   }
 
   Future<void> _load() async {
-    List<AppCategory> categories = [];
     emit(LoadingArticles());
     final result = await _getArticles();
     final categoryResults = await _getCategories();
     categoryResults.when(
       completed: (data, statusCode) {
-        categories.addAll(data);
+        if (_categories.isNotEmpty) _categories.clear();
+        _categories.addAll(data);
       },
       error: (apiError) {},
     );
@@ -68,7 +76,7 @@ class KnowledgeCubit extends Cubit<KnowledgeState> {
         emit(
           ArticlesLoaded(
             articles: data,
-            categories: categories,
+            categories: _categories,
           ),
         );
       },
@@ -78,11 +86,18 @@ class KnowledgeCubit extends Cubit<KnowledgeState> {
     );
   }
 
-  void loadArticle({required Article article}) {
-    _router.push(ArticlePageRoute(article: article));
-  }
+  // void goBackFromArticlPage() {
+  //   _router.maybePop();
+  //   _load();
+  //   // emit(ArticlesLoaded(articles: _articles, categories: _categories));
+  // }
 
   void loadBookmarks() {
     _router.push(const BookmarksPageRoute());
+  }
+
+  void loadArticle(String id) {
+    inject<SettingsManager>().setArticleId(id);
+    _router.push(const ArticlePageRoute());
   }
 }

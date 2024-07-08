@@ -17,7 +17,7 @@ _$ArticleModelImpl _$$ArticleModelImplFromJson(Map<String, dynamic> json) =>
           ? null
           : CategoryModel.fromJson(json['category'] as Map<String, dynamic>),
       cover: json['cover'] as String?,
-      required: json['required'],
+      isBookmarked: json['isBookmarked'] as bool?,
     );
 
 Map<String, dynamic> _$$ArticleModelImplToJson(_$ArticleModelImpl instance) =>
@@ -29,5 +29,5 @@ Map<String, dynamic> _$$ArticleModelImplToJson(_$ArticleModelImpl instance) =>
       'editedDate': instance.editedDate,
       'category': instance.category,
       'cover': instance.cover,
-      'required': instance.required,
+      'isBookmarked': instance.isBookmarked,
     };
