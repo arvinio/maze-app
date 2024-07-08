@@ -20,10 +20,10 @@ class KnowledgeRepoImpl implements KnowledgeRepo {
           (e) {
             return Article(
               id: e.id,
-              text: e.content,
-              category: AppCategory(id: e.category.id, name: e.category.name),
-              imageUrl: e.cover,
-              title: e.title,
+              text: e.content!,
+              category: AppCategory(id: e.category!.id, name: e.category!.name),
+              imageUrl: e.cover!,
+              title: e.title!,
             );
           },
         ).toList();
@@ -44,10 +44,10 @@ class KnowledgeRepoImpl implements KnowledgeRepo {
           (e) {
             return Article(
               id: e.id,
-              text: e.content,
-              category: AppCategory(id: e.category.id, name: e.category.name),
-              imageUrl: e.cover,
-              title: e.title,
+              text: e.content!,
+              category: AppCategory(id: e.category!.id, name: e.category!.name),
+              imageUrl: e.cover!,
+              title: e.title!,
             );
           },
         ).toList();
@@ -113,10 +113,10 @@ class KnowledgeRepoImpl implements KnowledgeRepo {
           (e) {
             return Article(
               id: e.id,
-              text: e.content,
-              category: AppCategory(id: e.category.id, name: e.category.name),
-              imageUrl: e.cover,
-              title: e.title,
+              text: e.content!,
+              category: AppCategory(id: e.category!.id, name: e.category!.name),
+              imageUrl: e.cover!,
+              title: e.title!,
             );
           },
         ).toList();

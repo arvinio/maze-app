@@ -10,6 +10,7 @@ import 'package:maze_app/feature/auth/login/presentation/view/welcome_page.dart'
 import 'package:maze_app/feature/auth/signup/presentation/view/signup_page.dart';
 import 'package:maze_app/feature/intro/presentation/view/intro_page.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/article.dart';
+import 'package:maze_app/feature/knowledge/presentation/knowledge/view/admin_article_page.dart';
 import 'package:maze_app/feature/knowledge/presentation/knowledge/view/article_page.dart';
 import 'package:maze_app/feature/knowledge/presentation/bookmarks/view/bookmarks_page.dart';
 import 'package:maze_app/feature/knowledge/presentation/knowledge/view/knowledge_page.dart';

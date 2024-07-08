@@ -14,6 +14,8 @@ class SettingsManager {
   final String _refreshTokenKey = 'refresh_t_K';
   final String _role = 'role';
 
+  final _isFirstRun = "IS_FIRST_RUNK";
+
   setUserName(String userName) {
     prefs.setStringAndEncrypt(_userNameKey, userName);
   }
@@ -51,7 +53,16 @@ class SettingsManager {
   }
 
   Role getRole() {
-    String role=prefs.getString(_role);
+    String role = prefs.getString(_role);
     return RoleExtension.getRoleByName(role);
+  }
+
+ Future<bool> setIsFirstRun() async {
+  return await prefs.setInt(_isFirstRun, 1);
+  }
+
+  int? getIsFirstRun() {
+    final test = prefs.getInt(_isFirstRun);
+    return test;
   }
 }
