@@ -31,10 +31,10 @@ class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
      final apiResponse=await repository.verify(userId: event.userId, code: event.code);
      apiResponse.when(completed: (data,int? statusCode){
        VerifyResponse response=data;
-       if(response.success!) {
+
          inject<SettingsManager>().setBearerToken(response.token!);
          inject<SettingsManager>().setRefreshToken(response.refreshToken!);
-       }
+
        emit(state.copyWith(verifyResponse: response,verifyStatus: VerifyStatus.success));
 
      },

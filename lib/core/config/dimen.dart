@@ -24,6 +24,13 @@ abstract class Dimen {
   static const double textFieldHeight = 54;
 
   static const double multiInputRadius = 12;
+  static const double bottomSheetRadius = 20;
+  static const double popupRadius = 20.0;
+  static const double screenSidePadding = 16;
+  static const double textBottomSheetContent = 16;
+
+
+
 
 
 }

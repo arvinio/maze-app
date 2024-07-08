@@ -62,22 +62,13 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) async {
             if (state.loginStatus.isSuccess) {
-              if (state.loginResponse!.success!) {
+
                 context.pushRoute(const WelcomePageRoute());
                 await Future.delayed(const Duration(seconds: 2));
                 if (context.mounted) {
                   context.pushRoute(const BottomNavigationRoute(),);
                 }
-              } else {
-                Fluttertoast.showToast(
-                    msg: state.loginResponse!.message!,
-                    toastLength: Toast.LENGTH_LONG,
-                    gravity: ToastGravity.CENTER,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.black,
-                    textColor: Colors.white,
-                    fontSize: 16.0);
-              }
+
             } else if (state.loginStatus.isFailure) {
               Fluttertoast.showToast(
                   msg: state.errorMessage!,
@@ -125,21 +116,19 @@ class _LoginPageState extends State<LoginPage> {
                 BlocConsumer<ForgotPassBloc, ForgotPassState>(
                   listener: (context, state) {
                     if (state.forgotPassStatus.isSuccess) {
-                      if (state.forgotPassResponse!.success!) {
-                        context.pushRoute(VerificationCodePageRoute(
-                            userId: state.forgotPassResponse!.userId!,
-                            userName: widget.userName,
-                            entryMode: EntryMode.forgetPassword));
-                      } else {
-                        Fluttertoast.showToast(
-                            msg: state.errorMessage!,
-                            toastLength: Toast.LENGTH_LONG,
-                            gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                            fontSize: 16.0);
-                      }
+                      context.pushRoute(VerificationCodePageRoute(
+                          userId: state.forgotPassResponse!.userId!,
+                          userName: widget.userName,
+                          entryMode: EntryMode.forgetPassword));
+                    } else if (state.forgotPassStatus.isFailure) {
+                      Fluttertoast.showToast(
+                          msg: state.errorMessage!,
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
                     }
                   },
                   builder: (context, state) {

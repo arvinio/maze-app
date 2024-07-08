@@ -65,18 +65,19 @@ class _SignupPageState extends State<SignupPage> {
       child:BlocConsumer<SignupBloc, SignupState>(
         listener: (context, state) {
           if(state.signupStatus.isSuccess){
-            (state.signupResponse!.success!)
-                ? context.pushRoute(VerificationCodePageRoute(
+                 context.pushRoute(VerificationCodePageRoute(
                 userName: _textController.text,
                 userId: state.signupResponse!.userId!,
                 entryMode: EntryMode.accountCreation
-            ))
-                : context.pushRoute(LoginPageRoute(
+            ));
+          }
+          else  if(state.signupStatus.isRegister){
+                context.pushRoute(LoginPageRoute(
               userName: _textController.text,
             ));
           }
           else  if (state.signupStatus.isFailure) {
-            Fluttertoast.showToast(msg: state.errorMessage!,
+            Fluttertoast.showToast(msg: state.signupResponse!.message!,
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
                 timeInSecForIosWeb: 1,

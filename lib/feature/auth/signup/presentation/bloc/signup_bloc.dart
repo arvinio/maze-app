@@ -22,7 +22,13 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
    final apiResponse=await signupRepository.signUp(email: event.userName);
    apiResponse.when(completed: (data,int? statusCode){
      SignupResponse response=data;
-     emit(state.copyWith(signupStatus: SignupStatus.success, signupResponse: response));
+     if(statusCode==208) {
+         emit(state.copyWith(
+             signupStatus: SignupStatus.register, signupResponse: response));
+       }else {
+       emit(state.copyWith(
+           signupStatus: SignupStatus.success, signupResponse: response));
+     }
    }
        ,error:(apiError){
          emit(state.copyWith(signupStatus: SignupStatus.failure,errorMessage: apiError.message));

@@ -61,28 +61,24 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
 
         child:BlocConsumer<VerifyBloc, VerifyState>(
     listener: (context, state) {
-      if (state.verifyStatus.isFailure) {
-        //toast
-      }
-      else
+
       if(state.verifyStatus.isSuccess) {
-        if(state.verifyResponse!.success!) {
           context.pushRoute(
               CreatePasswordPageRoute(entryMode: widget.entryMode,email:widget.userName));
-        }
-        else
-          {
-            Fluttertoast.showToast(
-              msg:appStrings.invalidCode,
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.black,
-              textColor: Colors.white,
-              fontSize: 16.0,
-            );
-          }
+
       }
+      else if (state.verifyStatus.isFailure)
+        {
+          Fluttertoast.showToast(
+            msg:appStrings.invalidCode,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+        }
       else if(state.verifyStatus.isResendSuccess)
       {
         Fluttertoast.showToast(

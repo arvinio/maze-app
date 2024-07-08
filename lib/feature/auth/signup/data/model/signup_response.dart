@@ -13,9 +13,7 @@ String SignupResponseToJson(SignupResponse data) => json.encode(data.toJson());
 @freezed
 class SignupResponse with _$SignupResponse{
   const factory SignupResponse({
-    @JsonKey(name: 'success') bool? success,
     @JsonKey(name: 'userId') String? userId,
-    @JsonKey(name: 'code') String? code,
     @JsonKey(name: "message")
     String? message,
   }) = _SignupResponse;

@@ -11,8 +11,6 @@ String loginResponseToJson(LoginResponse data) => json.encode(data.toJson());
 @freezed
 class LoginResponse with _$LoginResponse {
   const factory LoginResponse({
-    @JsonKey(name: "success")
-    bool? success,
     @JsonKey(name: "userId")
     String? userId,
     @JsonKey(name: "role")

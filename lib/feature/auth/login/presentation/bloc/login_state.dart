@@ -21,6 +21,5 @@ class LoginState with _$LoginState {
     @Default(LoginStatus.init) LoginStatus loginStatus,
     LoginResponse? loginResponse,
     String? errorMessage,
-    String? errorCode,
   })=_LoginState;
 }

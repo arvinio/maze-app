@@ -4,13 +4,15 @@ import 'package:injectable/injectable.dart';
 import 'package:maze_app/di/injection_container.dart';
 
 @LazySingleton()
-class AssetsBase {
+class AssetsBase  {
+
   static const String fontFamily = 'Urbanist';
 
   //AssetSvg get appIcon => const AssetSvg('assets/icons/app.png');
   AssetSvg get appIcon => const AssetSvg('assets/icons/app_icon.svg');
   AssetSvg get arrowLeft => const AssetSvg('assets/icons/arrow-left.svg');
   AssetSvg get eye => const AssetSvg('assets/icons/eye.svg');
+  AssetSvg get eyeSlash => const AssetSvg('assets/icons/eye-slash.svg');
   AssetSvg get eyeOff => const AssetSvg('assets/icons/eye-off.svg');
   AssetSvg get profile1 => const AssetSvg('assets/images/profile.svg');
   AssetSvg get profile => const AssetSvg('assets/icons/profile.png');
@@ -30,6 +32,15 @@ class AssetsBase {
       const AssetSvg('assets/icons/bookmark-selected-icon.svg');
   AssetSvg get searchNormalIcon =>
       const AssetSvg('assets/icons/search-normal-icon.svg');
+  AssetSvg get avatar => const AssetSvg('assets/icons/user.svg');
+  AssetSvg get floatingActionButtons => const AssetSvg('assets/icons/floating_action_buttons.svg');
+  AssetSvg get notif1 => const AssetSvg('assets/icons/notif1.svg');
+  AssetSvg get notif2 => const AssetSvg('assets/icons/notif2.svg');
+  AssetSvg get notif3 => const AssetSvg('assets/icons/notif3.svg');
+  AssetSvg get dropDown => const AssetSvg('assets/icons/drop_down.svg');
+  AssetSvg get infoCircle => const AssetSvg('assets/icons/info-circle.svg');
+  AssetSvg get close => const AssetSvg('assets/icons/close.svg');
+
 }
 
 class AssetImage {
@@ -122,7 +133,7 @@ class AssetSvg {
   }) {
     return SvgPicture.asset(
       _assetName,
-      // ((isDark ?? inject<ThemeService>().isDark) ? (assetNameDark ?? _assetName) : _assetName),
+     // ((isDark ?? inject<ThemeService>().isDark) ? (assetNameDark ?? _assetName) : _assetName),
       key: key,
       matchTextDirection: matchTextDirection,
       bundle: bundle,

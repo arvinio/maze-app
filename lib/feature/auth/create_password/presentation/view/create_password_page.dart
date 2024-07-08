@@ -55,11 +55,10 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
         child: BlocConsumer<CreatePassBloc, CreatePassState>(
           listener: (context, state) {
             if (state.createPassStatus.isSuccess) {
-              if (state.createPassResponse!.success!) {
                 (widget.entryMode.isAccountCreation)
-                    ? context.pushRoute(const BottomNavigationRoute())
+                    ? context.pushRoute(const AccountDetailsPageRoute())
                     : context.pushRoute(const BottomNavigationRoute());
-              }
+
             } else if (state.createPassStatus.isFailure) {
               //toast
             }

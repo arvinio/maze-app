@@ -23,6 +23,5 @@ class ForgotPassState with _$ForgotPassState {
     @Default(ForgotPassStatus.init) ForgotPassStatus forgotPassStatus,
     ForgotPasswordResponse? forgotPassResponse,
     String? errorMessage,
-    String? errorCode,
   })=_ForgotPassState;
 }

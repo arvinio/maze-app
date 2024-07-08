@@ -11,12 +11,10 @@ String forgotPasswordResponseToJson(ForgotPasswordResponse data) => json.encode(
 @freezed
 class ForgotPasswordResponse with _$ForgotPasswordResponse {
   const factory ForgotPasswordResponse({
-    @JsonKey(name: "success")
-    bool? success,
     @JsonKey(name: "userId")
     String? userId,
-    @JsonKey(name: "code")
-    String? code,
+    @JsonKey(name: "message")
+    String? message,
   }) = _ForgotPasswordResponse;
 
   factory ForgotPasswordResponse.fromJson(Map<String, dynamic> json) => _$ForgotPasswordResponseFromJson(json);

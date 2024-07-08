@@ -338,6 +338,10 @@ extension ColorSchemeExtension on ColorScheme {
       brightness == Brightness.light
           ? appColors.selectIconDropDown.light
           : appColors.selectIconDropDown.dark;
+  Color get progress =>
+      brightness == Brightness.light
+          ? appColors.progress.light
+          : appColors.progress.dark;
 
 
 }

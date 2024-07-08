@@ -311,7 +311,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                                       :widget.labelTextColor?? context.scheme().primaryText
                                   ),
                               hintText: widget.hint,
-                              fillColor:  (widget.focusNode!=null && widget.focusNode!.hasFocus)|| (widget.autoFocus)
+                              fillColor:(widget.focusNode!=null && widget.focusNode!.hasFocus)|| (widget.autoFocus)
                              ? context.scheme().primariesShade03
                              : context.scheme().neutralsFieldsTags,
                               filled: true,

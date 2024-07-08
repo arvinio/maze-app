@@ -82,6 +82,9 @@ class AppColor{
 
  AppColor get selectIconDropDown => const AppColor(light: Color(0xFFB4B4B4), dark: Color(0xFF8C8C8C));
 
+ //progressbar
+ AppColor get  progress=> const AppColor(light: Color(0xFFF18A00), dark: Color(0xFFF18A00));
+
 }
 
 

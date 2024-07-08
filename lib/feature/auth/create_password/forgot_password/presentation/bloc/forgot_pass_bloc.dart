@@ -29,7 +29,7 @@ class ForgotPassBloc extends Bloc<ForgotPassEvent, ForgotPassState> {
           forgotPassStatus: ForgotPassStatus.success));
     },
         error: (apiError) {
-          emit(state.copyWith(forgotPassStatus: ForgotPassStatus.failure,errorMessage: apiError.message,errorCode: apiError.code));
+          emit(state.copyWith(forgotPassStatus: ForgotPassStatus.failure,errorMessage: apiError.message));
         });
   }
 }

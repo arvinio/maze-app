@@ -4,6 +4,7 @@ enum SignupStatus {
   init,
   loading,
   success,
+  register,
   failure;
 
   bool get isInit => this == SignupStatus.init;
@@ -11,6 +12,8 @@ enum SignupStatus {
   bool get isLoading => this == SignupStatus.loading;
 
   bool get isSuccess => this == SignupStatus.success;
+
+  bool get isRegister => this == SignupStatus.register;
 
   bool get isFailure => this == SignupStatus.failure;
 }

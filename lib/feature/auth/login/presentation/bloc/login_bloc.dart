@@ -31,16 +31,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final apiResponse=await repository.login(email: event.email, password: event.password);
     apiResponse.when(completed: (data,int? statusCode){
       LoginResponse response=data;
-      if(response.success!) {
+
         inject<SettingsManager>().setBearerToken(response.token!);
         inject<SettingsManager>().setRefreshToken(response.refreshToken!);
         inject<SettingsManager>().setRole(response.role!);
-      }
-      emit(state.copyWith(loginResponse: response,loginStatus: LoginStatus.success));
+
+      emit(state.copyWith(loginStatus: LoginStatus.success,loginResponse: response));
   
     },
         error: (apiError){
-          emit(state.copyWith(loginStatus: LoginStatus.failure,errorMessage: apiError.message,errorCode: apiError.code));
+          emit(state.copyWith(loginStatus: LoginStatus.failure,errorMessage: apiError.message));
         });
   }
 }
