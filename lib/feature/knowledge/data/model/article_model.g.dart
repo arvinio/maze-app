@@ -9,13 +9,14 @@ part of 'article_model.dart';
 _$ArticleModelImpl _$$ArticleModelImplFromJson(Map<String, dynamic> json) =>
     _$ArticleModelImpl(
       id: json['_id'] as String,
-      title: json['title'] as String,
-      content: json['content'] as String,
-      createdDate: json['createdDate'] as String,
-      editedDate: json['editedDate'] as String,
-      category:
-          CategoryModel.fromJson(json['category'] as Map<String, dynamic>),
-      cover: json['cover'] as String,
+      title: json['title'] as String?,
+      content: json['content'] as String?,
+      createdDate: json['createdDate'] as String?,
+      editedDate: json['editedDate'] as String?,
+      category: json['category'] == null
+          ? null
+          : CategoryModel.fromJson(json['category'] as Map<String, dynamic>),
+      cover: json['cover'] as String?,
       required: json['required'],
     );
 

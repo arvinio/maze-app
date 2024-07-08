@@ -15,6 +15,18 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    AdminArticlePageRoute.name: (routeData) {
+      final args = routeData.argsAs<AdminArticlePageRouteArgs>(
+          orElse: () => const AdminArticlePageRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: AdminArticlePage(
+          key: args.key,
+          article: args.article,
+        )),
+      );
+    },
     ArticlePageRoute.name: (routeData) {
       final args = routeData.argsAs<ArticlePageRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -99,6 +111,44 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [AdminArticlePage]
+class AdminArticlePageRoute extends PageRouteInfo<AdminArticlePageRouteArgs> {
+  AdminArticlePageRoute({
+    Key? key,
+    Article? article,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AdminArticlePageRoute.name,
+          args: AdminArticlePageRouteArgs(
+            key: key,
+            article: article,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'AdminArticlePageRoute';
+
+  static const PageInfo<AdminArticlePageRouteArgs> page =
+      PageInfo<AdminArticlePageRouteArgs>(name);
+}
+
+class AdminArticlePageRouteArgs {
+  const AdminArticlePageRouteArgs({
+    this.key,
+    this.article,
+  });
+
+  final Key? key;
+
+  final Article? article;
+
+  @override
+  String toString() {
+    return 'AdminArticlePageRouteArgs{key: $key, article: $article}';
+  }
 }
 
 /// generated route for

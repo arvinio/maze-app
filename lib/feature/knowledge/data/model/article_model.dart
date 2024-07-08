@@ -9,12 +9,12 @@ part 'article_model.g.dart';
 class ArticleModel with _$ArticleModel {
   const factory ArticleModel(
       {@JsonKey(name: "_id") required String id,
-      required String title,
-      required String content,
-      required String createdDate,
-      required String editedDate,
-      required CategoryModel category,
-      required String cover,
+      required String? title,
+      required String? content,
+      required String? createdDate,
+      required String? editedDate,
+      required CategoryModel? category,
+      required String? cover,
       required}) = _ArticleModel;
 
   factory ArticleModel.fromJson(DataMap json) => _$ArticleModelFromJson(json);

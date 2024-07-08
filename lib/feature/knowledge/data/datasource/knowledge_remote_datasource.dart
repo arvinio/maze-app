@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/network/dio_caller.dart';
 import 'package:maze_app/core/util/typedef.dart';
@@ -40,28 +41,41 @@ class KnowledgeRemoteDataSourceImpl implements KnowledgeRemoteDatasource {
   @override
   ResultFuture<RespModelArticles> searchArticles(String params) async {
     return await _dioCaller.get(
-      'api/blog/search',
+      'api/blog/search?searchQuery=$params',
       fromJson: RespModelArticles.fromJson,
-      queryParameters: {'searchQuery': params},
     );
   }
 
   @override
-  ResultFuture<bool> createArticle(ArticleModel params) {
-    // TODO: implement createArticle
-    throw UnimplementedError();
+  ResultFuture<bool> createArticle(ArticleModel params) async {
+    final data = FormData.fromMap({
+      'files': [
+        await MultipartFile.fromFile(params.cover!),
+      ],
+      'title': params.title,
+      'content': params.content,
+      'category': params.category!.id
+    });
+    return await _dioCaller.post('api/blog', fromJson: () {}, data: data);
   }
 
   @override
-  ResultFuture<bool> deleteArticle(String params) {
-    // TODO: implement deleteArticle
-    throw UnimplementedError();
+  ResultFuture<bool> deleteArticle(String params) async {
+    return await _dioCaller.delete('api/blog/$params', fromJson: () {});
   }
 
   @override
-  ResultFuture<bool> editArticle(ArticleModel params) {
-    // TODO: implement editArticle
-    throw UnimplementedError();
+  ResultFuture<bool> editArticle(ArticleModel params) async {
+    final data = FormData.fromMap({
+      if (params.cover != null)
+        'files': [
+          await MultipartFile.fromFile(params.cover!),
+        ],
+      if (params.title != null) 'title': params.title,
+      if (params.content != null) 'content': params.content,
+      if (params.category!.id.isNotEmpty) 'category': params.category!.id
+    });
+    return await _dioCaller.put('api/blog', fromJson: () {}, data: data);
   }
 
   @override

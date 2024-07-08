@@ -1,8 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
+import 'package:maze_app/core/local/setting_manager.dart';
 import 'package:maze_app/core/network/model/api_error.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
+import 'package:maze_app/di/injection_container.dart';
+import 'package:maze_app/feature/auth/login/data/model/enum/role.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/app_category.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/article.dart';
 import 'package:maze_app/feature/knowledge/domain/usecase/get_articles.dart';
@@ -18,6 +21,7 @@ class KnowledgeCubit extends Cubit<KnowledgeState> {
   final AppRouter _router;
   final GetCategories _getCategories;
   final SearchArticles _searchArticles;
+  final bool isAdmin = inject<SettingsManager>().getRole() == Role.admin;
 
   final List<Article> _articles = [];
 
@@ -32,6 +36,18 @@ class KnowledgeCubit extends Cubit<KnowledgeState> {
         _searchArticles = searchArticles,
         super(KnowledgeInitial()) {
     _load();
+  }
+
+  Future<List<Article>> search(String input) async {
+    final result = await _searchArticles(input);
+    return result.when(
+      completed: (data, statusCode) {
+        return data;
+      },
+      error: (apiError) {
+        throw Exception(apiError.message);
+      },
+    );
   }
 
   Future<void> _load() async {

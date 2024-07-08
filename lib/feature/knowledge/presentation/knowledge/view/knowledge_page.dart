@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:maze_app/core/config/assets/assets.dart';
+import 'package:maze_app/core/presentation/route/app_router.dart';
 
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
 
@@ -42,6 +43,13 @@ class _KnowledgePageState extends State<KnowledgePage> {
             },
             icon: appAssets.bookmarkIcon.svg(),
           ),
+          if (context.read<KnowledgeCubit>().isAdmin)
+            IconButton.filledTonal(
+              onPressed: () {
+                context.pushRoute(AdminArticlePageRoute());
+              },
+              icon: appAssets.bookmarkIcon.svg(),
+            ),
         ],
       ),
       child: BlocBuilder<KnowledgeCubit, KnowledgeState>(
