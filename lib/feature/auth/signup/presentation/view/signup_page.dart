@@ -66,18 +66,18 @@ class _SignupPageState extends State<SignupPage> {
         listener: (context, state) {
           if(state.signupStatus.isSuccess){
                  context.pushRoute(VerificationCodePageRoute(
-                userName: _textController.text,
+                userName: _textController.text.trim(),
                 userId: state.signupResponse!.userId!,
                 entryMode: EntryMode.accountCreation
             ));
           }
           else  if(state.signupStatus.isRegister){
                 context.pushRoute(LoginPageRoute(
-              userName: _textController.text,
+              userName: _textController.text.trim(),
             ));
           }
           else  if (state.signupStatus.isFailure) {
-            Fluttertoast.showToast(msg: state.signupResponse!.message!,
+            Fluttertoast.showToast(msg: state.errorMessage!,
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
                 timeInSecForIosWeb: 1,
@@ -126,7 +126,7 @@ class _SignupPageState extends State<SignupPage> {
                 showLoading: state.signupStatus.isLoading,
                 onPressed: () {
                   context.read<SignupBloc>().add(
-                      SignupEvent.init(userName: _textController.text));
+                      SignupEvent.init(userName: _textController.text.trim()));
                 },),
               const SizedBox(height: 16,),
               Visibility(

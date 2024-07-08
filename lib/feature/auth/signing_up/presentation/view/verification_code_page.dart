@@ -91,6 +91,18 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
           fontSize: 16.0,
         );
 
+      }else if(state.verifyStatus.isResendFailure)
+      {
+        Fluttertoast.showToast(
+          msg:state.errorMessage!,
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+
       }
     },
     builder: (context, state) {

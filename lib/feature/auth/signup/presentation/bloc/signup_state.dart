@@ -25,7 +25,6 @@ class SignupState with _$SignupState {
     @Default(SignupStatus.init) SignupStatus signupStatus,
     SignupResponse? signupResponse,
     String? errorMessage,
-    String? errorCode
 
   })=_SignupState;
 }

@@ -22,6 +22,6 @@ class ForgotPassState with _$ForgotPassState {
   const factory ForgotPassState({
     @Default(ForgotPassStatus.init) ForgotPassStatus forgotPassStatus,
     ForgotPasswordResponse? forgotPassResponse,
-    String? errorMessage,
+    String? errorMessage
   })=_ForgotPassState;
 }

@@ -38,7 +38,7 @@ class AccountInfoBloc extends Bloc<AccountInfoEvent, AccountInfoState> {
       emit(state.copyWith(infoStatus: AccountInfoStatus.loadAllCountryList,allFetchedCountryList: list));
 
     }, error: (apiError){
-      emit(state.copyWith(infoStatus: AccountInfoStatus.fetchFailure));
+      emit(state.copyWith(infoStatus: AccountInfoStatus.fetchFailure,errorMessage: apiError.message));
     });
   }
 
@@ -53,7 +53,7 @@ class AccountInfoBloc extends Bloc<AccountInfoEvent, AccountInfoState> {
       emit(state.copyWith(infoStatus: AccountInfoStatus.loadAllStateList,allFetchedSateList: list));
 
     }, error: (apiError){
-      emit(state.copyWith(infoStatus: AccountInfoStatus.fetchFailure));
+      emit(state.copyWith(infoStatus: AccountInfoStatus.fetchFailure,errorMessage: apiError.message));
     });
   }
 
@@ -68,7 +68,7 @@ class AccountInfoBloc extends Bloc<AccountInfoEvent, AccountInfoState> {
       emit(state.copyWith(infoStatus: AccountInfoStatus.loadAllCouncilList,allFetchedCouncilList: list));
 
     }, error: (apiError){
-      emit(state.copyWith(infoStatus: AccountInfoStatus.fetchFailure));
+      emit(state.copyWith(infoStatus: AccountInfoStatus.fetchFailure,errorMessage: apiError.message));
     });
   }
 
@@ -89,7 +89,7 @@ class AccountInfoBloc extends Bloc<AccountInfoEvent, AccountInfoState> {
       emit(state.copyWith(infoStatus: AccountInfoStatus.registerSuccess,response: response));
 
     }, error: (apiError){
-      emit(state.copyWith(infoStatus: AccountInfoStatus.registerFailure));
+      emit(state.copyWith(infoStatus: AccountInfoStatus.registerFailure,errorMessage: apiError.message));
     });
   }
 }
