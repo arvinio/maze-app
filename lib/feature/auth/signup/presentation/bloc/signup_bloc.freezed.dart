@@ -225,7 +225,6 @@ mixin _$SignupState {
   SignupStatus get signupStatus => throw _privateConstructorUsedError;
   SignupResponse? get signupResponse => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
-  String? get errorCode => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SignupStateCopyWith<SignupState> get copyWith =>
@@ -241,8 +240,7 @@ abstract class $SignupStateCopyWith<$Res> {
   $Res call(
       {SignupStatus signupStatus,
       SignupResponse? signupResponse,
-      String? errorMessage,
-      String? errorCode});
+      String? errorMessage});
 
   $SignupResponseCopyWith<$Res>? get signupResponse;
 }
@@ -263,7 +261,6 @@ class _$SignupStateCopyWithImpl<$Res, $Val extends SignupState>
     Object? signupStatus = null,
     Object? signupResponse = freezed,
     Object? errorMessage = freezed,
-    Object? errorCode = freezed,
   }) {
     return _then(_value.copyWith(
       signupStatus: null == signupStatus
@@ -277,10 +274,6 @@ class _$SignupStateCopyWithImpl<$Res, $Val extends SignupState>
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      errorCode: freezed == errorCode
-          ? _value.errorCode
-          : errorCode // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -309,8 +302,7 @@ abstract class _$$SignupStateImplCopyWith<$Res>
   $Res call(
       {SignupStatus signupStatus,
       SignupResponse? signupResponse,
-      String? errorMessage,
-      String? errorCode});
+      String? errorMessage});
 
   @override
   $SignupResponseCopyWith<$Res>? get signupResponse;
@@ -330,7 +322,6 @@ class __$$SignupStateImplCopyWithImpl<$Res>
     Object? signupStatus = null,
     Object? signupResponse = freezed,
     Object? errorMessage = freezed,
-    Object? errorCode = freezed,
   }) {
     return _then(_$SignupStateImpl(
       signupStatus: null == signupStatus
@@ -345,10 +336,6 @@ class __$$SignupStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      errorCode: freezed == errorCode
-          ? _value.errorCode
-          : errorCode // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -359,8 +346,7 @@ class _$SignupStateImpl implements _SignupState {
   const _$SignupStateImpl(
       {this.signupStatus = SignupStatus.init,
       this.signupResponse,
-      this.errorMessage,
-      this.errorCode});
+      this.errorMessage});
 
   @override
   @JsonKey()
@@ -369,12 +355,10 @@ class _$SignupStateImpl implements _SignupState {
   final SignupResponse? signupResponse;
   @override
   final String? errorMessage;
-  @override
-  final String? errorCode;
 
   @override
   String toString() {
-    return 'SignupState(signupStatus: $signupStatus, signupResponse: $signupResponse, errorMessage: $errorMessage, errorCode: $errorCode)';
+    return 'SignupState(signupStatus: $signupStatus, signupResponse: $signupResponse, errorMessage: $errorMessage)';
   }
 
   @override
@@ -387,14 +371,12 @@ class _$SignupStateImpl implements _SignupState {
             (identical(other.signupResponse, signupResponse) ||
                 other.signupResponse == signupResponse) &&
             (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage) &&
-            (identical(other.errorCode, errorCode) ||
-                other.errorCode == errorCode));
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, signupStatus, signupResponse, errorMessage, errorCode);
+  int get hashCode =>
+      Object.hash(runtimeType, signupStatus, signupResponse, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -407,8 +389,7 @@ abstract class _SignupState implements SignupState {
   const factory _SignupState(
       {final SignupStatus signupStatus,
       final SignupResponse? signupResponse,
-      final String? errorMessage,
-      final String? errorCode}) = _$SignupStateImpl;
+      final String? errorMessage}) = _$SignupStateImpl;
 
   @override
   SignupStatus get signupStatus;
@@ -416,8 +397,6 @@ abstract class _SignupState implements SignupState {
   SignupResponse? get signupResponse;
   @override
   String? get errorMessage;
-  @override
-  String? get errorCode;
   @override
   @JsonKey(ignore: true)
   _$$SignupStateImplCopyWith<_$SignupStateImpl> get copyWith =>

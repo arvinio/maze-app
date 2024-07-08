@@ -481,6 +481,7 @@ mixin _$VerifyState {
   VerifyStatus get verifyStatus => throw _privateConstructorUsedError;
   VerifyResponse? get verifyResponse => throw _privateConstructorUsedError;
   ResendResponse? get resendResponse => throw _privateConstructorUsedError;
+  String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VerifyStateCopyWith<VerifyState> get copyWith =>
@@ -496,7 +497,8 @@ abstract class $VerifyStateCopyWith<$Res> {
   $Res call(
       {VerifyStatus verifyStatus,
       VerifyResponse? verifyResponse,
-      ResendResponse? resendResponse});
+      ResendResponse? resendResponse,
+      String? errorMessage});
 
   $VerifyResponseCopyWith<$Res>? get verifyResponse;
   $ResendResponseCopyWith<$Res>? get resendResponse;
@@ -518,6 +520,7 @@ class _$VerifyStateCopyWithImpl<$Res, $Val extends VerifyState>
     Object? verifyStatus = null,
     Object? verifyResponse = freezed,
     Object? resendResponse = freezed,
+    Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
       verifyStatus: null == verifyStatus
@@ -532,6 +535,10 @@ class _$VerifyStateCopyWithImpl<$Res, $Val extends VerifyState>
           ? _value.resendResponse
           : resendResponse // ignore: cast_nullable_to_non_nullable
               as ResendResponse?,
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -571,7 +578,8 @@ abstract class _$$VerifyStateImplCopyWith<$Res>
   $Res call(
       {VerifyStatus verifyStatus,
       VerifyResponse? verifyResponse,
-      ResendResponse? resendResponse});
+      ResendResponse? resendResponse,
+      String? errorMessage});
 
   @override
   $VerifyResponseCopyWith<$Res>? get verifyResponse;
@@ -593,6 +601,7 @@ class __$$VerifyStateImplCopyWithImpl<$Res>
     Object? verifyStatus = null,
     Object? verifyResponse = freezed,
     Object? resendResponse = freezed,
+    Object? errorMessage = freezed,
   }) {
     return _then(_$VerifyStateImpl(
       verifyStatus: null == verifyStatus
@@ -607,6 +616,10 @@ class __$$VerifyStateImplCopyWithImpl<$Res>
           ? _value.resendResponse
           : resendResponse // ignore: cast_nullable_to_non_nullable
               as ResendResponse?,
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -617,7 +630,8 @@ class _$VerifyStateImpl implements _VerifyState {
   const _$VerifyStateImpl(
       {this.verifyStatus = VerifyStatus.init,
       this.verifyResponse,
-      this.resendResponse});
+      this.resendResponse,
+      this.errorMessage});
 
   @override
   @JsonKey()
@@ -626,10 +640,12 @@ class _$VerifyStateImpl implements _VerifyState {
   final VerifyResponse? verifyResponse;
   @override
   final ResendResponse? resendResponse;
+  @override
+  final String? errorMessage;
 
   @override
   String toString() {
-    return 'VerifyState(verifyStatus: $verifyStatus, verifyResponse: $verifyResponse, resendResponse: $resendResponse)';
+    return 'VerifyState(verifyStatus: $verifyStatus, verifyResponse: $verifyResponse, resendResponse: $resendResponse, errorMessage: $errorMessage)';
   }
 
   @override
@@ -642,12 +658,14 @@ class _$VerifyStateImpl implements _VerifyState {
             (identical(other.verifyResponse, verifyResponse) ||
                 other.verifyResponse == verifyResponse) &&
             (identical(other.resendResponse, resendResponse) ||
-                other.resendResponse == resendResponse));
+                other.resendResponse == resendResponse) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, verifyStatus, verifyResponse, resendResponse);
+  int get hashCode => Object.hash(
+      runtimeType, verifyStatus, verifyResponse, resendResponse, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -660,7 +678,8 @@ abstract class _VerifyState implements VerifyState {
   const factory _VerifyState(
       {final VerifyStatus verifyStatus,
       final VerifyResponse? verifyResponse,
-      final ResendResponse? resendResponse}) = _$VerifyStateImpl;
+      final ResendResponse? resendResponse,
+      final String? errorMessage}) = _$VerifyStateImpl;
 
   @override
   VerifyStatus get verifyStatus;
@@ -668,6 +687,8 @@ abstract class _VerifyState implements VerifyState {
   VerifyResponse? get verifyResponse;
   @override
   ResendResponse? get resendResponse;
+  @override
+  String? get errorMessage;
   @override
   @JsonKey(ignore: true)
   _$$VerifyStateImplCopyWith<_$VerifyStateImpl> get copyWith =>
