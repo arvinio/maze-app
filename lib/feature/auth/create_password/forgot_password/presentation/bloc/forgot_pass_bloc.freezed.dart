@@ -314,7 +314,6 @@ mixin _$ForgotPassState {
   ForgotPasswordResponse? get forgotPassResponse =>
       throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
-  String? get errorCode => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ForgotPassStateCopyWith<ForgotPassState> get copyWith =>
@@ -330,8 +329,7 @@ abstract class $ForgotPassStateCopyWith<$Res> {
   $Res call(
       {ForgotPassStatus forgotPassStatus,
       ForgotPasswordResponse? forgotPassResponse,
-      String? errorMessage,
-      String? errorCode});
+      String? errorMessage});
 
   $ForgotPasswordResponseCopyWith<$Res>? get forgotPassResponse;
 }
@@ -352,7 +350,6 @@ class _$ForgotPassStateCopyWithImpl<$Res, $Val extends ForgotPassState>
     Object? forgotPassStatus = null,
     Object? forgotPassResponse = freezed,
     Object? errorMessage = freezed,
-    Object? errorCode = freezed,
   }) {
     return _then(_value.copyWith(
       forgotPassStatus: null == forgotPassStatus
@@ -366,10 +363,6 @@ class _$ForgotPassStateCopyWithImpl<$Res, $Val extends ForgotPassState>
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      errorCode: freezed == errorCode
-          ? _value.errorCode
-          : errorCode // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -399,8 +392,7 @@ abstract class _$$ForgotPassStateImplCopyWith<$Res>
   $Res call(
       {ForgotPassStatus forgotPassStatus,
       ForgotPasswordResponse? forgotPassResponse,
-      String? errorMessage,
-      String? errorCode});
+      String? errorMessage});
 
   @override
   $ForgotPasswordResponseCopyWith<$Res>? get forgotPassResponse;
@@ -420,7 +412,6 @@ class __$$ForgotPassStateImplCopyWithImpl<$Res>
     Object? forgotPassStatus = null,
     Object? forgotPassResponse = freezed,
     Object? errorMessage = freezed,
-    Object? errorCode = freezed,
   }) {
     return _then(_$ForgotPassStateImpl(
       forgotPassStatus: null == forgotPassStatus
@@ -435,10 +426,6 @@ class __$$ForgotPassStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      errorCode: freezed == errorCode
-          ? _value.errorCode
-          : errorCode // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -449,8 +436,7 @@ class _$ForgotPassStateImpl implements _ForgotPassState {
   const _$ForgotPassStateImpl(
       {this.forgotPassStatus = ForgotPassStatus.init,
       this.forgotPassResponse,
-      this.errorMessage,
-      this.errorCode});
+      this.errorMessage});
 
   @override
   @JsonKey()
@@ -459,12 +445,10 @@ class _$ForgotPassStateImpl implements _ForgotPassState {
   final ForgotPasswordResponse? forgotPassResponse;
   @override
   final String? errorMessage;
-  @override
-  final String? errorCode;
 
   @override
   String toString() {
-    return 'ForgotPassState(forgotPassStatus: $forgotPassStatus, forgotPassResponse: $forgotPassResponse, errorMessage: $errorMessage, errorCode: $errorCode)';
+    return 'ForgotPassState(forgotPassStatus: $forgotPassStatus, forgotPassResponse: $forgotPassResponse, errorMessage: $errorMessage)';
   }
 
   @override
@@ -477,14 +461,12 @@ class _$ForgotPassStateImpl implements _ForgotPassState {
             (identical(other.forgotPassResponse, forgotPassResponse) ||
                 other.forgotPassResponse == forgotPassResponse) &&
             (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage) &&
-            (identical(other.errorCode, errorCode) ||
-                other.errorCode == errorCode));
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, forgotPassStatus,
-      forgotPassResponse, errorMessage, errorCode);
+  int get hashCode => Object.hash(
+      runtimeType, forgotPassStatus, forgotPassResponse, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -498,8 +480,7 @@ abstract class _ForgotPassState implements ForgotPassState {
   const factory _ForgotPassState(
       {final ForgotPassStatus forgotPassStatus,
       final ForgotPasswordResponse? forgotPassResponse,
-      final String? errorMessage,
-      final String? errorCode}) = _$ForgotPassStateImpl;
+      final String? errorMessage}) = _$ForgotPassStateImpl;
 
   @override
   ForgotPassStatus get forgotPassStatus;
@@ -507,8 +488,6 @@ abstract class _ForgotPassState implements ForgotPassState {
   ForgotPasswordResponse? get forgotPassResponse;
   @override
   String? get errorMessage;
-  @override
-  String? get errorCode;
   @override
   @JsonKey(ignore: true)
   _$$ForgotPassStateImplCopyWith<_$ForgotPassStateImpl> get copyWith =>

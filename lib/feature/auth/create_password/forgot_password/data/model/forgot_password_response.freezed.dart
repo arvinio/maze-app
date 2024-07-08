@@ -21,12 +21,10 @@ ForgotPasswordResponse _$ForgotPasswordResponseFromJson(
 
 /// @nodoc
 mixin _$ForgotPasswordResponse {
-  @JsonKey(name: "success")
-  bool? get success => throw _privateConstructorUsedError;
   @JsonKey(name: "userId")
   String? get userId => throw _privateConstructorUsedError;
-  @JsonKey(name: "code")
-  String? get code => throw _privateConstructorUsedError;
+  @JsonKey(name: "message")
+  String? get message => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,9 +39,8 @@ abstract class $ForgotPasswordResponseCopyWith<$Res> {
       _$ForgotPasswordResponseCopyWithImpl<$Res, ForgotPasswordResponse>;
   @useResult
   $Res call(
-      {@JsonKey(name: "success") bool? success,
-      @JsonKey(name: "userId") String? userId,
-      @JsonKey(name: "code") String? code});
+      {@JsonKey(name: "userId") String? userId,
+      @JsonKey(name: "message") String? message});
 }
 
 /// @nodoc
@@ -60,22 +57,17 @@ class _$ForgotPasswordResponseCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? success = freezed,
     Object? userId = freezed,
-    Object? code = freezed,
+    Object? message = freezed,
   }) {
     return _then(_value.copyWith(
-      success: freezed == success
-          ? _value.success
-          : success // ignore: cast_nullable_to_non_nullable
-              as bool?,
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: freezed == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -91,9 +83,8 @@ abstract class _$$ForgotPasswordResponseImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "success") bool? success,
-      @JsonKey(name: "userId") String? userId,
-      @JsonKey(name: "code") String? code});
+      {@JsonKey(name: "userId") String? userId,
+      @JsonKey(name: "message") String? message});
 }
 
 /// @nodoc
@@ -109,22 +100,17 @@ class __$$ForgotPasswordResponseImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? success = freezed,
     Object? userId = freezed,
-    Object? code = freezed,
+    Object? message = freezed,
   }) {
     return _then(_$ForgotPasswordResponseImpl(
-      success: freezed == success
-          ? _value.success
-          : success // ignore: cast_nullable_to_non_nullable
-              as bool?,
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: freezed == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -134,26 +120,22 @@ class __$$ForgotPasswordResponseImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ForgotPasswordResponseImpl implements _ForgotPasswordResponse {
   const _$ForgotPasswordResponseImpl(
-      {@JsonKey(name: "success") this.success,
-      @JsonKey(name: "userId") this.userId,
-      @JsonKey(name: "code") this.code});
+      {@JsonKey(name: "userId") this.userId,
+      @JsonKey(name: "message") this.message});
 
   factory _$ForgotPasswordResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$ForgotPasswordResponseImplFromJson(json);
 
   @override
-  @JsonKey(name: "success")
-  final bool? success;
-  @override
   @JsonKey(name: "userId")
   final String? userId;
   @override
-  @JsonKey(name: "code")
-  final String? code;
+  @JsonKey(name: "message")
+  final String? message;
 
   @override
   String toString() {
-    return 'ForgotPasswordResponse(success: $success, userId: $userId, code: $code)';
+    return 'ForgotPasswordResponse(userId: $userId, message: $message)';
   }
 
   @override
@@ -161,14 +143,13 @@ class _$ForgotPasswordResponseImpl implements _ForgotPasswordResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ForgotPasswordResponseImpl &&
-            (identical(other.success, success) || other.success == success) &&
             (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.code, code) || other.code == code));
+            (identical(other.message, message) || other.message == message));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, success, userId, code);
+  int get hashCode => Object.hash(runtimeType, userId, message);
 
   @JsonKey(ignore: true)
   @override
@@ -187,23 +168,19 @@ class _$ForgotPasswordResponseImpl implements _ForgotPasswordResponse {
 
 abstract class _ForgotPasswordResponse implements ForgotPasswordResponse {
   const factory _ForgotPasswordResponse(
-          {@JsonKey(name: "success") final bool? success,
-          @JsonKey(name: "userId") final String? userId,
-          @JsonKey(name: "code") final String? code}) =
+          {@JsonKey(name: "userId") final String? userId,
+          @JsonKey(name: "message") final String? message}) =
       _$ForgotPasswordResponseImpl;
 
   factory _ForgotPasswordResponse.fromJson(Map<String, dynamic> json) =
       _$ForgotPasswordResponseImpl.fromJson;
 
   @override
-  @JsonKey(name: "success")
-  bool? get success;
-  @override
   @JsonKey(name: "userId")
   String? get userId;
   @override
-  @JsonKey(name: "code")
-  String? get code;
+  @JsonKey(name: "message")
+  String? get message;
   @override
   @JsonKey(ignore: true)
   _$$ForgotPasswordResponseImplCopyWith<_$ForgotPasswordResponseImpl>

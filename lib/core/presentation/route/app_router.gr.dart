@@ -15,6 +15,43 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    AccountDetailsPageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const AccountDetailsPage(),
+      );
+    },
+    AccountHouseholdInfoPageRoute.name: (routeData) {
+      final args = routeData.argsAs<AccountHouseholdInfoPageRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: AccountHouseholdInfoPage(
+          key: args.key,
+          userInfo: args.userInfo,
+        )),
+      );
+    },
+    AccountNotificationPageRoute.name: (routeData) {
+      final args = routeData.argsAs<AccountNotificationPageRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: AccountNotificationPage(
+          key: args.key,
+          userInfo: args.userInfo,
+        ),
+      );
+    },
+    AccountProfilePageRoute.name: (routeData) {
+      final args = routeData.argsAs<AccountProfilePageRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: AccountProfilePage(
+          key: args.key,
+          userInfo: args.userInfo,
+        ),
+      );
+    },
     AdminArticlePageRoute.name: (routeData) {
       final args = routeData.argsAs<AdminArticlePageRouteArgs>(
           orElse: () => const AdminArticlePageRouteArgs());
@@ -104,6 +141,12 @@ abstract class _$AppRouter extends RootStackRouter {
         )),
       );
     },
+    WelcomeAccountSetupPageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const WelcomeAccountSetupPage(),
+      );
+    },
     WelcomePageRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -111,6 +154,137 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [AccountDetailsPage]
+class AccountDetailsPageRoute extends PageRouteInfo<void> {
+  const AccountDetailsPageRoute({List<PageRouteInfo>? children})
+      : super(
+          AccountDetailsPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AccountDetailsPageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [AccountHouseholdInfoPage]
+class AccountHouseholdInfoPageRoute
+    extends PageRouteInfo<AccountHouseholdInfoPageRouteArgs> {
+  AccountHouseholdInfoPageRoute({
+    Key? key,
+    required UserInfo? userInfo,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AccountHouseholdInfoPageRoute.name,
+          args: AccountHouseholdInfoPageRouteArgs(
+            key: key,
+            userInfo: userInfo,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'AccountHouseholdInfoPageRoute';
+
+  static const PageInfo<AccountHouseholdInfoPageRouteArgs> page =
+      PageInfo<AccountHouseholdInfoPageRouteArgs>(name);
+}
+
+class AccountHouseholdInfoPageRouteArgs {
+  const AccountHouseholdInfoPageRouteArgs({
+    this.key,
+    required this.userInfo,
+  });
+
+  final Key? key;
+
+  final UserInfo? userInfo;
+
+  @override
+  String toString() {
+    return 'AccountHouseholdInfoPageRouteArgs{key: $key, userInfo: $userInfo}';
+  }
+}
+
+/// generated route for
+/// [AccountNotificationPage]
+class AccountNotificationPageRoute
+    extends PageRouteInfo<AccountNotificationPageRouteArgs> {
+  AccountNotificationPageRoute({
+    Key? key,
+    required UserInfo? userInfo,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AccountNotificationPageRoute.name,
+          args: AccountNotificationPageRouteArgs(
+            key: key,
+            userInfo: userInfo,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'AccountNotificationPageRoute';
+
+  static const PageInfo<AccountNotificationPageRouteArgs> page =
+      PageInfo<AccountNotificationPageRouteArgs>(name);
+}
+
+class AccountNotificationPageRouteArgs {
+  const AccountNotificationPageRouteArgs({
+    this.key,
+    required this.userInfo,
+  });
+
+  final Key? key;
+
+  final UserInfo? userInfo;
+
+  @override
+  String toString() {
+    return 'AccountNotificationPageRouteArgs{key: $key, userInfo: $userInfo}';
+  }
+}
+
+/// generated route for
+/// [AccountProfilePage]
+class AccountProfilePageRoute
+    extends PageRouteInfo<AccountProfilePageRouteArgs> {
+  AccountProfilePageRoute({
+    Key? key,
+    required UserInfo? userInfo,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AccountProfilePageRoute.name,
+          args: AccountProfilePageRouteArgs(
+            key: key,
+            userInfo: userInfo,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'AccountProfilePageRoute';
+
+  static const PageInfo<AccountProfilePageRouteArgs> page =
+      PageInfo<AccountProfilePageRouteArgs>(name);
+}
+
+class AccountProfilePageRouteArgs {
+  const AccountProfilePageRouteArgs({
+    this.key,
+    required this.userInfo,
+  });
+
+  final Key? key;
+
+  final UserInfo? userInfo;
+
+  @override
+  String toString() {
+    return 'AccountProfilePageRouteArgs{key: $key, userInfo: $userInfo}';
+  }
 }
 
 /// generated route for
@@ -388,6 +562,20 @@ class VerificationCodePageRouteArgs {
   String toString() {
     return 'VerificationCodePageRouteArgs{key: $key, userId: $userId, userName: $userName, entryMode: $entryMode}';
   }
+}
+
+/// generated route for
+/// [WelcomeAccountSetupPage]
+class WelcomeAccountSetupPageRoute extends PageRouteInfo<void> {
+  const WelcomeAccountSetupPageRoute({List<PageRouteInfo>? children})
+      : super(
+          WelcomeAccountSetupPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'WelcomeAccountSetupPageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

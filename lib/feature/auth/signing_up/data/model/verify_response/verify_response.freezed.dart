@@ -20,14 +20,14 @@ VerifyResponse _$VerifyResponseFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$VerifyResponse {
-  @JsonKey(name: "success")
-  bool? get success => throw _privateConstructorUsedError;
   @JsonKey(name: "userId")
   String? get userId => throw _privateConstructorUsedError;
   @JsonKey(name: "token")
   String? get token => throw _privateConstructorUsedError;
   @JsonKey(name: "refreshToken")
   String? get refreshToken => throw _privateConstructorUsedError;
+  @JsonKey(name: "message")
+  String? get message => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,10 +42,10 @@ abstract class $VerifyResponseCopyWith<$Res> {
       _$VerifyResponseCopyWithImpl<$Res, VerifyResponse>;
   @useResult
   $Res call(
-      {@JsonKey(name: "success") bool? success,
-      @JsonKey(name: "userId") String? userId,
+      {@JsonKey(name: "userId") String? userId,
       @JsonKey(name: "token") String? token,
-      @JsonKey(name: "refreshToken") String? refreshToken});
+      @JsonKey(name: "refreshToken") String? refreshToken,
+      @JsonKey(name: "message") String? message});
 }
 
 /// @nodoc
@@ -61,16 +61,12 @@ class _$VerifyResponseCopyWithImpl<$Res, $Val extends VerifyResponse>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? success = freezed,
     Object? userId = freezed,
     Object? token = freezed,
     Object? refreshToken = freezed,
+    Object? message = freezed,
   }) {
     return _then(_value.copyWith(
-      success: freezed == success
-          ? _value.success
-          : success // ignore: cast_nullable_to_non_nullable
-              as bool?,
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -82,6 +78,10 @@ class _$VerifyResponseCopyWithImpl<$Res, $Val extends VerifyResponse>
       refreshToken: freezed == refreshToken
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -96,10 +96,10 @@ abstract class _$$VerifyResponseImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "success") bool? success,
-      @JsonKey(name: "userId") String? userId,
+      {@JsonKey(name: "userId") String? userId,
       @JsonKey(name: "token") String? token,
-      @JsonKey(name: "refreshToken") String? refreshToken});
+      @JsonKey(name: "refreshToken") String? refreshToken,
+      @JsonKey(name: "message") String? message});
 }
 
 /// @nodoc
@@ -113,16 +113,12 @@ class __$$VerifyResponseImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? success = freezed,
     Object? userId = freezed,
     Object? token = freezed,
     Object? refreshToken = freezed,
+    Object? message = freezed,
   }) {
     return _then(_$VerifyResponseImpl(
-      success: freezed == success
-          ? _value.success
-          : success // ignore: cast_nullable_to_non_nullable
-              as bool?,
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -135,6 +131,10 @@ class __$$VerifyResponseImplCopyWithImpl<$Res>
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -143,17 +143,14 @@ class __$$VerifyResponseImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$VerifyResponseImpl implements _VerifyResponse {
   const _$VerifyResponseImpl(
-      {@JsonKey(name: "success") this.success,
-      @JsonKey(name: "userId") this.userId,
+      {@JsonKey(name: "userId") this.userId,
       @JsonKey(name: "token") this.token,
-      @JsonKey(name: "refreshToken") this.refreshToken});
+      @JsonKey(name: "refreshToken") this.refreshToken,
+      @JsonKey(name: "message") this.message});
 
   factory _$VerifyResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$VerifyResponseImplFromJson(json);
 
-  @override
-  @JsonKey(name: "success")
-  final bool? success;
   @override
   @JsonKey(name: "userId")
   final String? userId;
@@ -163,10 +160,13 @@ class _$VerifyResponseImpl implements _VerifyResponse {
   @override
   @JsonKey(name: "refreshToken")
   final String? refreshToken;
+  @override
+  @JsonKey(name: "message")
+  final String? message;
 
   @override
   String toString() {
-    return 'VerifyResponse(success: $success, userId: $userId, token: $token, refreshToken: $refreshToken)';
+    return 'VerifyResponse(userId: $userId, token: $token, refreshToken: $refreshToken, message: $message)';
   }
 
   @override
@@ -174,17 +174,17 @@ class _$VerifyResponseImpl implements _VerifyResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$VerifyResponseImpl &&
-            (identical(other.success, success) || other.success == success) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.token, token) || other.token == token) &&
             (identical(other.refreshToken, refreshToken) ||
-                other.refreshToken == refreshToken));
+                other.refreshToken == refreshToken) &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, success, userId, token, refreshToken);
+      Object.hash(runtimeType, userId, token, refreshToken, message);
 
   @JsonKey(ignore: true)
   @override
@@ -203,18 +203,14 @@ class _$VerifyResponseImpl implements _VerifyResponse {
 
 abstract class _VerifyResponse implements VerifyResponse {
   const factory _VerifyResponse(
-          {@JsonKey(name: "success") final bool? success,
-          @JsonKey(name: "userId") final String? userId,
-          @JsonKey(name: "token") final String? token,
-          @JsonKey(name: "refreshToken") final String? refreshToken}) =
-      _$VerifyResponseImpl;
+      {@JsonKey(name: "userId") final String? userId,
+      @JsonKey(name: "token") final String? token,
+      @JsonKey(name: "refreshToken") final String? refreshToken,
+      @JsonKey(name: "message") final String? message}) = _$VerifyResponseImpl;
 
   factory _VerifyResponse.fromJson(Map<String, dynamic> json) =
       _$VerifyResponseImpl.fromJson;
 
-  @override
-  @JsonKey(name: "success")
-  bool? get success;
   @override
   @JsonKey(name: "userId")
   String? get userId;
@@ -224,6 +220,9 @@ abstract class _VerifyResponse implements VerifyResponse {
   @override
   @JsonKey(name: "refreshToken")
   String? get refreshToken;
+  @override
+  @JsonKey(name: "message")
+  String? get message;
   @override
   @JsonKey(ignore: true)
   _$$VerifyResponseImplCopyWith<_$VerifyResponseImpl> get copyWith =>

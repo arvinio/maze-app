@@ -325,7 +325,6 @@ mixin _$LoginState {
   LoginStatus get loginStatus => throw _privateConstructorUsedError;
   LoginResponse? get loginResponse => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
-  String? get errorCode => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LoginStateCopyWith<LoginState> get copyWith =>
@@ -341,8 +340,7 @@ abstract class $LoginStateCopyWith<$Res> {
   $Res call(
       {LoginStatus loginStatus,
       LoginResponse? loginResponse,
-      String? errorMessage,
-      String? errorCode});
+      String? errorMessage});
 
   $LoginResponseCopyWith<$Res>? get loginResponse;
 }
@@ -363,7 +361,6 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
     Object? loginStatus = null,
     Object? loginResponse = freezed,
     Object? errorMessage = freezed,
-    Object? errorCode = freezed,
   }) {
     return _then(_value.copyWith(
       loginStatus: null == loginStatus
@@ -377,10 +374,6 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      errorCode: freezed == errorCode
-          ? _value.errorCode
-          : errorCode // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -409,8 +402,7 @@ abstract class _$$LoginStateImplCopyWith<$Res>
   $Res call(
       {LoginStatus loginStatus,
       LoginResponse? loginResponse,
-      String? errorMessage,
-      String? errorCode});
+      String? errorMessage});
 
   @override
   $LoginResponseCopyWith<$Res>? get loginResponse;
@@ -430,7 +422,6 @@ class __$$LoginStateImplCopyWithImpl<$Res>
     Object? loginStatus = null,
     Object? loginResponse = freezed,
     Object? errorMessage = freezed,
-    Object? errorCode = freezed,
   }) {
     return _then(_$LoginStateImpl(
       loginStatus: null == loginStatus
@@ -445,10 +436,6 @@ class __$$LoginStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      errorCode: freezed == errorCode
-          ? _value.errorCode
-          : errorCode // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -459,8 +446,7 @@ class _$LoginStateImpl implements _LoginState {
   const _$LoginStateImpl(
       {this.loginStatus = LoginStatus.init,
       this.loginResponse,
-      this.errorMessage,
-      this.errorCode});
+      this.errorMessage});
 
   @override
   @JsonKey()
@@ -469,12 +455,10 @@ class _$LoginStateImpl implements _LoginState {
   final LoginResponse? loginResponse;
   @override
   final String? errorMessage;
-  @override
-  final String? errorCode;
 
   @override
   String toString() {
-    return 'LoginState(loginStatus: $loginStatus, loginResponse: $loginResponse, errorMessage: $errorMessage, errorCode: $errorCode)';
+    return 'LoginState(loginStatus: $loginStatus, loginResponse: $loginResponse, errorMessage: $errorMessage)';
   }
 
   @override
@@ -487,14 +471,12 @@ class _$LoginStateImpl implements _LoginState {
             (identical(other.loginResponse, loginResponse) ||
                 other.loginResponse == loginResponse) &&
             (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage) &&
-            (identical(other.errorCode, errorCode) ||
-                other.errorCode == errorCode));
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, loginStatus, loginResponse, errorMessage, errorCode);
+  int get hashCode =>
+      Object.hash(runtimeType, loginStatus, loginResponse, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -507,8 +489,7 @@ abstract class _LoginState implements LoginState {
   const factory _LoginState(
       {final LoginStatus loginStatus,
       final LoginResponse? loginResponse,
-      final String? errorMessage,
-      final String? errorCode}) = _$LoginStateImpl;
+      final String? errorMessage}) = _$LoginStateImpl;
 
   @override
   LoginStatus get loginStatus;
@@ -516,8 +497,6 @@ abstract class _LoginState implements LoginState {
   LoginResponse? get loginResponse;
   @override
   String? get errorMessage;
-  @override
-  String? get errorCode;
   @override
   @JsonKey(ignore: true)
   _$$LoginStateImplCopyWith<_$LoginStateImpl> get copyWith =>

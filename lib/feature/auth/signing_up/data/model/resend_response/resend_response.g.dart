@@ -8,15 +8,13 @@ part of 'resend_response.dart';
 
 _$ResendResponseImpl _$$ResendResponseImplFromJson(Map<String, dynamic> json) =>
     _$ResendResponseImpl(
-      success: json['success'] as bool?,
       userId: json['userId'] as String?,
-      code: json['code'] as String?,
+      message: json['message'] as String?,
     );
 
 Map<String, dynamic> _$$ResendResponseImplToJson(
         _$ResendResponseImpl instance) =>
     <String, dynamic>{
-      'success': instance.success,
       'userId': instance.userId,
-      'code': instance.code,
+      'message': instance.message,
     };
