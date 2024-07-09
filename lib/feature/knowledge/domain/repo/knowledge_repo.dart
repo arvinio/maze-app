@@ -1,6 +1,7 @@
 import 'package:maze_app/core/network/model/api_response.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/app_category.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/article.dart';
+import 'package:maze_app/feature/knowledge/domain/entity/create_edit_article.dart';
 
 abstract interface class KnowledgeRepo {
   Future<ApiResponse<List<Article>>> getArticles();
@@ -11,7 +12,7 @@ abstract interface class KnowledgeRepo {
   Future<ApiResponse<List<AppCategory>>> getCategories();
   Future<ApiResponse<Article>> getArticle(String id);
   // Admin features
-  Future<ApiResponse<bool>> createArticle(Article article);
+  Future<ApiResponse<bool>> createArticle(CreateEditArticle article);
   Future<ApiResponse<bool>> deleteArticle(String id);
-  Future<ApiResponse<bool>> editArticle(Article article);
+  Future<ApiResponse<bool>> editArticle(CreateEditArticle article);
 }

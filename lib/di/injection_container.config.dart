@@ -91,9 +91,9 @@ import 'package:maze_app/feature/auth/signup/data/data_source/signup_remote_data
 import 'package:maze_app/feature/auth/signup/data/data_source/signup_remote_data_source_impl.dart'
     as _i59;
 import 'package:maze_app/feature/auth/signup/data/repository/signup_repository_impl.dart'
-    as _i72;
-import 'package:maze_app/feature/auth/signup/domain/repository/signup_repository.dart'
     as _i71;
+import 'package:maze_app/feature/auth/signup/domain/repository/signup_repository.dart'
+    as _i70;
 import 'package:maze_app/feature/auth/signup/presentation/bloc/signup_bloc.dart'
     as _i73;
 import 'package:maze_app/feature/intro/data/datasource/intro_local_datasource.dart'
@@ -105,7 +105,7 @@ import 'package:maze_app/feature/intro/domain/usecase/get_is_first_run.dart'
 import 'package:maze_app/feature/intro/domain/usecase/set_is_first_run.dart'
     as _i45;
 import 'package:maze_app/feature/intro/presentation/cubit/intro_cubit.dart'
-    as _i70;
+    as _i69;
 import 'package:maze_app/feature/knowledge/data/datasource/knowledge_remote_datasource.dart'
     as _i32;
 import 'package:maze_app/feature/knowledge/data/repo/knowledge_repo_impl.dart'
@@ -137,7 +137,7 @@ import 'package:maze_app/feature/knowledge/presentation/article/cubit/article_cu
 import 'package:maze_app/feature/knowledge/presentation/bookmarks/cubit/bookmarks_cubit.dart'
     as _i64;
 import 'package:maze_app/feature/knowledge/presentation/knowledge/cubit/knowledge_cubit.dart'
-    as _i69;
+    as _i72;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i3;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -285,7 +285,14 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i67.LoginBloc(gh<_i36.LoginRepository>()));
     gh.factory<_i68.CreatePassBloc>(
         () => _i68.CreatePassBloc(gh<_i65.CreatePasswordRepository>()));
-    gh.factory<_i69.KnowledgeCubit>(() => _i69.KnowledgeCubit(
+    gh.factory<_i69.IntroCubit>(() => _i69.IntroCubit(
+          getIsFirstRun: gh<_i44.GetIsFirstRun>(),
+          setIsFirstRun: gh<_i45.SetIsFirstRun>(),
+          router: gh<_i6.AppRouter>(),
+        ));
+    gh.factory<_i70.SignupRepository>(
+        () => _i71.SignupRepositoryImpl(gh<_i58.SignupRemoteDataSource>()));
+    gh.factory<_i72.KnowledgeCubit>(() => _i72.KnowledgeCubit(
           getArticles: gh<_i52.GetArticles>(),
           router: gh<_i6.AppRouter>(),
           searchArticles: gh<_i56.SearchArticles>(),
@@ -293,16 +300,12 @@ extension GetItInjectableX on _i1.GetIt {
           setBookmark: gh<_i57.SetBookmark>(),
           removeBookmark: gh<_i55.RemoveBookmark>(),
           getArticle: gh<_i51.GetArticle>(),
+          createArticle: gh<_i48.CreateArticle>(),
+          deleteArticle: gh<_i49.DeleteArticle>(),
+          editArticle: gh<_i50.EditArticle>(),
         ));
-    gh.factory<_i70.IntroCubit>(() => _i70.IntroCubit(
-          getIsFirstRun: gh<_i44.GetIsFirstRun>(),
-          setIsFirstRun: gh<_i45.SetIsFirstRun>(),
-          router: gh<_i6.AppRouter>(),
-        ));
-    gh.factory<_i71.SignupRepository>(
-        () => _i72.SignupRepositoryImpl(gh<_i58.SignupRemoteDataSource>()));
     gh.factory<_i73.SignupBloc>(
-        () => _i73.SignupBloc(gh<_i71.SignupRepository>()));
+        () => _i73.SignupBloc(gh<_i70.SignupRepository>()));
     gh.factory<_i74.TokenManager>(() => _i74.TokenManager(
           gh<_i14.SettingsManager>(),
           gh<_i61.TokenRepository>(),

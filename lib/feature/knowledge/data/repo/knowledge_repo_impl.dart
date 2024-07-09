@@ -3,6 +3,7 @@ import 'package:maze_app/core/network/model/api_response.dart';
 import 'package:maze_app/feature/knowledge/data/datasource/knowledge_remote_datasource.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/app_category.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/article.dart';
+import 'package:maze_app/feature/knowledge/domain/entity/create_edit_article.dart';
 import 'package:maze_app/feature/knowledge/domain/repo/knowledge_repo.dart';
 
 @Injectable(as: KnowledgeRepo)
@@ -81,9 +82,16 @@ class KnowledgeRepoImpl implements KnowledgeRepo {
   }
 
   @override
-  Future<ApiResponse<bool>> createArticle(Article article) {
-    // TODO: implement createArticle
-    throw UnimplementedError();
+  Future<ApiResponse<bool>> createArticle(CreateEditArticle article) async {
+    final result = await _remoteDatasource.createArticle(article);
+    return result.when(
+      completed: (data, statusCode) {
+        return ApiResponse.completed(data: data.success);
+      },
+      error: (apiError) {
+        return ApiResponse.error(apiError: apiError);
+      },
+    );
   }
 
   @override
@@ -93,7 +101,7 @@ class KnowledgeRepoImpl implements KnowledgeRepo {
   }
 
   @override
-  Future<ApiResponse<bool>> editArticle(Article article) {
+  Future<ApiResponse<bool>> editArticle(CreateEditArticle article) {
     // TODO: implement editArticle
     throw UnimplementedError();
   }
@@ -149,7 +157,8 @@ class KnowledgeRepoImpl implements KnowledgeRepo {
   Future<ApiResponse<bool>> removeBookmark(String id) async {
     final result = await _remoteDatasource.removeBookmark(id);
     return result.when(
-      completed: (data, statusCode) => ApiResponse.completed(data: data.success),
+      completed: (data, statusCode) =>
+          ApiResponse.completed(data: data.success),
       error: (apiError) => ApiResponse.error(apiError: apiError),
     );
   }
@@ -158,7 +167,8 @@ class KnowledgeRepoImpl implements KnowledgeRepo {
   Future<ApiResponse<bool>> setBookmark(String id) async {
     final result = await _remoteDatasource.setBookmark(id);
     return result.when(
-      completed: (data, statusCode) => ApiResponse.completed(data: data.success),
+      completed: (data, statusCode) =>
+          ApiResponse.completed(data: data.success),
       error: (apiError) => ApiResponse.error(apiError: apiError),
     );
   }
