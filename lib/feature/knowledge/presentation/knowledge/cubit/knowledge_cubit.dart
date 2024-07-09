@@ -77,12 +77,15 @@ class KnowledgeCubit extends Cubit<KnowledgeState> {
   Future<void> createArticle(CreateEditArticle article) async {
     final result = await _createArticle(article);
     result.when(
-      completed: (data, statusCode) {
+      completed: (data, statusCode) async {
+        await _load();
         _router.maybePop();
       },
       error: (apiError) {},
     );
   }
+
+  
 
   List<DropdownMenuEntry> getCategoriesDropDown() {
     final List<DropdownMenuEntry> dropDownMenu = [];

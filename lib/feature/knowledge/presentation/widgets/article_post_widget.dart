@@ -26,7 +26,9 @@ class AriclePostWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(16.r),
               child: FittedBox(
                 fit: BoxFit.cover,
-                child: Image.network(article.imageUrl),
+                child: Image.network(
+                  article.imageUrl,
+                ),
               ),
             ),
           ),

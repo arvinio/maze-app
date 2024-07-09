@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
+import 'package:maze_app/core/presentation/widget/page_loading.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/knowledge/presentation/article/cubit/article_cubit.dart';
@@ -64,12 +65,12 @@ class _ArticlePageState extends State<ArticlePage> {
                   ],
                 ));
           case LoadingArticle _:
-            return const Center(
-              child: Text('Loading'),
-            );
+            return const PageLoading();
           case LoadingFailed error:
-            return Center(
-              child: Text(error.error.message),
+            return BasePageWidget(
+              child: Center(
+                child: Text(error.error.message),
+              ),
             );
           default:
             return const BasePageWidget(

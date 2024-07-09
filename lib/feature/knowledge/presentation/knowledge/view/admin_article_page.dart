@@ -131,7 +131,6 @@ class _AdminArticlePageState extends State<AdminArticlePage> {
                                   title: _titleController.text,
                                   categoryID: _dropDownValue,
                                   image: file?.path,
-                                  
                                 ));
                           },
                         ),
@@ -141,8 +140,10 @@ class _AdminArticlePageState extends State<AdminArticlePage> {
                 ],
               );
             } else {
-              return const Center(
-                child: Text('state is not right'),
+              return const BasePageWidget(
+                child: Center(
+                  child: Text('state is not right'),
+                ),
               );
             }
           },
