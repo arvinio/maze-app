@@ -39,7 +39,7 @@ class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
 
      },
          error: (apiError){
-       emit(state.copyWith(verifyStatus: VerifyStatus.failure));
+       emit(state.copyWith(verifyStatus: VerifyStatus.failure,errorMessage: apiError.message));
      });
   }
 
@@ -50,11 +50,11 @@ class VerifyBloc extends Bloc<VerifyEvent, VerifyState> {
     final apiResponse=await repository.resend(userId: event.userId);
     apiResponse.when(completed: (data,int? statusCode){
       ResendResponse response=data;
-      emit(state.copyWith(resendResponse: response,verifyStatus: VerifyStatus.resendSuccess));
+      emit(state.copyWith(verifyStatus: VerifyStatus.resendSuccess,resendResponse: response));
 
     },
         error: (apiError){
-          emit(state.copyWith(verifyStatus: VerifyStatus.failure));
+          emit(state.copyWith(verifyStatus: VerifyStatus.resendFailure,errorMessage: apiError.message));
         });
   }
 }

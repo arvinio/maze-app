@@ -6,16 +6,15 @@ enum VerifyStatus {
   loading,
   success,
   resendSuccess,
-  failure;
+  failure,
+  resendFailure;
 
   bool get isInit => this == VerifyStatus.init;
-
   bool get isLoading => this == VerifyStatus.loading;
-
   bool get isSuccess => this == VerifyStatus.success;
   bool get isResendSuccess => this == VerifyStatus.resendSuccess;
-
   bool get isFailure => this == VerifyStatus.failure;
+  bool get isResendFailure => this == VerifyStatus.resendFailure;
 }
 
 @freezed
@@ -23,6 +22,8 @@ class VerifyState with _$VerifyState {
   const factory VerifyState({
     @Default(VerifyStatus.init) VerifyStatus verifyStatus,
     VerifyResponse? verifyResponse,
-    ResendResponse? resendResponse
-})=_VerifyState;
+    ResendResponse? resendResponse,
+    String? errorMessage
+
+  })=_VerifyState;
 }

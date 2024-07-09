@@ -20,5 +20,7 @@ class CreatePassState with _$CreatePassState {
   const factory CreatePassState({
     @Default(CreatePassStatus.init) CreatePassStatus createPassStatus,
     CreatePasswordResponse? createPassResponse,
+    String? errorMessage
+
   })=_CreatePassState;
 }

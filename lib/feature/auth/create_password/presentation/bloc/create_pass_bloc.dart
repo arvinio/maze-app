@@ -31,7 +31,7 @@ class CreatePassBloc extends Bloc<CreatePassEvent, CreatePassState> {
 
     },
         error: (apiError){
-          emit(state.copyWith(createPassStatus: CreatePassStatus.failure));
+          emit(state.copyWith(createPassStatus: CreatePassStatus.failure,errorMessage: apiError.message));
         });
   }
 }

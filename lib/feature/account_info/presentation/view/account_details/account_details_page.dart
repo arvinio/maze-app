@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
@@ -13,7 +14,7 @@ import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/account_info/domain/entity/user_info.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 
 @RoutePage()
 class AccountDetailsPage extends StatefulWidget  {
@@ -33,6 +34,11 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
   late final ValueNotifier<bool> _keyboardVisibilityValueNotifier;
   UserInfo? userInfo;
   String? _birthDate;
+  final List<DateTime?> _dialogCalendarPickerValue = [
+    DateTime.now().add(const Duration(days: 1)),
+
+  ];
+
 
   @override
   void initState() {
@@ -136,18 +142,15 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                 readOnly: true,
 
                onTap: (){
-                 _selectDate();
+                 _selectDate(context,(date) {
+                   _birthDateController.text='${date![0]!.day} ${monthList[date![0]!.month-1]} ${date![0]!.year}';
+                      _birthDate='${date![0]!.year}/${date![0]!.month}/${date![0]!.day}';
+
+                 });
                },
               ),
-              /* CalendarDatePicker2(
-              config: CalendarDatePicker2Config(
-                calendarType: CalendarDatePicker2Type.multi,
-              ),
-             // value: _dates,
-              //onValueChanged: (dates) => _dates = dates,
-            ),)*/
 
-              (!_keyboardVisibilityValueNotifier.value)? const Spacer(): SizedBox(height: 0.04*h,),
+            (!_keyboardVisibilityValueNotifier.value)? const Spacer(): SizedBox(height: 0.04*h,),
               ListTile(
                 title: CustomText(
                   appStrings.showBirthday,
@@ -167,10 +170,25 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                 child: CustomButton.submit(
                   text: appStrings.continueSteps,
                   onPressed: () {
-                    userInfo?.firstName=_firstNameController.text;
-                    userInfo?.lastName=_lastNameController.text;
-                    userInfo?.birthDate='1985/10/02';//_birthDate
-                    context.pushRoute( AccountProfilePageRoute(userInfo: userInfo!));
+                    if(_firstNameController.text.isNotEmpty && _lastNameController.text.isNotEmpty
+                    && _birthDateController.text.isNotEmpty) {
+                      userInfo?.firstName = _firstNameController.text;
+                      userInfo?.lastName = _lastNameController.text;
+                      userInfo?.birthDate = _birthDate;
+                      context.pushRoute(
+                          AccountProfilePageRoute(userInfo: userInfo!));
+                    }else
+                      {
+                        Fluttertoast.showToast(
+                          msg:'Fill in the fields',
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.black,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                      }
                   },),
               ),
 
@@ -178,17 +196,39 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
         ));
   }
 
-  Future<void> _selectDate() async {
-    DateTime? _picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000), lastDate: DateTime(2100),);
-    if (_picked != null) {
-      _birthDateController.text =
-      '${_picked.day} ${monthList[_picked.month]} ${_picked.year}';
-     _birthDate='${_picked.year}/${_picked.month}/${_picked.day}' ;
-    }
+
+  Future<void> _selectDate( BuildContext context,Function(List<DateTime?>? date) onSelectDate) async {
+      final date = (await showCalendarDatePicker2Dialog(
+        context: context,
+        config: config,
+        dialogSize: const Size(325, 370),
+        borderRadius: BorderRadius.circular(15),
+        value: _dialogCalendarPickerValue,
+        dialogBackgroundColor: Colors.white,
+      ));
+
+    if (date != null) onSelectDate(date);
   }
+
+  final config = CalendarDatePicker2WithActionButtonsConfig(
+    calendarViewScrollPhysics: const NeverScrollableScrollPhysics(),
+    calendarType: CalendarDatePicker2Type.single,
+    selectedDayHighlightColor: const Color(0xff5AA700),
+    closeDialogOnCancelTapped: true,
+    firstDayOfWeek: 1,
+    weekdayLabelTextStyle: const TextStyle(
+      color: Colors.black87,
+      fontWeight: FontWeight.bold,
+    ),
+    controlsTextStyle: const TextStyle(
+      color: Colors.black,
+      fontSize: 15,
+      fontWeight: FontWeight.bold,
+    ),
+    centerAlignModePicker: true,
+    customModePickerIcon: const SizedBox(),
+
+  );
 
   final List<String> monthList = [
     "January",
@@ -204,5 +244,6 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
     "November",
     "December"
   ];
+
 
 }

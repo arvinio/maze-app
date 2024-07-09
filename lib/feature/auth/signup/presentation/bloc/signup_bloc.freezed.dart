@@ -16,42 +16,43 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SignupEvent {
-  String get userName => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userName) init,
+    required TResult Function() init,
+    required TResult Function(String userName) signup,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userName)? init,
+    TResult? Function()? init,
+    TResult? Function(String userName)? signup,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userName)? init,
+    TResult Function()? init,
+    TResult Function(String userName)? signup,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InitEvent value) init,
+    required TResult Function(_SignupEvent value) signup,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitEvent value)? init,
+    TResult? Function(_SignupEvent value)? signup,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitEvent value)? init,
+    TResult Function(_SignupEvent value)? signup,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $SignupEventCopyWith<SignupEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -60,8 +61,6 @@ abstract class $SignupEventCopyWith<$Res> {
   factory $SignupEventCopyWith(
           SignupEvent value, $Res Function(SignupEvent) then) =
       _$SignupEventCopyWithImpl<$Res, SignupEvent>;
-  @useResult
-  $Res call({String userName});
 }
 
 /// @nodoc
@@ -73,30 +72,13 @@ class _$SignupEventCopyWithImpl<$Res, $Val extends SignupEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? userName = null,
-  }) {
-    return _then(_value.copyWith(
-      userName: null == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$InitEventImplCopyWith<$Res>
-    implements $SignupEventCopyWith<$Res> {
+abstract class _$$InitEventImplCopyWith<$Res> {
   factory _$$InitEventImplCopyWith(
           _$InitEventImpl value, $Res Function(_$InitEventImpl) then) =
       __$$InitEventImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String userName});
 }
 
 /// @nodoc
@@ -106,76 +88,54 @@ class __$$InitEventImplCopyWithImpl<$Res>
   __$$InitEventImplCopyWithImpl(
       _$InitEventImpl _value, $Res Function(_$InitEventImpl) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? userName = null,
-  }) {
-    return _then(_$InitEventImpl(
-      userName: null == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$InitEventImpl implements _InitEvent {
-  const _$InitEventImpl({required this.userName});
-
-  @override
-  final String userName;
+  const _$InitEventImpl();
 
   @override
   String toString() {
-    return 'SignupEvent.init(userName: $userName)';
+    return 'SignupEvent.init()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$InitEventImpl &&
-            (identical(other.userName, userName) ||
-                other.userName == userName));
+        (other.runtimeType == runtimeType && other is _$InitEventImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userName);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$InitEventImplCopyWith<_$InitEventImpl> get copyWith =>
-      __$$InitEventImplCopyWithImpl<_$InitEventImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userName) init,
+    required TResult Function() init,
+    required TResult Function(String userName) signup,
   }) {
-    return init(userName);
+    return init();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userName)? init,
+    TResult? Function()? init,
+    TResult? Function(String userName)? signup,
   }) {
-    return init?.call(userName);
+    return init?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userName)? init,
+    TResult Function()? init,
+    TResult Function(String userName)? signup,
     required TResult orElse(),
   }) {
     if (init != null) {
-      return init(userName);
+      return init();
     }
     return orElse();
   }
@@ -184,6 +144,7 @@ class _$InitEventImpl implements _InitEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InitEvent value) init,
+    required TResult Function(_SignupEvent value) signup,
   }) {
     return init(this);
   }
@@ -192,6 +153,7 @@ class _$InitEventImpl implements _InitEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitEvent value)? init,
+    TResult? Function(_SignupEvent value)? signup,
   }) {
     return init?.call(this);
   }
@@ -200,6 +162,7 @@ class _$InitEventImpl implements _InitEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitEvent value)? init,
+    TResult Function(_SignupEvent value)? signup,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -210,13 +173,141 @@ class _$InitEventImpl implements _InitEvent {
 }
 
 abstract class _InitEvent implements SignupEvent {
-  const factory _InitEvent({required final String userName}) = _$InitEventImpl;
+  const factory _InitEvent() = _$InitEventImpl;
+}
+
+/// @nodoc
+abstract class _$$SignupEventImplCopyWith<$Res> {
+  factory _$$SignupEventImplCopyWith(
+          _$SignupEventImpl value, $Res Function(_$SignupEventImpl) then) =
+      __$$SignupEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String userName});
+}
+
+/// @nodoc
+class __$$SignupEventImplCopyWithImpl<$Res>
+    extends _$SignupEventCopyWithImpl<$Res, _$SignupEventImpl>
+    implements _$$SignupEventImplCopyWith<$Res> {
+  __$$SignupEventImplCopyWithImpl(
+      _$SignupEventImpl _value, $Res Function(_$SignupEventImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userName = null,
+  }) {
+    return _then(_$SignupEventImpl(
+      userName: null == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SignupEventImpl implements _SignupEvent {
+  const _$SignupEventImpl({required this.userName});
 
   @override
-  String get userName;
+  final String userName;
+
   @override
+  String toString() {
+    return 'SignupEvent.signup(userName: $userName)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SignupEventImpl &&
+            (identical(other.userName, userName) ||
+                other.userName == userName));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, userName);
+
   @JsonKey(ignore: true)
-  _$$InitEventImplCopyWith<_$InitEventImpl> get copyWith =>
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SignupEventImplCopyWith<_$SignupEventImpl> get copyWith =>
+      __$$SignupEventImplCopyWithImpl<_$SignupEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function(String userName) signup,
+  }) {
+    return signup(userName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function(String userName)? signup,
+  }) {
+    return signup?.call(userName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function(String userName)? signup,
+    required TResult orElse(),
+  }) {
+    if (signup != null) {
+      return signup(userName);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitEvent value) init,
+    required TResult Function(_SignupEvent value) signup,
+  }) {
+    return signup(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_InitEvent value)? init,
+    TResult? Function(_SignupEvent value)? signup,
+  }) {
+    return signup?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitEvent value)? init,
+    TResult Function(_SignupEvent value)? signup,
+    required TResult orElse(),
+  }) {
+    if (signup != null) {
+      return signup(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SignupEvent implements SignupEvent {
+  const factory _SignupEvent({required final String userName}) =
+      _$SignupEventImpl;
+
+  String get userName;
+  @JsonKey(ignore: true)
+  _$$SignupEventImplCopyWith<_$SignupEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -225,7 +316,6 @@ mixin _$SignupState {
   SignupStatus get signupStatus => throw _privateConstructorUsedError;
   SignupResponse? get signupResponse => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
-  String? get errorCode => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SignupStateCopyWith<SignupState> get copyWith =>
@@ -241,8 +331,7 @@ abstract class $SignupStateCopyWith<$Res> {
   $Res call(
       {SignupStatus signupStatus,
       SignupResponse? signupResponse,
-      String? errorMessage,
-      String? errorCode});
+      String? errorMessage});
 
   $SignupResponseCopyWith<$Res>? get signupResponse;
 }
@@ -263,7 +352,6 @@ class _$SignupStateCopyWithImpl<$Res, $Val extends SignupState>
     Object? signupStatus = null,
     Object? signupResponse = freezed,
     Object? errorMessage = freezed,
-    Object? errorCode = freezed,
   }) {
     return _then(_value.copyWith(
       signupStatus: null == signupStatus
@@ -277,10 +365,6 @@ class _$SignupStateCopyWithImpl<$Res, $Val extends SignupState>
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      errorCode: freezed == errorCode
-          ? _value.errorCode
-          : errorCode // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -309,8 +393,7 @@ abstract class _$$SignupStateImplCopyWith<$Res>
   $Res call(
       {SignupStatus signupStatus,
       SignupResponse? signupResponse,
-      String? errorMessage,
-      String? errorCode});
+      String? errorMessage});
 
   @override
   $SignupResponseCopyWith<$Res>? get signupResponse;
@@ -330,7 +413,6 @@ class __$$SignupStateImplCopyWithImpl<$Res>
     Object? signupStatus = null,
     Object? signupResponse = freezed,
     Object? errorMessage = freezed,
-    Object? errorCode = freezed,
   }) {
     return _then(_$SignupStateImpl(
       signupStatus: null == signupStatus
@@ -345,10 +427,6 @@ class __$$SignupStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      errorCode: freezed == errorCode
-          ? _value.errorCode
-          : errorCode // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -359,8 +437,7 @@ class _$SignupStateImpl implements _SignupState {
   const _$SignupStateImpl(
       {this.signupStatus = SignupStatus.init,
       this.signupResponse,
-      this.errorMessage,
-      this.errorCode});
+      this.errorMessage});
 
   @override
   @JsonKey()
@@ -369,12 +446,10 @@ class _$SignupStateImpl implements _SignupState {
   final SignupResponse? signupResponse;
   @override
   final String? errorMessage;
-  @override
-  final String? errorCode;
 
   @override
   String toString() {
-    return 'SignupState(signupStatus: $signupStatus, signupResponse: $signupResponse, errorMessage: $errorMessage, errorCode: $errorCode)';
+    return 'SignupState(signupStatus: $signupStatus, signupResponse: $signupResponse, errorMessage: $errorMessage)';
   }
 
   @override
@@ -387,14 +462,12 @@ class _$SignupStateImpl implements _SignupState {
             (identical(other.signupResponse, signupResponse) ||
                 other.signupResponse == signupResponse) &&
             (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage) &&
-            (identical(other.errorCode, errorCode) ||
-                other.errorCode == errorCode));
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, signupStatus, signupResponse, errorMessage, errorCode);
+  int get hashCode =>
+      Object.hash(runtimeType, signupStatus, signupResponse, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -407,8 +480,7 @@ abstract class _SignupState implements SignupState {
   const factory _SignupState(
       {final SignupStatus signupStatus,
       final SignupResponse? signupResponse,
-      final String? errorMessage,
-      final String? errorCode}) = _$SignupStateImpl;
+      final String? errorMessage}) = _$SignupStateImpl;
 
   @override
   SignupStatus get signupStatus;
@@ -416,8 +488,6 @@ abstract class _SignupState implements SignupState {
   SignupResponse? get signupResponse;
   @override
   String? get errorMessage;
-  @override
-  String? get errorCode;
   @override
   @JsonKey(ignore: true)
   _$$SignupStateImplCopyWith<_$SignupStateImpl> get copyWith =>

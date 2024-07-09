@@ -146,9 +146,16 @@ class _CustomButtonState extends State<CustomButton> {
                         ),
                       ),
                       widget.showLoading
-                          ? Center(
-                              child:  CustomText('laoding... '),
-                            )
+                          ?Center(
+                            child: SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>( context.scheme().neutralsBackground),
+                              strokeWidth: 2
+                            )),
+                          )
+
                           : Center(
                               child: CustomText(
                                 widget.text,
