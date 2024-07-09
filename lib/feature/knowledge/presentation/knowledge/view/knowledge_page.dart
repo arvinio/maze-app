@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
@@ -48,7 +49,7 @@ class _KnowledgePageState extends State<KnowledgePage> {
               onPressed: () {
                 context.pushRoute(AdminArticlePageRoute());
               },
-              icon: appAssets.bookmarkIcon.svg(),
+              icon: const Icon(Icons.add),
             ),
         ],
       ),
@@ -60,13 +61,10 @@ class _KnowledgePageState extends State<KnowledgePage> {
                 itemCount: loaded.articles.length,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    child: AriclePostWidget(article: loaded.articles[index]),
-                    onTap: () {
-                      context.read<KnowledgeCubit>().loadArticle(
-                            article: loaded.articles[index],
-                          );
-                    },
-                  );
+                      child: AriclePostWidget(article: loaded.articles[index]),
+                      onTap: () => context
+                          .read<KnowledgeCubit>()
+                          .loadArticle(loaded.articles[index].id));
                 },
               );
 

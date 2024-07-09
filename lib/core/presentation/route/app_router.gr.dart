@@ -65,14 +65,9 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     ArticlePageRoute.name: (routeData) {
-      final args = routeData.argsAs<ArticlePageRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(
-            child: ArticlePage(
-          key: args.key,
-          article: args.article,
-        )),
+        child: WrappedRoute(child: const ArticlePage()),
       );
     },
     BookmarksPageRoute.name: (routeData) {
@@ -327,40 +322,16 @@ class AdminArticlePageRouteArgs {
 
 /// generated route for
 /// [ArticlePage]
-class ArticlePageRoute extends PageRouteInfo<ArticlePageRouteArgs> {
-  ArticlePageRoute({
-    Key? key,
-    required Article article,
-    List<PageRouteInfo>? children,
-  }) : super(
+class ArticlePageRoute extends PageRouteInfo<void> {
+  const ArticlePageRoute({List<PageRouteInfo>? children})
+      : super(
           ArticlePageRoute.name,
-          args: ArticlePageRouteArgs(
-            key: key,
-            article: article,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'ArticlePageRoute';
 
-  static const PageInfo<ArticlePageRouteArgs> page =
-      PageInfo<ArticlePageRouteArgs>(name);
-}
-
-class ArticlePageRouteArgs {
-  const ArticlePageRouteArgs({
-    this.key,
-    required this.article,
-  });
-
-  final Key? key;
-
-  final Article article;
-
-  @override
-  String toString() {
-    return 'ArticlePageRouteArgs{key: $key, article: $article}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

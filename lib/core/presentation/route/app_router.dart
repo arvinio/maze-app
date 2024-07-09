@@ -17,34 +17,42 @@ import 'package:maze_app/feature/auth/signup/presentation/view/signup_page.dart'
 import 'package:maze_app/feature/intro/presentation/view/intro_page.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/article.dart';
 import 'package:maze_app/feature/knowledge/presentation/knowledge/view/admin_article_page.dart';
-import 'package:maze_app/feature/knowledge/presentation/knowledge/view/article_page.dart';
+import 'package:maze_app/feature/knowledge/presentation/article/view/article_page.dart';
 import 'package:maze_app/feature/knowledge/presentation/bookmarks/view/bookmarks_page.dart';
 import 'package:maze_app/feature/knowledge/presentation/knowledge/view/knowledge_page.dart';
 
 part 'app_router.gr.dart';
 
 @AutoRouterConfig(
-  replaceInRouteName: 'Page,Route,Screen',)
+  replaceInRouteName: 'Page,Route,Screen',
+)
 @lazySingleton
 class AppRouter extends _$AppRouter {
   @override
   RouteType get defaultRouteType => const RouteType.adaptive();
   @override
   final List<AutoRoute> routes = [
-
     AutoRoute(path: '/', page: IntroPageRoute.page),
-    AutoRoute(path:'/SignupPage', page: SignupPageRoute.page),
-    AutoRoute(path:'/VerificationCodePage', page: VerificationCodePageRoute.page),
-    AutoRoute(path:'/LoginPage', page: LoginPageRoute.page),
-    AutoRoute(path:'/WelcomePage', page: WelcomePageRoute.page),
-    AutoRoute(path:'/CreatePasswordPage', page: CreatePasswordPageRoute.page),
-    AutoRoute(path:'/AccountDetailsPage', page: AccountDetailsPageRoute.page),
-    AutoRoute(path:'/AccountProfilePage', page: AccountProfilePageRoute.page),
-    AutoRoute(path:'/AccountNotificationPage', page: AccountNotificationPageRoute.page),
-    AutoRoute(path:'/AccountHouseholdInfoPage', page: AccountHouseholdInfoPageRoute.page),
-    AutoRoute(path:'/WelcomeAccountSetupPage', page: WelcomeAccountSetupPageRoute.page),
+    AutoRoute(path: '/SignupPage', page: SignupPageRoute.page),
+    AutoRoute(
+        path: '/VerificationCodePage', page: VerificationCodePageRoute.page),
+    AutoRoute(path: '/LoginPage', page: LoginPageRoute.page),
+    AutoRoute(path: '/WelcomePage', page: WelcomePageRoute.page),
+    AutoRoute(path: '/CreatePasswordPage', page: CreatePasswordPageRoute.page),
+    AutoRoute(path: '/AccountDetailsPage', page: AccountDetailsPageRoute.page),
+    AutoRoute(path: '/AccountProfilePage', page: AccountProfilePageRoute.page),
+    AutoRoute(
+        path: '/AccountNotificationPage',
+        page: AccountNotificationPageRoute.page),
+    AutoRoute(
+        path: '/AccountHouseholdInfoPage',
+        page: AccountHouseholdInfoPageRoute.page),
+    AutoRoute(
+        path: '/WelcomeAccountSetupPage',
+        page: WelcomeAccountSetupPageRoute.page),
     AutoRoute(path: '/HomePage', page: BottomNavigationRoute.page),
     AutoRoute(path: '/ArticlePage', page: ArticlePageRoute.page),
     AutoRoute(path: '/BookmarkPage', page: BookmarksPageRoute.page),
+    AutoRoute(path: '/AdminArticlePage', page: AdminArticlePageRoute.page),
   ];
 }

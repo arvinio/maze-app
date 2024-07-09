@@ -21,7 +21,11 @@ class BookmarksPage extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(create: (_) => inject<BookmarksCubit>(), child: this);
+    // return BlocProvider(create: (_) => inject<BookmarksCubit>(), child: this);
+    return MultiBlocProvider(providers: [
+      BlocProvider(create: (_) => inject<BookmarksCubit>(), child: this),
+      BlocProvider(create: (_) => inject<KnowledgeCubit>(), child: this)
+    ], child: this);
   }
 }
 
@@ -46,13 +50,11 @@ class _BookmarksPageState extends State<BookmarksPage> {
                   itemCount: loaded.articles.length,
                   itemBuilder: (context, index) {
                     return InkWell(
-                      child: AriclePostWidget(article: loaded.articles[index]),
-                      onTap: () {
-                        context.read<KnowledgeCubit>().loadArticle(
-                              article: loaded.articles[index],
-                            );
-                      },
-                    );
+                        child:
+                            AriclePostWidget(article: loaded.articles[index]),
+                        onTap: () => context
+                            .read<BookmarksCubit>()
+                            .loadArticle(loaded.articles[index].id));
                   },
                 );
               } else {
