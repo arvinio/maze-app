@@ -54,7 +54,7 @@ class KnowledgeRemoteDataSourceImpl implements KnowledgeRemoteDatasource {
   ResultFuture<RespEmptyModel> createArticle(CreateEditArticle params) async {
     final data = FormData.fromMap({
       if (params.image != null)
-        'files': [
+        'cover': [
           await MultipartFile.fromFile(params.image!,
               filename: params.image?.split('/').last),
         ],
