@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
+import 'package:maze_app/core/presentation/widget/page_loading.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/knowledge/presentation/bookmarks/cubit/bookmarks_cubit.dart';
@@ -64,16 +65,18 @@ class _BookmarksPageState extends State<BookmarksPage> {
               }
 
             case LoadingBookmarks _:
-              return const Center(
-                child: Text('Loading'),
-              );
+              return const PageLoading();
             case ErrorLoadingBookmarks error:
-              return Center(
-                child: Text(error.error.message),
+              return BasePageWidget(
+                child: Center(
+                  child: Text(error.error.message),
+                ),
               );
             default:
-              return const Center(
-                child: Text('something is not right'),
+              return const BasePageWidget(
+                child: Center(
+                  child: Text('something is not right'),
+                ),
               );
           }
         },
