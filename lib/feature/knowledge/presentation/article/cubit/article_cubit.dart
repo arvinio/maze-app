@@ -46,15 +46,34 @@ class ArticleCubit extends Cubit<ArticleState> {
     );
   }
 
-  Future<void> setBookmark({required bool bookmark, required String id}) async {
+  Future<bool> toggleBookmark(
+      {required bool bookmark, required String id}) async {
     final result =
         bookmark == true ? await _removeBookmark(id) : await _setBookmark(id);
 
-    result.when(
+    return result.when(
       completed: (data, statusCode) {
+        if (data) {
+          if (state is ArticleLoaded) {
+            final currentArticle = (state as ArticleLoaded).article;
+            final updateArticle = Article(
+                id: currentArticle.id,
+                text: currentArticle.text,
+                category: currentArticle.category,
+                imageUrl: currentArticle.imageUrl,
+                title: currentArticle.title,
+                isBookmark: !bookmark);
+            emit(LoadingArticle());
+            emit(ArticleLoaded(article: updateArticle));
+          }
+          return !bookmark;
+        } else {
+          return bookmark;
+        }
         //TODO : show toast
       },
       error: (apiError) {
+        return bookmark;
         //TODO : show toast
       },
     );

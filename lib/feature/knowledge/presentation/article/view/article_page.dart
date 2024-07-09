@@ -33,16 +33,18 @@ class _ArticlePageState extends State<ArticlePage> {
       builder: (context, state) {
         switch (state) {
           case ArticleLoaded article:
+            final bookmark = article.article.isBookmark;
             return BasePageWidget(
                 appBar: AppBar(
                   actions: [
                     IconButton.filledTonal(
                       onPressed: () {
-                        context.read<ArticleCubit>().setBookmark(
+                        context.read<ArticleCubit>().toggleBookmark(
                             bookmark: article.article.isBookmark,
                             id: article.article.id);
                       },
-                      icon: appAssets.bookmarkIcon.svg(),
+                      icon: appAssets.bookmarkIcon
+                          .svg(color: bookmark ? Colors.green : null),
                     ),
                   ],
                 ),

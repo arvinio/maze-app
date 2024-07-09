@@ -111,6 +111,7 @@ class KnowledgeRepoImpl implements KnowledgeRepo {
                 id: data.result.category!.id, name: data.result.category!.name),
             imageUrl: data.result.cover!,
             title: data.result.title!,
+            isBookmark: data.result.isBookmarked!,
           ),
         );
       },
@@ -148,7 +149,7 @@ class KnowledgeRepoImpl implements KnowledgeRepo {
   Future<ApiResponse<bool>> removeBookmark(String id) async {
     final result = await _remoteDatasource.removeBookmark(id);
     return result.when(
-      completed: (data, statusCode) => ApiResponse.completed(data: data),
+      completed: (data, statusCode) => ApiResponse.completed(data: data.success),
       error: (apiError) => ApiResponse.error(apiError: apiError),
     );
   }
@@ -157,7 +158,7 @@ class KnowledgeRepoImpl implements KnowledgeRepo {
   Future<ApiResponse<bool>> setBookmark(String id) async {
     final result = await _remoteDatasource.setBookmark(id);
     return result.when(
-      completed: (data, statusCode) => ApiResponse.completed(data: data),
+      completed: (data, statusCode) => ApiResponse.completed(data: data.success),
       error: (apiError) => ApiResponse.error(apiError: apiError),
     );
   }
