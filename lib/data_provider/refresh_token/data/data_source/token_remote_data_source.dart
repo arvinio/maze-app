@@ -18,7 +18,7 @@ class TokenRemoteDataSourceImpl implements TokenRemoteDataSource {
   Future<ApiResponse<RefreshTokenResponse>> generateNewToken({required String refreshToken}) {
     return dioCaller.post<RefreshTokenResponse>('api/auth/refresh',
         data: {
-          'refresh_token': refreshToken,
+          'refreshToken': refreshToken,
         },
         fromJson: RefreshTokenResponse.fromJson);
   }
