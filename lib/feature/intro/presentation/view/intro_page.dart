@@ -32,6 +32,11 @@ class _IntroPageState extends State<IntroPage> {
       width: width,
     );
   }
+  @override
+  void initState() {
+    context.read<IntroCubit>().onLoadAppData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -28,7 +28,7 @@ mixin _$ArticleModel {
   String? get editedDate => throw _privateConstructorUsedError;
   CategoryModel? get category => throw _privateConstructorUsedError;
   String? get cover => throw _privateConstructorUsedError;
-  dynamic get required => throw _privateConstructorUsedError;
+  bool? get isBookmarked => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,7 +50,7 @@ abstract class $ArticleModelCopyWith<$Res> {
       String? editedDate,
       CategoryModel? category,
       String? cover,
-      dynamic required});
+      bool? isBookmarked});
 
   $CategoryModelCopyWith<$Res>? get category;
 }
@@ -75,7 +75,7 @@ class _$ArticleModelCopyWithImpl<$Res, $Val extends ArticleModel>
     Object? editedDate = freezed,
     Object? category = freezed,
     Object? cover = freezed,
-    Object? required = freezed,
+    Object? isBookmarked = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -106,10 +106,10 @@ class _$ArticleModelCopyWithImpl<$Res, $Val extends ArticleModel>
           ? _value.cover
           : cover // ignore: cast_nullable_to_non_nullable
               as String?,
-      required: freezed == required
-          ? _value.required
-          : required // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+      isBookmarked: freezed == isBookmarked
+          ? _value.isBookmarked
+          : isBookmarked // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 
@@ -142,7 +142,7 @@ abstract class _$$ArticleModelImplCopyWith<$Res>
       String? editedDate,
       CategoryModel? category,
       String? cover,
-      dynamic required});
+      bool? isBookmarked});
 
   @override
   $CategoryModelCopyWith<$Res>? get category;
@@ -166,7 +166,7 @@ class __$$ArticleModelImplCopyWithImpl<$Res>
     Object? editedDate = freezed,
     Object? category = freezed,
     Object? cover = freezed,
-    Object? required = freezed,
+    Object? isBookmarked = freezed,
   }) {
     return _then(_$ArticleModelImpl(
       id: null == id
@@ -197,7 +197,10 @@ class __$$ArticleModelImplCopyWithImpl<$Res>
           ? _value.cover
           : cover // ignore: cast_nullable_to_non_nullable
               as String?,
-      required: freezed == required ? _value.required! : required,
+      isBookmarked: freezed == isBookmarked
+          ? _value.isBookmarked
+          : isBookmarked // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -213,7 +216,7 @@ class _$ArticleModelImpl implements _ArticleModel {
       required this.editedDate,
       required this.category,
       required this.cover,
-      this.required});
+      required this.isBookmarked});
 
   factory _$ArticleModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ArticleModelImplFromJson(json);
@@ -234,11 +237,11 @@ class _$ArticleModelImpl implements _ArticleModel {
   @override
   final String? cover;
   @override
-  final dynamic required;
+  final bool? isBookmarked;
 
   @override
   String toString() {
-    return 'ArticleModel(id: $id, title: $title, content: $content, createdDate: $createdDate, editedDate: $editedDate, category: $category, cover: $cover, required: $required)';
+    return 'ArticleModel(id: $id, title: $title, content: $content, createdDate: $createdDate, editedDate: $editedDate, category: $category, cover: $cover, isBookmarked: $isBookmarked)';
   }
 
   @override
@@ -256,21 +259,14 @@ class _$ArticleModelImpl implements _ArticleModel {
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.cover, cover) || other.cover == cover) &&
-            const DeepCollectionEquality().equals(other.required, required));
+            (identical(other.isBookmarked, isBookmarked) ||
+                other.isBookmarked == isBookmarked));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      title,
-      content,
-      createdDate,
-      editedDate,
-      category,
-      cover,
-      const DeepCollectionEquality().hash(required));
+  int get hashCode => Object.hash(runtimeType, id, title, content, createdDate,
+      editedDate, category, cover, isBookmarked);
 
   @JsonKey(ignore: true)
   @override
@@ -295,7 +291,7 @@ abstract class _ArticleModel implements ArticleModel {
       required final String? editedDate,
       required final CategoryModel? category,
       required final String? cover,
-      final dynamic required}) = _$ArticleModelImpl;
+      required final bool? isBookmarked}) = _$ArticleModelImpl;
 
   factory _ArticleModel.fromJson(Map<String, dynamic> json) =
       _$ArticleModelImpl.fromJson;
@@ -316,7 +312,7 @@ abstract class _ArticleModel implements ArticleModel {
   @override
   String? get cover;
   @override
-  dynamic get required;
+  bool? get isBookmarked;
   @override
   @JsonKey(ignore: true)
   _$$ArticleModelImplCopyWith<_$ArticleModelImpl> get copyWith =>

@@ -3,11 +3,13 @@ import 'package:auto_route/auto_route.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
 
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
+import 'package:maze_app/core/presentation/widget/page_loading.dart';
 
 import 'package:maze_app/core/style/app_theme.dart';
 
@@ -23,6 +25,7 @@ class KnowledgePage extends StatefulWidget {
 }
 
 class _KnowledgePageState extends State<KnowledgePage> {
+  int _selectedIndex = -1;
   @override
   Widget build(BuildContext context) {
     return BasePageWidget(
@@ -48,7 +51,7 @@ class _KnowledgePageState extends State<KnowledgePage> {
               onPressed: () {
                 context.pushRoute(AdminArticlePageRoute());
               },
-              icon: appAssets.bookmarkIcon.svg(),
+              icon: const Icon(Icons.add),
             ),
         ],
       ),
@@ -56,31 +59,66 @@ class _KnowledgePageState extends State<KnowledgePage> {
         builder: (context, state) {
           switch (state) {
             case ArticlesLoaded loaded:
-              return ListView.builder(
-                itemCount: loaded.articles.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    child: AriclePostWidget(article: loaded.articles[index]),
-                    onTap: () {
-                      context.read<KnowledgeCubit>().loadArticle(
-                            article: loaded.articles[index],
-                          );
-                    },
-                  );
-                },
+              return Column(
+                children: [
+                  SizedBox(
+                    height: 50.h,
+                    child: ListView.builder(
+                      itemCount: loaded.categories.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.only(right: 20.w),
+                          child: ChoiceChip(
+                            selected: _selectedIndex == index ? true : false,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.w),
+                            ),
+                            label: Text(loaded.categories[index].name),
+                            onSelected: (value) {
+                              setState(() {
+                                if (value) {
+                                  _selectedIndex = index;
+                                } else {
+                                  _selectedIndex = -1;
+                                }
+                              });
+                            },
+                          ),
+                        );
+                      },
+                      scrollDirection: Axis.horizontal,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 550.h,
+                    child: ListView.builder(
+                      itemCount: loaded.articles.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                            child: AriclePostWidget(
+                                article: loaded.articles[index]),
+                            onTap: () => context
+                                .read<KnowledgeCubit>()
+                                .loadArticle(loaded.articles[index].id));
+                      },
+                    ),
+                  ),
+                ],
               );
 
             case LoadingArticles _:
-              return const Center(
-                child: Text('Loading'),
-              );
+              return const PageLoading();
             case ErrorLoadingArticles error:
-              return Center(
-                child: Text(error.error.message),
+              return BasePageWidget(
+                child: Center(
+                  child: Text(error.error.message),
+                ),
               );
             default:
-              return const Center(
-                child: Text('something is not right'),
+              return const BasePageWidget(
+                child: Center(
+                  child: Text('something is not right'),
+                ),
               );
           }
         },

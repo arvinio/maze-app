@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
+import 'package:maze_app/core/local/setting_manager.dart';
 import 'package:maze_app/core/network/model/api_error.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
+import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/article.dart';
 import 'package:maze_app/feature/knowledge/domain/usecase/get_bookmarks.dart';
 import 'package:maze_app/feature/knowledge/domain/usecase/remove_bookmark.dart';
@@ -51,13 +53,13 @@ class BookmarksCubit extends Cubit<BookmarksState> {
     );
   }
 
+  void loadArticle(String id) {
+    inject<SettingsManager>().setArticleId(id);
+    _router.push(ArticlePageRoute());
+  }
+
   Future<void> setBookmark({required bool bookmark, required String id}) async {
     final result =
         bookmark == true ? await _removeBookmark(id) : await _setBookmark(id);
-
-    result.when(
-      completed: (data, statusCode) {},
-      error: (apiError) {},
-    );
   }
 }

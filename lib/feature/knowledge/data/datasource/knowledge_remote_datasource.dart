@@ -4,24 +4,26 @@ import 'package:maze_app/core/network/dio_caller.dart';
 import 'package:maze_app/core/util/typedef.dart';
 import 'package:maze_app/di/di_const.dart';
 import 'package:maze_app/feature/knowledge/data/model/article_model.dart';
+import 'package:maze_app/feature/knowledge/data/model/resp_empty_model.dart';
 import 'package:maze_app/feature/knowledge/data/model/resp_model_article.dart';
 import 'package:maze_app/feature/knowledge/data/model/resp_model_articles.dart';
 import 'package:maze_app/feature/knowledge/data/model/resp_model_category.dart';
+import 'package:maze_app/feature/knowledge/domain/entity/create_edit_article.dart';
 import 'package:maze_app/feature/knowledge/domain/usecase/get_bookmarks.dart';
 
 abstract interface class KnowledgeRemoteDatasource {
   ResultFuture<RespModelArticles> getArticles();
   ResultFuture<RespModelArticles> getBookmarks();
-  ResultFuture<bool> removeBookmark(String id);
-  ResultFuture<bool> setBookmark(String id);
-  ResultFuture<ArticleModel> getArticle(String params);
+  ResultFuture<RespEmptyModel> removeBookmark(String id);
+  ResultFuture<RespEmptyModel> setBookmark(String id);
+  ResultFuture<RespModelArticle> getArticle(String params);
   ResultFuture<RespModelArticles> searchArticles(String params);
   ResultFuture<RespModelCategory> getCategories();
 
   //Admin features
-  ResultFuture<bool> createArticle(ArticleModel params);
-  ResultFuture<bool> editArticle(ArticleModel params);
-  ResultFuture<bool> deleteArticle(String params);
+  ResultFuture<RespEmptyModel> createArticle(CreateEditArticle params);
+  ResultFuture<RespEmptyModel> editArticle(CreateEditArticle params);
+  ResultFuture<RespEmptyModel> deleteArticle(String params);
 }
 
 @Injectable(as: KnowledgeRemoteDatasource)
@@ -34,8 +36,10 @@ class KnowledgeRemoteDataSourceImpl implements KnowledgeRemoteDatasource {
   @override
   ResultFuture<RespModelArticles> getArticles() async {
     //TODO: complete this section
-    return await _dioCaller.get('api/blog',
-        fromJson: RespModelArticles.fromJson);
+    return await _dioCaller.get(
+      'api/blog',
+      fromJson: RespModelArticles.fromJson,
+    );
   }
 
   @override
@@ -47,39 +51,44 @@ class KnowledgeRemoteDataSourceImpl implements KnowledgeRemoteDatasource {
   }
 
   @override
-  ResultFuture<bool> createArticle(ArticleModel params) async {
+  ResultFuture<RespEmptyModel> createArticle(CreateEditArticle params) async {
     final data = FormData.fromMap({
-      'files': [
-        await MultipartFile.fromFile(params.cover!),
-      ],
-      'title': params.title,
-      'content': params.content,
-      'category': params.category!.id
-    });
-    return await _dioCaller.post('api/blog', fromJson: () {}, data: data);
-  }
-
-  @override
-  ResultFuture<bool> deleteArticle(String params) async {
-    return await _dioCaller.delete('api/blog/$params', fromJson: () {});
-  }
-
-  @override
-  ResultFuture<bool> editArticle(ArticleModel params) async {
-    final data = FormData.fromMap({
-      if (params.cover != null)
-        'files': [
-          await MultipartFile.fromFile(params.cover!),
+      if (params.image != null)
+        'cover': [
+          await MultipartFile.fromFile(params.image!,
+              filename: params.image?.split('/').last),
         ],
-      if (params.title != null) 'title': params.title,
-      if (params.content != null) 'content': params.content,
-      if (params.category!.id.isNotEmpty) 'category': params.category!.id
+      'title': params.title,
+      'content': params.text,
+      'category': params.categoryID,
     });
-    return await _dioCaller.put('api/blog', fromJson: () {}, data: data);
+    return await _dioCaller.post('api/blog',
+        fromJson: RespEmptyModel.fromJson, data: data);
   }
 
   @override
-  ResultFuture<ArticleModel> getArticle(String params) async {
+  ResultFuture<RespEmptyModel> deleteArticle(String params) async {
+    return await _dioCaller.delete('api/blog/$params',
+        fromJson: RespEmptyModel.fromJson);
+  }
+
+  @override
+  ResultFuture<RespEmptyModel> editArticle(CreateEditArticle params) async {
+    final data = FormData.fromMap({
+      if (params.image != null)
+        'files': [
+          await MultipartFile.fromFile(params.image!),
+        ],
+      'title': params.title,
+      'content': params.text,
+      if (params.categoryID != null) 'category': params.categoryID
+    });
+    return await _dioCaller.put('api/blog',
+        fromJson: RespEmptyModel.fromJson, data: data);
+  }
+
+  @override
+  ResultFuture<RespModelArticle> getArticle(String params) async {
     return await _dioCaller.get('api/blog/$params',
         fromJson: RespModelArticle.fromJson);
   }
@@ -101,20 +110,18 @@ class KnowledgeRemoteDataSourceImpl implements KnowledgeRemoteDatasource {
   }
 
   @override
-  ResultFuture<bool> removeBookmark(String id) async {
-    //TODO:fromjson
+  ResultFuture<RespEmptyModel> removeBookmark(String id) async {
     return await _dioCaller.delete(
       'api/bookmark/$id',
-      fromJson: RespModelCategory.fromJson,
+      fromJson: RespEmptyModel.fromJson,
     );
   }
 
   @override
-  ResultFuture<bool> setBookmark(String id) async {
-    //TODO:fromjson
+  ResultFuture<RespEmptyModel> setBookmark(String id) async {
     return await _dioCaller.post(
       'api/bookmark',
-      fromJson: RespModelCategory.fromJson,
+      fromJson: RespEmptyModel.fromJson,
       data: {
         'blogId': id,
       },

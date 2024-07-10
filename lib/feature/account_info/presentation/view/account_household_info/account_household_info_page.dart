@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
@@ -144,7 +145,15 @@ class _AccountHouseholdInfoPageState extends State<AccountHouseholdInfoPage> {
                 }
 
               case AccountInfoStatus.registerFailure:
-              // TODO: Handle this case.
+                Fluttertoast.showToast(
+                  msg:state.errorMessage!,
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.black,
+                  textColor: Colors.white,
+                  fontSize: 16.0,
+                );
             }
           },
           builder: (context, state) {

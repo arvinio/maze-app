@@ -15,9 +15,13 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
   SignupBloc(this.signupRepository) : super(const SignupState()) {
     on<_InitEvent>(_onInit);
+    on<_SignupEvent>(_onSignup);
   }
 
-   _onInit(_InitEvent event, Emitter<SignupState> emit) async{
+  _onInit(_InitEvent event, Emitter<SignupState> emit) async{
+  }
+
+  _onSignup(_SignupEvent event, Emitter<SignupState> emit) async{
    emit(state.copyWith(signupStatus: SignupStatus.loading));
    final apiResponse=await signupRepository.signUp(email: event.userName);
    apiResponse.when(completed: (data,int? statusCode){

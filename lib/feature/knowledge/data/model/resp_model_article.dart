@@ -8,7 +8,7 @@ part 'resp_model_article.g.dart';
 class RespModelArticle with _$RespModelArticle {
   const factory RespModelArticle({
     required bool success,
-    required List<ArticleModel> result,
+    required ArticleModel result,
   }) = _RespModelArticle;
 
   factory RespModelArticle.fromJson(Map<String, dynamic> json) =>

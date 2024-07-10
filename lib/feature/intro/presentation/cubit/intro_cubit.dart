@@ -1,9 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/local/setting_manager.dart';
+import 'package:maze_app/core/local/user/user_manager.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/di/injection_container.dart';
 
@@ -15,30 +16,46 @@ part 'intro_state.dart';
 @injectable
 class IntroCubit extends Cubit<IntroState> {
   final AppRouter _router;
+  final UserManager userManager;
 
-  IntroCubit(
+  IntroCubit(this.userManager,
       {required GetIsFirstRun getIsFirstRun,
       required SetIsFirstRun setIsFirstRun,
       required AppRouter router})
       : _router = router,
         super(IntroInitial()) {
-    checkIsFirstRun();
+    splashLoading();
   }
   Future<void> setFirstRunDone() async {
     await inject<SettingsManager>().setIsFirstRun();
-    _goToNextPage();
+    _goToSignUpPage();
+  }
+
+  Future<void> splashLoading() async {
+    FlutterNativeSplash.remove();
+    await Future.delayed(const Duration(seconds: 2));
+    await onLoadAppData();
   }
 
   Future<void> checkIsFirstRun() async {
     int isFirstRun = inject<SettingsManager>().getIsFirstRun() ?? 0;
-    inject<SettingsManager>().getBearerToken();
-    FlutterNativeSplash.remove();
+
     if (isFirstRun == 1) {
-      _goToNextPage();
+      _goToSignUpPage();
+    } else {
+      _router.popAndPush(const IntroPageRoute());
     }
   }
 
-  void _goToNextPage() {
+  Future<void> onLoadAppData() async {
+    if (userManager.isUserLoggedIn()) {
+      _router.popAndPush(const BottomNavigationRoute());
+    } else {
+      await checkIsFirstRun();
+    }
+  }
+
+  void _goToSignUpPage() {
     _router.popAndPush(const SignupPageRoute());
   }
 }

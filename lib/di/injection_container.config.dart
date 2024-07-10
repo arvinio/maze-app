@@ -32,8 +32,8 @@ import 'package:maze_app/data_provider/refresh_token/data/repository/token_repos
 import 'package:maze_app/data_provider/refresh_token/domain/token_repository.dart'
     as _i61;
 import 'package:maze_app/data_provider/refresh_token/token_manager.dart'
-    as _i73;
-import 'package:maze_app/di/injection_container.dart' as _i74;
+    as _i74;
+import 'package:maze_app/di/injection_container.dart' as _i75;
 import 'package:maze_app/feature/account_info/data/data_source/account_info_remote_data_source.dart'
     as _i38;
 import 'package:maze_app/feature/account_info/data/data_source/account_info_remote_data_source_impl.dart'
@@ -95,7 +95,7 @@ import 'package:maze_app/feature/auth/signup/data/repository/signup_repository_i
 import 'package:maze_app/feature/auth/signup/domain/repository/signup_repository.dart'
     as _i70;
 import 'package:maze_app/feature/auth/signup/presentation/bloc/signup_bloc.dart'
-    as _i72;
+    as _i73;
 import 'package:maze_app/feature/intro/data/datasource/intro_local_datasource.dart'
     as _i25;
 import 'package:maze_app/feature/intro/data/repo/intro_repo_impl.dart' as _i29;
@@ -132,10 +132,12 @@ import 'package:maze_app/feature/knowledge/domain/usecase/search_articles.dart'
     as _i56;
 import 'package:maze_app/feature/knowledge/domain/usecase/set_bookmark.dart'
     as _i57;
+import 'package:maze_app/feature/knowledge/presentation/article/cubit/article_cubit.dart'
+    as _i60;
 import 'package:maze_app/feature/knowledge/presentation/bookmarks/cubit/bookmarks_cubit.dart'
     as _i64;
 import 'package:maze_app/feature/knowledge/presentation/knowledge/cubit/knowledge_cubit.dart'
-    as _i60;
+    as _i72;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i3;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -260,11 +262,11 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i58.SignupRemoteDataSource>(() =>
         _i59.SignupRemoteDataSourceImpl(
             dioCaller: gh<_i18.DioCaller>(instanceName: 'maze')));
-    gh.factory<_i60.KnowledgeCubit>(() => _i60.KnowledgeCubit(
-          getArticles: gh<_i52.GetArticles>(),
+    gh.factory<_i60.ArticleCubit>(() => _i60.ArticleCubit(
+          setBookmark: gh<_i57.SetBookmark>(),
+          removeBookmark: gh<_i55.RemoveBookmark>(),
+          getArticle: gh<_i51.GetArticle>(),
           router: gh<_i6.AppRouter>(),
-          searchArticles: gh<_i56.SearchArticles>(),
-          getCategories: gh<_i54.GetCategories>(),
         ));
     gh.factory<_i61.TokenRepository>(
         () => _i62.TokenRepositoryImpl(gh<_i42.TokenRemoteDataSource>()));
@@ -284,15 +286,28 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i68.CreatePassBloc>(
         () => _i68.CreatePassBloc(gh<_i65.CreatePasswordRepository>()));
     gh.factory<_i69.IntroCubit>(() => _i69.IntroCubit(
+          gh<_i17.UserManager>(),
           getIsFirstRun: gh<_i44.GetIsFirstRun>(),
           setIsFirstRun: gh<_i45.SetIsFirstRun>(),
           router: gh<_i6.AppRouter>(),
         ));
     gh.factory<_i70.SignupRepository>(
         () => _i71.SignupRepositoryImpl(gh<_i58.SignupRemoteDataSource>()));
-    gh.factory<_i72.SignupBloc>(
-        () => _i72.SignupBloc(gh<_i70.SignupRepository>()));
-    gh.factory<_i73.TokenManager>(() => _i73.TokenManager(
+    gh.factory<_i72.KnowledgeCubit>(() => _i72.KnowledgeCubit(
+          getArticles: gh<_i52.GetArticles>(),
+          router: gh<_i6.AppRouter>(),
+          searchArticles: gh<_i56.SearchArticles>(),
+          getCategories: gh<_i54.GetCategories>(),
+          setBookmark: gh<_i57.SetBookmark>(),
+          removeBookmark: gh<_i55.RemoveBookmark>(),
+          getArticle: gh<_i51.GetArticle>(),
+          createArticle: gh<_i48.CreateArticle>(),
+          deleteArticle: gh<_i49.DeleteArticle>(),
+          editArticle: gh<_i50.EditArticle>(),
+        ));
+    gh.factory<_i73.SignupBloc>(
+        () => _i73.SignupBloc(gh<_i70.SignupRepository>()));
+    gh.factory<_i74.TokenManager>(() => _i74.TokenManager(
           gh<_i14.SettingsManager>(),
           gh<_i61.TokenRepository>(),
           gh<_i12.AppLog>(),
@@ -301,4 +316,4 @@ extension GetItInjectableX on _i1.GetIt {
   }
 }
 
-class _$NetworkModule extends _i74.NetworkModule {}
+class _$NetworkModule extends _i75.NetworkModule {}

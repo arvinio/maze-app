@@ -316,6 +316,7 @@ mixin _$CreatePassState {
   CreatePassStatus get createPassStatus => throw _privateConstructorUsedError;
   CreatePasswordResponse? get createPassResponse =>
       throw _privateConstructorUsedError;
+  String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CreatePassStateCopyWith<CreatePassState> get copyWith =>
@@ -330,7 +331,8 @@ abstract class $CreatePassStateCopyWith<$Res> {
   @useResult
   $Res call(
       {CreatePassStatus createPassStatus,
-      CreatePasswordResponse? createPassResponse});
+      CreatePasswordResponse? createPassResponse,
+      String? errorMessage});
 
   $CreatePasswordResponseCopyWith<$Res>? get createPassResponse;
 }
@@ -350,6 +352,7 @@ class _$CreatePassStateCopyWithImpl<$Res, $Val extends CreatePassState>
   $Res call({
     Object? createPassStatus = null,
     Object? createPassResponse = freezed,
+    Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
       createPassStatus: null == createPassStatus
@@ -360,6 +363,10 @@ class _$CreatePassStateCopyWithImpl<$Res, $Val extends CreatePassState>
           ? _value.createPassResponse
           : createPassResponse // ignore: cast_nullable_to_non_nullable
               as CreatePasswordResponse?,
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -387,7 +394,8 @@ abstract class _$$CreatePassStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {CreatePassStatus createPassStatus,
-      CreatePasswordResponse? createPassResponse});
+      CreatePasswordResponse? createPassResponse,
+      String? errorMessage});
 
   @override
   $CreatePasswordResponseCopyWith<$Res>? get createPassResponse;
@@ -406,6 +414,7 @@ class __$$CreatePassStateImplCopyWithImpl<$Res>
   $Res call({
     Object? createPassStatus = null,
     Object? createPassResponse = freezed,
+    Object? errorMessage = freezed,
   }) {
     return _then(_$CreatePassStateImpl(
       createPassStatus: null == createPassStatus
@@ -416,6 +425,10 @@ class __$$CreatePassStateImplCopyWithImpl<$Res>
           ? _value.createPassResponse
           : createPassResponse // ignore: cast_nullable_to_non_nullable
               as CreatePasswordResponse?,
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -424,17 +437,21 @@ class __$$CreatePassStateImplCopyWithImpl<$Res>
 
 class _$CreatePassStateImpl implements _CreatePassState {
   const _$CreatePassStateImpl(
-      {this.createPassStatus = CreatePassStatus.init, this.createPassResponse});
+      {this.createPassStatus = CreatePassStatus.init,
+      this.createPassResponse,
+      this.errorMessage});
 
   @override
   @JsonKey()
   final CreatePassStatus createPassStatus;
   @override
   final CreatePasswordResponse? createPassResponse;
+  @override
+  final String? errorMessage;
 
   @override
   String toString() {
-    return 'CreatePassState(createPassStatus: $createPassStatus, createPassResponse: $createPassResponse)';
+    return 'CreatePassState(createPassStatus: $createPassStatus, createPassResponse: $createPassResponse, errorMessage: $errorMessage)';
   }
 
   @override
@@ -445,12 +462,14 @@ class _$CreatePassStateImpl implements _CreatePassState {
             (identical(other.createPassStatus, createPassStatus) ||
                 other.createPassStatus == createPassStatus) &&
             (identical(other.createPassResponse, createPassResponse) ||
-                other.createPassResponse == createPassResponse));
+                other.createPassResponse == createPassResponse) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, createPassStatus, createPassResponse);
+  int get hashCode => Object.hash(
+      runtimeType, createPassStatus, createPassResponse, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -462,14 +481,16 @@ class _$CreatePassStateImpl implements _CreatePassState {
 
 abstract class _CreatePassState implements CreatePassState {
   const factory _CreatePassState(
-          {final CreatePassStatus createPassStatus,
-          final CreatePasswordResponse? createPassResponse}) =
-      _$CreatePassStateImpl;
+      {final CreatePassStatus createPassStatus,
+      final CreatePasswordResponse? createPassResponse,
+      final String? errorMessage}) = _$CreatePassStateImpl;
 
   @override
   CreatePassStatus get createPassStatus;
   @override
   CreatePasswordResponse? get createPassResponse;
+  @override
+  String? get errorMessage;
   @override
   @JsonKey(ignore: true)
   _$$CreatePassStateImplCopyWith<_$CreatePassStateImpl> get copyWith =>

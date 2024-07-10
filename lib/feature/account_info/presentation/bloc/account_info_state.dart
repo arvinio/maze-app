@@ -35,6 +35,8 @@ class AccountInfoState with _$AccountInfoState {
     @Default([]) List<Result>? allFetchedSateList,
     @Default([]) List<Result>? allFetchedCouncilList,
     EntryMode? entryMode,
-    RegisterDetailsResponse? response
+    RegisterDetailsResponse? response,
+    String? errorMessage
+
   })=_AccountInfoState;
 }
