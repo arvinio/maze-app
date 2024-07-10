@@ -15,6 +15,7 @@ import 'package:maze_app/feature/auth/login/presentation/view/login_page.dart';
 import 'package:maze_app/feature/auth/login/presentation/view/welcome_page.dart';
 import 'package:maze_app/feature/auth/signup/presentation/view/signup_page.dart';
 import 'package:maze_app/feature/intro/presentation/view/intro_page.dart';
+import 'package:maze_app/feature/intro/presentation/view/splash_loading_page.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/article.dart';
 import 'package:maze_app/feature/knowledge/presentation/knowledge/view/admin_article_page.dart';
 import 'package:maze_app/feature/knowledge/presentation/article/view/article_page.dart';
@@ -32,7 +33,8 @@ class AppRouter extends _$AppRouter {
   RouteType get defaultRouteType => const RouteType.adaptive();
   @override
   final List<AutoRoute> routes = [
-    AutoRoute(path: '/', page: IntroPageRoute.page),
+    AutoRoute(path: '/', page: SplashLoadingPageRoute.page),
+    AutoRoute(path: '/IntroPage', page: IntroPageRoute.page),
     AutoRoute(path: '/SignupPage', page: SignupPageRoute.page),
     AutoRoute(
         path: '/VerificationCodePage', page: VerificationCodePageRoute.page),

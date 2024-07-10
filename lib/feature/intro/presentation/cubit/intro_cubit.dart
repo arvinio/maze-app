@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/local/setting_manager.dart';
@@ -22,30 +22,31 @@ class IntroCubit extends Cubit<IntroState> {
       required AppRouter router})
       : _router = router,
         super(IntroInitial()) {
-    checkIsFirstRun();
+    splashLoading();
   }
   Future<void> setFirstRunDone() async {
     await inject<SettingsManager>().setIsFirstRun();
-    _goToNextPage();
+    _goToSignUpPage();
+  }
+
+  Future<void> splashLoading() async {
+    FlutterNativeSplash.remove();
+    emit(SplashLoading());
+    await Future.delayed(const Duration(seconds: 2));
+    await checkIsFirstRun();
   }
 
   Future<void> checkIsFirstRun() async {
-    // inject<SettingsManager>()
-    //     .setBearerToken('''eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiO
-    //     iI2NjgxNmJlNWU2N2ZhZTM0MGNiNWJhMDAiLCJpYXQiOjE3MjA0NT
-    //     M5NzYsImV4cCI6MTcyMDQ2ODM3Nn0.mTX0cH5jy3jSY_DEhulJGfc
-    //     KKNcvujsv52tMhng8hEo''');
     int isFirstRun = inject<SettingsManager>().getIsFirstRun() ?? 0;
 
     if (isFirstRun == 1) {
-      _goToNextPage();
-      FlutterNativeSplash.remove();
+      _goToSignUpPage();
     } else {
-      FlutterNativeSplash.remove();
+      _router.popAndPush(const IntroPageRoute());
     }
   }
 
-  void _goToNextPage() {
+  void _goToSignUpPage() {
     _router.popAndPush(const SignupPageRoute());
     // _router.popAndPush(const BottomNavigationRoute());
   }
