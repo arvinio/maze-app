@@ -123,6 +123,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: WrappedRoute(child: const SignupPage()),
       );
     },
+    SplashLoadingPageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const SplashLoadingPage()),
+      );
+    },
     VerificationCodePageRoute.name: (routeData) {
       final args = routeData.argsAs<VerificationCodePageRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -482,6 +488,20 @@ class SignupPageRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SignupPageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SplashLoadingPage]
+class SplashLoadingPageRoute extends PageRouteInfo<void> {
+  const SplashLoadingPageRoute({List<PageRouteInfo>? children})
+      : super(
+          SplashLoadingPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SplashLoadingPageRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
