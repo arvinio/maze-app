@@ -13,5 +13,7 @@ final class IsFirstRun extends IntroState{}
 
 final class SplashLoading extends IntroState{}
 
+final class UserLoggedIn extends IntroState{}
+final class UserNotLoggedIn extends IntroState{}
 
 

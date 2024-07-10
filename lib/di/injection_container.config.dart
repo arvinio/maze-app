@@ -286,6 +286,7 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i68.CreatePassBloc>(
         () => _i68.CreatePassBloc(gh<_i65.CreatePasswordRepository>()));
     gh.factory<_i69.IntroCubit>(() => _i69.IntroCubit(
+          gh<_i17.UserManager>(),
           getIsFirstRun: gh<_i44.GetIsFirstRun>(),
           setIsFirstRun: gh<_i45.SetIsFirstRun>(),
           router: gh<_i6.AppRouter>(),
