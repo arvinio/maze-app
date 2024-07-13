@@ -39,6 +39,8 @@ dependencies:
   introduction_screen: ^3.1.14
   flutter_screenutil: ^5.9.3
   file_picker: ^8.0.6
+  hive: ^2.2.3
+  hive_flutter:
   
 
 dev_dependencies:
@@ -48,7 +50,7 @@ dev_dependencies:
   injectable_generator: ^2.6.1
   build_runner: ^2.4.10
   json_serializable: ^6.8.0
-
+  hive_generator:
 
   flutter_lints: ^3.0.0
 
