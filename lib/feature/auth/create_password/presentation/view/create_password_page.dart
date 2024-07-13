@@ -36,6 +36,7 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
   final TextEditingController _controller = TextEditingController();
 
   final FocusNode _focusNode = FocusNode();
+  ValueNotifier<bool> obscureState = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -102,13 +103,30 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                 const SizedBox(
                   height: 35,
                 ),
-                CustomTextField.outline(
-                    textEditingController: _controller,
-                    label: appStrings.password,
-                    focusNode: _focusNode,
-                    autoFocus: true,
-                    obscureText: true,
-                    suffix: appAssets.eye.svg()),
+                ValueListenableBuilder(
+                  valueListenable: obscureState,
+                  builder: (BuildContext context, bool obscureValue,
+                      Widget? child) {
+                    return CustomTextField.outline(
+                        textEditingController: _controller,
+                        label: appStrings.password,
+                        focusNode: _focusNode,
+                        autoFocus: true,
+                        obscureText: !obscureState.value,
+                        suffixIcon: IconButton(iconSize: 20,
+                          padding: EdgeInsets.zero,
+                          highlightColor: Colors.transparent,
+                          constraints: const BoxConstraints(
+                              maxHeight: 24, maxWidth: 24),
+                          icon: !obscureState.value
+                              ? appAssets.eye.svg()
+                              : appAssets.eyeSlash.svg(),
+                          onPressed: () {
+                            obscureState.value = !obscureState.value;
+                          },)
+                    );
+                  },
+                ),
                 const Spacer(),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),

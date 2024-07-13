@@ -42,6 +42,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _controller = TextEditingController();
 
   final FocusNode _focusNode = FocusNode();
+  ValueNotifier<bool> obscureState = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -105,13 +106,28 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 35,
                 ),
-                CustomTextField.outline(
-                    textEditingController: _controller,
-                    label: appStrings.password,
-                    focusNode: _focusNode,
-                    obscureText: true,
-                    autoFocus: true,
-                    suffix: appAssets.eye.svg()),
+                ValueListenableBuilder(
+                  valueListenable: obscureState,
+                  builder: (BuildContext context, bool obscureValue, Widget? child) {
+                    return CustomTextField.outline(
+                        textEditingController: _controller,
+                        label: appStrings.password,
+                        focusNode: _focusNode,
+                        obscureText: !obscureState.value,
+                        autoFocus: true,
+                        suffixIcon: IconButton(iconSize:20 ,
+                          highlightColor: Colors.transparent,
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(maxHeight: 24,maxWidth: 24),
+                          icon: !obscureState.value
+                              ? appAssets.eye.svg()
+                              : appAssets.eyeSlash.svg(),
+                          onPressed: () {
+                            obscureState.value = !obscureState.value;
+                          },)
+                    );
+                  },
+                ),
                 const Spacer(),
                 BlocConsumer<ForgotPassBloc, ForgotPassState>(
                   listener: (context, state) {
