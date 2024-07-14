@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/local/setting_manager.dart';
 import 'package:maze_app/core/local/user/user_manager.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
@@ -13,7 +12,6 @@ import 'package:maze_app/feature/intro/domain/usecase/set_is_first_run.dart';
 
 part 'intro_state.dart';
 
-@injectable
 class IntroCubit extends Cubit<IntroState> {
   final AppRouter _router;
   final UserManager userManager;

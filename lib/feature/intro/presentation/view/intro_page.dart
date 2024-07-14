@@ -3,11 +3,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:maze_app/core/presentation/widget/custom_button.dart';
-import 'package:maze_app/core/style/app_color.dart';
+import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/di/injection_container.dart';
-import 'package:maze_app/feature/intro/presentation/cubit/intro_cubit.dart';
+import 'package:maze_app/feature/intro/presentation/bloc/splash_bloc.dart';
 
 @RoutePage()
 class IntroPage extends StatefulWidget implements AutoRouteWrapper {
@@ -18,7 +17,7 @@ class IntroPage extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(create: (_) => inject<IntroCubit>(), child: this);
+    return BlocProvider(create: (_) => inject<SplashBloc>(), child: this);
   }
 }
 
@@ -34,7 +33,6 @@ class _IntroPageState extends State<IntroPage> {
   }
   @override
   void initState() {
-    context.read<IntroCubit>().onLoadAppData();
     super.initState();
   }
 
@@ -50,8 +48,15 @@ class _IntroPageState extends State<IntroPage> {
         imageFlex: 7,
         bodyFlex: 2);
     size = MediaQuery.of(context).size;
-    return BlocBuilder<IntroCubit, IntroState>(
-      builder: (context, state) {
+    return  BlocConsumer<SplashBloc, SplashState>(
+        listener: (context, state) {
+          if(state.splashStatus.isSplashDone)
+            {
+              context.pushRoute(const SignupPageRoute());
+            }
+
+        },
+        builder: (context, state) {
         return Scaffold(
           body: SizedBox(
             height: size.height,
@@ -103,7 +108,7 @@ class _IntroPageState extends State<IntroPage> {
                     //   },
                     // ),
                     next: const Text("Next", style: TextStyle(fontSize: 20)),
-                    onDone: () => context.read<IntroCubit>().setFirstRunDone(),
+                    onDone: () => context.read<SplashBloc>().add(const SplashEvent.onDone()),
                     done: const Text(
                       "Done",
                       style: TextStyle(fontSize: 20),
