@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/strings.dart';
@@ -168,8 +169,22 @@ class _AccountProfilePageState extends State<AccountProfilePage> {
                       if(_file!=null) {
                         widget.userInfo!.avatar = File(_file!.path!);
                       }
-                      context.pushRoute( AccountNotificationPageRoute(userInfo: widget.userInfo));
-                    },),
+    if(_userNameController.text.isNotEmpty) {
+      context.pushRoute(
+          AccountNotificationPageRoute(userInfo: widget.userInfo));
+    }else
+      {
+        Fluttertoast.showToast(
+          msg:'username should not be empty',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
+                    }),
                 ),
           
               ],),

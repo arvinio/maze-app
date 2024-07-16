@@ -290,10 +290,25 @@ class _AccountHouseholdInfoPageState extends State<AccountHouseholdInfoPage> {
                           widget.userInfo!.state = stateController.text;
                           widget.userInfo!.council = councilController.text;
                           widget.userInfo!.postcode = postcodeController.text;
-                          widget.userInfo!.householdSize =int.parse(
-                              householdSizeController.text.substring(0,1));
+                          if(householdSizeController.text.isNotEmpty) {
+                            widget.userInfo!.householdSize =int.parse(
+                                householdSizeController.text.substring(0,1));
+                            context.read<AccountInfoBloc>().add(
+                                AccountInfoEvent.registerDetailsEvent(userInfoParam:  widget.userInfo!));
 
-                          context.read<AccountInfoBloc>().add(AccountInfoEvent.registerDetailsEvent(userInfoParam:  widget.userInfo!));
+                          }else
+                          {
+                            Fluttertoast.showToast(
+                              msg:'householdSize must not be less than 1',
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.black,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                          }
+
                         },),
                     ),
 
