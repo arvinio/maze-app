@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
+import 'package:maze_app/core/presentation/widget/app_loading.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
 import 'package:maze_app/core/presentation/widget/custom_button.dart';
 import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
+import 'package:maze_app/core/presentation/widget/page_loading.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/article.dart';
@@ -140,11 +142,7 @@ class _AdminArticlePageState extends State<AdminArticlePage> {
                 ],
               );
             } else {
-              return const BasePageWidget(
-                child: Center(
-                  child: Text('state is not right'),
-                ),
-              );
+              return const PageLoading();
             }
           },
         ));

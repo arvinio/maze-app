@@ -63,13 +63,11 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) async {
             if (state.loginStatus.isSuccess) {
-
-                context.pushRoute(const WelcomePageRoute());
-                await Future.delayed(const Duration(seconds: 2));
-                if (context.mounted) {
-                  context.pushRoute(const BottomNavigationRoute(),);
-                }
-
+              context.pushRoute(const WelcomePageRoute());
+              await Future.delayed(const Duration(seconds: 2));
+              if (context.mounted) {
+                context.router.replaceAll([const BottomNavigationRoute()]);
+              }
             } else if (state.loginStatus.isFailure) {
               Fluttertoast.showToast(
                   msg: state.errorMessage!,
@@ -108,24 +106,27 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 ValueListenableBuilder(
                   valueListenable: obscureState,
-                  builder: (BuildContext context, bool obscureValue, Widget? child) {
+                  builder:
+                      (BuildContext context, bool obscureValue, Widget? child) {
                     return CustomTextField.outline(
                         textEditingController: _controller,
                         label: appStrings.password,
                         focusNode: _focusNode,
                         obscureText: !obscureState.value,
                         autoFocus: true,
-                        suffixIcon: IconButton(iconSize:20 ,
+                        suffixIcon: IconButton(
+                          iconSize: 20,
                           highlightColor: Colors.transparent,
                           padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(maxHeight: 24,maxWidth: 24),
+                          constraints:
+                              const BoxConstraints(maxHeight: 24, maxWidth: 24),
                           icon: !obscureState.value
                               ? appAssets.eye.svg()
                               : appAssets.eyeSlash.svg(),
                           onPressed: () {
                             obscureState.value = !obscureState.value;
-                          },)
-                    );
+                          },
+                        ));
                   },
                 ),
                 const Spacer(),

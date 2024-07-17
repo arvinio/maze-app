@@ -12,7 +12,7 @@ import 'package:maze_app/feature/knowledge/domain/entity/create_edit_article.dar
 import 'package:maze_app/feature/knowledge/domain/usecase/get_bookmarks.dart';
 
 abstract interface class KnowledgeRemoteDatasource {
-  ResultFuture<RespModelArticles> getArticles();
+  ResultFuture<RespModelArticles> getArticles(String params);
   ResultFuture<RespModelArticles> getBookmarks();
   ResultFuture<RespEmptyModel> removeBookmark(String id);
   ResultFuture<RespEmptyModel> setBookmark(String id);
@@ -34,10 +34,10 @@ class KnowledgeRemoteDataSourceImpl implements KnowledgeRemoteDatasource {
     @Named(DiConst.dioNamedToken) required DioCaller dioCaller,
   }) : _dioCaller = dioCaller;
   @override
-  ResultFuture<RespModelArticles> getArticles() async {
+  ResultFuture<RespModelArticles> getArticles(String params) async {
     //TODO: complete this section
     return await _dioCaller.get(
-      'api/blog',
+      'api/blog?filter=$params',
       fromJson: RespModelArticles.fromJson,
     );
   }

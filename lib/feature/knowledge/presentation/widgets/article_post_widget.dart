@@ -32,9 +32,15 @@ class AriclePostWidget extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(
+            height: 10.h,
+          ),
           Text(
             article.category.name,
             style: context.footnoteFootnote,
+          ),
+          SizedBox(
+            height: 10.h,
           ),
           Text(
             article.title,

@@ -12,6 +12,7 @@ import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
 import 'package:maze_app/core/presentation/widget/page_loading.dart';
 
 import 'package:maze_app/core/style/app_theme.dart';
+import 'package:maze_app/core/util/extentsion/context_ext.dart';
 
 import 'package:maze_app/feature/knowledge/presentation/knowledge/cubit/knowledge_cubit.dart';
 import 'package:maze_app/feature/knowledge/presentation/widgets/article_post_widget.dart';
@@ -41,6 +42,7 @@ class _KnowledgePageState extends State<KnowledgePage> {
             icon: appAssets.searchNormalIcon.svg(),
           ),
           IconButton.filledTonal(
+            
             onPressed: () {
               context.read<KnowledgeCubit>().loadBookmarks();
             },
@@ -66,25 +68,7 @@ class _KnowledgePageState extends State<KnowledgePage> {
                     child: ListView.builder(
                       itemCount: loaded.categories.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.only(right: 20.w),
-                          child: ChoiceChip(
-                            selected: _selectedIndex == index ? true : false,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.w),
-                            ),
-                            label: Text(loaded.categories[index].name),
-                            onSelected: (value) {
-                              setState(() {
-                                if (value) {
-                                  _selectedIndex = index;
-                                } else {
-                                  _selectedIndex = -1;
-                                }
-                              });
-                            },
-                          ),
-                        );
+                        return categoryChip(context, index, loaded);
                       },
                       scrollDirection: Axis.horizontal,
                     ),
@@ -121,6 +105,46 @@ class _KnowledgePageState extends State<KnowledgePage> {
                 ),
               );
           }
+        },
+      ),
+    );
+  }
+
+  Container categoryChip(
+      BuildContext context, int index, ArticlesLoaded loaded) {
+    return Container(
+      margin: EdgeInsets.only(right: 8.w),
+      child: FilterChip(
+        showCheckmark: false,
+        labelStyle: context.subheadlineSubheadline,
+        selectedColor: context.scheme().primariesShade02,
+        selected: _selectedIndex == index ? true : false,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: _selectedIndex == index
+                ? context.scheme().primary
+                : context.scheme().neutralsBorderDivider,
+          ),
+          borderRadius: BorderRadius.circular(20.w),
+        ),
+        label: Text(
+          loaded.categories[index].name,
+          style: context.subheadlineSubheadline.copyWith(
+              color: _selectedIndex == index
+                  ? context.scheme().primary
+                  : context.scheme().tertiaryText),
+        ),
+        onSelected: (value) {
+          context
+              .read<KnowledgeCubit>()
+              .loadArticles(filter: loaded.categories[index].name);
+          setState(() {
+            if (value) {
+              _selectedIndex = index;
+            } else {
+              _selectedIndex = -1;
+            }
+          });
         },
       ),
     );
