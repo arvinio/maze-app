@@ -4,7 +4,7 @@ import 'package:maze_app/feature/knowledge/domain/entity/article.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/create_edit_article.dart';
 
 abstract interface class KnowledgeRepo {
-  Future<ApiResponse<List<Article>>> getArticles();
+  Future<ApiResponse<List<Article>>> getArticles(String params);
   Future<ApiResponse<List<Article>>> getBookmarks();
   Future<ApiResponse<bool>> setBookmark(String id);
   Future<ApiResponse<bool>> removeBookmark(String id);

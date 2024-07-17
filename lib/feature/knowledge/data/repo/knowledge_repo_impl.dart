@@ -13,8 +13,8 @@ class KnowledgeRepoImpl implements KnowledgeRepo {
   KnowledgeRepoImpl({required KnowledgeRemoteDatasource remoteDatasource})
       : _remoteDatasource = remoteDatasource;
   @override
-  Future<ApiResponse<List<Article>>> getArticles() async {
-    final result = await _remoteDatasource.getArticles();
+  Future<ApiResponse<List<Article>>> getArticles(String params) async {
+    final result = await _remoteDatasource.getArticles(params);
     return result.when(
       completed: (respModel, statusCode) {
         final List<Article> articles = respModel.result.map(

@@ -59,7 +59,7 @@ class KnowledgeCubit extends Cubit<KnowledgeState> {
         _deleteArticle = deleteArticle,
         _editArticle = editArticle,
         super(KnowledgeInitial()) {
-    _load();
+    loadArticles();
   }
 
   Future<List<Article>> search(String input) async {
@@ -78,14 +78,12 @@ class KnowledgeCubit extends Cubit<KnowledgeState> {
     final result = await _createArticle(article);
     result.when(
       completed: (data, statusCode) async {
-        await _load();
+        await loadArticles();
         _router.maybePop();
       },
       error: (apiError) {},
     );
   }
-
-  
 
   List<DropdownMenuEntry> getCategoriesDropDown() {
     final List<DropdownMenuEntry> dropDownMenu = [];
@@ -96,13 +94,15 @@ class KnowledgeCubit extends Cubit<KnowledgeState> {
     return dropDownMenu;
   }
 
-  Future<void> _load() async {
+  Future<void> loadArticles({String? filter}) async {
     emit(LoadingArticles());
-    final result = await _getArticles();
+    final result = await _getArticles(filter ?? 'newest');
     final categoryResults = await _getCategories();
     categoryResults.when(
       completed: (data, statusCode) {
         if (_categories.isNotEmpty) _categories.clear();
+        _categories.add(AppCategory(id: 'newest', name: 'newest'));
+        _categories.add(AppCategory(id: 'popular', name: 'popular'));
         _categories.addAll(data);
       },
       error: (apiError) {},

@@ -12,6 +12,7 @@ import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
 import 'package:maze_app/core/presentation/widget/page_loading.dart';
 
 import 'package:maze_app/core/style/app_theme.dart';
+import 'package:maze_app/core/util/extentsion/context_ext.dart';
 
 import 'package:maze_app/feature/knowledge/presentation/knowledge/cubit/knowledge_cubit.dart';
 import 'package:maze_app/feature/knowledge/presentation/widgets/article_post_widget.dart';
@@ -74,7 +75,11 @@ class _KnowledgePageState extends State<KnowledgePage> {
                               borderRadius: BorderRadius.circular(20.w),
                             ),
                             label: Text(loaded.categories[index].name),
+                            // selectedColor: context.scheme().primariesShade01,
                             onSelected: (value) {
+                              context.read<KnowledgeCubit>().loadArticles(
+                                  filter: loaded.categories[index].name);
+
                               setState(() {
                                 if (value) {
                                   _selectedIndex = index;
