@@ -96,14 +96,32 @@ class _AdminArticlePageState extends State<AdminArticlePage> {
                     children: [
                       const Text('Choose a cover photo'),
                       IconButton.filled(
-                          onPressed: () async {
-                            FilePickerResult? result =
-                                await FilePicker.platform.pickFiles();
-                            if (result != null) {
+                        onPressed: () async {
+                          FilePickerResult? result =
+                              await FilePicker.platform.pickFiles();
+                          if (result != null) {
+                            setState(() {
                               file = File(result.files.single.path!);
-                            }
-                          },
-                          icon: const Icon(Icons.camera_alt_outlined))
+                            });
+                          }
+                        },
+                        icon: const Icon(Icons.camera_alt_outlined),
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      if (file != null) ...[
+                        SizedBox(
+                          height: 90.h,
+                          width: 90.h,
+                          child: Image.file(file!),
+                        ),
+                        IconButton(
+                            onPressed: () => setState(() {
+                                  file = null;
+                                }),
+                            icon: const Icon(Icons.cancel))
+                      ]
                     ],
                   ),
                   SizedBox(

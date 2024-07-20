@@ -13,16 +13,25 @@ import 'package:maze_app/core/presentation/widget/page_loading.dart';
 
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
+import 'package:maze_app/di/injection_container.dart';
 
 import 'package:maze_app/feature/knowledge/presentation/knowledge/cubit/knowledge_cubit.dart';
 import 'package:maze_app/feature/knowledge/presentation/widgets/article_post_widget.dart';
+import 'package:maze_app/feature/knowledge/presentation/widgets/article_search_item.dart';
+import 'package:maze_app/feature/knowledge/presentation/widgets/custom_seach_delegate.dart';
+import 'package:maze_app/feature/knowledge/presentation/widgets/knowledge_search_delegate.dart';
 
 @RoutePage()
-class KnowledgePage extends StatefulWidget {
+class KnowledgePage extends StatefulWidget implements AutoRouteWrapper {
   const KnowledgePage({super.key});
 
   @override
   State<KnowledgePage> createState() => _KnowledgePageState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(create: (_) => inject<KnowledgeCubit>(), child: this);
+  }
 }
 
 class _KnowledgePageState extends State<KnowledgePage> {
@@ -38,11 +47,16 @@ class _KnowledgePageState extends State<KnowledgePage> {
         ),
         actions: [
           IconButton.filledTonal(
-            onPressed: () {},
+            onPressed: () {
+              final knowledgeCubit = context.read<KnowledgeCubit>();
+              customShowSearch(
+                context: context,
+                delegate: KnowledgeSearchDelegate(knowledgeCubit, context),
+              );
+            },
             icon: appAssets.searchNormalIcon.svg(),
           ),
           IconButton.filledTonal(
-            
             onPressed: () {
               context.read<KnowledgeCubit>().loadBookmarks();
             },
@@ -89,7 +103,9 @@ class _KnowledgePageState extends State<KnowledgePage> {
                   ),
                 ],
               );
-
+            case SearchResultsLoaded searchResults:
+              // Build UI for search results here
+              return _buildSearchResults(context, searchResults);
             case LoadingArticles _:
               return const PageLoading();
             case ErrorLoadingArticles error:
@@ -106,6 +122,28 @@ class _KnowledgePageState extends State<KnowledgePage> {
               );
           }
         },
+      ),
+    );
+  }
+
+  Widget _buildSearchResults(
+      BuildContext context, SearchResultsLoaded searchResults) {
+    return SizedBox(
+      height: 600.h,
+      child: Column(
+        children: [
+          Text('Search Results'),
+          SizedBox(
+            height: 550.h,
+            child: ListView.builder(
+              itemCount: searchResults.articles.length,
+              itemBuilder: (context, index) {
+                final article = searchResults.articles[index];
+                return ArticleSearchItem(article: article);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -128,7 +166,8 @@ class _KnowledgePageState extends State<KnowledgePage> {
           borderRadius: BorderRadius.circular(20.w),
         ),
         label: Text(
-          loaded.categories[index].name,
+          loaded.categories[index].name[0].toUpperCase() +
+              loaded.categories[index].name.substring(1),
           style: context.subheadlineSubheadline.copyWith(
               color: _selectedIndex == index
                   ? context.scheme().primary

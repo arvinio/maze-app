@@ -26,3 +26,9 @@ final class ErrorLoadingArticles extends KnowledgeState {
 
   const ErrorLoadingArticles({required this.error});
 }
+
+final class SearchResultsLoaded extends KnowledgeState {
+  final List<Article> articles;
+
+  const SearchResultsLoaded({required this.articles});
+}

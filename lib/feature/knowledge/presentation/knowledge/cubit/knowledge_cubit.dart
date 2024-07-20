@@ -40,6 +40,8 @@ class KnowledgeCubit extends Cubit<KnowledgeState> {
   final List<Article> _articles = [];
   final List<AppCategory> _categories = [];
 
+  late ArticlesLoaded _preservedState;
+
   KnowledgeCubit({
     required GetArticles getArticles,
     required AppRouter router,
@@ -62,11 +64,12 @@ class KnowledgeCubit extends Cubit<KnowledgeState> {
     loadArticles();
   }
 
-  Future<List<Article>> search(String input) async {
+  Future<void> search(String input) async {
+    emit(LoadingArticles());
     final result = await _searchArticles(input);
-    return result.when(
+    result.when(
       completed: (data, statusCode) {
-        return data;
+        emit(SearchResultsLoaded(articles: data));
       },
       error: (apiError) {
         throw Exception(apiError.message);
@@ -87,9 +90,11 @@ class KnowledgeCubit extends Cubit<KnowledgeState> {
 
   List<DropdownMenuEntry> getCategoriesDropDown() {
     final List<DropdownMenuEntry> dropDownMenu = [];
-    for (var element in _categories) {
-      dropDownMenu
-          .add(DropdownMenuEntry(value: element.id, label: element.name));
+    final filteredCategories = _categories.skip(2);
+    for (var element in filteredCategories) {
+      dropDownMenu.add(
+        DropdownMenuEntry(value: element.id, label: element.name),
+      );
     }
     return dropDownMenu;
   }
@@ -111,6 +116,8 @@ class KnowledgeCubit extends Cubit<KnowledgeState> {
       completed: (data, statusCode) {
         _articles.isEmpty ? null : _articles.clear();
         _articles.addAll(data);
+        _preservedState =
+            ArticlesLoaded(articles: data, categories: _categories);
         emit(
           ArticlesLoaded(
             articles: data,
@@ -122,6 +129,10 @@ class KnowledgeCubit extends Cubit<KnowledgeState> {
         emit(ErrorLoadingArticles(error: apiError));
       },
     );
+  }
+
+  void loadPreservedState() {
+    emit(_preservedState);
   }
 
   // void goBackFromArticlPage() {

@@ -30,22 +30,20 @@ class _SplashLoadingPageState extends State<SplashLoadingPage> {
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SplashBloc, SplashState>(
       listener: (context, state) {
-        if(state.splashStatus.isSuccess){
+        if (state.splashStatus.isSuccess) {
           context.read<SplashBloc>().add(const SplashEvent.onLoadAppData());
-
-        }
-        else  if(state.splashStatus.isUserLoggedIn){
-          context.pushRoute(const BottomNavigationRoute());
-        }
-        else  if(state.splashStatus.isUserNotLoggedIn){
+        } else if (state.splashStatus.isUserLoggedIn) {
+          context.replaceRoute(const BottomNavigationRoute());
+        } else if (state.splashStatus.isUserNotLoggedIn) {
           context.read<SplashBloc>().add(const SplashEvent.checkIsFirstRun());
-        } else  if(state.splashStatus.isFirstRun){
+        } else if (state.splashStatus.isFirstRun) {
           context.pushRoute(const IntroPageRoute());
-        } else  if(state.splashStatus.isNotFirstRun){
+        } else if (state.splashStatus.isNotFirstRun) {
           context.pushRoute(const SignupPageRoute());
         }
       },
