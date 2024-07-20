@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
+import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/knowledge/presentation/knowledge/cubit/knowledge_cubit.dart';
@@ -114,13 +115,18 @@ class KnowledgeSearchDelegate extends CustomSearchDelegate<String> {
               child: Text("Try searching for another phrase"),
             );
           }
-          return SizedBox(
-            height: 800.h,
-            // width: 400.w,
-            child: ListView.builder(
-              itemCount: results.length,
-              itemBuilder: (context, index) =>
-                  ArticleSearchItem(article: results[index]),
+          return BasePageWidget(
+            child: SizedBox(
+              height: 800.h,
+              // width: 400.w,
+              child: ListView.builder(
+                  itemCount: results.length,
+                  itemBuilder: (context, index) => ArticleSearchItem(
+                        article: results[index],
+                        function: () {
+                          knowledgeCubit.loadArticle(results[index].id);
+                        },
+                      )),
             ),
           );
         } else if (state is ErrorLoadingArticles) {
