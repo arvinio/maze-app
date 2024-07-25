@@ -103,9 +103,7 @@ class _KnowledgePageState extends State<KnowledgePage> {
                   ),
                 ],
               );
-            case SearchResultsLoaded searchResults:
-              // Build UI for search results here
-              return _buildSearchResults(context, searchResults);
+
             case LoadingArticles _:
               return const PageLoading();
             case ErrorLoadingArticles error:
@@ -122,28 +120,6 @@ class _KnowledgePageState extends State<KnowledgePage> {
               );
           }
         },
-      ),
-    );
-  }
-
-  Widget _buildSearchResults(
-      BuildContext context, SearchResultsLoaded searchResults) {
-    return SizedBox(
-      height: 600.h,
-      child: Column(
-        children: [
-          Text('Search Results'),
-          SizedBox(
-            height: 550.h,
-            child: ListView.builder(
-              itemCount: searchResults.articles.length,
-              itemBuilder: (context, index) {
-                final article = searchResults.articles[index];
-                return ArticleSearchItem(article: article);
-              },
-            ),
-          ),
-        ],
       ),
     );
   }
