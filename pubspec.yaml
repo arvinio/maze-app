@@ -86,7 +86,8 @@ flutter:
         - asset: assets/fonts/Urbanist-Thin.ttf
         - asset: assets/fonts/Urbanist-ThinItalic.ttf
 
-flutter_icons:
+flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/launcher-icon.png"
+  image_path: "assets/maze.png"
+  remove_alpha_ios: true
