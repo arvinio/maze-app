@@ -50,6 +50,7 @@ dev_dependencies:
   json_serializable: ^6.8.0
 
   flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.13.1
 
 flutter:
 
@@ -85,3 +86,7 @@ flutter:
         - asset: assets/fonts/Urbanist-Thin.ttf
         - asset: assets/fonts/Urbanist-ThinItalic.ttf
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/launcher-icon.png"
