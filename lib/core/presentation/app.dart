@@ -23,6 +23,7 @@ class App extends StatelessWidget {
         routerDelegate: appRouter.delegate(),
         routeInformationProvider: appRouter.routeInfoProvider(),
         routeInformationParser: appRouter.defaultRouteParser(),
+        themeMode: ThemeMode.light,
       ),
     );
   }
