@@ -75,34 +75,37 @@ class _KnowledgePageState extends State<KnowledgePage> {
         builder: (context, state) {
           switch (state) {
             case ArticlesLoaded loaded:
-              return Column(
-                children: [
-                  SizedBox(
-                    height: 50.h,
-                    child: ListView.builder(
-                      itemCount: loaded.categories.length,
-                      itemBuilder: (context, index) {
-                        return categoryChip(context, index, loaded);
-                      },
-                      scrollDirection: Axis.horizontal,
+              return LayoutBuilder(builder: (context, constraints) {
+                final maxH = constraints.maxHeight;
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: maxH * .078,
+                      child: ListView.builder(
+                        itemCount: loaded.categories.length,
+                        itemBuilder: (context, index) {
+                          return categoryChip(context, index, loaded);
+                        },
+                        scrollDirection: Axis.horizontal,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 550.h,
-                    child: ListView.builder(
-                      itemCount: loaded.articles.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                            child: AriclePostWidget(
-                                article: loaded.articles[index]),
-                            onTap: () => context
-                                .read<KnowledgeCubit>()
-                                .loadArticle(loaded.articles[index].id));
-                      },
+                    SizedBox(
+                      height: maxH * .92,
+                      child: ListView.builder(
+                        itemCount: loaded.articles.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                              child: AriclePostWidget(
+                                  article: loaded.articles[index]),
+                              onTap: () => context
+                                  .read<KnowledgeCubit>()
+                                  .loadArticle(loaded.articles[index].id));
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              );
+                  ],
+                );
+              });
 
             case LoadingArticles _:
               return const PageLoading();
