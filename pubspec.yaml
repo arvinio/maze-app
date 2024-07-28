@@ -38,7 +38,7 @@ dependencies:
   flutter_native_splash: ^2.4.0
   introduction_screen: ^3.1.14
   flutter_screenutil: ^5.9.3
-  file_picker: ^8.0.6
+  
   
 
 dev_dependencies:
@@ -91,3 +91,10 @@ flutter_launcher_icons:
   ios: true
   image_path: "assets/maze.png"
   remove_alpha_ios: true
+
+
+flutter_native_splash:
+  color: "#ffffff"
+  image:  assets/app-logo.png
+  android: true
+  ios: true

@@ -5,6 +5,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/presentation/widget/app_loading.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
@@ -16,7 +17,6 @@ import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/article.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/create_edit_article.dart';
 import 'package:maze_app/feature/knowledge/presentation/knowledge/cubit/knowledge_cubit.dart';
-import 'package:file_picker/file_picker.dart';
 
 @RoutePage()
 class AdminArticlePage extends StatefulWidget implements AutoRouteWrapper {
@@ -97,13 +97,55 @@ class _AdminArticlePageState extends State<AdminArticlePage> {
                       const Text('Choose a cover photo'),
                       IconButton.filled(
                         onPressed: () async {
-                          FilePickerResult? result =
-                              await FilePicker.platform.pickFiles();
-                          if (result != null) {
-                            setState(() {
-                              file = File(result.files.single.path!);
-                            });
-                          }
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (context) => SizedBox(
+                                    height: 150.h,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        SizedBox(
+                                          height: 70.h,
+                                          child: FittedBox(
+                                            fit: BoxFit.cover,
+                                            child: IconButton(
+                                              onPressed: () async {
+                                                XFile? result =
+                                                    await ImagePicker()
+                                                        .pickImage(
+                                                            source: ImageSource
+                                                                .camera);
+                                                if (result != null) {
+                                                  setState(() {
+                                                    file = File(result.path);
+                                                    Navigator.pop(context);
+                                                  });
+                                                }
+                                              },
+                                              icon:
+                                                  const Icon(Icons.camera_alt),
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () async {
+                                            XFile? result = await ImagePicker()
+                                                .pickImage(
+                                                    source:
+                                                        ImageSource.gallery);
+                                            if (result != null) {
+                                              setState(() {
+                                                file = File(result.path);
+                                                Navigator.pop(context);
+                                              });
+                                            }
+                                          },
+                                          icon: const Icon(Icons.photo),
+                                        ),
+                                      ],
+                                    ),
+                                  ));
                         },
                         icon: const Icon(Icons.camera_alt_outlined),
                       ),

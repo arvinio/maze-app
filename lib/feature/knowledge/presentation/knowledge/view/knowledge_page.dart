@@ -39,37 +39,40 @@ class _KnowledgePageState extends State<KnowledgePage> {
   @override
   Widget build(BuildContext context) {
     return BasePageWidget(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: Text(
-          'Knowledge',
-          style: context.titleTitle2,
-        ),
-        actions: [
-          IconButton.filledTonal(
-            onPressed: () {
-              final knowledgeCubit = context.read<KnowledgeCubit>();
-              customShowSearch(
-                context: context,
-                delegate: KnowledgeSearchDelegate(knowledgeCubit, context),
-              );
-            },
-            icon: appAssets.searchNormalIcon.svg(),
+      appBar: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 13.w),
+        child: AppBar(
+          backgroundColor: Colors.transparent,
+          title: Text(
+            'Knowledge',
+            style: context.titleTitle2,
           ),
-          IconButton.filledTonal(
-            onPressed: () {
-              context.read<KnowledgeCubit>().loadBookmarks();
-            },
-            icon: appAssets.bookmarkIcon.svg(),
-          ),
-          if (context.read<KnowledgeCubit>().isAdmin)
+          actions: [
             IconButton.filledTonal(
               onPressed: () {
-                context.pushRoute(AdminArticlePageRoute());
+                final knowledgeCubit = context.read<KnowledgeCubit>();
+                customShowSearch(
+                  context: context,
+                  delegate: KnowledgeSearchDelegate(knowledgeCubit, context),
+                );
               },
-              icon: const Icon(Icons.add),
+              icon: appAssets.searchNormalIcon.svg(),
             ),
-        ],
+            IconButton.filledTonal(
+              onPressed: () {
+                context.read<KnowledgeCubit>().loadBookmarks();
+              },
+              icon: appAssets.bookmarkIcon.svg(),
+            ),
+            if (context.read<KnowledgeCubit>().isAdmin)
+              IconButton.filledTonal(
+                onPressed: () {
+                  context.pushRoute(AdminArticlePageRoute());
+                },
+                icon: const Icon(Icons.add),
+              ),
+          ],
+        ),
       ),
       child: BlocBuilder<KnowledgeCubit, KnowledgeState>(
         builder: (context, state) {
