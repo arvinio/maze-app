@@ -41,6 +41,17 @@ class AssetsBase  {
   AssetSvg get infoCircle => const AssetSvg('assets/icons/info-circle.svg');
   AssetSvg get close => const AssetSvg('assets/icons/close.svg');
 
+
+  AssetSvg get rightArrow => const AssetSvg('assets/icons/right_arrow.svg');
+  AssetSvg get editProfile => const AssetSvg('assets/icons/edit_profile.svg');
+  AssetSvg get house => const AssetSvg('assets/icons/house.svg');
+  AssetSvg get question => const AssetSvg('assets/icons/question.svg');
+  AssetSvg get settings => const AssetSvg('assets/icons/settings.svg');
+  AssetSvg get yourDetails => const AssetSvg('assets/icons/your_details.svg');
+  AssetSvg get addReport => const AssetSvg('assets/icons/add_report.svg');
+  AssetSvg get cover => const AssetSvg('assets/images/cover.jpg');
+
+
 }
 
 class AssetImage {

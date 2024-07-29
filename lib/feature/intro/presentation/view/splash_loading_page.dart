@@ -44,7 +44,7 @@ class _SplashLoadingPageState extends State<SplashLoadingPage> {
         } else if (state.splashStatus.isFirstRun) {
           context.pushRoute(const IntroPageRoute());
         } else if (state.splashStatus.isNotFirstRun) {
-          context.pushRoute(const SignupPageRoute());
+          context.replaceRoute(const SignupPageRoute());
         }
       },
       builder: (context, state) {

@@ -111,7 +111,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
           children: [
             ListTile(
               title: CustomText(
-                  appStrings.verificationCode,
+                  widget.entryMode.isNewEmail ?appStrings.verifyNewEmail:appStrings.verificationCode,
                   style: context.titleTitle1),
               subtitle: Padding(
                 padding: const EdgeInsets.only(left: 10.0, top: 5),

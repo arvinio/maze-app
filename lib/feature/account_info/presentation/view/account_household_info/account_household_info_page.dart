@@ -115,7 +115,6 @@ class _AccountHouseholdInfoPageState extends State<AccountHouseholdInfoPage> {
                     councilEnable=true;
                   } else if (state.entryMode == EntryMode.fetchCouncilList) {
                     councilController.text = state.selectedResult!.name!;
-                    countryId = state.selectedResult!.id!;
                   }
                   break;
                 }
@@ -139,7 +138,7 @@ class _AccountHouseholdInfoPageState extends State<AccountHouseholdInfoPage> {
                   context.pushRoute(const WelcomeAccountSetupPageRoute());
                   await Future.delayed(const Duration(seconds: 2));
                   if (context.mounted) {
-                    context.pushRoute(const BottomNavigationRoute(),);
+                    context.router.replaceAll([const BottomNavigationRoute()]);
                   }
 
                 }

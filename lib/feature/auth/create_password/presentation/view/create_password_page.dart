@@ -59,7 +59,7 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
             if (state.createPassStatus.isSuccess) {
                 (widget.entryMode.isAccountCreation)
                     ? context.pushRoute(const AccountDetailsPageRoute())
-                    : context.pushRoute(const BottomNavigationRoute());
+                    : context.router.replaceAll([const BottomNavigationRoute()]);
 
             } else if (state.createPassStatus.isFailure) {
               Fluttertoast.showToast(

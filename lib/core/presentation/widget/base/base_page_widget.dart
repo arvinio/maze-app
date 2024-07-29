@@ -19,7 +19,8 @@ class BasePageWidget extends StatefulWidget {
     this.bottomNav,
     this.failureMessage,
     this.resizeToAvoidBottomInset = true,
-    this.floatingActionButton
+    this.floatingActionButton,
+    this.appBarHeight
   }) ;
 
 
@@ -38,6 +39,8 @@ class BasePageWidget extends StatefulWidget {
   final String? failureMessage;
   final bool? resizeToAvoidBottomInset;
   final Widget? floatingActionButton;
+  final double? appBarHeight;
+
 
   @override
   State<BasePageWidget> createState() => _BasePageWidgetState();
@@ -57,7 +60,7 @@ class _BasePageWidgetState extends State<BasePageWidget> {
       backgroundColor: widget.backgroundColor,
       appBar: widget.appBar != null
           ? PreferredSize(
-        preferredSize: const Size.fromHeight(Dimen.appBarHeight),
+        preferredSize:  Size.fromHeight(widget.appBarHeight ?? Dimen.appBarHeight),
         child: widget.appBar ?? const SizedBox(),
       )
           : null,
