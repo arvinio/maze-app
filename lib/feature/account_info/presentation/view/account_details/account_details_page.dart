@@ -87,7 +87,7 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
               LinearPercentIndicator(progressColor: context
                   .scheme()
                   .progress,
-              padding:const EdgeInsets.all(1),
+                padding:const EdgeInsets.all(1),
                 animation: true,
                 barRadius: const Radius.circular(99),
                 lineHeight: 8.0,
@@ -109,15 +109,15 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: w * 0.45,
-                    child: CustomTextField.outline(
-                      textEditingController: _firstNameController,
-                      label: appStrings.firstName,
-                      focusNode: _focusNode1,
-                      labelTextColor: context
-                          .scheme()
-                          .secondaryText,
-                     )),
+                      width: w * 0.45,
+                      child: CustomTextField.outline(
+                        textEditingController: _firstNameController,
+                        label: appStrings.firstName,
+                        focusNode: _focusNode1,
+                        labelTextColor: context
+                            .scheme()
+                            .secondaryText,
+                      )),
 
                   SizedBox(
                       width: w * 0.45,
@@ -141,16 +141,16 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                     .secondaryText,
                 readOnly: true,
 
-               onTap: (){
-                 _selectDate(context,(date) {
-                   _birthDateController.text='${date![0]!.day} ${monthList[date![0]!.month-1]} ${date![0]!.year}';
-                      _birthDate='${date![0]!.year}/${date![0]!.month}/${date![0]!.day}';
+                onTap: (){
+                  _selectDate(context,(date) {
+                    _birthDateController.text='${date![0]!.day} ${monthList[date![0]!.month-1]} ${date![0]!.year}';
+                    _birthDate='${date![0]!.year}/${date![0]!.month}/${date![0]!.day}';
 
-                 });
-               },
+                  });
+                },
               ),
 
-            (!_keyboardVisibilityValueNotifier.value)? const Spacer(): SizedBox(height: 0.04*h,),
+              (!_keyboardVisibilityValueNotifier.value)? const Spacer(): SizedBox(height: 0.04*h,),
               ListTile(
                 title: CustomText(
                   appStrings.showBirthday,
@@ -170,25 +170,11 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                 child: CustomButton.submit(
                   text: appStrings.continueSteps,
                   onPressed: () {
-                    if(_firstNameController.text.isNotEmpty && _lastNameController.text.isNotEmpty
-                    && _birthDateController.text.isNotEmpty) {
-                      userInfo?.firstName = _firstNameController.text;
-                      userInfo?.lastName = _lastNameController.text;
-                      userInfo?.birthDate = _birthDate;
-                      context.pushRoute(
-                          AccountProfilePageRoute(userInfo: userInfo!));
-                    }else
-                      {
-                        Fluttertoast.showToast(
-                          msg:'Fill in the fields',
-                          toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.CENTER,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.black,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
-                      }
+                    userInfo?.firstName = _firstNameController.text;
+                    userInfo?.lastName = _lastNameController.text;
+                    userInfo?.birthDate = _birthDate;
+                    context.pushRoute(
+                        AccountProfilePageRoute(userInfo: userInfo!));
                   },),
               ),
 
@@ -198,14 +184,14 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
 
 
   Future<void> _selectDate( BuildContext context,Function(List<DateTime?>? date) onSelectDate) async {
-      final date = (await showCalendarDatePicker2Dialog(
-        context: context,
-        config: config,
-        dialogSize: const Size(325, 370),
-        borderRadius: BorderRadius.circular(15),
-        value: _dialogCalendarPickerValue,
-        dialogBackgroundColor: Colors.white,
-      ));
+    final date = (await showCalendarDatePicker2Dialog(
+      context: context,
+      config: config,
+      dialogSize: const Size(325, 370),
+      borderRadius: BorderRadius.circular(15),
+      value: _dialogCalendarPickerValue,
+      dialogBackgroundColor: Colors.white,
+    ));
 
     if (date != null) onSelectDate(date);
   }

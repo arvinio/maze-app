@@ -23,7 +23,7 @@ class AccountProfilePage extends StatefulWidget  {
   UserInfo? userInfo;
 
   AccountProfilePage({super.key,required
-      this.userInfo});
+  this.userInfo});
 
 
   @override
@@ -92,7 +92,7 @@ class _AccountProfilePageState extends State<AccountProfilePage> {
               children: [
                 CustomText(
                   appStrings.yourProfileTitle, style: context.titleTitle1,),
-                 SizedBox(height:(! _keyboardVisibilityValueNotifier.value) ? 40:20,),
+                SizedBox(height:(! _keyboardVisibilityValueNotifier.value) ? 40:20,),
                 LinearPercentIndicator(progressColor: context
                     .scheme()
                     .progress,
@@ -109,35 +109,35 @@ class _AccountProfilePageState extends State<AccountProfilePage> {
                   restartAnimation: false,
 
                 ),
-                 SizedBox(height: (! _keyboardVisibilityValueNotifier.value) ? 40:20,),
+                SizedBox(height: (! _keyboardVisibilityValueNotifier.value) ? 40:20,),
                 CustomText(
                   appStrings.yourProfileSubTitle, style: context.bodyBody,),
-                 SizedBox(height: (! _keyboardVisibilityValueNotifier.value) ? 30:20,),
+                SizedBox(height: (! _keyboardVisibilityValueNotifier.value) ? 30:20,),
                 Center(
                   child: Stack(
                     children: [
-                    SizedBox(
-                      width: 136,
-                      height: 136,
-                      child: _image!=null
-                      ? CircleAvatar(
+                      SizedBox(
+                        width: 136,
+                        height: 136,
+                        child: _image!=null
+                            ? CircleAvatar(
                           radius: 100,
                           backgroundImage: MemoryImage( _image! ),
-                      )
-                      : CircleAvatar(
-                        backgroundColor: context.scheme().disabledText,
-                        radius: 100,
-                        child: appAssets.avatar.svg(width: 100, height: 100,color: context.scheme().neutralsBackground),
+                        )
+                            : CircleAvatar(
+                          backgroundColor: context.scheme().disabledText,
+                          radius: 100,
+                          child: appAssets.avatar.svg(width: 100, height: 100,color: context.scheme().neutralsBackground),
+                        ),
                       ),
-                    ),
                       Positioned(
                         bottom: -10,
                         left: 80,
                         child: IconButton(icon: appAssets.floatingActionButtons.svg(),onPressed: () { selectImage(); }, ),
                       )
-                  ],),
+                    ],),
                 ),
-          
+
                 const SizedBox(height: 20,),
                 CustomTextField.outline(
                   textEditingController: _userNameController,
@@ -163,30 +163,19 @@ class _AccountProfilePageState extends State<AccountProfilePage> {
                 Padding(
                   padding:  const EdgeInsets.only(bottom: 16),
                   child: CustomButton.submit(
-                    text: appStrings.continueSteps,
-                    onPressed: () {
-                      widget.userInfo!.username=_userNameController.text;
-                      if(_file!=null) {
-                        widget.userInfo!.avatar = File(_file!.path!);
-                      }
-    if(_userNameController.text.isNotEmpty) {
-      context.pushRoute(
-          AccountNotificationPageRoute(userInfo: widget.userInfo));
-    }else
-      {
-        Fluttertoast.showToast(
-          msg:'username should not be empty',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-      }
-                    }),
+                      text: appStrings.continueSteps,
+                      onPressed: () {
+                        widget.userInfo!.username = _userNameController.text;
+                        if (_file != null) {
+                          widget.userInfo!.avatar = File(_file!.path!);
+                        }
+
+                        context.pushRoute(
+                            AccountNotificationPageRoute(
+                                userInfo: widget.userInfo));
+                      }),
                 ),
-          
+
               ],),
           ),
         ));
@@ -196,10 +185,10 @@ class _AccountProfilePageState extends State<AccountProfilePage> {
     final ImagePicker imagePicker=ImagePicker();
     XFile? file=await imagePicker.pickImage(source: source);
     if(file!=null)
-      {
+    {
 
-        return file;
-      }
+      return file;
+    }
     print('No Images Selected');
   }
 
