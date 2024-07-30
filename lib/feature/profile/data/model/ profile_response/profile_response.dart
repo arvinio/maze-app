@@ -32,13 +32,13 @@ class ProfileResponse with _$ProfileResponse {
     @JsonKey(name: "notification")
     bool? notification,
     @JsonKey(name: "council")
-    String? council,
+    HouseholdInfo? council,
     @JsonKey(name: "country")
-    String? country,
+    HouseholdInfo? country,
     @JsonKey(name: "postcode")
     String? postcode,
     @JsonKey(name: "state")
-    String? state,
+    HouseholdInfo? state,
     @JsonKey(name: "about")
     String? about,
     @JsonKey(name: "avatar")
@@ -48,4 +48,16 @@ class ProfileResponse with _$ProfileResponse {
   }) = _ProfileResponse;
 
   factory ProfileResponse.fromJson(Map<String, dynamic> json) => _$ProfileResponseFromJson(json);
+}
+
+@freezed
+class HouseholdInfo with _$HouseholdInfo {
+  const factory HouseholdInfo({
+    @JsonKey(name: "_id")
+    String? id,
+    @JsonKey(name: "name")
+    String? name,
+  }) = _HouseholdInfo;
+
+  factory HouseholdInfo.fromJson(Map<String, dynamic> json) => _$HouseholdInfoFromJson(json);
 }

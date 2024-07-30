@@ -7,7 +7,6 @@ import 'package:maze_app/core/config/dimen.dart';
 import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
-import 'package:maze_app/core/presentation/widget/custom_listTile_menus.dart';
 import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
@@ -26,6 +25,8 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
     double w=MediaQuery.of(context).size.width;
 
     return BasePageWidget(
+        appBarHeight: 60,
+
         appBar: Padding(
           padding: const EdgeInsets.fromLTRB(16, 56, 12, 16),
           child: Row(
@@ -49,7 +50,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
             Container(
                 padding: EdgeInsets.zero,
                 decoration: BoxDecoration(
@@ -83,7 +84,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
         ));
   }
 
-  Divider buildDivider(BuildContext context, double w) => Divider(color: context.scheme().neutralsBorderDivider,indent: w*0.12,);
+  Divider buildDivider(BuildContext context, double w) => Divider(color: context.scheme().neutralsBorderDivider,indent: w*0.06,);
 
 
 
@@ -100,7 +101,8 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
           height: 64,
           child: trailing),
       onTap:onTap ,
-      contentPadding: const EdgeInsets.all( 10),
+      contentPadding: const EdgeInsets.fromLTRB( 0,5,5,5,),
+      horizontalTitleGap: 0,
     );
   }
 }

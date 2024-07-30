@@ -53,7 +53,8 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
           email=state.response!.email!;
         }
         else if(state.profileStatus.isDeleteSuccess){
-          context.router.popUntilRouteWithName(const SignupPageRoute().routeName);
+          clearSharedPreferences();
+          context.router.replaceAll([const SignupPageRoute()]);
         }
         else  if (state.profileStatus.isFailure) {
           Fluttertoast.showToast(msg: state.errorMessage!,
@@ -79,7 +80,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                   },
 
                   child: appAssets.arrowLeft.svg(width: 24, height: 24)),
-              SizedBox(width: w*0.25,),
+              SizedBox(width: w*0.23,),
               CustomText(appStrings.accountSettings, style: context.titleHeadline,
                 textAlign: TextAlign.center,),
             ],
@@ -92,7 +93,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
             Container(
                 padding: EdgeInsets.zero,
                 decoration: BoxDecoration(
@@ -107,7 +108,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                 ),
 
                 child:Column(children: [
-                  buildAccountMenus(context,
+                  buildEmailMenus(context,
                       title:appStrings.email,
                       subTitle: email,
                       trailing: appAssets.rightArrow.svg(color: context.scheme().tertiaryText),
@@ -155,10 +156,8 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                           SizedBox(width: 100,height: 50, child: CustomButton.submit(
                               text: 'Yes',
                               onPressed: (){
-                            inject<SettingsManager>().setBearerToken('');
-                            inject<SettingsManager>().setRefreshToken('');
-                            inject<SettingsManager>().setRole('');
-                            context.router.popUntilRouteWithName(const SignupPageRoute().routeName);
+                            clearSharedPreferences();
+                            context.router.replaceAll([const SignupPageRoute()]);
                           })),
                           SizedBox(width: 100,height:50,child: CustomButton.outline(text: 'No', onPressed: (){Navigator.of(context).pop();}))
 
@@ -186,7 +185,10 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                                 content: CustomText(appStrings.sureLogout),
 
                                 actions: [
-                                  SizedBox(width: 100,height: 50, child: CustomButton.submit(text: 'Yes', onPressed: (){
+                                  SizedBox(width: 100,height: 50,
+                                      child: CustomButton.submit(text: 'Yes',
+                                          showLoading: state.profileStatus.isLoading,
+                                          onPressed: (){
                                     context.read<ProfileBloc>().add( const ProfileEvent.deleteAccountEvent());
                                   })),
                                   SizedBox(width: 100,height:50,child: CustomButton.outline(text: 'No', onPressed: (){Navigator.of(context).pop();}))
@@ -210,17 +212,22 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
 );
   }
 
+  void clearSharedPreferences() {
+     inject<SettingsManager>().setBearerToken('');
+    inject<SettingsManager>().setRefreshToken('');
+    inject<SettingsManager>().setRole('');
+  }
+
   Divider buildDivider(BuildContext context, double w) => Divider(color: context.scheme().neutralsBorderDivider,indent: w*0.06,);
 
 
 
-  ListTile buildAccountMenus(BuildContext context,
+  ListTile buildEmailMenus(BuildContext context,
       {required String title,String? subTitle='' ,  Widget? leading,required Widget trailing,TextStyle? titleStyle,void Function()? onTap}) {
     return ListTile(
       title: CustomText(
           title,
-          style: context.bodyBody),
-      titleTextStyle: titleStyle,
+          style:titleStyle ?? context.bodyBody),
       subtitle: CustomText(
           subTitle!,
           style: context.footnoteFootnote.copyWith(color: context.scheme().secondaryText)),
@@ -230,9 +237,33 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
       trailing: SizedBox(width: 24,
           height: 64,
           child: trailing),
-      contentPadding: const EdgeInsets.fromLTRB( 0,5,5,5,),
+      contentPadding: const EdgeInsets.fromLTRB( 0,10,5,0,),
       horizontalTitleGap: 0,
       onTap: onTap,
     );
+
+
   }
+
+  ListTile buildAccountMenus(BuildContext context,
+      {required String title,Widget? leading,required Widget trailing,TextStyle? titleStyle,void Function()? onTap}) {
+    return ListTile(
+      title: CustomText(
+          title,
+          style:titleStyle ?? context.bodyBody),
+      leading: SizedBox(width: 24,
+          height: 64,
+          child:leading ),
+      trailing: SizedBox(width: 24,
+          height: 64,
+          child: trailing),
+      contentPadding: const EdgeInsets.fromLTRB( 0,10,5,5,),
+      horizontalTitleGap: 0,
+      onTap: onTap,
+    );
+
+
+  }
+
+
 }

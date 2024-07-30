@@ -24,6 +24,7 @@ class _AboutPageState extends State<AboutPage> {
     double w=MediaQuery.of(context).size.width;
 
     return BasePageWidget(
+        appBarHeight: 60,
         appBar: Padding(
           padding: const EdgeInsets.fromLTRB(16, 56, 12, 16),
           child: Row(
@@ -35,7 +36,7 @@ class _AboutPageState extends State<AboutPage> {
                   },
 
                   child: appAssets.arrowLeft.svg(width: 24, height: 24)),
-              SizedBox(width: w*0.3,),
+              SizedBox(width: w*0.33,),
               CustomText(appStrings.about, style: context.titleHeadline,
                 textAlign: TextAlign.center,),
             ],
@@ -47,7 +48,7 @@ class _AboutPageState extends State<AboutPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
             Container(
                 padding: EdgeInsets.zero,
                 decoration: BoxDecoration(
@@ -89,7 +90,7 @@ class _AboutPageState extends State<AboutPage> {
         ));
   }
 
-  Divider buildDivider(BuildContext context, double w) => Divider(color: context.scheme().neutralsBorderDivider,indent: w*0.12,);
+  Divider buildDivider(BuildContext context, double w) => Divider(color: context.scheme().neutralsBorderDivider,indent: w*0.06,);
 
 
 
@@ -105,7 +106,8 @@ class _AboutPageState extends State<AboutPage> {
       trailing: SizedBox(width: 24,
           height: 64,
           child: trailing),
-      contentPadding: const EdgeInsets.all( 10),
+      contentPadding: const EdgeInsets.fromLTRB( 0,5,5,5,),
+      horizontalTitleGap: 0,
     );
   }
 }

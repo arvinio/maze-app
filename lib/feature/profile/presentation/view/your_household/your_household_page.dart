@@ -55,6 +55,7 @@ class _YourHouseholdPageState extends State<YourHouseholdPage> {
 
   String? countryId;
   String? stateId;
+  String? councilId;
   bool stateEnable = false;
   bool councilEnable = false;
   List<String> size=[
@@ -73,6 +74,7 @@ class _YourHouseholdPageState extends State<YourHouseholdPage> {
   @override
   void dispose() {
     countryController.dispose();
+    stateController.dispose();
     councilController.dispose();
     postCodeController.dispose();
     householdSizeController.dispose();
@@ -100,14 +102,34 @@ class _YourHouseholdPageState extends State<YourHouseholdPage> {
     return BlocConsumer<ProfileBloc, ProfileState>(
       listener: (context, state) async {
         if (state.profileStatus.isSuccess) {
-          /*countryId = state.response!.countryId!;
-          stateId = state.selectedResult!.id!;*/
-          countryController.text=state.response!.country!.isNotEmpty ?state.response!.country! :'';
-          stateController.text=state.response!.state!.isNotEmpty ? state.response!.state! :'';
-          councilController.text=state.response!.council!.isNotEmpty ? state.response!.council!:'';
-          postCodeController.text=state.response!.postcode!.isNotEmpty  ? state.response!.postcode! :'';
+
           householdSizeController.text=size[state.response!.householdSize!-1];
           councilBinController.text=state.response!.measurementSystem!.isNotEmpty ? state.response!.measurementSystem!:'';
+
+          if(state.response!.postcode !=null ) {
+            postCodeController.text= state.response!.postcode!;
+          }
+          if(state.response!.country !=null )
+          {
+            countryId = state.response!.country!.id;
+            countryController.text=state.response!.country!.name!;
+            stateEnable = true;
+
+          }
+          if(state.response!.state !=null )
+          {
+            stateId = state.response!.state!.id;
+            stateController.text=state.response!.state!.name!;
+            councilEnable = true;
+
+          }
+          if(state.response!.country !=null )
+          {
+            councilId = state.response!.council!.id;
+            councilController.text=state.response!.council!.name!;
+          }
+
+
         }
         if(state.profileStatus.isNotifyChangeFieldsValue) {
           if (state.entryMode == EntryMode.fetchCountryList) {
@@ -120,6 +142,8 @@ class _YourHouseholdPageState extends State<YourHouseholdPage> {
             councilEnable = true;
           } else if (state.entryMode == EntryMode.fetchCouncilList) {
             councilController.text = state.selectedResult!.name!;
+            councilId = state.selectedResult!.id!;
+
           }
         }
         else if (state.profileStatus.isEditProfileSuccess){
@@ -161,8 +185,7 @@ class _YourHouseholdPageState extends State<YourHouseholdPage> {
                   title: CustomText(
                     appStrings.yourHousehold, style: context.titleHeadline,
                     textAlign: TextAlign.center,),
-                  horizontalTitleGap: 0,
-                  contentPadding: const EdgeInsets.only(left: 20,right: 20),
+                  contentPadding: const EdgeInsets.only(left: 20,right:10),
                   leading: InkWell(
                       onTap: () {
                         Navigator.pop(context);
@@ -175,9 +198,9 @@ class _YourHouseholdPageState extends State<YourHouseholdPage> {
                       onPressed: () {
 
                         EditHouseholdRequest houseHolParam = EditHouseholdRequest(
-                          country: countryController.text.trim(),
-                          state: stateController.text.trim(),
-                          council: councilController.text.trim(),
+                          country: countryId,
+                          state: stateId,
+                          council: councilId,
                           postcode: postCodeController.text.trim(),
                           householdSize: int.parse(householdSizeController.text.substring(0,1)),
                           measurementSystem: councilBinController.text.trim(),

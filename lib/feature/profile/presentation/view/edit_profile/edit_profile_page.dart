@@ -44,8 +44,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Uint8List? _coverImage;
   XFile? _avatarFile;
   Uint8List? _avatarImage;
-  String? avatarUrl;
-  String? coverUrl;
+  String avatarUrl="";
+  String coverUrl="";
   late final ValueNotifier<bool> _keyboardVisibilityValueNotifier;
 
   Future<void> selectCoverImage() async {
@@ -90,10 +90,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return BlocConsumer<ProfileBloc, ProfileState>(
       listener: (context, state) {
         if (state.profileStatus.isSuccess) {
-          _userNameController.text = state.response!.username!;
-          _aboutYouController.text = state.response!.about!;
-          avatarUrl = state.response!.avatar!;
-          coverUrl = state.response!.cover!;
+          if (state.response!.cover != null) {
+            coverUrl = state.response!.cover!;
+          }
+          if (state.response!.avatar != null) {
+            avatarUrl = state.response!.avatar!;
+          }
+          if (state.response!.username != null) {
+            _userNameController.text = state.response!.username!;
+          }
+          if (state.response!.about != null) {
+            _aboutYouController.text = state.response!.about!;
+          }
         }
         else if (state.profileStatus.isFailure) {
           Fluttertoast.showToast(msg: state.errorMessage!,
@@ -193,8 +201,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     image: DecorationImage(
                                         image: _coverImage != null
                                             ? MemoryImage(_coverImage!)
-                                            : coverUrl!.isNotEmpty?
-                                            NetworkImage(coverUrl!)
+                                            : coverUrl.isNotEmpty?
+                                            NetworkImage(coverUrl)
                                         :ExactAssetImage(
                                             appAssets.cover.path),
                                         fit: BoxFit.cover)
@@ -235,7 +243,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                           .scheme()
                                           .disabledText,
                                       radius: 100,
-                                     backgroundImage:avatarUrl!.isNotEmpty? NetworkImage(avatarUrl!
+                                     backgroundImage:avatarUrl.isNotEmpty? NetworkImage(avatarUrl
                                      ):ExactAssetImage(
                                          appAssets.avatar.path),
                                     ),

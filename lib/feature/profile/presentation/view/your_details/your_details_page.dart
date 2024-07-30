@@ -78,15 +78,22 @@ class _YourDetailsPageState extends State<YourDetailsPage> {
     return BlocConsumer<ProfileBloc, ProfileState>(
       listener: (context, state) {
         if (state.profileStatus.isSuccess) {
-          _firstNameController.text = state.response!.firstName!;
-          _lastNameController.text = state.response!.lastName!;
-          _dateController.text =
-          '${state.response!.birthDate!.day} ${monthList[state.response!
-              .birthDate!.month - 1]} ${state.response!.birthDate!
-              .year}';
-          _birthDate =
-          '${state.response!.birthDate!.year}/${state.response!
-              .birthDate!.month}/${state.response!.birthDate!.day}';
+          if(state.response!.firstName !=null) {
+            _firstNameController.text = state.response!.firstName!;
+          }
+          if(state.response!.lastName !=null) {
+            _lastNameController.text = state.response!.lastName!;
+          }
+          if(state.response!.birthDate !=null) {
+            _dateController.text =
+            '${state.response!.birthDate!.day} ${monthList[state.response!
+                .birthDate!.month - 1]} ${state.response!.birthDate!
+                .year}';
+            _birthDate =
+            '${state.response!.birthDate!.year}/${state.response!
+                .birthDate!.month}/${state.response!.birthDate!.day}';
+          }
+
         } else if (state.profileStatus.isEditProfileSuccess) {
 
           Fluttertoast.showToast(msg: appStrings.yourDetailsUpdatedMsg,
@@ -155,7 +162,7 @@ class _YourDetailsPageState extends State<YourDetailsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
-                const SizedBox(height: 30),
+                const SizedBox(height: 10),
                 CustomTextField.outline(label: appStrings.firstName,
                   textEditingController: _firstNameController,
                   focusNode: _firstNameFocusNode,

@@ -170,25 +170,11 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                 child: CustomButton.submit(
                   text: appStrings.continueSteps,
                   onPressed: () {
-                    if(_firstNameController.text.isNotEmpty && _lastNameController.text.isNotEmpty
-                    && _birthDateController.text.isNotEmpty) {
                       userInfo?.firstName = _firstNameController.text;
                       userInfo?.lastName = _lastNameController.text;
                       userInfo?.birthDate = _birthDate;
                       context.pushRoute(
                           AccountProfilePageRoute(userInfo: userInfo!));
-                    }else
-                      {
-                        Fluttertoast.showToast(
-                          msg:'Fill in the fields',
-                          toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.CENTER,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.black,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
-                      }
                   },),
               ),
 

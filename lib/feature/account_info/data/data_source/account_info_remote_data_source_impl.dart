@@ -41,24 +41,60 @@ class AccountInfoRemoteRemoteDataSourceImpl implements AccountInfoRemoteRemoteDa
   @override
   Future<ApiResponse<RegisterDetailsResponse>> registerDetails(
       {required UserInfo userInfoParam}) async {
-    File file = userInfoParam.avatar!;
-    var fileName = file.path
-        .split('/')
-        .last;
 
     FormData formData = FormData.fromMap({
-      'firstName': userInfoParam.firstName,
-      'lastName': userInfoParam.lastName,
-      'birthDate': userInfoParam.birthDate,
-      'username': userInfoParam.username,
       'notification': userInfoParam.notification,
-      'country': userInfoParam.country,
-      'state': userInfoParam.state,
-      'council': userInfoParam.council,
-      'postcode': userInfoParam.postcode,
-      'householdSize': userInfoParam.householdSize,
-      'avatar': await MultipartFile.fromFile(file.path, filename: fileName),
+      'householdSize':userInfoParam.householdSize
     });
+
+    if (userInfoParam.firstName!.isNotEmpty) {
+      formData.fields.add(
+          MapEntry("firstName",userInfoParam.firstName!));
+    }
+
+
+    if ( userInfoParam.lastName!.isNotEmpty) {
+      formData.fields.add(
+          MapEntry("lastName",userInfoParam.lastName!));
+    }
+
+    if (userInfoParam.birthDate !=null ) {
+      formData.fields.add(
+          MapEntry("birthDate",userInfoParam.birthDate!));
+    }
+
+    if ( userInfoParam.username!.isNotEmpty) {
+      formData.fields.add(
+          MapEntry("username",userInfoParam.username!));
+    }
+
+    if (userInfoParam.country !=null ) {
+      formData.fields.add(
+          MapEntry("country",userInfoParam.country!));
+    }
+    if (userInfoParam.state !=null ) {
+      formData.fields.add(
+          MapEntry("state",userInfoParam.state!));
+    }
+    if (userInfoParam.council !=null ) {
+      formData.fields.add(
+          MapEntry("council",userInfoParam.council!));
+    }
+
+    if ( userInfoParam.postcode!.isNotEmpty) {
+      formData.fields.add(
+          MapEntry("postcode",userInfoParam.postcode!));
+    }
+
+
+    if (userInfoParam.avatar != null) {
+      File file = userInfoParam.avatar!;
+      var fileName = file.path
+          .split('/')
+          .last;
+
+      formData.files.add(MapEntry("avatar", await MultipartFile.fromFile(file.path, filename: fileName)));
+    }
 
     return await dioCaller.post<RegisterDetailsResponse>(
       'api/user/details', fromJson: RegisterDetailsResponse.fromJson,
