@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+// import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/local/setting_manager.dart';
@@ -22,14 +22,12 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
   }
 
   _onInit(_InitEvent event, Emitter<SplashState> emit) async {
-    FlutterNativeSplash.remove();
+    // FlutterNativeSplash.remove();
     await Future.delayed(const Duration(seconds: 2));
     emit(state.copyWith(splashStatus: SplashStatus.success));
-
   }
 
-  _onLoadAppData(_OnLoadAppDataEvent event,
-      Emitter<SplashState> emit) async {
+  _onLoadAppData(_OnLoadAppDataEvent event, Emitter<SplashState> emit) async {
     if (userManager.isUserLoggedIn()) {
       emit(state.copyWith(splashStatus: SplashStatus.userLoggedIn));
     } else {
@@ -37,21 +35,19 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     }
   }
 
-  _checkIsFirstRun(_CheckIsFirstRunEvent event,
-      Emitter<SplashState> emit) async {
+  _checkIsFirstRun(
+      _CheckIsFirstRunEvent event, Emitter<SplashState> emit) async {
     int isFirstRun = inject<SettingsManager>().getIsFirstRun() ?? 0;
 
     if (isFirstRun == 1) {
       emit(state.copyWith(splashStatus: SplashStatus.notFirstRun));
-
     } else {
       emit(state.copyWith(splashStatus: SplashStatus.firstRun));
-
     }
   }
+
   _onDone(_OnDoneEvent event, Emitter<SplashState> emit) async {
     await inject<SettingsManager>().setIsFirstRun();
     emit(state.copyWith(splashStatus: SplashStatus.splashDone));
-
   }
 }

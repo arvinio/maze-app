@@ -29,7 +29,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 @RoutePage()
 class AccountHouseholdInfoPage extends StatefulWidget  implements AutoRouteWrapper{
   UserInfo? userInfo;
-   AccountHouseholdInfoPage({super.key,required this.userInfo});
+  AccountHouseholdInfoPage({super.key,required this.userInfo});
 
   @override
   State<AccountHouseholdInfoPage> createState() => _AccountHouseholdInfoPageState();

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+// import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:maze_app/core/local/setting_manager.dart';
 import 'package:maze_app/core/local/user/user_manager.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
@@ -30,7 +30,7 @@ class IntroCubit extends Cubit<IntroState> {
   }
 
   Future<void> splashLoading() async {
-    FlutterNativeSplash.remove();
+    // FlutterNativeSplash.remove();
     await Future.delayed(const Duration(seconds: 2));
     await onLoadAppData();
   }
