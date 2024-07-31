@@ -63,9 +63,15 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
     listener: (context, state) {
 
       if(state.verifyStatus.isSuccess) {
-          context.pushRoute(
-              CreatePasswordPageRoute(entryMode: widget.entryMode,email:widget.userName));
 
+        (widget.entryMode.isChangeEmail)
+
+            ? context.router.popUntilRouteWithName(
+            const AccountSettingsPageRoute().routeName,)
+
+            : context.pushRoute(
+            CreatePasswordPageRoute(
+                entryMode: widget.entryMode, email: widget.userName));
       }
       else if (state.verifyStatus.isFailure)
         {
@@ -111,7 +117,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
           children: [
             ListTile(
               title: CustomText(
-                  appStrings.verificationCode,
+                  widget.entryMode.isChangeEmail ?appStrings.verifyNewEmail:appStrings.verificationCode,
                   style: context.titleTitle1),
               subtitle: Padding(
                 padding: const EdgeInsets.only(left: 10.0, top: 5),

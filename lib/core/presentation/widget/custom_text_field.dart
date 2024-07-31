@@ -214,6 +214,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
         return Column(
@@ -278,7 +279,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                             onEditingComplete: widget.onEditingComplete,
                             textAlignVertical: widget.textAlignVertical ?? TextAlignVertical.center,
                             textDirection: TextDirection.ltr,
-                          //  onChanged: onChanged,
+                            onChanged: widget.onChanged,
                             textAlign: TextAlign.left,
                             decoration: InputDecoration(
                               contentPadding: widget.padding ?? const EdgeInsets.only(top: 5, bottom: 16, right: 16, left: 16),
@@ -308,7 +309,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                                   context.bodyBody.copyWith(
                                     color:(widget.focusNode!=null && widget.focusNode!.hasFocus)|| (widget.autoFocus)
                                       ?context.scheme().primary
-                                      :widget.labelTextColor?? context.scheme().primaryText
+                                      :widget.labelTextColor?? context.scheme().secondaryText,
+                                    fontSize: (widget.focusNode!=null && widget.focusNode!.hasFocus)|| (widget.autoFocus)
+                                        ?11
+                                        :17
                                   ),
                               hintText: widget.hint,
                               fillColor:(widget.focusNode!=null && widget.focusNode!.hasFocus)|| (widget.autoFocus)

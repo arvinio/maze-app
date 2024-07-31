@@ -55,6 +55,7 @@ class _AccountHouseholdInfoPageState extends State<AccountHouseholdInfoPage> {
   final TextEditingController householdSizeController = TextEditingController();
   String? countryId;
   String? stateId;
+  String? councilId;
   bool stateEnable=false;
   bool councilEnable=false;
 
@@ -115,7 +116,8 @@ class _AccountHouseholdInfoPageState extends State<AccountHouseholdInfoPage> {
                     councilEnable=true;
                   } else if (state.entryMode == EntryMode.fetchCouncilList) {
                     councilController.text = state.selectedResult!.name!;
-                    countryId = state.selectedResult!.id!;
+                    councilId = state.selectedResult!.id!;
+
                   }
                   break;
                 }
@@ -139,7 +141,7 @@ class _AccountHouseholdInfoPageState extends State<AccountHouseholdInfoPage> {
                   context.pushRoute(const WelcomeAccountSetupPageRoute());
                   await Future.delayed(const Duration(seconds: 2));
                   if (context.mounted) {
-                    context.pushRoute(const BottomNavigationRoute(),);
+                    context.router.replaceAll([const BottomNavigationRoute()]);
                   }
 
                 }
@@ -285,30 +287,22 @@ class _AccountHouseholdInfoPageState extends State<AccountHouseholdInfoPage> {
                       padding: EdgeInsets.only(top: h * 0.12, bottom: 16),
                       child: CustomButton.submit(
                         text: appStrings.accountCreation,
+                        showLoading: state.infoStatus.isLoading,
                         onPressed: () {
-                          widget.userInfo!.country = countryController.text;
-                          widget.userInfo!.state = stateController.text;
-                          widget.userInfo!.council = councilController.text;
+
                           widget.userInfo!.postcode = postcodeController.text;
-                          if(householdSizeController.text.isNotEmpty) {
-                            widget.userInfo!.householdSize =int.parse(
-                                householdSizeController.text.substring(0,1));
-                            context.read<AccountInfoBloc>().add(
-                                AccountInfoEvent.registerDetailsEvent(userInfoParam:  widget.userInfo!));
+                          widget.userInfo!.country = countryId;
+                          widget.userInfo!.state = stateId;
+                          widget.userInfo!.council = councilId;
 
-                          }else
-                          {
-                            Fluttertoast.showToast(
-                              msg:'householdSize must not be less than 1',
-                              toastLength: Toast.LENGTH_LONG,
-                              gravity: ToastGravity.CENTER,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black,
-                              textColor: Colors.white,
-                              fontSize: 16.0,
-                            );
-                          }
+                          widget.userInfo!.householdSize=householdSizeController.text.isNotEmpty
+                              ?int.parse(
+                              householdSizeController.text.substring(0, 1))
+                              :1;
 
+                          context.read<AccountInfoBloc>().add(
+                              AccountInfoEvent.registerDetailsEvent(
+                                  userInfoParam: widget.userInfo!));
                         },),
                     ),
 

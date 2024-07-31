@@ -142,12 +142,11 @@ class BottomSheetHeader extends StatelessWidget {
                       }
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 10.0, right: 10, left: 10, bottom: 6),
+                      padding: const EdgeInsets.only(top: 20.0, right: 10, left: 15, bottom: 0),
                       child: Container(
                         constraints: const BoxConstraints(minHeight: 38),
                         child: Center(
-                            child: closeIcon /*?? //todo ad close icon later
-                              as.icEdit.svg(color: context.scheme().mainBackground1),*/
+                            child: closeIcon
                         ),
                       ),
                     ),
@@ -156,7 +155,7 @@ class BottomSheetHeader extends StatelessWidget {
 
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.only(top: 20,bottom: 0),
                     child: CustomText(
                         title ?? '',
                         style: context.titleHeadline,textAlign: TextAlign.center

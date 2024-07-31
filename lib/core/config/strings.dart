@@ -6,6 +6,9 @@ import 'package:maze_app/di/injection_container.dart';
 class StringsBase {
   //public
   String get continueSteps => 'Continue';
+  String get save => 'Save';
+  String get version => 'Version 12.2.4';
+  String get pleaseWait => 'Please Wait...';
 
   //SignUp
   String get mazeComposting => 'Maze Composting';
@@ -53,7 +56,7 @@ class StringsBase {
   String get showBirthday => 'Your birthday isn’t shown on your public profile';
   String get yourProfileTitle => 'Your profile';
   String get yourProfileSubTitle => 'Add a profile picture and username to get\n started. You’ll be able to add more later';
-  String get userName => 'username';
+  String get userName => 'User Name';
   String get showPublicProfile => 'These details will be shown on your public profile';
   String get notificationTitle => 'Notifications';
   String get notificationSubTitle => 'Allow us to send you notifications. These will\n help you throughout your composting journey!';
@@ -79,6 +82,48 @@ class StringsBase {
   String get tryAgain => 'Try Again';
   String get householdSizeInfoTitle => 'Info';
   String get householdSizeInfoSubTitle => 'By knowing the amount of members of your\n household, it allows us to more accurately\n calculate waste per person.';
+
+//Account Info
+  String get account => 'Account';
+  String get editProfile => 'Edit profile';
+  String get yourDetails => 'Your details';
+  String get yourHousehold => 'Your Household';
+  String get accountSettings => 'Account settings';
+  String get helpCentre => 'Help centre';
+  String get about => 'About';
+  String get aboutYou => 'About you';
+  String get countryLocation => 'What country are you located in?';
+  String get stateLocation => 'What state are you located in?';
+  String get councilBelong => 'What council do you belong to?';
+  String get councilBin => 'Type of council bin';
+  String get measurementSystem => 'Measurement system';
+  String get metricKilogram => 'Metric (Kilogram)';
+  String get imperialPound => 'Imperial (Pound)';
+  String get logout => 'Logout';
+  String get sureLogout => 'Are you sure?';
+  String get deleteAccount => 'Delete account';
+  String get contactUs => 'Contact us';
+  String get reportProblem => 'Report a problem';
+  String get termsConditions => 'Terms and Conditions';
+  String get subject => 'Subject';
+  String get description => 'Description';
+  String get submitReport => 'Submit Report';
+  String get yourPassword => 'Your Password';
+  String get currentPassword => 'Type in your current password for\n';
+  String get typeNewPassword => 'Type in the new password for\n';
+  String get newEmailTitle => 'New Email Address';
+  String get newEmailSubTitle => 'Enter your new email address.';
+  String get newEmailAddress => 'New email address';
+  String get verifyNewEmail => 'Verify New Email';
+  String get notPublicShow => 'Your full name and birthday isn’t shown publicly';
+  String get detailsPublicProfile => 'These details will be shown on your public profile';
+  String get profileUpdatedMsg => 'Profile successfully updated';
+  String get householdUpdatedMsg => 'Your household successfully updated';
+  String get yourDetailsUpdatedMsg => 'your Details successfully updated';
+  String get reportSendMsg => 'Report successfully sent';
+
+
+
 }
 
 StringsBase appStrings = inject<StringsBase>();

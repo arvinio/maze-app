@@ -165,25 +165,14 @@ class _AccountProfilePageState extends State<AccountProfilePage> {
                   child: CustomButton.submit(
                     text: appStrings.continueSteps,
                     onPressed: () {
-                      widget.userInfo!.username=_userNameController.text;
-                      if(_file!=null) {
+                      widget.userInfo!.username = _userNameController.text;
+                      if (_file != null) {
                         widget.userInfo!.avatar = File(_file!.path!);
                       }
-    if(_userNameController.text.isNotEmpty) {
-      context.pushRoute(
-          AccountNotificationPageRoute(userInfo: widget.userInfo));
-    }else
-      {
-        Fluttertoast.showToast(
-          msg:'username should not be empty',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-      }
+
+                      context.pushRoute(
+                          AccountNotificationPageRoute(
+                              userInfo: widget.userInfo));
                     }),
                 ),
           

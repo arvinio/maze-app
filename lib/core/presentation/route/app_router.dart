@@ -4,6 +4,11 @@ import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/presentation/widget/bottom_navigation.dart';
 import 'package:maze_app/feature/account_info/domain/entity/user_info.dart';
 import 'package:maze_app/feature/account_info/presentation/view/account_details/account_details_page.dart';
+import 'package:maze_app/feature/profile/presentation/view/about/about_page.dart';
+import 'package:maze_app/feature/profile/presentation/view/change_password/change_password_page.dart';
+import 'package:maze_app/feature/profile/presentation/view/change_password/current_password_page.dart';
+import 'package:maze_app/feature/profile/presentation/view/edit_profile/edit_profile_page.dart';
+import 'package:maze_app/feature/profile/presentation/view/profile_home_page.dart';
 import 'package:maze_app/feature/account_info/presentation/view/account_household_info/account_household_info_page.dart';
 import 'package:maze_app/feature/account_info/presentation/view/account_notification/account_notification_page.dart';
 import 'package:maze_app/feature/account_info/presentation/view/account_profile/account_profile_page.dart';
@@ -21,6 +26,12 @@ import 'package:maze_app/feature/knowledge/presentation/knowledge/view/admin_art
 import 'package:maze_app/feature/knowledge/presentation/article/view/article_page.dart';
 import 'package:maze_app/feature/knowledge/presentation/bookmarks/view/bookmarks_page.dart';
 import 'package:maze_app/feature/knowledge/presentation/knowledge/view/knowledge_page.dart';
+import 'package:maze_app/feature/profile/presentation/view/account_settings/account_settings_page.dart';
+import 'package:maze_app/feature/profile/presentation/view/help_center/help_center_page.dart';
+import 'package:maze_app/feature/profile/presentation/view/new_email_address/new_email_address_page.dart';
+import 'package:maze_app/feature/profile/presentation/view/report/presentation/view/report_page.dart';
+import 'package:maze_app/feature/profile/presentation/view/your_details/your_details_page.dart';
+import 'package:maze_app/feature/profile/presentation/view/your_household/your_household_page.dart';
 
 part 'app_router.gr.dart';
 
@@ -56,5 +67,16 @@ class AppRouter extends _$AppRouter {
     AutoRoute(path: '/ArticlePage', page: ArticlePageRoute.page),
     AutoRoute(path: '/BookmarkPage', page: BookmarksPageRoute.page),
     AutoRoute(path: '/AdminArticlePage', page: AdminArticlePageRoute.page),
+    AutoRoute(path: '/ProfileHomePage', page: ProfileHomePageRoute.page),
+    AutoRoute(path: '/HelpCenterPage', page: HelpCenterPageRoute.page),
+    AutoRoute(path: '/AboutPage', page: AboutPageRoute.page),
+    AutoRoute(path: '/AccountSettingsPage', page: AccountSettingsPageRoute.page),
+    AutoRoute(path: '/NewEmailAddressPage', page: NewEmailAddressPageRoute.page),
+    AutoRoute(path: '/ReportPage', page:ReportPageRoute.page),
+    AutoRoute(path: '/YourDetailsPage', page:YourDetailsPageRoute.page),
+    AutoRoute(path: '/EditProfilePage', page:EditProfilePageRoute.page),
+    AutoRoute(path: '/YourHouseholdPage', page:YourHouseholdPageRoute.page),
+    AutoRoute(path: '/ChangePasswordPage', page:ChangePasswordPageRoute.page),
+    AutoRoute(path: '/CurrentPasswordPage', page:CurrentPasswordPageRoute.page),
   ];
 }
