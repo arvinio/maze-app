@@ -17,7 +17,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 
 @RoutePage()
-class AccountDetailsPage extends StatefulWidget  {
+class AccountDetailsPage extends StatefulWidget {
   const AccountDetailsPage({super.key});
 
   @override
@@ -36,15 +36,13 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
   String? _birthDate;
   final List<DateTime?> _dialogCalendarPickerValue = [
     DateTime.now().add(const Duration(days: 1)),
-
   ];
-
 
   @override
   void initState() {
     super.initState();
     _keyboardVisibilityValueNotifier = ValueNotifier(true);
-    userInfo=inject<UserInfo>();
+    userInfo = inject<UserInfo>();
   }
 
   @override
@@ -57,21 +55,12 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    _keyboardVisibilityValueNotifier.value = MediaQuery
-        .of(context)
-        .viewInsets
-        .bottom != 0;
+    _keyboardVisibilityValueNotifier.value =
+        MediaQuery.of(context).viewInsets.bottom != 0;
 
-    double w = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double w = MediaQuery.of(context).size.width;
 
-    double h = MediaQuery
-        .of(context)
-        .size
-        .height;
-
+    double h = MediaQuery.of(context).size.height;
 
     return BasePageWidget(
         resizeToAvoidBottomInset: false,
@@ -82,75 +71,78 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomText(
-                appStrings.accountDtlTitle, style: context.titleTitle1,),
-              const SizedBox(height: 20,),
-              LinearPercentIndicator(progressColor: context
-                  .scheme()
-                  .progress,
-              padding:const EdgeInsets.all(1),
+                appStrings.accountDtlTitle,
+                style: context.titleTitle1,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              LinearPercentIndicator(
+                progressColor: context.scheme().progress,
+                padding: const EdgeInsets.all(1),
                 animation: true,
                 barRadius: const Radius.circular(99),
                 lineHeight: 8.0,
                 animationDuration: 2000,
                 percent: 0.25,
                 animateFromLastPercent: true,
-                backgroundColor: context
-                    .scheme()
-                    .neutralsBorderDivider,
+                backgroundColor: context.scheme().neutralsBorderDivider,
                 restartAnimation: false,
-
               ),
-              const SizedBox(height: 40,),
+              const SizedBox(
+                height: 40,
+              ),
               CustomText(
-                appStrings.accountDtlSuTitle, style: context.bodyBody,),
-              const SizedBox(height: 30,),
-
+                appStrings.accountDtlSuTitle,
+                style: context.bodyBody,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: w * 0.45,
-                    child: CustomTextField.outline(
-                      textEditingController: _firstNameController,
-                      label: appStrings.firstName,
-                      focusNode: _focusNode1,
-                      labelTextColor: context
-                          .scheme()
-                          .secondaryText,
-                     )),
-
+                      width: w * 0.45,
+                      child: CustomTextField.outline(
+                        textEditingController: _firstNameController,
+                        label: appStrings.firstName,
+                        focusNode: _focusNode1,
+                        labelTextColor: context.scheme().secondaryText,
+                      )),
                   SizedBox(
                       width: w * 0.45,
                       child: CustomTextField.outline(
                         textEditingController: _lastNameController,
                         label: appStrings.lastName,
                         focusNode: _focusNode2,
-                        labelTextColor: context
-                            .scheme()
-                            .secondaryText,
-
+                        labelTextColor: context.scheme().secondaryText,
                       )),
                 ],
               ),
-              const SizedBox(height: 20,),
-              CustomTextField.outline(textEditingController: _birthDateController,
+              const SizedBox(
+                height: 20,
+              ),
+              CustomTextField.outline(
+                textEditingController: _birthDateController,
                 label: appStrings.birthday,
                 focusNode: _focusNode3,
-                labelTextColor: context
-                    .scheme()
-                    .secondaryText,
+                labelTextColor: context.scheme().secondaryText,
                 readOnly: true,
-
-               onTap: (){
-                 _selectDate(context,(date) {
-                   _birthDateController.text='${date![0]!.day} ${monthList[date![0]!.month-1]} ${date![0]!.year}';
-                      _birthDate='${date![0]!.year}/${date![0]!.month}/${date![0]!.day}';
-
-                 });
-               },
+                onTap: () {
+                  _selectDate(context, (date) {
+                    _birthDateController.text =
+                        '${date![0]!.day} ${monthList[date![0]!.month - 1]} ${date![0]!.year}';
+                    _birthDate =
+                        '${date![0]!.year}/${date![0]!.month}/${date![0]!.day}';
+                  });
+                },
               ),
-
-            (!_keyboardVisibilityValueNotifier.value)? const Spacer(): SizedBox(height: 0.04*h,),
+              (!_keyboardVisibilityValueNotifier.value)
+                  ? const Spacer()
+                  : SizedBox(
+                      height: 0.04 * h,
+                    ),
               ListTile(
                 title: CustomText(
                   appStrings.showBirthday,
@@ -162,36 +154,35 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
                 ),
                 contentPadding: EdgeInsets.zero,
                 horizontalTitleGap: 0.0,
-
-
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 16),
                 child: CustomButton.submit(
                   text: appStrings.continueSteps,
                   onPressed: () {
-                      userInfo?.firstName = _firstNameController.text;
-                      userInfo?.lastName = _lastNameController.text;
-                      userInfo?.birthDate = _birthDate;
-                      context.pushRoute(
-                          AccountProfilePageRoute(userInfo: userInfo!));
-                  },),
+                    userInfo?.firstName = _firstNameController.text;
+                    userInfo?.lastName = _lastNameController.text;
+                    userInfo?.birthDate = _birthDate;
+                    context.pushRoute(
+                        AccountProfilePageRoute(userInfo: userInfo!));
+                  },
+                ),
               ),
-
-            ],),
+            ],
+          ),
         ));
   }
 
-
-  Future<void> _selectDate( BuildContext context,Function(List<DateTime?>? date) onSelectDate) async {
-      final date = (await showCalendarDatePicker2Dialog(
-        context: context,
-        config: config,
-        dialogSize: const Size(325, 370),
-        borderRadius: BorderRadius.circular(15),
-        value: _dialogCalendarPickerValue,
-        dialogBackgroundColor: Colors.white,
-      ));
+  Future<void> _selectDate(BuildContext context,
+      Function(List<DateTime?>? date) onSelectDate) async {
+    final date = (await showCalendarDatePicker2Dialog(
+      context: context,
+      config: config,
+      dialogSize: const Size(325, 370),
+      borderRadius: BorderRadius.circular(15),
+      value: _dialogCalendarPickerValue,
+      dialogBackgroundColor: Colors.white,
+    ));
 
     if (date != null) onSelectDate(date);
   }
@@ -213,7 +204,6 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
     ),
     centerAlignModePicker: true,
     customModePickerIcon: const SizedBox(),
-
   );
 
   final List<String> monthList = [
@@ -230,6 +220,4 @@ class _AccountDetailsPageState extends State<AccountDetailsPage> {
     "November",
     "December"
   ];
-
-
 }

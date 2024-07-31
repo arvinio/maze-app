@@ -17,14 +17,11 @@ import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/account_info/domain/entity/user_info.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-
 @RoutePage()
-class AccountProfilePage extends StatefulWidget  {
+class AccountProfilePage extends StatefulWidget {
   UserInfo? userInfo;
 
-  AccountProfilePage({super.key,required
-      this.userInfo});
-
+  AccountProfilePage({super.key, required this.userInfo});
 
   @override
   State<AccountProfilePage> createState() => _AccountProfilePageState();
@@ -39,8 +36,7 @@ class _AccountProfilePageState extends State<AccountProfilePage> {
 
   void selectImage() async {
     _file = await pickImage(ImageSource.gallery);
-    if(_file!=null)
-    {
+    if (_file != null) {
       _image = await _file!.readAsBytes();
     }
   }
@@ -59,15 +55,10 @@ class _AccountProfilePageState extends State<AccountProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    _keyboardVisibilityValueNotifier.value = MediaQuery
-        .of(context)
-        .viewInsets
-        .bottom != 0;
+    _keyboardVisibilityValueNotifier.value =
+        MediaQuery.of(context).viewInsets.bottom != 0;
 
-    double h = MediaQuery
-        .of(context)
-        .size
-        .height;
+    double h = MediaQuery.of(context).size.height;
     return BasePageWidget(
         appBar: Padding(
           padding: const EdgeInsets.fromLTRB(16, 40, 12, 16),
@@ -82,72 +73,90 @@ class _AccountProfilePageState extends State<AccountProfilePage> {
             ],
           ),
         ),
-
         child: SingleChildScrollView(
           child: SizedBox(
-            height:(! _keyboardVisibilityValueNotifier.value) ?0.9*h: 0.65*h,
+            height:
+                (!_keyboardVisibilityValueNotifier.value) ? 0.9 * h : 0.65 * h,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
-                  appStrings.yourProfileTitle, style: context.titleTitle1,),
-                 SizedBox(height:(! _keyboardVisibilityValueNotifier.value) ? 40:20,),
-                LinearPercentIndicator(progressColor: context
-                    .scheme()
-                    .progress,
-                  padding:const EdgeInsets.all(1),
+                  appStrings.yourProfileTitle,
+                  style: context.titleTitle1,
+                ),
+                SizedBox(
+                  height: (!_keyboardVisibilityValueNotifier.value) ? 40 : 20,
+                ),
+                LinearPercentIndicator(
+                  progressColor: context.scheme().progress,
+                  padding: const EdgeInsets.all(1),
                   animation: true,
                   barRadius: const Radius.circular(99),
                   lineHeight: 8.0,
                   animationDuration: 2000,
                   percent: 0.5,
                   animateFromLastPercent: true,
-                  backgroundColor: context
-                      .scheme()
-                      .neutralsBorderDivider,
+                  backgroundColor: context.scheme().neutralsBorderDivider,
                   restartAnimation: false,
-
                 ),
-                 SizedBox(height: (! _keyboardVisibilityValueNotifier.value) ? 40:20,),
+                SizedBox(
+                  height: (!_keyboardVisibilityValueNotifier.value) ? 40 : 20,
+                ),
                 CustomText(
-                  appStrings.yourProfileSubTitle, style: context.bodyBody,),
-                 SizedBox(height: (! _keyboardVisibilityValueNotifier.value) ? 30:20,),
+                  appStrings.yourProfileSubTitle,
+                  style: context.bodyBody,
+                ),
+                SizedBox(
+                  height: (!_keyboardVisibilityValueNotifier.value) ? 30 : 20,
+                ),
                 Center(
                   child: Stack(
                     children: [
-                    SizedBox(
-                      width: 136,
-                      height: 136,
-                      child: _image!=null
-                      ? CircleAvatar(
-                          radius: 100,
-                          backgroundImage: MemoryImage( _image! ),
-                      )
-                      : CircleAvatar(
-                        backgroundColor: context.scheme().disabledText,
-                        radius: 100,
-                        child: appAssets.avatar.svg(width: 100, height: 100,color: context.scheme().neutralsBackground),
+                      SizedBox(
+                        width: 136,
+                        height: 136,
+                        child: _image != null
+                            ? CircleAvatar(
+                                radius: 100,
+                                backgroundImage: MemoryImage(_image!),
+                              )
+                            : CircleAvatar(
+                                backgroundColor: context.scheme().disabledText,
+                                radius: 100,
+                                child: appAssets.avatar.svg(
+                                    width: 100,
+                                    height: 100,
+                                    color: context.scheme().neutralsBackground),
+                              ),
                       ),
-                    ),
                       Positioned(
                         bottom: -10,
                         left: 80,
-                        child: IconButton(icon: appAssets.floatingActionButtons.svg(),onPressed: () { selectImage(); }, ),
+                        child: IconButton(
+                          icon: appAssets.floatingActionButtons.svg(),
+                          onPressed: () {
+                            selectImage();
+                          },
+                        ),
                       )
-                  ],),
+                    ],
+                  ),
                 ),
-          
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 CustomTextField.outline(
                   textEditingController: _userNameController,
                   label: appStrings.userName,
                   focusNode: _focusNode,
-                  labelTextColor: context
-                      .scheme()
-                      .secondaryText,
+                  labelTextColor: context.scheme().secondaryText,
                 ),
-                (! _keyboardVisibilityValueNotifier.value)? const Spacer():SizedBox(height: 0.01*h,),
+                (!_keyboardVisibilityValueNotifier.value)
+                    ? const Spacer()
+                    : SizedBox(
+                        height: 0.01 * h,
+                      ),
                 ListTile(
                   title: CustomText(
                     appStrings.showPublicProfile,
@@ -161,36 +170,31 @@ class _AccountProfilePageState extends State<AccountProfilePage> {
                   horizontalTitleGap: 0.0,
                 ),
                 Padding(
-                  padding:  const EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.only(bottom: 16),
                   child: CustomButton.submit(
-                    text: appStrings.continueSteps,
-                    onPressed: () {
-                      widget.userInfo!.username = _userNameController.text;
-                      if (_file != null) {
-                        widget.userInfo!.avatar = File(_file!.path!);
-                      }
+                      text: appStrings.continueSteps,
+                      onPressed: () {
+                        widget.userInfo!.username = _userNameController.text;
+                        if (_file != null) {
+                          widget.userInfo!.avatar = File(_file!.path!);
+                        }
 
-                      context.pushRoute(
-                          AccountNotificationPageRoute(
-                              userInfo: widget.userInfo));
-                    }),
+                        context.pushRoute(AccountNotificationPageRoute(
+                            userInfo: widget.userInfo));
+                      }),
                 ),
-          
-              ],),
+              ],
+            ),
           ),
         ));
   }
 
-  Future<XFile?> pickImage(ImageSource source) async{
-    final ImagePicker imagePicker=ImagePicker();
-    XFile? file=await imagePicker.pickImage(source: source);
-    if(file!=null)
-      {
-
-        return file;
-      }
+  Future<XFile?> pickImage(ImageSource source) async {
+    final ImagePicker imagePicker = ImagePicker();
+    XFile? file = await imagePicker.pickImage(source: source);
+    if (file != null) {
+      return file;
+    }
     print('No Images Selected');
   }
-
-
 }

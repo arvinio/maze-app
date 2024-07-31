@@ -97,8 +97,8 @@ class AccountInfoRemoteRemoteDataSourceImpl implements AccountInfoRemoteRemoteDa
     }
 
     return await dioCaller.post<RegisterDetailsResponse>(
-      'api/user/details', fromJson: RegisterDetailsResponse.fromJson,
-      data: formData
+        'api/user/details', fromJson: RegisterDetailsResponse.fromJson,
+        data: formData
     );
   }
 }
