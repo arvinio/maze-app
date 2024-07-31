@@ -6,6 +6,7 @@ import 'package:maze_app/core/network/model/api_response.dart';
 import 'package:maze_app/di/di_const.dart';
 import 'package:maze_app/feature/profile/data/data_source/profile_remote_data_source.dart';
 import 'package:maze_app/feature/profile/data/model/%20profile_response/profile_response.dart';
+import 'package:maze_app/feature/profile/data/model/change_email_response/change_email_response.dart';
 import 'package:maze_app/feature/profile/data/model/change_password_request/change_password_request.dart';
 import 'package:maze_app/feature/profile/data/model/edit_details_request/edit_details_request.dart';
 import 'package:maze_app/feature/profile/data/model/edit_household_request/edit_household_request.dart';
@@ -57,10 +58,10 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse<EditProfileResponse>> changeEmail(
+  Future<ApiResponse<ChangeEmailResponse>> changeEmail(
       {required String email}) async {
-    return await dioCaller.put<EditProfileResponse>(
-        'api/user/change-email', fromJson: EditProfileResponse.fromJson,
+    return await dioCaller.put<ChangeEmailResponse>(
+        'api/user/change-email', fromJson: ChangeEmailResponse.fromJson,
         data: {
           'email': email
         }

@@ -38,6 +38,7 @@ class ProfileState with _$ProfileState {
     @Default(ProfileStatus.init) ProfileStatus  profileStatus,
     ProfileResponse? response,
     EditProfileResponse? editResponse,
+    ChangeEmailResponse? changeEmailResponse,
     Result? selectedResult,
     EntryMode? entryMode,
     String? errorMessage

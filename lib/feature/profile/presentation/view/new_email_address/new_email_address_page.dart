@@ -33,7 +33,6 @@ class _NewEmailAddressPageState extends State<NewEmailAddressPage> {
   final TextEditingController _controller = TextEditingController();
 
   final FocusNode _focusNode = FocusNode();
-  ValueNotifier<bool> obscureState = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +54,8 @@ class _NewEmailAddressPageState extends State<NewEmailAddressPage> {
         child: BlocConsumer<ProfileBloc, ProfileState>(
           listener: (context, state) {
             if (state.profileStatus.isSuccess) {
-               context.pushRoute(VerificationCodePageRoute(userId: '', userName: _controller.text.trim(), entryMode: EntryMode.newEmail));
+               context.pushRoute(VerificationCodePageRoute(userId: state.changeEmailResponse!.userId!, userName: _controller.text.trim(),
+                   entryMode: EntryMode.changeEmail));
             } else if (state.profileStatus.isFailure) {
               Fluttertoast.showToast(
                 msg:state.errorMessage!,
@@ -96,6 +96,7 @@ class _NewEmailAddressPageState extends State<NewEmailAddressPage> {
                   padding: const EdgeInsets.only(bottom: 16),
                   child: CustomButton.submit(
                     text: appStrings.continueSteps,
+                    showLoading: state.profileStatus.isLoading,
                     onPressed: () {
                       context.read<ProfileBloc>().add(
                           ProfileEvent.changeEmailEvent(

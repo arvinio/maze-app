@@ -5,7 +5,7 @@ enum EntryMode {
   fetchStateList,
   fetchCouncilList,
   fetchHouseholdSize,
-  newEmail;
+  changeEmail;
 
 
   bool get isForgetPassword => this == forgetPassword;
@@ -14,6 +14,6 @@ enum EntryMode {
   bool get isFetchCountryList => this == fetchCountryList;
   bool get isFetchStateList => this == fetchStateList;
   bool get isFetchCouncilList => this == fetchCouncilList;
-  bool get isNewEmail => this == newEmail;
+  bool get isChangeEmail => this == changeEmail;
 
 }
