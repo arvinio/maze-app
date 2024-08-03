@@ -8,6 +8,7 @@ import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/dimen.dart';
 import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
+import 'package:maze_app/core/presentation/widget/app_loading.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
 import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/style/app_theme.dart';
@@ -44,6 +45,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
 
   @override
   Widget build(BuildContext context) {
+    double h=MediaQuery.of(context).size.height;
     return BasePageWidget(
         appBar: Padding(
           padding: const EdgeInsets.fromLTRB(16, 40, 12, 16),
@@ -155,6 +157,10 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
 
               }, // end onSubmit
             ),
+            Visibility( visible:state.verifyStatus.isLoading ,
+                child: Padding(
+                    padding: EdgeInsets.only(top: h/8),
+                    child: const Center(child: AppLoading()))),
             const Spacer(),
             Padding(
                 padding: const EdgeInsets.only(bottom: 16),

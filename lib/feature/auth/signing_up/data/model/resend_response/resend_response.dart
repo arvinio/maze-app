@@ -13,9 +13,7 @@ String resendResponseToJson(ResendResponse data) => json.encode(data.toJson());
 class ResendResponse with _$ResendResponse {
   const factory ResendResponse({
     @JsonKey(name: "userId")
-    String? userId,
-  @JsonKey(name: "message")
-  String? message
+    String? userId
   }) = _ResendResponse;
 
   factory ResendResponse.fromJson(Map<String, dynamic> json) => _$ResendResponseFromJson(json);
