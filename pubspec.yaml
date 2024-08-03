@@ -48,6 +48,7 @@ dev_dependencies:
   injectable_generator: ^2.6.1
   build_runner: ^2.4.10
   json_serializable: ^6.8.0
+  flutter_flavorizr: ^2.2.3
 
   flutter_lints: ^3.0.0
   flutter_launcher_icons: ^0.13.1
@@ -98,3 +99,28 @@ flutter_native_splash:
   image:  assets/app-logo.png
   android: true
   ios: true
+
+flavorizr:
+  app:
+    android:
+      flavorDimensions: "flavor-type"
+    ios:
+      targets:
+        Runner:
+          additionalConfigurations: [ ]
+  flavors:
+    app_develop:
+      app:
+        name: "Maze App Dev"
+      android:
+        applicationId: "com.arvinio.maze_app.dev"
+      ios:
+        bundleId: "com.arvinio.maze_app.dev"
+
+    app_production:
+      app:
+        name: "Maze App"
+      android:
+        applicationId: "com.arvinio.maze_app"
+      ios:
+        bundleId: "com.arvinio.maze_app"

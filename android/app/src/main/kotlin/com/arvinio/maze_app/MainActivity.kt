@@ -1,4 +1,4 @@
-package com.example.maze_app
+package com.arvinio.maze_app
 
 import io.flutter.embedding.android.FlutterActivity
 
