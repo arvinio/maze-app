@@ -39,7 +39,7 @@ class StringsBase {
   String get forgotPassword => 'Forgot password';
 
   //WellcomPage
-   String get welcomeTitle => 'Welcome Wilson51';
+   String get welcomeTitle => 'Welcome ';
    String get welcomeSubTitle => 'Let’s get back into it!';
 
   //Forgot Password
