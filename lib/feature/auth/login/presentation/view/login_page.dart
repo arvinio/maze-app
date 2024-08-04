@@ -173,6 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.only(top: 16, bottom: 16),
                   child: CustomButton.submit(
                     text: appStrings.continueSteps,
+                    showLoading: state.loginStatus.isLoading,
                     onPressed: () {
                       context.read<LoginBloc>().add(LoginEvent.loginUser(
                           email: widget.userName, password: _controller.text));
