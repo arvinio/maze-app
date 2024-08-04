@@ -1,3 +1,4 @@
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
 
@@ -15,12 +16,14 @@ class LoginResponse with _$LoginResponse {
     String? userId,
     @JsonKey(name: "role")
     String? role,
+    @JsonKey(name: "username")
+    String? username,
+    @JsonKey(name: "avatar")
+    String? avatar,
     @JsonKey(name: "token")
     String? token,
     @JsonKey(name: "refreshToken")
     String? refreshToken,
-    @JsonKey(name: "message")
-    String? message,
   }) = _LoginResponse;
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) => _$LoginResponseFromJson(json);
