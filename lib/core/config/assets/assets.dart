@@ -51,6 +51,13 @@ class AssetsBase  {
   AssetSvg get addReport => const AssetSvg('assets/icons/add_report.svg');
   AssetSvg get cover => const AssetSvg('assets/images/cover.jpg');
 
+   AssetSvg get add => const AssetSvg('assets/icons/add.svg');
+   AssetSvg get faq1 => const AssetSvg('assets/icons/faq.svg');
+   AssetSvg get faq => const AssetSvg('assets/icons/faq.png');
+   AssetSvg get message => const AssetSvg('assets/icons/message.svg');
+   AssetSvg get messageNotify => const AssetSvg('assets/icons/message-notif.svg');
+   AssetSvg get more => const AssetSvg('assets/icons/more.svg');
+
 
 }
 
