@@ -4,8 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:maze_app/di/injection_container.dart';
 
 @LazySingleton()
-class AssetsBase  {
-
+class AssetsBase {
   static const String fontFamily = 'Urbanist';
 
   //AssetSvg get appIcon => const AssetSvg('assets/icons/app.png');
@@ -33,14 +32,14 @@ class AssetsBase  {
   AssetSvg get searchNormalIcon =>
       const AssetSvg('assets/icons/search-normal-icon.svg');
   AssetSvg get avatar => const AssetSvg('assets/icons/user.svg');
-  AssetSvg get floatingActionButtons => const AssetSvg('assets/icons/floating_action_buttons.svg');
+  AssetSvg get floatingActionButtons =>
+      const AssetSvg('assets/icons/floating_action_buttons.svg');
   AssetSvg get notif1 => const AssetSvg('assets/icons/notif1.svg');
   AssetSvg get notif2 => const AssetSvg('assets/icons/notif2.svg');
   AssetSvg get notif3 => const AssetSvg('assets/icons/notif3.svg');
   AssetSvg get dropDown => const AssetSvg('assets/icons/drop_down.svg');
   AssetSvg get infoCircle => const AssetSvg('assets/icons/info-circle.svg');
   AssetSvg get close => const AssetSvg('assets/icons/close.svg');
-
 
   AssetSvg get rightArrow => const AssetSvg('assets/icons/right_arrow.svg');
   AssetSvg get editProfile => const AssetSvg('assets/icons/edit_profile.svg');
@@ -51,7 +50,23 @@ class AssetsBase  {
   AssetSvg get addReport => const AssetSvg('assets/icons/add_report.svg');
   AssetSvg get cover => const AssetSvg('assets/images/cover.jpg');
 
-
+  // Tracker assets
+  AssetSvg get messageQuestion =>
+      const AssetSvg('assets/icons/tracker/message-question.svg');
+  AssetSvg get compostBin =>
+      const AssetSvg('assets/icons/tracker/compost-bin.png');
+  AssetSvg get compostIcon =>
+      const AssetSvg('assets/icons/tracker/compost-icon.png');
+  AssetSvg get organicIcon =>
+      const AssetSvg('assets/icons/tracker/organic-icon.png');
+  AssetSvg get recycleIcon =>
+      const AssetSvg('assets/icons/tracker/recycle-icon.png');
+  AssetSvg get redBin => const AssetSvg('assets/icons/tracker/red-bin.png');
+  AssetSvg get landfillIcon =>
+      const AssetSvg('assets/icons/tracker/landfill-icon.png');
+  AssetSvg get trashIcon2 =>
+      const AssetSvg('assets/icons/tracker/trash-icon2.svg');
+  AssetSvg get addBin => const AssetSvg('assets/icons/tracker/add-bin.svg');
 }
 
 class AssetImage {
@@ -144,7 +159,7 @@ class AssetSvg {
   }) {
     return SvgPicture.asset(
       _assetName,
-     // ((isDark ?? inject<ThemeService>().isDark) ? (assetNameDark ?? _assetName) : _assetName),
+      // ((isDark ?? inject<ThemeService>().isDark) ? (assetNameDark ?? _assetName) : _assetName),
       key: key,
       matchTextDirection: matchTextDirection,
       bundle: bundle,

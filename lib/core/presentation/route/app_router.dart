@@ -32,6 +32,7 @@ import 'package:maze_app/feature/profile/presentation/view/new_email_address/new
 import 'package:maze_app/feature/profile/presentation/view/report/presentation/view/report_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/your_details/your_details_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/your_household/your_household_page.dart';
+import 'package:maze_app/feature/tracker/presentation/view/tracker_page.dart';
 
 part 'app_router.gr.dart';
 
@@ -70,13 +71,16 @@ class AppRouter extends _$AppRouter {
     AutoRoute(path: '/ProfileHomePage', page: ProfileHomePageRoute.page),
     AutoRoute(path: '/HelpCenterPage', page: HelpCenterPageRoute.page),
     AutoRoute(path: '/AboutPage', page: AboutPageRoute.page),
-    AutoRoute(path: '/AccountSettingsPage', page: AccountSettingsPageRoute.page),
-    AutoRoute(path: '/NewEmailAddressPage', page: NewEmailAddressPageRoute.page),
-    AutoRoute(path: '/ReportPage', page:ReportPageRoute.page),
-    AutoRoute(path: '/YourDetailsPage', page:YourDetailsPageRoute.page),
-    AutoRoute(path: '/EditProfilePage', page:EditProfilePageRoute.page),
-    AutoRoute(path: '/YourHouseholdPage', page:YourHouseholdPageRoute.page),
-    AutoRoute(path: '/ChangePasswordPage', page:ChangePasswordPageRoute.page),
-    AutoRoute(path: '/CurrentPasswordPage', page:CurrentPasswordPageRoute.page),
+    AutoRoute(
+        path: '/AccountSettingsPage', page: AccountSettingsPageRoute.page),
+    AutoRoute(
+        path: '/NewEmailAddressPage', page: NewEmailAddressPageRoute.page),
+    AutoRoute(path: '/ReportPage', page: ReportPageRoute.page),
+    AutoRoute(path: '/YourDetailsPage', page: YourDetailsPageRoute.page),
+    AutoRoute(path: '/EditProfilePage', page: EditProfilePageRoute.page),
+    AutoRoute(path: '/YourHouseholdPage', page: YourHouseholdPageRoute.page),
+    AutoRoute(path: '/ChangePasswordPage', page: ChangePasswordPageRoute.page),
+    AutoRoute(
+        path: '/CurrentPasswordPage', page: CurrentPasswordPageRoute.page),
   ];
 }

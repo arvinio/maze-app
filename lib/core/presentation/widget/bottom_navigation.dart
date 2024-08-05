@@ -8,6 +8,8 @@ import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/profile/presentation/view/profile_home_page.dart';
 import 'package:maze_app/feature/knowledge/presentation/knowledge/cubit/knowledge_cubit.dart';
 import 'package:maze_app/feature/knowledge/presentation/knowledge/view/knowledge_page.dart';
+import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/view/tracker_page.dart';
 
 @RoutePage()
 class BottomNavigation extends StatefulWidget implements AutoRouteWrapper {
@@ -18,7 +20,13 @@ class BottomNavigation extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(create: (_) => inject<KnowledgeCubit>(), child: this);
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => inject<TrackerBloc>(), child: this),
+        BlocProvider(create: (_) => inject<KnowledgeCubit>(), child: this),
+      ],
+      child: this,
+    );
   }
 }
 
@@ -36,13 +44,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
         child: Text("page must be added here"),
       ),
     ),
-    Scaffold(
-      body: Center(
-        child: Text("page must be added here"),
-      ),
-    ),
+    TrackerPage(),
     ProfileHomePage()
-
   ];
   void _onItemTapped(int index) {
     setState(() {
