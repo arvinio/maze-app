@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/dimen.dart';
 import 'package:maze_app/core/config/strings.dart';
@@ -14,9 +12,8 @@ import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
-import 'package:maze_app/feature/account_info/data/model/account_info_response.dart';
-import 'package:maze_app/feature/account_info/presentation/bloc/account_info_bloc.dart';
-import 'package:maze_app/feature/account_info/presentation/widgets/country_dialog_content.dart';
+import 'package:maze_app/feature/chatbot/data/model/faq/faq_response.dart';
+import 'package:maze_app/feature/chatbot/presentation/bloc/chat_bot_bloc.dart';
 import 'package:maze_app/feature/chatbot/presentation/view/faq/faq_page.dart';
 
 
@@ -29,7 +26,7 @@ class ChatBotHomePage extends StatefulWidget  implements AutoRouteWrapper{
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(create: (_) => inject<AccountInfoBloc>(), child: this);
+    return BlocProvider(create: (_) => inject<ChatBotBloc>(), child: this);
 
   }
 }

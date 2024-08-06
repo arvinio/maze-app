@@ -10,7 +10,8 @@ class StringsBase {
   String get version => 'Version 12.2.4';
   String get pleaseWait => 'Please Wait...';
   String get today => 'Today';
-  String get yesterday => 'Yesterday';
+  String get yesterday => 'ِِYesterday';
+  String get emptyList => 'No data available';
 
   //SignUp
   String get mazeComposting => 'Maze Composting';

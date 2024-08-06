@@ -38,6 +38,7 @@ class AssetsBase  {
   AssetSvg get notif2 => const AssetSvg('assets/icons/notif2.svg');
   AssetSvg get notif3 => const AssetSvg('assets/icons/notif3.svg');
   AssetSvg get dropDown => const AssetSvg('assets/icons/drop_down.svg');
+  AssetSvg get dropUp => const AssetSvg('assets/icons/dropup.svg');
   AssetSvg get infoCircle => const AssetSvg('assets/icons/info-circle.svg');
   AssetSvg get close => const AssetSvg('assets/icons/close.svg');
 
