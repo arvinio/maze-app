@@ -149,9 +149,14 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     WelcomePageRoute.name: (routeData) {
+      final args = routeData.argsAs<WelcomePageRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const WelcomePage(),
+        child: WelcomePage(
+          key: args.key,
+          userName: args.userName,
+          avatarUrl: args.avatarUrl,
+        ),
       );
     },
   };
@@ -571,14 +576,43 @@ class WelcomeAccountSetupPageRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [WelcomePage]
-class WelcomePageRoute extends PageRouteInfo<void> {
-  const WelcomePageRoute({List<PageRouteInfo>? children})
-      : super(
+class WelcomePageRoute extends PageRouteInfo<WelcomePageRouteArgs> {
+  WelcomePageRoute({
+    Key? key,
+    required String? userName,
+    required String? avatarUrl,
+    List<PageRouteInfo>? children,
+  }) : super(
           WelcomePageRoute.name,
+          args: WelcomePageRouteArgs(
+            key: key,
+            userName: userName,
+            avatarUrl: avatarUrl,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'WelcomePageRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<WelcomePageRouteArgs> page =
+      PageInfo<WelcomePageRouteArgs>(name);
+}
+
+class WelcomePageRouteArgs {
+  const WelcomePageRouteArgs({
+    this.key,
+    required this.userName,
+    required this.avatarUrl,
+  });
+
+  final Key? key;
+
+  final String? userName;
+
+  final String? avatarUrl;
+
+  @override
+  String toString() {
+    return 'WelcomePageRouteArgs{key: $key, userName: $userName, avatarUrl: $avatarUrl}';
+  }
 }
