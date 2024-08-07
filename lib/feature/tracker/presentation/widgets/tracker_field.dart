@@ -51,6 +51,7 @@ class TrackerField extends StatelessWidget {
               : Container(
                   height: 50.sp,
                   width: 50.sp,
+                  padding: EdgeInsets.all(3.sp),
                   decoration: BoxDecoration(
                     border: Border.all(
                         color: context.scheme().neutralsBorderDivider),

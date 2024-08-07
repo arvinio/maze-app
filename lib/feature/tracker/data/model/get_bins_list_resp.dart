@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:maze_app/core/util/typedef.dart';
 
 part 'get_bins_list_resp.freezed.dart';
 part 'get_bins_list_resp.g.dart';
@@ -31,21 +32,20 @@ class BinModel with _$BinModel {
     required bool isShare,
     required DateTime createdDate,
     @Default(null) String? photo,
-    required List<ChartData> chartData,
+    required List<ChartDataModel> chartData,
     required int totalAmount,
   }) = _BinModel;
 
-  factory BinModel.fromJson(Map<String, dynamic> json) =>
-      _$BinModelFromJson(json);
+  factory BinModel.fromJson(DataMap json) => _$BinModelFromJson(json);
 }
 
 @freezed
-class ChartData with _$ChartData {
-  factory ChartData({
+class ChartDataModel with _$ChartDataModel {
+  factory ChartDataModel({
     required String name,
     required int value,
-  }) = _ChartData;
+  }) = _ChartDataModel;
 
-  factory ChartData.fromJson(Map<String, dynamic> json) =>
-      _$ChartDataFromJson(json);
+  factory ChartDataModel.fromJson(DataMap json) =>
+      _$ChartDataModelFromJson(json);
 }

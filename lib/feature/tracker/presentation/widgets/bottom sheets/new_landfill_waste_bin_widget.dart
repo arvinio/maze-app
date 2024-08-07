@@ -4,9 +4,11 @@ import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.da
 class NewLandfillWasteBinWidget extends StatelessWidget {
   const NewLandfillWasteBinWidget({
     super.key,
-    required this.func,
+    required this.haveBin,
+    required this.dontHaveBin,
   });
-  final VoidCallback func;
+  final VoidCallback haveBin;
+  final VoidCallback dontHaveBin;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,7 +30,7 @@ class NewLandfillWasteBinWidget extends StatelessWidget {
           // leadingIcon: const InfoIcon(),
           title: "I have a council landfill bin",
           // subTitle: 'Tap to get some help',
-          onTap: func,
+          onTap: haveBin,
         ),
         SizedBox(
           height: 15.h,
@@ -38,7 +40,7 @@ class NewLandfillWasteBinWidget extends StatelessWidget {
           title: "I don't have a council landfill bin",
           // subTitle:
           //     'Storeswaste that will later be emptied intro your council landfill bin',
-          onTap: () {},
+          onTap: dontHaveBin,
         ),
         SizedBox(
           height: 15.h,
@@ -51,7 +53,7 @@ class NewLandfillWasteBinWidget extends StatelessWidget {
           // ),
           title: "I share my council landfill bin with other households",
           subTitle: "Usually if you live in apartments",
-          onTap: () {},
+          onTap: dontHaveBin,
         ),
         SizedBox(
           height: 15.h,

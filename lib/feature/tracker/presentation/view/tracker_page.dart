@@ -16,6 +16,7 @@ import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/add_waste_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/council_landfill_bin_widget.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/landfill_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/new_landfill_waste_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
@@ -164,7 +165,7 @@ class _TrackerPageState extends State<TrackerPage>
                                                     openModalBottomSheet(
                                                       context,
                                                       AddBinWidget(
-                                                        func: () {
+                                                        addWasteBin: () {
                                                           openModalBottomSheet(
                                                             context,
                                                             AddWasteBinWidget(
@@ -172,7 +173,8 @@ class _TrackerPageState extends State<TrackerPage>
                                                                 openModalBottomSheet(
                                                                   context,
                                                                   NewLandfillWasteBinWidget(
-                                                                    func: () {
+                                                                    haveBin:
+                                                                        () {
                                                                       openModalBottomSheet(
                                                                         context,
                                                                         CouncilLandfillBinWidget(
@@ -180,12 +182,20 @@ class _TrackerPageState extends State<TrackerPage>
                                                                                 bloc),
                                                                       );
                                                                     },
+                                                                    dontHaveBin:
+                                                                        () {
+                                                                      openModalBottomSheet(
+                                                                          context,
+                                                                          LandfillBinWidget(
+                                                                              bloc: bloc));
+                                                                    },
                                                                   ),
                                                                 );
                                                               },
                                                             ),
                                                           );
                                                         },
+                                                        addCompostBin: () {},
                                                       ),
                                                     );
                                                   },

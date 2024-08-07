@@ -19,6 +19,7 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
   bool hasCompost = false;
   bool hasRecycling = false;
   bool hasLandfill = false;
+  var bins = <Bin>[];
 
   TrackerBloc(this.repo) : super(const TrackerState.initial()) {
     on<_initEvent>(_onInit);
@@ -35,6 +36,11 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
     final response = await repo.getBinsList();
     response.when(
       completed: (data, statusCode) {
+        hasOrganic = data.any((bin) => bin.type == BinType.organic);
+        hasCompost = data.any((bin) => bin.type == BinType.compost);
+        hasRecycling = data.any((bin) => bin.type == BinType.recycling);
+        hasLandfill = data.any((bin) => bin.type == BinType.landfill);
+        bins.addAll(data);
         emit(TrackerState.binsLoaded(bins: data));
       },
       error: (apiError) {

@@ -1,3 +1,5 @@
+import 'package:maze_app/feature/tracker/domain/entity/chart_data.dart';
+
 class Bin {
   final String? id;
   final String nickName;
@@ -16,6 +18,8 @@ class Bin {
   final String? width;
   final String? length;
   final String? height;
+  final int? totalAmount;
+  final List<ChartData>? chartData;
 
   const Bin({
     required this.type,
@@ -31,6 +35,8 @@ class Bin {
     required this.width,
     required this.length,
     required this.height,
+    this.totalAmount,
+    this.chartData,
   });
 }
 

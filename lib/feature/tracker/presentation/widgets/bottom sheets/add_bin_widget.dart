@@ -4,9 +4,11 @@ import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.da
 class AddBinWidget extends StatelessWidget {
   const AddBinWidget({
     super.key,
-    required this.func,
+    required this.addWasteBin,
+    required this.addCompostBin,
   });
-  final VoidCallback func;
+  final VoidCallback addWasteBin;
+  final VoidCallback addCompostBin;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,7 +39,7 @@ class AddBinWidget extends StatelessWidget {
           leadingIcon: Image.asset(appAssets.landfillIcon.path),
           title: 'Waste Bin',
           subTitle: 'This can be a landfill, organic or recycling waste bin.',
-          onTap: func,
+          onTap: addWasteBin,
         ),
         SizedBox(
           height: 10.h,
@@ -47,7 +49,7 @@ class AddBinWidget extends StatelessWidget {
           title: 'Compost Bin',
           subTitle:
               'Is a bin for turning organic waste into nutrient-rich compost.',
-          onTap: () {},
+          onTap: addCompostBin,
         ),
       ],
     );
