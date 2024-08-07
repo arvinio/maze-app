@@ -11,8 +11,8 @@ import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
-import 'package:maze_app/feature/account_info/data/model/account_info_response.dart';
 import 'package:maze_app/feature/chatbot/presentation/bloc/chat_bot_bloc.dart';
+import 'package:maze_app/feature/chatbot/presentation/widgets/empty_list_widget.dart';
 
 
 class FaqPage extends StatefulWidget implements AutoRouteWrapper {
@@ -113,13 +113,11 @@ final List<int>? list=[];
                                                       },
                                                       title:CustomText(state.allFetchedFaqList![index].question!,style: context.bodyBodyMedium) ,
                                                       trailing:  appAssets.dropDown.svg(width: 24, height: 24),
-                                                      //SizedBox(width: 24,height: 24, child:appAssets.dropDown.svg(width: 10, height: 6)),
                                                       contentPadding: EdgeInsets.zero,
                                                     ),
 
                                                   )
                                                       :Container(
-                                                    // width: w*0.95,
                                                       padding: const EdgeInsets.fromLTRB(12,5,5,10),
                                                     decoration: BoxDecoration(border: Border.all(color: context.scheme().neutralsBorderDivider),
                                                       borderRadius: BorderRadius.circular(Dimen.defaultRadius),
@@ -133,7 +131,6 @@ final List<int>? list=[];
                                                             },
                                                             title:CustomText(state.allFetchedFaqList![index].question!,style: context.bodyBodyMedium) ,
                                                             trailing:  appAssets.dropUp.svg(width: 24, height: 24),
-                                                            //SizedBox(width: 24,height: 24, child:appAssets.dropDown.svg(width: 10, height: 6)),
                                                             contentPadding: EdgeInsets.zero,
                                                           ),
                                                           const SizedBox(height: 10,),
@@ -156,7 +153,7 @@ final List<int>? list=[];
                                         ),
                                         ),
                                   )
-                            :emptyListWidget();
+                            : emptyListWidget();
 
                       } else if (state.chatBotStatus.isFailure) {
                         return _failureModeWidget(context);
@@ -240,16 +237,10 @@ final List<int>? list=[];
     );
   }
 
-  _onSelect(BuildContext context, Result result) {
-    debugPrint('with reason:${result.name}');
-    Navigator.pop(context, result);
-  }
 
   _fetchFaqList(BuildContext context) {
     context.read<ChatBotBloc>().add(const ChatBotEvent.fetchFaqListEvent());
   }
-
-
 }
 
 

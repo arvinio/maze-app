@@ -11,6 +11,11 @@ class CharBotRepositoryImpl implements CharBotRepository
 
 
   @override
+  Future<ApiResponse> getChatHistory() async{
+    return await remoteDataSource.getChatHistory();
+  }
+
+  @override
   Future<ApiResponse> getFaqList() async{
     return await remoteDataSource.getFaqList();
 

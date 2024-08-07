@@ -11,18 +11,16 @@ String faqResponseToJson(FaqResponse data) => json.encode(data.toJson());
 @freezed
 class FaqResponse with _$FaqResponse {
   const factory FaqResponse({
-    @JsonKey(name: "success")
-    bool? success,
     @JsonKey(name: "result")
-    List<Result>? result,
+    List<FaqResult>? result,
   }) = _FaqResponse;
 
   factory FaqResponse.fromJson(Map<String, dynamic> json) => _$FaqResponseFromJson(json);
 }
 
 @freezed
-class Result with _$Result {
-  const factory Result({
+class FaqResult with _$FaqResult {
+  const factory FaqResult({
     @JsonKey(name: "_id")
     String? id,
     @JsonKey(name: "question")
@@ -31,7 +29,7 @@ class Result with _$Result {
     String? answer,
     @JsonKey(name: "createdDate")
     DateTime? createdDate,
-  }) = _Result;
+  }) = _FaqResult;
 
-  factory Result.fromJson(Map<String, dynamic> json) => _$ResultFromJson(json);
+  factory FaqResult.fromJson(Map<String, dynamic> json) => _$FaqResultFromJson(json);
 }
