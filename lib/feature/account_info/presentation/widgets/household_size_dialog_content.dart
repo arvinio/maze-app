@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/dimen.dart';
 import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/widget/bottom_sheet_header.dart';
@@ -25,11 +26,30 @@ class HouseholdSizeDialogContent extends StatefulWidget implements AutoRouteWrap
 }
 
 class _HouseholdSizeDialogContentState extends State<HouseholdSizeDialogContent> {
-  double dialogHeightPercent = 0.4;
+  double dialogHeightPercent = 0.7;
   @override
   void initState() {
     super.initState();
   }
+
+  List<String> size=[
+    "1  member",
+    "2  members",
+    "3  members",
+    '4  members',
+    '5  members',
+    '6  members',
+    '7  members',
+    '8  members',
+    '9  members',
+    '10  members',
+    '11  members',
+    '12  members',
+    '13  members',
+    '14  members',
+    '15  members'
+  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +65,7 @@ class _HouseholdSizeDialogContentState extends State<HouseholdSizeDialogContent>
           height: MediaQuery
               .of(context)
               .size
-              .height * 0.4,
+              .height * 0.9,
           child: Column(
             children: [
               Expanded(
@@ -71,41 +91,53 @@ class _HouseholdSizeDialogContentState extends State<HouseholdSizeDialogContent>
                           behavior: CustomScrollBehavior(),
                           child: Column(
                             children: [
-                              BottomSheetHeader.withHandler(
-                                showDivider: true,
+                              BottomSheetHeader(
                                 title: appStrings.householdSize,
+                                closeIcon: appAssets.close.svg(),
+                                showDivider: false,
                               ),
                               Expanded(
-                                  child: ListView(
+                                child:  Padding(
+                                  padding: const EdgeInsets.all(24.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: context
+                                          .scheme()
+                                          .neutralsBackground,
+                                      border: Border.all(color: context
+                                          .scheme()
+                                          .neutralsBorderDivider),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(Dimen.defaultRadius)),
+                                    ),
+                                    child: ListView.separated(
                                       shrinkWrap: false,
-                                      children: ([
-                                        "1 member",
-                                        "2 members",
-                                        "3 members",
-                                        '4 members',
-                                        '5 members'])
-                                          .map((e) =>
-                                          Material(
-                                            color: Colors.transparent,
-                                            child: InkWell(
-                                              child: Padding(
-                                                  padding:
-                                                  const EdgeInsets
-                                                      .symmetric(
-                                                      vertical: 13,
-                                                      horizontal: 30),
-                                                  child:
-                                                  Row(mainAxisAlignment: MainAxisAlignment
+                                      itemBuilder: (BuildContext context, int index) { return
+                                        InkWell(
+                                          child: Padding(
+                                              padding:
+                                              const EdgeInsets
+                                                  .only(top: 30,left: 20),
+                                              child:
+                                              Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment
                                                       .start, children: [
-                                                    CustomText(
-                                                        e.toString()!),
-                                                  ])),
-                                              onTap: () =>
-                                                  Navigator.pop(
-                                                      context, e),
-                                            ),
-                                          ))
-                                          .toList()))
+                                                CustomText(
+                                                    size[index].toString()!),
+                                                const SizedBox(height: 20,),
+
+                                              ])),
+                                          onTap: () =>
+                                              Navigator.pop(
+                                                  context,size[index]),
+                                        ); },
+                                      separatorBuilder: (BuildContext context, int index) { return Divider(color: context.scheme().neutralsBorderDivider,indent: 20,endIndent: 20,); },
+                                      itemCount:size.length ,
+                                    ),
+                                  ),
+                                ),)
 
 
                             ],
