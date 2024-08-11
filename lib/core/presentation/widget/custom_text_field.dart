@@ -320,8 +320,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                              : context.scheme().neutralsFieldsTags,
                               filled: true,
                               isDense: true,
-                              hintStyle: context.bodyCallout.copyWith(
-                                color: widget.hintColor ?? context.scheme().disabledText,
+                              hintStyle: context.bodyBody.copyWith(
+                                color: widget.hintColor ?? context.scheme().secondaryText,
                               ),
                               errorStyle: const TextStyle(height: 0.001, color: Colors.transparent),
                               errorText: widget.isInputInValid ? widget.bottomText : null,

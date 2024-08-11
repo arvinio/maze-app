@@ -56,8 +56,10 @@ class AssetsBase  {
    AssetSvg get faq1 => const AssetSvg('assets/icons/faq.svg');
    AssetSvg get faq => const AssetSvg('assets/icons/faq.png');
    AssetSvg get message => const AssetSvg('assets/icons/message.svg');
-   AssetSvg get messageNotify => const AssetSvg('assets/icons/message-notif.svg');
+   AssetSvg get messageNotify => const AssetSvg('assets/icons/message_notify.svg');
    AssetSvg get more => const AssetSvg('assets/icons/more.svg');
+   AssetSvg get sendMsgInactive => const AssetSvg('assets/icons/send_msg_inactive.svg');
+   AssetSvg get sendMsgActive => const AssetSvg('assets/icons/send_msg_active.svg');
 
 
 }

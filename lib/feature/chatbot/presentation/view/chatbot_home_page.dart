@@ -31,33 +31,16 @@ class ChatBotHomePage extends StatefulWidget  implements AutoRouteWrapper{
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    //return BlocProvider(create: (_) => inject<ChatBotBloc>()..add(const ChatBotEvent.fetchChatHistoryListEvent()), child: this);
     return BlocProvider(create: (_) => inject<ChatBotBloc>(), child: this);
-
   }
 }
 
 class _ChatBotHomePageState extends State<ChatBotHomePage> {
-  /*final historyList =[
-    {
-      "lastQuestion": "What materials can be composted, and which ones should be avoided?",
-      "createdDate": "2024-08-06T21:08:06.322Z"
-    },
-    {
-      "lastQuestion": "Are there common mistakes to avoid when composting?",
-      "createdDate": "2024-08-06T20:14:07.617Z"
-    },
-  ];*/
-
-
   late final List<ChatHistoryResult>? historyList=[];
-
-
 
   @override
   void initState() {
     super.initState();
-    //context.read<ChatBotBloc>().add(const ChatBotEvent.fetchChatHistoryListEvent());
   }
 
   @override
@@ -69,7 +52,6 @@ class _ChatBotHomePageState extends State<ChatBotHomePage> {
   Widget build(BuildContext context) {
     final DateTime now = DateTime.now();
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
-    final String formatted = formatter.format(now);
 
     double h = MediaQuery
         .of(context)
@@ -104,7 +86,7 @@ class _ChatBotHomePageState extends State<ChatBotHomePage> {
                         appStrings.chatHomeTitle, style: context.titleTitle2,),
                       trailing: InkWell(
                         onTap: () {
-                              context.pushRoute(const ChatBotPageRoute());
+                              context.pushRoute(const ChatPageRoute());
                         },
                         child: Container(
                           padding: const EdgeInsets.all(5),
@@ -228,13 +210,6 @@ class _ChatBotHomePageState extends State<ChatBotHomePage> {
 
   Future<void> _showFAQDialog(BuildContext context,
       Function(FaqResult reason) onSelectReason) async {
-    print( "zaraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-    final DateTime now = DateTime.now().subtract(Duration(days:1));
-    final DateFormat formatter = DateFormat('yyyy-MM-dd');
-    final String formatted = formatter.format(now);
-
-    print( formatted);
-    print("2024-08-06" == formatted);
     FocusScope.of(context).unfocus();
     FaqResult? result = await showModalBottomSheet(
         isScrollControlled: true,
