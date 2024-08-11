@@ -26,18 +26,29 @@ class HouseholdSizeDialogContent extends StatefulWidget implements AutoRouteWrap
 }
 
 class _HouseholdSizeDialogContentState extends State<HouseholdSizeDialogContent> {
-  double dialogHeightPercent = 0.4;
+  double dialogHeightPercent = 0.7;
   @override
   void initState() {
     super.initState();
   }
 
   List<String> size=[
-    "1 member",
-    "2 members",
-    "3 members",
-    '4 members',
-    '5 members'];
+    "1  member",
+    "2  members",
+    "3  members",
+    '4  members',
+    '5  members',
+    '6  members',
+    '7  members',
+    '8  members',
+    '9  members',
+    '10  members',
+    '11  members',
+    '12  members',
+    '13  members',
+    '14  members',
+    '15  members'
+  ];
 
 
   @override
@@ -54,7 +65,7 @@ class _HouseholdSizeDialogContentState extends State<HouseholdSizeDialogContent>
           height: MediaQuery
               .of(context)
               .size
-              .height * 0.6,
+              .height * 0.9,
           child: Column(
             children: [
               Expanded(

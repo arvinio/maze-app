@@ -297,7 +297,7 @@ class _AccountHouseholdInfoPageState extends State<AccountHouseholdInfoPage> {
 
                           widget.userInfo!.householdSize=householdSizeController.text.isNotEmpty
                               ?int.parse(
-                              householdSizeController.text.substring(0, 1))
+                              householdSizeController.text.substring(0, 2))
                               :1;
 
                           context.read<AccountInfoBloc>().add(
