@@ -375,4 +375,3 @@ class _AccountHouseholdInfoPageState extends State<AccountHouseholdInfoPage> {
         AccountInfoEvent.setSelectedResultEvent(result, entryMode));
   }
 }
-

@@ -38,6 +38,7 @@ class AssetsBase  {
   AssetSvg get notif2 => const AssetSvg('assets/icons/notif2.svg');
   AssetSvg get notif3 => const AssetSvg('assets/icons/notif3.svg');
   AssetSvg get dropDown => const AssetSvg('assets/icons/drop_down.svg');
+  AssetSvg get dropUp => const AssetSvg('assets/icons/dropup.svg');
   AssetSvg get infoCircle => const AssetSvg('assets/icons/info-circle.svg');
   AssetSvg get close => const AssetSvg('assets/icons/close.svg');
 
@@ -50,6 +51,17 @@ class AssetsBase  {
   AssetSvg get yourDetails => const AssetSvg('assets/icons/your_details.svg');
   AssetSvg get addReport => const AssetSvg('assets/icons/add_report.svg');
   AssetSvg get cover => const AssetSvg('assets/images/cover.jpg');
+
+   AssetSvg get add => const AssetSvg('assets/icons/add.svg');
+   AssetSvg get faq1 => const AssetSvg('assets/icons/faq.svg');
+   AssetSvg get faq => const AssetSvg('assets/icons/faq.png');
+   AssetSvg get message => const AssetSvg('assets/icons/message.svg');
+   AssetSvg get messageNotify => const AssetSvg('assets/icons/message_notify.svg');
+   AssetSvg get more => const AssetSvg('assets/icons/more.svg');
+   AssetSvg get sendMsgInactive => const AssetSvg('assets/icons/send_msg_inactive.svg');
+   AssetSvg get sendMsgActive => const AssetSvg('assets/icons/send_msg_active.svg');
+  // AssetSvg get chatBot => const AssetSvg('assets/icons/chatBot.svg');
+   AssetSvg get chatBot => const AssetSvg('assets/icons/chatBot.png');
 
 
 }

@@ -224,7 +224,7 @@ class _YourHouseholdPageState extends State<YourHouseholdPage> {
             ),
             child: state.profileStatus.isLoading
                 ?  const CustomLoading()
-            :SingleChildScrollView(
+                :SingleChildScrollView(
               child: SizedBox(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -427,4 +427,3 @@ class _YourHouseholdPageState extends State<YourHouseholdPage> {
         ProfileEvent.setSelectedResultEvent(result, entryMode));
   }
 }
-

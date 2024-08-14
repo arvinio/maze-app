@@ -97,47 +97,47 @@ class _HouseholdSizeDialogContentState extends State<HouseholdSizeDialogContent>
                                 showDivider: false,
                               ),
                               Expanded(
-                                  child:  Padding(
-                                    padding: const EdgeInsets.all(24.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: context
-                                            .scheme()
-                                            .neutralsBackground,
-                                        border: Border.all(color: context
-                                            .scheme()
-                                            .neutralsBorderDivider),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(Dimen.defaultRadius)),
-                                      ),
-                                      child: ListView.separated(
-                                        shrinkWrap: false,
-                                        itemBuilder: (BuildContext context, int index) { return
-                                          InkWell(
-                                            child: Padding(
-                                                padding:
-                                                const EdgeInsets
-                                                    .only(top: 30,left: 20),
-                                                child:
-                                                Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    crossAxisAlignment:
-                                                    CrossAxisAlignment
-                                                        .start, children: [
-                                                  CustomText(
-                                                      size[index].toString()!),
-                                                  const SizedBox(height: 20,),
-
-                                                ])),
-                                            onTap: () =>
-                                                Navigator.pop(
-                                                    context,size[index]),
-                                          ); },
-                                        separatorBuilder: (BuildContext context, int index) { return Divider(color: context.scheme().neutralsBorderDivider,indent: 20,endIndent: 20,); },
-                                        itemCount:size.length ,
-                                      ),
+                                child:  Padding(
+                                  padding: const EdgeInsets.all(24.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: context
+                                          .scheme()
+                                          .neutralsBackground,
+                                      border: Border.all(color: context
+                                          .scheme()
+                                          .neutralsBorderDivider),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(Dimen.defaultRadius)),
                                     ),
-                                  ),)
+                                    child: ListView.separated(
+                                      shrinkWrap: false,
+                                      itemBuilder: (BuildContext context, int index) { return
+                                        InkWell(
+                                          child: Padding(
+                                              padding:
+                                              const EdgeInsets
+                                                  .only(top: 30,left: 20),
+                                              child:
+                                              Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment
+                                                      .start, children: [
+                                                CustomText(
+                                                    size[index].toString()!),
+                                                const SizedBox(height: 20,),
+
+                                              ])),
+                                          onTap: () =>
+                                              Navigator.pop(
+                                                  context,size[index]),
+                                        ); },
+                                      separatorBuilder: (BuildContext context, int index) { return Divider(color: context.scheme().neutralsBorderDivider,indent: 20,endIndent: 20,); },
+                                      itemCount:size.length ,
+                                    ),
+                                  ),
+                                ),)
 
 
                             ],

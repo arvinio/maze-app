@@ -207,6 +207,9 @@ extension TextThemeSchemeExtension on BuildContext {
   TextStyle get subheadlineSubheadline =>
       TextStyle(color: Theme.of(this).colorScheme.primaryText, fontWeight: FontWeight.w400, fontSize: 15);
 
+  TextStyle get subheadlineSubheadlineSemibold =>
+      TextStyle(color: Theme.of(this).colorScheme.primaryText, fontWeight: FontWeight.w600, fontSize: 15);
+
   TextStyle get footnoteFootnoteBold =>
       TextStyle(color: Theme.of(this).colorScheme.primaryText, fontWeight: FontWeight.w600, fontSize: 13);
 
