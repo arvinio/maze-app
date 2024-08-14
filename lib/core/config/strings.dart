@@ -136,6 +136,7 @@ class StringsBase {
   String get chatDescMsg => 'Feel free to ask me a question\n and I’ll try my best to answer it!';
   String get regenerateAnswer => 'Regenerate Answer';
   String get speakToHuman => 'Speak to a human';
+  String get chatMsg => 'Hey there 👋\n \nFeel free to ask me a question\n and I’ll try my best to answer it!';
 
 
 

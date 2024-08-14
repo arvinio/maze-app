@@ -60,6 +60,8 @@ class AssetsBase  {
    AssetSvg get more => const AssetSvg('assets/icons/more.svg');
    AssetSvg get sendMsgInactive => const AssetSvg('assets/icons/send_msg_inactive.svg');
    AssetSvg get sendMsgActive => const AssetSvg('assets/icons/send_msg_active.svg');
+  // AssetSvg get chatBot => const AssetSvg('assets/icons/chatBot.svg');
+   AssetSvg get chatBot => const AssetSvg('assets/icons/chatBot.png');
 
 
 }

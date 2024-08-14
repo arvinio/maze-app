@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/presentation/widget/bottom_navigation.dart';
 import 'package:maze_app/feature/account_info/domain/entity/user_info.dart';
 import 'package:maze_app/feature/account_info/presentation/view/account_details/account_details_page.dart';
-import 'package:maze_app/feature/chatbot/presentation/view/chat/chat_page.dart';
+import 'package:maze_app/feature/chatbot/presentation/view/chat/presentation/view/chat_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/about/about_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/change_password/change_password_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/change_password/current_password_page.dart';
