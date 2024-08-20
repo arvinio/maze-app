@@ -131,7 +131,7 @@ class _ChatPageState extends State<ChatPage> {
                         Navigator.pop(context);
                       },
                       child: appAssets.arrowLeft.svg(width: 24, height: 24)),
-                  trailing: appAssets.more.svg(),
+                 // trailing: appAssets.more.svg(),
                 )),
 
             child: Column(
