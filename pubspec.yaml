@@ -39,6 +39,9 @@ dependencies:
   introduction_screen: ^3.1.14
   flutter_screenutil: ^5.9.3
   grouped_list: ^6.0.0
+  sentry_flutter: ^8.7.0
+  sentry_logging: ^8.0.0
+
   
   
 
