@@ -26,4 +26,9 @@ class CharRepositoryImpl implements ChatRepository
   Future<ApiResponse<RegenerateResponse>> regenerate({required String chatId}) async{
     return await remoteDataSource.regenerate(chatId: chatId);
   }
+
+  @override
+  Future<ApiResponse> getChatMessagesList({required String chatId}) async{
+    return await remoteDataSource.getChatMessagesList(chatId: chatId);
+  }
 }

@@ -3,6 +3,7 @@ import 'package:maze_app/core/network/dio_caller.dart';
 import 'package:maze_app/core/network/model/api_response.dart';
 import 'package:maze_app/di/di_const.dart';
 import 'package:maze_app/feature/chatbot/presentation/view/chat/data/model/ask_question_response/ask_question_response.dart';
+import 'package:maze_app/feature/chatbot/presentation/view/chat/data/model/chat_msg_list/chat_msg_list_response.dart';
 import 'package:maze_app/feature/chatbot/presentation/view/chat/data/model/create_chat_response/create_chat_response.dart';
 import 'package:maze_app/feature/chatbot/presentation/view/chat/data/model/regenerate_response/regenerate_response.dart';
 
@@ -42,6 +43,11 @@ class ChatBotRemoteRemoteDataSourceImpl implements ChatRemoteRemoteDataSource {
           'chatId': chatId,
         }
     );
+  }
+
+  @override
+  Future<ApiResponse> getChatMessagesList({required String chatId}) async{
+    return await dioCaller.get('api/chat/messages?chatId=$chatId', fromJson: ChatMsgListResponse.fromJson);
   }
 
 }

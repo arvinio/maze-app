@@ -7,4 +7,6 @@ abstract class ChatRemoteRemoteDataSource {
   Future<ApiResponse<CreateChatResponse>> createChat({required String question});
   Future<ApiResponse<AskQuestionResponse>> askQuestion({required String chatId,required String question});
   Future<ApiResponse<RegenerateResponse>> regenerate(  {required String chatId});
+  Future<ApiResponse> getChatMessagesList(  {required String chatId});
+
 }

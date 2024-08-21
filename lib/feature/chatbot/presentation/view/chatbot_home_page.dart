@@ -20,6 +20,7 @@ import 'package:maze_app/feature/chatbot/presentation/view/faq/faq_page.dart';
 import 'package:intl/intl.dart';
 
 import 'package:grouped_list/grouped_list.dart';
+import 'package:maze_app/feature/chatbot/presentation/widgets/chat_history_widget.dart';
 
 
 @RoutePage()
@@ -86,7 +87,7 @@ class _ChatBotHomePageState extends State<ChatBotHomePage> {
                         appStrings.chatHomeTitle, style: context.titleTitle2,),
                       trailing: InkWell(
                         onTap: () {
-                              context.pushRoute(const ChatPageRoute());
+                              context.pushRoute( ChatPageRoute(chatId: null));
                         },
                         child: Container(
                           padding: const EdgeInsets.all(5),
@@ -179,8 +180,15 @@ class _ChatBotHomePageState extends State<ChatBotHomePage> {
 
                           , style: context.titleHeadline,),
                       ),
-                      itemBuilder: (context, ChatHistoryResult element) =>
-                          ChatHistoryWidget(title:element.lastQuestion!),
+                      itemBuilder: (context, ChatHistoryResult element) {
+                        return ChatHistoryWidget(
+                            title: element.lastQuestion!,
+                          onTap: (){
+                              context.pushRoute(ChatPageRoute(chatId:element.id));
+                          },
+                        );
+
+                      },
                       floatingHeader: true, // optional
                       order: GroupedListOrder.DESC, // optional
                     )
@@ -223,36 +231,4 @@ class _ChatBotHomePageState extends State<ChatBotHomePage> {
   }
 }
 
-class ChatHistoryWidget extends StatelessWidget {
-  final String? title;
-  final Widget? leading;
-  const ChatHistoryWidget({
-    super.key,
-    required this.title, this.leading,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 10,),
-        Container(
-          padding:const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: context.scheme().neutralsBackground,
-            border: Border.all(color:  context.scheme().neutralsBorderDivider,width: 1),
-            borderRadius:
-            BorderRadius.circular(Dimen.defaultRadius),
-          ),
-          child: ListTile(
-            title: CustomText(title!,style: context.bodyBody),
-            leading:leading ?? appAssets.message.svg(),
-            contentPadding: EdgeInsets.zero,
-          ),
-        ),
-      ],
-    );
-  }
-}
 

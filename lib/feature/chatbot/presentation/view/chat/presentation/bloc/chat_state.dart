@@ -11,6 +11,7 @@ enum ChatStatus {
   regenerateLoading,
   regenerateSuccess,
   regenerateFailure,
+  chatMsgListSuccess,
   notifyAskQuestionValue,
   notifyResultChatValue;
 
@@ -25,6 +26,7 @@ enum ChatStatus {
   bool get isRegenerateLoading => this == ChatStatus.regenerateLoading;
   bool get isRegenerateSuccess => this == ChatStatus.regenerateSuccess;
   bool get isRegenerateFailure => this == ChatStatus.regenerateFailure;
+  bool get isChatMsgListSuccess => this == ChatStatus.chatMsgListSuccess;
 
 }
 
@@ -37,6 +39,7 @@ class ChatState with _$ChatState{
     CreateChatResponse? chatResponse,
     AskQuestionResponse? questionResponse,
     RegenerateResponse? regenerateResponse,
+    ChatMsgListResponse? chatMsgListResponse,
     String? question,
     int? count,
     String? errorMessage

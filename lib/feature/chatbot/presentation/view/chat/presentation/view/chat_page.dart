@@ -13,6 +13,7 @@ import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
+import 'package:maze_app/feature/chatbot/presentation/view/chat/data/model/chat_msg_list/chat_msg_list_response.dart';
 import 'package:maze_app/feature/chatbot/presentation/view/chat/presentation/bloc/chat_bloc.dart';
 import 'package:maze_app/feature/chatbot/presentation/view/chat/presentation/widgets/ask_question_widget.dart';
 import 'package:maze_app/feature/chatbot/presentation/view/chat/presentation/widgets/chat_result_widget.dart';
@@ -20,7 +21,8 @@ import 'package:maze_app/feature/chatbot/presentation/view/chat/presentation/wid
 
 @RoutePage()
 class ChatPage extends StatefulWidget implements AutoRouteWrapper {
-  const ChatPage({super.key});
+  String? chatId;
+   ChatPage({super.key,this.chatId});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -37,10 +39,10 @@ class _ChatPageState extends State<ChatPage> {
   ValueNotifier<bool> obscureState = ValueNotifier(false);
   late final ValueNotifier<bool> _keyboardVisibilityValueNotifier;
   bool isVisibleRegenerate = false;
-  String? chatId = "";
 
+  List<Result> results = [];
   List<Widget> list = [];
-  Widget _questions = Center();
+  Widget _questions =  Center();
   Widget _chatResult = Center();
 
 
@@ -48,6 +50,10 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
+    if(widget.chatId !=null) {
+      context.read<ChatBloc>().add(
+          ChatEvent.chatMessagesListEvent(chatId: widget.chatId));
+    }
     _keyboardVisibilityValueNotifier = ValueNotifier(true);
   }
 
@@ -74,21 +80,44 @@ class _ChatPageState extends State<ChatPage> {
 
     return BlocConsumer<ChatBloc, ChatState>(
       listener: (context, state) {
-      if (state.chatStatus.isChatLoading) {
+        if (state.chatStatus.isChatMsgListSuccess) {
+
+          results.addAll(state.chatMsgListResponse!.result!);
+          for(int i=results.length-1;i>=0;--i)
+            {
+              if(results[i].role=="user") {
+                _questions = AskQuestionWidget(
+                    question: results[i].content![0].text!.value!, width: w);
+                list.add(_questions);
+              }else if(results[i].role=="assistant"){
+
+                _chatResult =
+                    ChatResultWidget(result:results.isNotEmpty? results[i].content![0].text!.value! :'');
+              list.add(_chatResult);
+            }
+        }
+          isVisibleRegenerate = true;
+          list.add(buildRegenerate(w,context));
+        }
+
+        else if (state.chatStatus.isChatLoading) {
           _questions =  AskQuestionWidget(question: _chatController.text, width: w);
-          isVisibleRegenerate = false;
+          if(widget.chatId !=null)
+          {
+            list.removeAt(list.length-1);
+          }
           list.add(_questions);
           _chatController.clear();
           _chatResult =SizedBox(width: w*0.27,child: const ChatResultWidget( result:"..."));
-          isVisibleRegenerate = false;
+
           list.add(_chatResult);
 
         }
 
         else if (state.chatStatus.isChatSuccess) {
-          chatId = state.chatResponse!.result!.chatId;
+          widget.chatId = state.chatResponse!.result!.chatId;
           list.removeAt(list.length-1);
-          chatResultGenerate(state: state,width: w,isQuestionSuccess: false);
+          chatResultGenerate(state: state,width: w,isChatSuccess: true);
         }
         else if (state.chatStatus.isChatFailure) {
           Fluttertoast.showToast(
@@ -100,6 +129,15 @@ class _ChatPageState extends State<ChatPage> {
               textColor: Colors.white,
               fontSize: 16.0);
         }
+      else if (state.chatStatus.isRegenerateLoading) {
+        list.removeAt(list.length-1);
+        _chatResult =SizedBox(width: w*0.27,child: const ChatResultWidget( result:"..."));
+        list.add(_chatResult);
+      }
+      else if (state.chatStatus.isRegenerateSuccess) {
+        list.removeAt(list.length-1);
+        chatResultGenerate(state: state,width: w, isRegenerateSuccess: true);
+      }
         else if (state.chatStatus.isQuestionSuccess) {
           list.removeAt(list.length-1);
           chatResultGenerate(state: state,width: w, isQuestionSuccess: true);
@@ -167,7 +205,18 @@ class _ChatPageState extends State<ChatPage> {
                   contentPadding: const EdgeInsets.fromLTRB(0, 12, 30, 12),
                   horizontalTitleGap: 8,
                 ),
-                 SizedBox(
+                /* state.chatStatus.isChatMsgListSuccess?
+                SizedBox(
+                    height: (!_keyboardVisibilityValueNotifier.value)?h * 0.55:h*0.25,
+                    child: ListView.builder(
+                      itemCount: state.chatMsgListResponse!.result!.length,
+                      scrollDirection: Axis.vertical,
+                      // shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        return list[index];
+                      },
+                    ))
+                :*/SizedBox(
                       height: (!_keyboardVisibilityValueNotifier.value)?h * 0.55:h*0.25,
                       child: ListView.builder(
                         itemCount: list.length,
@@ -204,13 +253,13 @@ class _ChatPageState extends State<ChatPage> {
                           onTap: () {
 
 
-                            if(chatId!.isEmpty) {
+                            if(widget.chatId ==null) {
                               context.read<ChatBloc>().add(
                                   ChatEvent.createChatEvent(question: _chatController.text));
                             }else
                             {
                               context.read<ChatBloc>().add(
-                                  ChatEvent.askQuestionEvent(chatId: chatId!,question: _chatController.text));
+                                  ChatEvent.askQuestionEvent(chatId: widget.chatId!,question: _chatController.text));
                             }
                           },
                           child: Padding(
@@ -246,25 +295,31 @@ class _ChatPageState extends State<ChatPage> {
     return Visibility(
                             visible: isVisibleRegenerate,
                             child: Column(children: [
-                              Container(
-                                width: w,
-                                padding: const EdgeInsets.fromLTRB(
-                                    0, 16, 0, 16),
-                                decoration: BoxDecoration(
-                                  //color: context.scheme().primary,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(Dimen.defaultRadius)),
-                                    border: Border.all(color: context
+                              InkWell(
+                                onTap: (){
+                                  context.read<ChatBloc>().add(
+                                      ChatEvent.regenerateEvent(chatId: widget.chatId!));
+                                },
+                                child: Container(
+                                  width: w,
+                                  padding: const EdgeInsets.fromLTRB(
+                                      0, 16, 0, 16),
+                                  decoration: BoxDecoration(
+                                    //color: context.scheme().primary,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(Dimen.defaultRadius)),
+                                      border: Border.all(color: context
+                                          .scheme()
+                                          .neutralsBorderDivider)
+                                  ),
+                                  child: CustomText(appStrings.regenerateAnswer,
+                                    textAlign: TextAlign.center,
+                                    style: context
+                                        .subheadlineSubheadlineSemibold
+                                        .copyWith(color: context
                                         .scheme()
-                                        .neutralsBorderDivider)
+                                        .primary),),
                                 ),
-                                child: CustomText(appStrings.regenerateAnswer,
-                                  textAlign: TextAlign.center,
-                                  style: context
-                                      .subheadlineSubheadlineSemibold
-                                      .copyWith(color: context
-                                      .scheme()
-                                      .primary),),
                               ),
                               const SizedBox(height: 10,),
                               Container(
@@ -287,19 +342,30 @@ class _ChatPageState extends State<ChatPage> {
                                       .scheme()
                                       .primary),),
                               ),
+                              const SizedBox(height: 10,),
+
                             ],),
                           );
   }
 
   void chatResultGenerate({required ChatState state,required double width,
-      bool isQuestionSuccess=false}) {
-    if (!isQuestionSuccess) {
+      bool isChatSuccess=false,bool isQuestionSuccess=false,bool isRegenerateSuccess=false}) {
+    if (isChatSuccess) {
       _chatResult =
           ChatResultWidget(result:state.chatResponse !=null? state.chatResponse!.result!.result! :'');
-    } else {
-      _chatResult =
-          ChatResultWidget(result:state.questionResponse!=null? state.questionResponse!.result!.result! :'');
     }
+    if (isQuestionSuccess) {
+      _chatResult =
+          ChatResultWidget(
+              result: state.questionResponse != null ? state.questionResponse!
+                  .result!.result! : '');
+    }
+
+      if (isRegenerateSuccess) {
+        _chatResult =
+            ChatResultWidget(result:state.regenerateResponse!=null? state.regenerateResponse!.result!.result! :'');
+      }
+
     isVisibleRegenerate = true;
     list.add(_chatResult);
     list.add(buildRegenerate(width,context));
