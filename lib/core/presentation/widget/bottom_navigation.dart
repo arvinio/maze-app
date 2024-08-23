@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/di/injection_container.dart';
+import 'package:maze_app/feature/chatbot/presentation/view/chatBot_home_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/profile_home_page.dart';
 import 'package:maze_app/feature/knowledge/presentation/knowledge/cubit/knowledge_cubit.dart';
 import 'package:maze_app/feature/knowledge/presentation/knowledge/view/knowledge_page.dart';
@@ -39,6 +40,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
       ),
     ),
     KnowledgePage(),
+    ChatBotHomePage(),
+    Scaffold(
+      body: Center(
+        child: Text("page must be added here"),
+      ),
+    ),
     Scaffold(
       body: Center(
         child: Text("page must be added here"),

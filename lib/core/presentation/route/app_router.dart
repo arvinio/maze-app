@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/presentation/widget/bottom_navigation.dart';
 import 'package:maze_app/feature/account_info/domain/entity/user_info.dart';
 import 'package:maze_app/feature/account_info/presentation/view/account_details/account_details_page.dart';
+import 'package:maze_app/feature/chatbot/presentation/view/chat/presentation/view/chat_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/about/about_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/change_password/change_password_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/change_password/current_password_page.dart';
@@ -19,6 +20,7 @@ import 'package:maze_app/feature/auth/signing_up/presentation/view/verification_
 import 'package:maze_app/feature/auth/login/presentation/view/login_page.dart';
 import 'package:maze_app/feature/auth/login/presentation/view/welcome_page.dart';
 import 'package:maze_app/feature/auth/signup/presentation/view/signup_page.dart';
+import 'package:maze_app/feature/chatbot/presentation/view/chatBot_home_page.dart';
 import 'package:maze_app/feature/intro/presentation/view/intro_page.dart';
 import 'package:maze_app/feature/intro/presentation/view/splash_loading_page.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/article.dart';
@@ -71,6 +73,19 @@ class AppRouter extends _$AppRouter {
     AutoRoute(path: '/ProfileHomePage', page: ProfileHomePageRoute.page),
     AutoRoute(path: '/HelpCenterPage', page: HelpCenterPageRoute.page),
     AutoRoute(path: '/AboutPage', page: AboutPageRoute.page),
+    AutoRoute(
+        path: '/AccountSettingsPage', page: AccountSettingsPageRoute.page),
+    AutoRoute(
+        path: '/NewEmailAddressPage', page: NewEmailAddressPageRoute.page),
+    AutoRoute(path: '/ReportPage', page: ReportPageRoute.page),
+    AutoRoute(path: '/YourDetailsPage', page: YourDetailsPageRoute.page),
+    AutoRoute(path: '/EditProfilePage', page: EditProfilePageRoute.page),
+    AutoRoute(path: '/YourHouseholdPage', page: YourHouseholdPageRoute.page),
+    AutoRoute(path: '/ChangePasswordPage', page: ChangePasswordPageRoute.page),
+    AutoRoute(
+        path: '/CurrentPasswordPage', page: CurrentPasswordPageRoute.page),
+    AutoRoute(path: '/ChatBotHomePage', page: ChatBotHomePageRoute.page),
+    AutoRoute(path: '/ChatPage', page: ChatPageRoute.page),
     AutoRoute(
         path: '/AccountSettingsPage', page: AccountSettingsPageRoute.page),
     AutoRoute(

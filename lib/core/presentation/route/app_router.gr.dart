@@ -106,6 +106,24 @@ abstract class _$AppRouter extends RootStackRouter {
         )),
       );
     },
+    ChatBotHomePageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const ChatBotHomePage()),
+      );
+    },
+    ChatPageRoute.name: (routeData) {
+      final args = routeData.argsAs<ChatPageRouteArgs>(
+          orElse: () => const ChatPageRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: ChatPage(
+          key: args.key,
+          chatId: args.chatId,
+        )),
+      );
+    },
     CreatePasswordPageRoute.name: (routeData) {
       final args = routeData.argsAs<CreatePasswordPageRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -220,9 +238,14 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     WelcomePageRoute.name: (routeData) {
+      final args = routeData.argsAs<WelcomePageRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const WelcomePage(),
+        child: WelcomePage(
+          key: args.key,
+          userName: args.userName,
+          avatarUrl: args.avatarUrl,
+        ),
       );
     },
     YourDetailsPageRoute.name: (routeData) {
@@ -520,6 +543,58 @@ class ChangePasswordPageRouteArgs {
   @override
   String toString() {
     return 'ChangePasswordPageRouteArgs{key: $key, email: $email, currentPass: $currentPass}';
+  }
+}
+
+/// generated route for
+/// [ChatBotHomePage]
+class ChatBotHomePageRoute extends PageRouteInfo<void> {
+  const ChatBotHomePageRoute({List<PageRouteInfo>? children})
+      : super(
+          ChatBotHomePageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ChatBotHomePageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ChatPage]
+class ChatPageRoute extends PageRouteInfo<ChatPageRouteArgs> {
+  ChatPageRoute({
+    Key? key,
+    String? chatId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ChatPageRoute.name,
+          args: ChatPageRouteArgs(
+            key: key,
+            chatId: chatId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ChatPageRoute';
+
+  static const PageInfo<ChatPageRouteArgs> page =
+      PageInfo<ChatPageRouteArgs>(name);
+}
+
+class ChatPageRouteArgs {
+  const ChatPageRouteArgs({
+    this.key,
+    this.chatId,
+  });
+
+  final Key? key;
+
+  final String? chatId;
+
+  @override
+  String toString() {
+    return 'ChatPageRouteArgs{key: $key, chatId: $chatId}';
   }
 }
 
@@ -849,16 +924,45 @@ class WelcomeAccountSetupPageRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [WelcomePage]
-class WelcomePageRoute extends PageRouteInfo<void> {
-  const WelcomePageRoute({List<PageRouteInfo>? children})
-      : super(
+class WelcomePageRoute extends PageRouteInfo<WelcomePageRouteArgs> {
+  WelcomePageRoute({
+    Key? key,
+    required String? userName,
+    required String? avatarUrl,
+    List<PageRouteInfo>? children,
+  }) : super(
           WelcomePageRoute.name,
+          args: WelcomePageRouteArgs(
+            key: key,
+            userName: userName,
+            avatarUrl: avatarUrl,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'WelcomePageRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<WelcomePageRouteArgs> page =
+      PageInfo<WelcomePageRouteArgs>(name);
+}
+
+class WelcomePageRouteArgs {
+  const WelcomePageRouteArgs({
+    this.key,
+    required this.userName,
+    required this.avatarUrl,
+  });
+
+  final Key? key;
+
+  final String? userName;
+
+  final String? avatarUrl;
+
+  @override
+  String toString() {
+    return 'WelcomePageRouteArgs{key: $key, userName: $userName, avatarUrl: $avatarUrl}';
+  }
 }
 
 /// generated route for

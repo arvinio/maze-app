@@ -9,6 +9,9 @@ class StringsBase {
   String get save => 'Save';
   String get version => 'Version 12.2.4';
   String get pleaseWait => 'Please Wait...';
+  String get today => 'Today';
+  String get yesterday => 'ِِYesterday';
+  String get emptyList => 'No data available';
 
   //SignUp
   String get mazeComposting => 'Maze Composting';
@@ -39,7 +42,7 @@ class StringsBase {
   String get forgotPassword => 'Forgot password';
 
   //WellcomPage
-   String get welcomeTitle => 'Welcome Wilson51';
+   String get welcomeTitle => 'Welcome ';
    String get welcomeSubTitle => 'Let’s get back into it!';
 
   //Forgot Password
@@ -121,6 +124,22 @@ class StringsBase {
   String get householdUpdatedMsg => 'Your household successfully updated';
   String get yourDetailsUpdatedMsg => 'your Details successfully updated';
   String get reportSendMsg => 'Report successfully sent';
+
+  //chatbot
+  String get chatHomeTitle => 'Messages';
+  String get newChat => 'New chat';
+  String get faqTitle => 'FAQ';
+  String get faqSubTitle => 'View common questions';
+  String get chatBotTitle => 'Chat Bot';
+  String get message => 'Message';
+  String get chatTitleMsg => 'Hey there';
+  String get chatDescMsg => 'Feel free to ask me a question\n and I’ll try my best to answer it!';
+  String get regenerateAnswer => 'Regenerate Answer';
+  String get speakToHuman => 'Speak to a human';
+  String get chatMsg => 'Hey there 👋\n \nFeel free to ask me a question\n and I’ll try my best to answer it!';
+
+
+
 
 
 

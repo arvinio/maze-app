@@ -44,6 +44,9 @@ class _LoginPageState extends State<LoginPage> {
   final FocusNode _focusNode = FocusNode();
   ValueNotifier<bool> obscureState = ValueNotifier(false);
 
+  String avatarUrl="";
+  String userName="";
+
   @override
   Widget build(BuildContext context) {
     return BasePageWidget(
@@ -63,7 +66,15 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) async {
             if (state.loginStatus.isSuccess) {
-              context.pushRoute(const WelcomePageRoute());
+              if (state.loginResponse!.avatar != null) {
+                avatarUrl = state.loginResponse!.avatar!;
+              }
+              if (state.loginResponse!.username != null) {
+                userName = state.loginResponse!.username!;
+              }
+
+              context.pushRoute( WelcomePageRoute(userName:userName,avatarUrl: avatarUrl ));
+
               await Future.delayed(const Duration(seconds: 2));
               if (context.mounted) {
                 context.router.replaceAll([const BottomNavigationRoute()]);
@@ -162,6 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.only(top: 16, bottom: 16),
                   child: CustomButton.submit(
                     text: appStrings.continueSteps,
+                    showLoading: state.loginStatus.isLoading,
                     onPressed: () {
                       context.read<LoginBloc>().add(LoginEvent.loginUser(
                           email: widget.userName, password: _controller.text));

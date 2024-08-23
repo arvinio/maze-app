@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:maze_app/core/network/util/expire_token_interceptor.dart';
+import 'package:maze_app/core/network/util/logger.dart';
 
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -30,6 +31,7 @@ Dio provideDio(
   }
 
   dio.interceptors.add(inject<PrettyDioLogger>());
+  dio.interceptors.add(LoggingInterceptor());
 
 
   return dio;

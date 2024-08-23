@@ -59,11 +59,21 @@ class _YourHouseholdPageState extends State<YourHouseholdPage> {
   bool stateEnable = false;
   bool councilEnable = false;
   List<String> size=[
-    "1 member",
-    "2 members",
-    "3 members",
-    '4 members',
-    '5 members'];
+    "1  member",
+    "2  members",
+    "3  members",
+    '4  members',
+    '5  members',
+    '6  members',
+    '7  members',
+    '8  members',
+    '9  members',
+    '10 members',
+    '11 members',
+    '12 members',
+    '13 members',
+    '14 members',
+    '15 members'];
 
   @override
   void initState() {
@@ -123,7 +133,7 @@ class _YourHouseholdPageState extends State<YourHouseholdPage> {
             councilEnable = true;
 
           }
-          if(state.response!.country !=null )
+          if(state.response!.council !=null )
           {
             councilId = state.response!.council!.id;
             councilController.text=state.response!.council!.name!;
@@ -202,7 +212,7 @@ class _YourHouseholdPageState extends State<YourHouseholdPage> {
                           state: stateId,
                           council: councilId,
                           postcode: postCodeController.text.trim(),
-                          householdSize: int.parse(householdSizeController.text.substring(0,1)),
+                          householdSize: int.parse(householdSizeController.text.substring(0,2)),
                           measurementSystem: councilBinController.text.trim(),
                         );
                         context.read<ProfileBloc>().add(
@@ -214,7 +224,7 @@ class _YourHouseholdPageState extends State<YourHouseholdPage> {
             ),
             child: state.profileStatus.isLoading
                 ?  const CustomLoading()
-            :SingleChildScrollView(
+                :SingleChildScrollView(
               child: SizedBox(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -417,4 +427,3 @@ class _YourHouseholdPageState extends State<YourHouseholdPage> {
         ProfileEvent.setSelectedResultEvent(result, entryMode));
   }
 }
-

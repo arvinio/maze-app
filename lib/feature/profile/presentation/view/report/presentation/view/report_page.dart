@@ -91,7 +91,7 @@ class _ReportPageState extends State<ReportPage> {
 
 
     return BlocConsumer<ReportBloc, ReportState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state.reportStatus.isSuccess) {
           Fluttertoast.showToast(msg: appStrings.reportSendMsg,
               toastLength: Toast.LENGTH_LONG,
@@ -100,6 +100,9 @@ class _ReportPageState extends State<ReportPage> {
               backgroundColor: Colors.black,
               textColor: Colors.white,
               fontSize: 16.0);
+          await Future.delayed(const Duration(seconds: 1));
+
+          Navigator.of(context).pop();
         }
 
         else if (state.reportStatus.isFailure) {

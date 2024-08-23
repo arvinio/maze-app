@@ -39,14 +39,15 @@ class _YourDetailsPageState extends State<YourDetailsPage> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   String? _birthDate;
-  final List<DateTime?> _dialogCalendarPickerValue = [
-    DateTime.now().add(const Duration(days: 1))];
+  late  List<DateTime?> _dialogCalendarPickerValue;
   late final ValueNotifier<bool> _keyboardVisibilityValueNotifier;
 
 
   @override
   void initState() {
     super.initState();
+    _dialogCalendarPickerValue = [
+    DateTime.now().add(const Duration(days: 1))];
     _keyboardVisibilityValueNotifier = ValueNotifier(false);
     context.read<ProfileBloc>().add(const ProfileEvent.getProfileEvent());
   }
@@ -92,6 +93,8 @@ class _YourDetailsPageState extends State<YourDetailsPage> {
             _birthDate =
             '${state.response!.birthDate!.year}/${state.response!
                 .birthDate!.month}/${state.response!.birthDate!.day}';
+
+            _dialogCalendarPickerValue=[state.response!.birthDate!];
           }
 
         } else if (state.profileStatus.isEditProfileSuccess) {
@@ -183,6 +186,8 @@ class _YourDetailsPageState extends State<YourDetailsPage> {
                       .secondaryText,
                   onTap: () {
                     _selectDate(context, (date) {
+                      _dialogCalendarPickerValue=date!;
+
                       _dateController.text =
                       '${date![0]!.day} ${monthList[date![0]!.month -
                           1]} ${date![0]!.year}';
@@ -229,7 +234,9 @@ class _YourDetailsPageState extends State<YourDetailsPage> {
       dialogSize: const Size(325, 370),
       borderRadius: BorderRadius.circular(15),
       value: _dialogCalendarPickerValue,
-      dialogBackgroundColor: Colors.white,
+      dialogBackgroundColor: Colors.white
+
+
     ));
 
     if (date != null) onSelectDate(date);
