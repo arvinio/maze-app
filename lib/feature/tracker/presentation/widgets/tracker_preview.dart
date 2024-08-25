@@ -55,10 +55,14 @@ class TrackerPreview extends StatelessWidget {
                   ),
                   child: FittedBox(
                       fit: BoxFit.contain,
-                      child: Image.network(
-                        bin.imageUrl!,
-                        fit: BoxFit.contain,
-                      )),
+                      child: bin.imageUrl == null
+                          ? const SizedBox(
+                              child: Text('no image'),
+                            )
+                          : Image.network(
+                              bin.imageUrl!,
+                              fit: BoxFit.contain,
+                            )),
                 ),
                 trailing: const AppArrow(),
               ),

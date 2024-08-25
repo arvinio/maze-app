@@ -41,16 +41,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
     ),
     KnowledgePage(),
     ChatBotHomePage(),
-    Scaffold(
-      body: Center(
-        child: Text("page must be added here"),
-      ),
-    ),
-    Scaffold(
-      body: Center(
-        child: Text("page must be added here"),
-      ),
-    ),
     TrackerPage(),
     ProfileHomePage()
   ];
