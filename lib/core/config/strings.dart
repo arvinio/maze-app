@@ -138,6 +138,29 @@ class StringsBase {
   String get speakToHuman => 'Speak to a human';
   String get chatMsg => 'Hey there 👋\n \nFeel free to ask me a question\n and I’ll try my best to answer it!';
 
+  //Tutorial
+
+  String get tutorialTitleMsg => 'Hey there 👋';
+  String get tutorialSubTitleMsg => 'Welcome to Maze Composting, I’m \nwormy, would you like a quick walk \nthrough of the app?';
+  String get noThanksTutorial => 'No thanks';
+  String get yesPlease => 'Yes please';
+  String get back => 'Back';
+  String get next => 'Next';
+  String get finishWalkthrough =>'Finish Walkthrough';
+  String get communityTutorial => 'Here is where you can interact with\n others in the composting community\n and ask questions to get help on your\n journey.';
+  String get knowledgeTutorial => 'This is where you can browse through articles, on all things composting. This is a great place to get started if you’re new to composting.';
+  String get liveChatTutorial =>'This is where I live, I’ll try my best to answer all of your questions. If I’m not able to, I’ll transfer you to a human.';
+  String get trackerTutorial =>'This is where you can track all of your waste and compost bins. If you’re new to composting, I recommend checking out the Knowledge area first and getting to know the basics.';
+  String get profileTutorial =>'Lastly, here you’ll find your public profile and access to your account settings at the top.';
+  String get finishTutorial =>'Lastly, If you ever have any questions, feel free to ask the community or myself. Have fun and welcome to Maze Composting! 🎉 ';
+
+  String get community => 'Community';
+  String get knowledge => 'Knowledge';
+  String get liveChat =>'Live chat';
+  String get tracker =>'Tracker';
+  String get profile =>'Profile';
+  String get thanksForListening =>'Thanks for listening ';
+
 
 
 
