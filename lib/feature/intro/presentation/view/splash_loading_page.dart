@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:maze_app/core/local/setting_manager.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/core/presentation/widget/app_loading.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
@@ -38,12 +39,15 @@ class _SplashLoadingPageState extends State<SplashLoadingPage> {
         if (state.splashStatus.isSuccess) {
           context.read<SplashBloc>().add(const SplashEvent.onLoadAppData());
         } else if (state.splashStatus.isUserLoggedIn) {
+          inject<SettingsManager>().setShowTutorial(0);
           context.replaceRoute(const BottomNavigationRoute());
         } else if (state.splashStatus.isUserNotLoggedIn) {
           context.read<SplashBloc>().add(const SplashEvent.checkIsFirstRun());
         } else if (state.splashStatus.isFirstRun) {
+          inject<SettingsManager>().setShowTutorial(1);
           context.pushRoute(const IntroPageRoute());
         } else if (state.splashStatus.isNotFirstRun) {
+          inject<SettingsManager>().setShowTutorial(0);
           context.replaceRoute(const SignupPageRoute());
         }
       },

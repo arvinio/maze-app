@@ -37,6 +37,7 @@ class CustomButton extends StatefulWidget {
     this.rightArrow = false,
     this.icon,
     this.iconSize,
+    this.textStyle,
     this.horizontalPadding,
   })  : _buttonType = ButtonType.submit,
         borderColor = null;
@@ -57,6 +58,7 @@ class CustomButton extends StatefulWidget {
     required this.onPressed,
     this.icon,
     this.iconSize,
+    this.textStyle,
     this.horizontalPadding,
   })  : _buttonType = ButtonType.cancel,
         borderColor = null,
@@ -80,6 +82,7 @@ class CustomButton extends StatefulWidget {
     this.icon,
     this.iconSize,
     this.horizontalPadding,
+    this.textStyle,
     required this.onPressed,
   })  : _buttonType = ButtonType.outline,
         leftArrow = false,
@@ -103,6 +106,7 @@ class CustomButton extends StatefulWidget {
   final bool rightArrow;
   final Widget? icon;
   final double? iconSize;
+  final TextStyle? textStyle;
   final double? horizontalPadding;
 
   @override
@@ -160,7 +164,8 @@ class _CustomButtonState extends State<CustomButton> {
                               child: CustomText(
                                 widget.text,
                                 textAlign: TextAlign.center,
-                                style: context.titleHeadline.copyWith(
+                                style: widget.textStyle ??
+                                context.titleHeadline.copyWith(
                                   color: _getTextColor(context),
                                   fontSize: widget.textFontSize,
                                   fontWeight: widget.textFontWeight,

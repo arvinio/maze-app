@@ -15,6 +15,7 @@ class SettingsManager {
   final String _role = 'role';
 
   final _isFirstRun = "IS_FIRST_RUNK";
+  final String _showTutorial = "is_s_t";
   final _articleId = 'Article_ID';
 
   setUserName(String userName) {
@@ -74,4 +75,22 @@ class SettingsManager {
   String getArticleId() {
     return prefs.getString(_articleId);
   }
+
+
+  /*bool isShowTutorial() {
+    return prefs.getBool(_showTutorial) ?? false;
+  }
+
+  setShowTutorial(bool isShowTutorial) async{
+    await prefs.setBool(_showTutorial, isShowTutorial);
+  }*/
+
+  Future<bool> setShowTutorial(int i) async {
+    return await prefs.setInt(_showTutorial, i);
+  }
+
+  int? isShowTutorial() {
+     return prefs.getInt(_showTutorial);
+  }
+
 }
