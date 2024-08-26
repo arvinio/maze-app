@@ -82,6 +82,17 @@ abstract class _$AppRouter extends RootStackRouter {
         child: WrappedRoute(child: const ArticlePage()),
       );
     },
+    BinDetailsPageRoute.name: (routeData) {
+      final args = routeData.argsAs<BinDetailsPageRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: BinDetailsPage(
+          key: args.key,
+          bin: args.bin,
+          entries: args.entries,
+        ),
+      );
+    },
     BookmarksPageRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -186,6 +197,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(child: const NewEmailAddressPage()),
+      );
+    },
+    NewEntryPageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const NewEntryPage(),
       );
     },
     ProfileHomePageRoute.name: (routeData) {
@@ -472,6 +489,49 @@ class ArticlePageRoute extends PageRouteInfo<void> {
   static const String name = 'ArticlePageRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [BinDetailsPage]
+class BinDetailsPageRoute extends PageRouteInfo<BinDetailsPageRouteArgs> {
+  BinDetailsPageRoute({
+    Key? key,
+    required Bin bin,
+    required List<EditEntry> entries,
+    List<PageRouteInfo>? children,
+  }) : super(
+          BinDetailsPageRoute.name,
+          args: BinDetailsPageRouteArgs(
+            key: key,
+            bin: bin,
+            entries: entries,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'BinDetailsPageRoute';
+
+  static const PageInfo<BinDetailsPageRouteArgs> page =
+      PageInfo<BinDetailsPageRouteArgs>(name);
+}
+
+class BinDetailsPageRouteArgs {
+  const BinDetailsPageRouteArgs({
+    this.key,
+    required this.bin,
+    required this.entries,
+  });
+
+  final Key? key;
+
+  final Bin bin;
+
+  final List<EditEntry> entries;
+
+  @override
+  String toString() {
+    return 'BinDetailsPageRouteArgs{key: $key, bin: $bin, entries: $entries}';
+  }
 }
 
 /// generated route for
@@ -785,6 +845,20 @@ class NewEmailAddressPageRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'NewEmailAddressPageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [NewEntryPage]
+class NewEntryPageRoute extends PageRouteInfo<void> {
+  const NewEntryPageRoute({List<PageRouteInfo>? children})
+      : super(
+          NewEntryPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'NewEntryPageRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

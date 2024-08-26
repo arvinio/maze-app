@@ -43,10 +43,11 @@ class TrackerInfoWidget extends StatelessWidget {
           ),
           const TrackerItemDivider(),
           TrackerItem(
-            amount: bloc.wasteRecycled,
-            title: "Waste recycled",
-            isGrayed: !bloc.hasRecycling,
-          ),
+              amount: bloc.wasteRecycled,
+              title: "Waste recycled",
+              isGrayed: false
+              // !bloc.hasRecycling,
+              ),
         ],
       ),
     );

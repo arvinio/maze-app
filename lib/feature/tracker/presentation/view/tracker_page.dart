@@ -6,14 +6,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/dimen.dart';
 import 'package:maze_app/core/network/model/api_error.dart';
+import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
 import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/presentation/widget/info_icon.dart';
 import 'package:maze_app/core/presentation/widget/page_loading.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
+import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
+import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
 
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/view/bin_details_page.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/add_waste_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/council_landfill_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/landfill_bin_widget.dart';
@@ -75,7 +79,23 @@ class _TrackerPageState extends State<TrackerPage>
             ],
           ),
         ),
-        child: BlocBuilder<TrackerBloc, TrackerState>(
+        child: BlocConsumer<TrackerBloc, TrackerState>(
+          listener: (context, state) {
+            state.when(
+              initial: () {},
+              loadInProgress: () {},
+              binsLoaded: (bins) {},
+              loadingError: (error) {},
+              binDetailsLoaded: (bin, details) {
+                context.pushRoute(
+                  BinDetailsPageRoute(
+                    bin: bin,
+                    entries: details,
+                  ),
+                );
+              },
+            );
+          },
           builder: (context, state) {
             return state.when(
                 initial: () {
@@ -87,10 +107,10 @@ class _TrackerPageState extends State<TrackerPage>
                   return LayoutBuilder(builder: (context, constraints) {
                     return ListView(
                       children: [
-                        (!bloc.hasLandfill &&
-                                !bloc.hasCompost &&
-                                !bloc.hasRecycling &&
-                                !bloc.hasOrganic)
+                        (!bloc.hasLandfill && !bloc.hasCompost
+                            // !bloc.hasRecycling &&
+                            // !bloc.hasOrganic
+                            )
                             ? ShadowTooltip(
                                 message:
                                     "You must at least add a landfil bin to get started with your tracking journey.",
@@ -254,6 +274,9 @@ class _TrackerPageState extends State<TrackerPage>
                       child: Text(error.message),
                     ),
                   );
+                },
+                binDetailsLoaded: (Bin bin, List<EditEntry> details) {
+                  return const SizedBox.shrink();
                 });
           },
         ));
