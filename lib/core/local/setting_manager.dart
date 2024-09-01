@@ -17,6 +17,7 @@ class SettingsManager {
   final _isFirstRun = "IS_FIRST_RUNK";
   final String _showTutorial = "is_s_t";
   final _articleId = 'Article_ID';
+  final String _emailKey = 'e_k';
 
   setUserName(String userName) {
     prefs.setStringAndEncrypt(_userNameKey, userName);
@@ -91,6 +92,14 @@ class SettingsManager {
 
   int? isShowTutorial() {
      return prefs.getInt(_showTutorial);
+  }
+
+  setEmail(String email) {
+    prefs.setStringAndEncrypt(_emailKey, email);
+  }
+
+  String getEmail() {
+    return prefs.getEncryptedString(_emailKey);
   }
 
 }

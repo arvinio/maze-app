@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/dimen.dart';
 import 'package:maze_app/core/config/strings.dart';
+import 'package:maze_app/core/local/setting_manager.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/core/presentation/widget/app_loading.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
@@ -66,14 +67,21 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
 
       if(state.verifyStatus.isSuccess) {
 
-        (widget.entryMode.isChangeEmail)
+        if(widget.entryMode.isChangeEmail)
 
-            ? context.router.popUntilRouteWithName(
-            const AccountSettingsPageRoute().routeName,)
+            {
 
-            : context.pushRoute(
-            CreatePasswordPageRoute(
-                entryMode: widget.entryMode, email: widget.userName));
+          inject<SettingsManager>().setEmail(widget.userName);
+
+          context.router.popUntilRouteWithName(
+          const AccountSettingsPageRoute().routeName);
+        }
+
+           else {
+          context.pushRoute(
+              CreatePasswordPageRoute(
+                  entryMode: widget.entryMode, email: widget.userName));
+        }
       }
       else if (state.verifyStatus.isFailure)
         {
@@ -82,7 +90,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
-            backgroundColor: Colors.black,
+            backgroundColor: context.scheme().error,
             textColor: Colors.white,
             fontSize: 16.0,
           );
@@ -106,7 +114,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
+          backgroundColor: context.scheme().error,
           textColor: Colors.white,
           fontSize: 16.0,
         );
