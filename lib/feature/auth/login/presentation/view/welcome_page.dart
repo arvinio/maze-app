@@ -31,37 +31,36 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return BasePageWidget(
-        child:  Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                 SizedBox(
-            width: 95,
-            height: 95,
-            child: CircleAvatar(
-                  backgroundColor: context
-                      .scheme()
-                      .disabledText,
-                  radius: 100,
-                  backgroundImage: (widget.avatarUrl!=null)
-                      ? NetworkImage(widget.avatarUrl!
-                  ):ExactAssetImage(
-                      appAssets.avatar.path),
-                ),
-                 ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 95,
+              height: 95,
+              child: CircleAvatar(
+                backgroundColor: context
+                    .scheme()
+                    .disabledText,
+                radius: 100,
+                backgroundImage: (widget.avatarUrl!.isNotEmpty)
+                    ? NetworkImage(widget.avatarUrl!)
+                    : ExactAssetImage(appAssets.avatarPng.path),
+              ),
+            ),
 
-                ListTile(
-                    title: CustomText(
-                      (widget.userName!=null)
-                      ?'${appStrings.welcomeTitle} ${widget.userName}'
-                          :appStrings.welcomeTitle
-                      , textAlign: TextAlign.center,
-                      style: context.titleTitle1,),
-                    subtitle: CustomText(appStrings.welcomeSubTitle,
-                        textAlign: TextAlign.center,
-                        style: context.bodyBody)
+            ListTile(
+                title: CustomText(
+                  (widget.userName != null)
+                      ? '${appStrings.welcomeTitle} ${widget.userName}'
+                      : appStrings.welcomeTitle
+                  , textAlign: TextAlign.center,
+                  style: context.titleTitle1,),
+                subtitle: CustomText(appStrings.welcomeSubTitle,
+                    textAlign: TextAlign.center,
+                    style: context.bodyBody)
 
-                ),
-              ],)
-          );
+            ),
+          ],)
+    );
   }
 }

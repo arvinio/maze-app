@@ -33,6 +33,7 @@ class AssetsBase  {
   AssetSvg get searchNormalIcon =>
       const AssetSvg('assets/icons/search-normal-icon.svg');
   AssetSvg get avatar => const AssetSvg('assets/icons/user.svg');
+  AssetSvg get avatarPng => const AssetSvg('assets/icons/user.png');
   AssetSvg get floatingActionButtons => const AssetSvg('assets/icons/floating_action_buttons.svg');
   AssetSvg get notif1 => const AssetSvg('assets/icons/notif1.svg');
   AssetSvg get notif2 => const AssetSvg('assets/icons/notif2.svg');
