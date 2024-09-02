@@ -180,9 +180,10 @@ class _ChatBotHomePageState extends State<ChatBotHomePage> {
                                     : groupByValue == formatter.format(
                                     now.subtract(const Duration(days: 1)))
                                     ? appStrings.yesterday
-                                    : monthList[7]
-
-                                , style: context.titleHeadline,),
+                                    : groupByValue == monthList[now.month - 1]
+                                    ? monthList[now.month - 1]
+                                    : appStrings.older
+                                , style: context.titleHeadline),
                             ),
                         itemBuilder: (context, ChatHistoryResult element) {
                           return ChatHistoryWidget(

@@ -11,6 +11,7 @@ class StringsBase {
   String get pleaseWait => 'Please Wait...';
   String get today => 'Today';
   String get yesterday => 'ِِYesterday';
+  String get older => 'Older';
   String get emptyList => 'No data available';
 
   //SignUp
