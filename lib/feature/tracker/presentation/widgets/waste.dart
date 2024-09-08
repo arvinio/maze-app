@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
@@ -27,7 +28,10 @@ class Waste extends StatelessWidget {
                 onTap: () {},
               )
             : TrackerPreview(
-                onTap: () {},
+                onTap: () {
+                  context.read<TrackerBloc>().add(
+                      TrackerEvent.fetchBinDetails(binId: bloc.bins.first.id!));
+                },
                 bin: bloc.bins.firstWhere(
                   (element) => element.type == BinType.landfill,
                 )),

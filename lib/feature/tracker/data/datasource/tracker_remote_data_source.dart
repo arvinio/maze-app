@@ -1,4 +1,5 @@
 import 'package:maze_app/core/network/model/api_response.dart';
+import 'package:maze_app/feature/tracker/data/model/get_bin_chart_data_resp.dart';
 import 'package:maze_app/feature/tracker/data/model/get_bin_entry_list_resp.dart';
 import 'package:maze_app/feature/tracker/data/model/get_bins_list_resp.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
@@ -9,7 +10,8 @@ abstract interface class TrackerRemoteDataSource {
   Future<ApiResponse> createBin(Bin bin);
   Future<ApiResponse> editbin(Bin bin);
   Future<ApiResponse> deleteBin(String binId);
-  Future<ApiResponse> getBinChartData(String binId);
+  Future<ApiResponse<GetBinChartDataResp>> getBinChartData(String binId);
+  Future<ApiResponse<GetBinResp>> getBinDetails(String binId);
 
   ///
   Future<ApiResponse> createBinEntry(Entry entry);

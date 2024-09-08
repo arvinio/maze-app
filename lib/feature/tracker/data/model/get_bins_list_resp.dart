@@ -16,6 +16,17 @@ class GetBinsListResp with _$GetBinsListResp {
 }
 
 @freezed
+class GetBinResp with _$GetBinResp {
+  factory GetBinResp({
+    required bool success,
+    required BinModel result,
+  }) = _GetBinResp;
+
+  factory GetBinResp.fromJson(Map<String, dynamic> json) =>
+      _$GetBinRespFromJson(json);
+}
+
+@freezed
 class BinModel with _$BinModel {
   factory BinModel({
     @JsonKey(name: "_id") required String id,
@@ -32,8 +43,8 @@ class BinModel with _$BinModel {
     required bool isShare,
     required DateTime createdDate,
     @Default(null) String? photo,
-    required List<ChartDataModel> chartData,
-    required int totalAmount,
+    List<ChartDataModel>? chartData,
+    int? totalAmount,
   }) = _BinModel;
 
   factory BinModel.fromJson(DataMap json) => _$BinModelFromJson(json);

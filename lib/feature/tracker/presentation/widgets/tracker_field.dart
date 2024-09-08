@@ -19,7 +19,7 @@ class TrackerField extends StatelessWidget {
   final Widget? leadingIcon;
   final String title;
   final String? subTitle;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final double? height;
 
   @override

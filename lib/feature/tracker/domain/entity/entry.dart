@@ -46,17 +46,20 @@ class EditEntry extends Entry {
 }
 
 enum EntryType {
-  emptiedBin('emptied-bin'),
-  generalNote('general-note'),
-  addedWaste('added-waste'),
-  emptiedCompost('emptied-compost');
+  emptiedBin('emptied-bin', ' Emptied bin'),
+  generalNote('general-note', 'General note'),
+  addedWaste('added-waste', 'Added waste'),
+  emptiedCompost('emptied-compost', 'Emptied compost');
 
-  const EntryType(this.description);
+  const EntryType(this.description, this.displayText);
 
   final String description;
+  final String displayText;
 
   @override
   String toString() => description;
+
+  String toDisplayString() => displayText;
 
   static EntryType fromString(String str) {
     return values.firstWhere(

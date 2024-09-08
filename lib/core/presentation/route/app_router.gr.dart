@@ -86,11 +86,13 @@ abstract class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<BinDetailsPageRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: BinDetailsPage(
+        child: WrappedRoute(
+            child: BinDetailsPage(
           key: args.key,
           bin: args.bin,
           entries: args.entries,
-        ),
+          chartData: args.chartData,
+        )),
       );
     },
     BookmarksPageRoute.name: (routeData) {
@@ -200,9 +202,14 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     NewEntryPageRoute.name: (routeData) {
+      final args = routeData.argsAs<NewEntryPageRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const NewEntryPage(),
+        child: WrappedRoute(
+            child: NewEntryPage(
+          key: args.key,
+          bin: args.bin,
+        )),
       );
     },
     ProfileHomePageRoute.name: (routeData) {
@@ -498,6 +505,7 @@ class BinDetailsPageRoute extends PageRouteInfo<BinDetailsPageRouteArgs> {
     Key? key,
     required Bin bin,
     required List<EditEntry> entries,
+    required BinChartData chartData,
     List<PageRouteInfo>? children,
   }) : super(
           BinDetailsPageRoute.name,
@@ -505,6 +513,7 @@ class BinDetailsPageRoute extends PageRouteInfo<BinDetailsPageRouteArgs> {
             key: key,
             bin: bin,
             entries: entries,
+            chartData: chartData,
           ),
           initialChildren: children,
         );
@@ -520,6 +529,7 @@ class BinDetailsPageRouteArgs {
     this.key,
     required this.bin,
     required this.entries,
+    required this.chartData,
   });
 
   final Key? key;
@@ -528,9 +538,11 @@ class BinDetailsPageRouteArgs {
 
   final List<EditEntry> entries;
 
+  final BinChartData chartData;
+
   @override
   String toString() {
-    return 'BinDetailsPageRouteArgs{key: $key, bin: $bin, entries: $entries}';
+    return 'BinDetailsPageRouteArgs{key: $key, bin: $bin, entries: $entries, chartData: $chartData}';
   }
 }
 
@@ -851,16 +863,40 @@ class NewEmailAddressPageRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [NewEntryPage]
-class NewEntryPageRoute extends PageRouteInfo<void> {
-  const NewEntryPageRoute({List<PageRouteInfo>? children})
-      : super(
+class NewEntryPageRoute extends PageRouteInfo<NewEntryPageRouteArgs> {
+  NewEntryPageRoute({
+    Key? key,
+    required Bin bin,
+    List<PageRouteInfo>? children,
+  }) : super(
           NewEntryPageRoute.name,
+          args: NewEntryPageRouteArgs(
+            key: key,
+            bin: bin,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'NewEntryPageRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<NewEntryPageRouteArgs> page =
+      PageInfo<NewEntryPageRouteArgs>(name);
+}
+
+class NewEntryPageRouteArgs {
+  const NewEntryPageRouteArgs({
+    this.key,
+    required this.bin,
+  });
+
+  final Key? key;
+
+  final Bin bin;
+
+  @override
+  String toString() {
+    return 'NewEntryPageRouteArgs{key: $key, bin: $bin}';
+  }
 }
 
 /// generated route for

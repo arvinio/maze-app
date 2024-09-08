@@ -82,6 +82,15 @@ class AssetsBase {
   AssetSvg get trashIcon2 =>
       const AssetSvg('assets/icons/tracker/trash-icon2.svg');
   AssetSvg get addBin => const AssetSvg('assets/icons/tracker/add-bin.svg');
+
+  AssetSvg get generalNoteIcon =>
+      const AssetSvg('assets/icons/tracker/general-note-icon.svg');
+  AssetSvg get emptiedCompostIcon =>
+      const AssetSvg('assets/icons/tracker/emptied-compost-icon.svg');
+  AssetSvg get addWasteIcon =>
+      const AssetSvg('assets/icons/tracker/add_waste_icon.svg');
+  AssetSvg get calendarIcon =>
+      const AssetSvg('assets/icons/tracker/calendar-icon.svg');
 }
 
 class AssetImage {

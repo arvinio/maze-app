@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_serializable/json_serializable.dart';
 
 part 'get_bin_entry_list_resp.freezed.dart';
 part 'get_bin_entry_list_resp.g.dart';
@@ -22,12 +21,12 @@ abstract class ApiResponseEntry with _$ApiResponseEntry {
     required ApiBin bin,
     required DateTime entryDate,
     required String type,
-    required String howFull,
-    required int amount,
+    required String? howFull,
+    required int? amount,
     String? note,
     List<String>? whatRecycle,
     List<String>? whatDidAdd,
-    required bool isMixed,
+    required bool? isMixed,
     List<String>? compostUsed,
     List<String>? photos,
     required DateTime createdDate,

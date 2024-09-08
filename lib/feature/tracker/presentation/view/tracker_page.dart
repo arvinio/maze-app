@@ -9,18 +9,16 @@ import 'package:maze_app/core/network/model/api_error.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
 import 'package:maze_app/core/presentation/widget/custom_text.dart';
-import 'package:maze_app/core/presentation/widget/info_icon.dart';
 import 'package:maze_app/core/presentation/widget/page_loading.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
-import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
-import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
 
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
-import 'package:maze_app/feature/tracker/presentation/view/bin_details_page.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/add_waste_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/council_landfill_bin_widget.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/have_compost_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/landfill_bin_widget.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/new_compost_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/new_landfill_waste_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
@@ -35,12 +33,16 @@ class TrackerPage extends StatefulWidget {
 class _TrackerPageState extends State<TrackerPage>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
+
+  late final TrackerBloc bloc;
   @override
   void initState() {
     context.read<TrackerBloc>().add(const TrackerEvent.getBinsList());
 
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
+
+    bloc = context.read<TrackerBloc>();
   }
 
   @override
@@ -70,11 +72,20 @@ class _TrackerPageState extends State<TrackerPage>
               style: context.titleTitle2,
             ),
             actions: [
-              ElevatedButton.icon(
-                onPressed: null,
-                label: const Text('new entry'),
-                iconAlignment: IconAlignment.start,
-                icon: const Icon(Icons.add_circle),
+              BlocBuilder<TrackerBloc, TrackerState>(
+                builder: (context, state) {
+                  return ElevatedButton.icon(
+                    onPressed: (bloc.hasCompost || bloc.hasLandfill)
+                        ? () {
+                            // context.read<TrackerBloc>().add(
+                            //     const TrackerEvent.navigateToAddNewEntryPage(bin: ));
+                          }
+                        : null,
+                    label: const Text('new entry'),
+                    iconAlignment: IconAlignment.start,
+                    icon: const Icon(Icons.add_circle),
+                  );
+                },
               )
             ],
           ),
@@ -86,12 +97,26 @@ class _TrackerPageState extends State<TrackerPage>
               loadInProgress: () {},
               binsLoaded: (bins) {},
               loadingError: (error) {},
-              binDetailsLoaded: (bin, details) {
-                context.pushRoute(
+              binDetailsLoaded: (bin, details, chartData) {
+                context
+                    .pushRoute(
                   BinDetailsPageRoute(
                     bin: bin,
                     entries: details,
+                    chartData: chartData,
                   ),
+                )
+                    .then(
+                  (value) {
+                    context
+                        .read<TrackerBloc>()
+                        .add(const TrackerEvent.getBinsList());
+                  },
+                );
+              },
+              navigateToAddNewEntryPage: (bin) {
+                context.pushRoute(
+                  NewEntryPageRoute(bin: bin),
                 );
               },
             );
@@ -103,7 +128,6 @@ class _TrackerPageState extends State<TrackerPage>
                 },
                 loadInProgress: () => const PageLoading(),
                 binsLoaded: (bins) {
-                  final bloc = context.read<TrackerBloc>();
                   return LayoutBuilder(builder: (context, constraints) {
                     return ListView(
                       children: [
@@ -215,7 +239,22 @@ class _TrackerPageState extends State<TrackerPage>
                                                             ),
                                                           );
                                                         },
-                                                        addCompostBin: () {},
+                                                        addCompostBin: () {
+                                                          openModalBottomSheet(
+                                                              context,
+                                                              HaveCompostBinWidget(
+                                                                haveBinFunc:
+                                                                    () {
+                                                                  openModalBottomSheet(
+                                                                      context,
+                                                                      NewCompostBinWidget(
+                                                                          bloc:
+                                                                              bloc));
+                                                                },
+                                                                dontHaveBinFunc:
+                                                                    () {},
+                                                              ));
+                                                        },
                                                       ),
                                                     );
                                                   },
@@ -275,7 +314,10 @@ class _TrackerPageState extends State<TrackerPage>
                     ),
                   );
                 },
-                binDetailsLoaded: (Bin bin, List<EditEntry> details) {
+                binDetailsLoaded: (_, __, ___) {
+                  return const SizedBox.shrink();
+                },
+                navigateToAddNewEntryPage: (_) {
                   return const SizedBox.shrink();
                 });
           },

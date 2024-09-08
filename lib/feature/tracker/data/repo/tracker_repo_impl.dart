@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/network/model/api_response.dart';
 import 'package:maze_app/feature/tracker/data/datasource/tracker_remote_data_source.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
+import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
 import 'package:maze_app/feature/tracker/domain/entity/chart_data.dart';
 import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
 import 'package:maze_app/feature/tracker/domain/repo/tracker_repo.dart';
@@ -30,7 +31,7 @@ class TrackerRepoImpl implements TrackerRepo {
             },
           );
 
-          List<ChartData> charts = e.chartData.map(
+          List<ChartData> charts = e.chartData!.map(
             (e) {
               return ChartData(name: e.name, value: e.value);
             },
@@ -122,6 +123,80 @@ class TrackerRepoImpl implements TrackerRepo {
           ));
         }
         return ApiResponse.completed(data: entries);
+      },
+      error: (apiError) {
+        return ApiResponse.error(apiError: apiError);
+      },
+    );
+  }
+
+  @override
+  Future<ApiResponse<Bin>> getBinDetails({required String binId}) async {
+    final resp = await _trackerRemoteDataSource.getBinDetails(binId);
+    return resp.when(
+      completed: (data, statusCode) {
+        var e = data.result;
+
+        var type = BinType.values.firstWhere(
+          (element) {
+            return element.name == e.type;
+          },
+        );
+        var sizeT = SizeType.values.firstWhere(
+          (element) {
+            return element.name == e.sizeType;
+          },
+        );
+
+        var bin = Bin(
+          type: type,
+          id: e.id,
+          nickName: e.nickname,
+          sizeType: sizeT,
+          amountOfLiters: e.amountOfLitres,
+          isShare: e.isShare,
+          imageUrl: e.photo,
+          pickUpDate: e.pickupDate,
+          typeOfCompostBin: e.typeOfCompostBin,
+          is2Compostement: e.is2Compostement,
+          width: e.width.toString(),
+          length: e.length.toString(),
+          height: e.height.toString(),
+          totalAmount: e.totalAmount,
+        );
+
+        return ApiResponse.completed(data: bin);
+      },
+      error: (apiError) {
+        return ApiResponse.error(apiError: apiError);
+      },
+    );
+  }
+
+  @override
+  Future<ApiResponse<BinChartData>> getBinChartData(
+      {required String binId}) async {
+    final result = await _trackerRemoteDataSource.getBinChartData(binId);
+    return result.when(
+      completed: (data, statusCode) {
+        var chartData = BinChartData(
+          chartWeek: data.result.chartWeek.map(
+            (e) {
+              return ChartData(name: e.name, value: e.value);
+            },
+          ).toList(),
+          chartMonth: data.result.chartMonth.map(
+            (e) {
+              return ChartData(name: e.name, value: e.value);
+            },
+          ).toList(),
+          chartYear: data.result.chartYear.map(
+            (e) {
+              return ChartData(name: e.name, value: e.value);
+            },
+          ).toList(),
+        );
+        return ApiResponse.completed(data: chartData);
       },
       error: (apiError) {
         return ApiResponse.error(apiError: apiError);

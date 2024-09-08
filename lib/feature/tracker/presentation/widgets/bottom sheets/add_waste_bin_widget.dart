@@ -43,26 +43,26 @@ class AddWasteBinWidget extends StatelessWidget {
         SizedBox(
           height: 15.h,
         ),
-        TrackerField(
-          leadingIcon: Image.asset(
-            appAssets.organicIcon.path,
-            fit: BoxFit.contain,
-          ),
-          title: 'Add an organic waste bin',
-          subTitle:
-              'Store organic waste that will later be emptied intor a compost bin',
-          onTap: () {},
-        ),
-        SizedBox(
-          height: 15.h,
-        ),
-        TrackerField(
-          leadingIcon: Image.asset(appAssets.recycleIcon.path),
-          title: 'Add a recycling waste bin',
-          subTitle:
-              "Stores your recyclable waste before it's taken by the council or donated",
-          onTap: () {},
-        )
+        // TrackerField(
+        //   leadingIcon: Image.asset(
+        //     appAssets.organicIcon.path,
+        //     fit: BoxFit.contain,
+        //   ),
+        //   title: 'Add an organic waste bin',
+        //   subTitle:
+        //       'Store organic waste that will later be emptied intor a compost bin',
+        //   onTap: () {},
+        // ),
+        // SizedBox(
+        //   height: 15.h,
+        // ),
+        // TrackerField(
+        //   leadingIcon: Image.asset(appAssets.recycleIcon.path),
+        //   title: 'Add a recycling waste bin',
+        //   subTitle:
+        //       "Stores your recyclable waste before it's taken by the council or donated",
+        //   onTap: () {},
+        // )
       ],
     );
   }
