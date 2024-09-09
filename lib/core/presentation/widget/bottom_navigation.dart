@@ -269,11 +269,15 @@ class _BottomNavigationState extends State<BottomNavigation> {
         ),
 
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(width: MediaQuery
                 .of(context)
                 .size
-                .width * 0.4,
+                .width * 0.43,
+              height: 40,
+
               child: Center(
                 child: CustomButton.outline(
                   text:appStrings.back,
@@ -308,12 +312,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
               ),
             ),
             const SizedBox(
-                width: 20),
+                width: 10),
             SizedBox(
               width: MediaQuery
                   .of(context)
                   .size
-                  .width * 0.4,
+                  .width * 0.43,
+              height: 40,
               child: CustomButton.submit(
                 textStyle: context.subheadlineSubheadlineSemibold.copyWith(
                     color: context
