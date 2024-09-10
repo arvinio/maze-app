@@ -11,6 +11,7 @@ import 'package:maze_app/core/presentation/widget/custom_button.dart';
 import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
 import 'package:maze_app/core/style/app_theme.dart';
+import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/auth/signing_up/data/model/entry_mode.dart';
 import 'package:maze_app/feature/profile/presentation/bloc/profile_bloc.dart';
@@ -62,7 +63,7 @@ class _NewEmailAddressPageState extends State<NewEmailAddressPage> {
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.CENTER,
                 timeInSecForIosWeb: 1,
-                backgroundColor: Colors.black,
+                backgroundColor: context.scheme().error,
                 textColor: Colors.white,
                 fontSize: 16.0,
               );

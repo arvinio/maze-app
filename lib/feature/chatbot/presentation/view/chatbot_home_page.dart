@@ -24,16 +24,11 @@ import 'package:maze_app/feature/chatbot/presentation/widgets/chat_history_widge
 
 
 @RoutePage()
-class ChatBotHomePage extends StatefulWidget  implements AutoRouteWrapper{
-  const ChatBotHomePage({super.key});
+class ChatBotHomePage extends StatefulWidget {
+   const ChatBotHomePage({super.key});
 
   @override
   State<ChatBotHomePage> createState() => _ChatBotHomePageState();
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(create: (_) => inject<ChatBotBloc>(), child: this);
-  }
 }
 
 class _ChatBotHomePageState extends State<ChatBotHomePage> {
@@ -42,11 +37,6 @@ class _ChatBotHomePageState extends State<ChatBotHomePage> {
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -59,145 +49,161 @@ class _ChatBotHomePageState extends State<ChatBotHomePage> {
         .size
         .height;
     return BlocProvider(
-      create: (_) => inject<ChatBotBloc>()..add(const ChatBotEvent.fetchChatHistoryListEvent()),
-      child: BlocConsumer<ChatBotBloc, ChatBotState>(
-        listener: (context, state) {
-          if (state.chatBotStatus.isLoadAllHistory) {
-            historyList!.clear();
-            historyList!.addAll(state.allFetchedHistoryList!);
-          } else if (state.chatBotStatus.isFailure) {
-            Fluttertoast.showToast(
-                msg: state.errorMessage!,
-                toastLength: Toast.LENGTH_LONG,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
-                textColor: Colors.white,
-                fontSize: 16.0);
-          }
+        create: (_) =>
+        inject<ChatBotBloc>()
+          ..add(const ChatBotEvent.fetchChatHistoryListEvent()),
+        child: BlocConsumer<ChatBotBloc, ChatBotState>(
+          listener: (context, state) {
+            if (state.chatBotStatus.isLoadAllHistory) {
+              historyList!.clear();
+              historyList!.addAll(state.allFetchedHistoryList!);
+            } else if (state.chatBotStatus.isFailure) {
+              Fluttertoast.showToast(
+                  msg: state.errorMessage!,
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            }
+          },
+          builder: (context, state) {
+            return BasePageWidget(
+                appBarHeight: 100,
+                appBar: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 56, bottom: 14, left: 10),
+                    child: ListTile(
+                        leading: CustomText(
+                          appStrings.chatHomeTitle,
+                          style: context.titleTitle2,),
+                        trailing: InkWell(
+                          onTap: () {
+                            context.pushRoute(ChatPageRoute(chatId: null))
+                                .then((value) {
+                              if (context.mounted) {
+                                context.read<ChatBotBloc>().add(
+                                    const ChatBotEvent
+                                        .fetchChatHistoryListEvent());
+                              }
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            width: 125,
+                            height: 34,
+                            decoration: BoxDecoration(color: context
+                                .scheme()
+                                .primary,
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(100))),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                appAssets.add.svg(),
+                                const SizedBox(width: 5),
+                                CustomText(appStrings.newChat,
+                                  textAlign: TextAlign.center,
+                                  style: context.titleHeadline.copyWith(
+                                      color: context
+                                          .scheme()
+                                          .whiteText),),
+                              ],
+                            ),),
+                        ))
+                ),
 
-        },
-        builder: (context, state) {
-          return BasePageWidget(
-              appBarHeight: 100,
-              appBar: Padding(
-                  padding: const EdgeInsets.only(top: 56, bottom: 14, left: 10),
-                  child: ListTile(
-                      leading: CustomText(
-                        appStrings.chatHomeTitle, style: context.titleTitle2,),
-                      trailing: InkWell(
-                        onTap: () {
-                              context.pushRoute( ChatPageRoute(chatId: null));
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          width: 125,
-                          height: 34,
-                          decoration: BoxDecoration(color: context
-                              .scheme()
-                              .primary,
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(100))),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              appAssets.add.svg(),
-                              const SizedBox(width: 5),
-                              CustomText(appStrings.newChat,
-                                textAlign: TextAlign.center,
-                                style: context.titleHeadline.copyWith(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Divider(color: context
+                          .scheme()
+                          .neutralsBorderDivider,
+                        indent: 0,
+                        endIndent: 0,
+                        thickness: 1,),
+                      const SizedBox(height: 30,),
+                      InkWell(
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
+                          onTap: () {
+                            _showFAQDialog(context, (result) {
+
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
+                            decoration: BoxDecoration(
+                              color: context
+                                  .scheme()
+                                  .neutralsBackground,
+                              border: Border.all(color: context
+                                  .scheme()
+                                  .neutralsBorderDivider, width: 1),
+                              borderRadius:
+                              BorderRadius.circular(Dimen.defaultRadius),
+                            ),
+                            child: ListTile(
+                              title: CustomText(appStrings.faqTitle,
+                                style: context.subheadlineSubheadlineSemibold,),
+                              subtitle: CustomText(appStrings.faqSubTitle,
+                                style: context.footnoteFootnote.copyWith(
                                     color: context
                                         .scheme()
-                                        .whiteText),),
-                            ],
-                          ),),
-                      ))
-              ),
-
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Divider(color: context
-                        .scheme()
-                        .neutralsBorderDivider,
-                      indent: 0,
-                      endIndent: 0,
-                      thickness: 1,),
-                    const SizedBox(height: 30,),
-                    InkWell(
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
-                        onTap: () {
-
-                          _showFAQDialog(context, (result) {
-
-                          });
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
-                          decoration: BoxDecoration(
-                            color: context
-                                .scheme()
-                                .neutralsBackground,
-                            border: Border.all(color: context
-                                .scheme()
-                                .neutralsBorderDivider, width: 1),
-                            borderRadius:
-                            BorderRadius.circular(Dimen.defaultRadius),
-                          ),
-                          child: ListTile(
-                            title: CustomText(appStrings.faqTitle,
-                              style: context.subheadlineSubheadlineSemibold,),
-                            subtitle: CustomText(appStrings.faqSubTitle,
-                              style: context.footnoteFootnote.copyWith(
-                                  color: context
-                                      .scheme()
-                                      .secondaryText),),
-                            leading: SizedBox(width: 48,
-                                height: 48,
-                                child: Image.asset(appAssets.faq.path)),
-                            trailing: SizedBox(width: 28,
-                                height: 28,
-                                child: appAssets.dropDown.svg(
-                                    width: 10, height: 6)),
-                          ),
-                        )
-                    ),
-                    GroupedListView<ChatHistoryResult, String>(
-                      elements: historyList!,
-                      shrinkWrap: true,
-                      groupBy: (element) => element.createdDate.toString().substring(0,10),
-                      groupSeparatorBuilder: (dynamic groupByValue) => Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
-                        child: CustomText(
-                          groupByValue ==formatter.format(now)?
-                          appStrings.today
-                              :groupByValue ==formatter.format(now.subtract(const Duration(days:1)))
-                              ?appStrings.yesterday
-                              :monthList[7]
-
-                          , style: context.titleHeadline,),
+                                        .secondaryText),),
+                              leading: SizedBox(width: 48,
+                                  height: 48,
+                                  child: Image.asset(appAssets.faq.path)),
+                              trailing: SizedBox(width: 28,
+                                  height: 28,
+                                  child: appAssets.dropDown.svg(
+                                      width: 10, height: 6)),
+                            ),
+                          )
                       ),
-                      itemBuilder: (context, ChatHistoryResult element) {
-                        return ChatHistoryWidget(
+                      state.chatBotStatus.isLoading
+                          ? const Center()
+                          : GroupedListView<ChatHistoryResult, String>(
+                        elements: historyList!,
+                        shrinkWrap: true,
+                        groupBy: (element) =>
+                            element.createdDate.toString().substring(0, 10),
+                        groupSeparatorBuilder: (dynamic groupByValue) =>
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20.0),
+                              child: CustomText(
+                                groupByValue == formatter.format(now) ?
+                                appStrings.today
+                                    : groupByValue == formatter.format(
+                                    now.subtract(const Duration(days: 1)))
+                                    ? appStrings.yesterday
+                                    : groupByValue == monthList[now.month - 1]
+                                    ? monthList[now.month - 1]
+                                    : appStrings.older
+                                , style: context.titleHeadline),
+                            ),
+                        itemBuilder: (context, ChatHistoryResult element) {
+                          return ChatHistoryWidget(
                             title: element.lastQuestion!,
-                          onTap: (){
-                              context.pushRoute(ChatPageRoute(chatId:element.id));
-                          },
-                        );
+                            onTap: () {
+                              context.pushRoute(
+                                  ChatPageRoute(chatId: element.id));
+                            },
+                          );
+                        },
+                        floatingHeader: true,
+                        // optional
+                        order: GroupedListOrder.DESC, // optional
+                      )
 
-                      },
-                      floatingHeader: true, // optional
-                      order: GroupedListOrder.DESC, // optional
-                    )
-
-                  ],),
-              )
-          );
-        },
-      ),
+                    ],),
+                )
+            );
+          },
+        )
     );
   }
 

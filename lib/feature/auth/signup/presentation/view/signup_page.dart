@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:maze_app/core/config/strings.dart';
+import 'package:maze_app/core/local/setting_manager.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
 import 'package:maze_app/core/presentation/widget/custom_button.dart';
@@ -125,6 +126,8 @@ class _SignupPageState extends State<SignupPage> {
                 text: appStrings.continueSteps,
                 showLoading: state.signupStatus.isLoading,
                 onPressed: () {
+                  inject<SettingsManager>().setEmail(_textController.text.trim());
+
                   context.read<SignupBloc>().add(
                       SignupEvent.signup(userName: _textController.text.trim()));
                 },),
