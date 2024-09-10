@@ -13,4 +13,8 @@ class TrackerEvent with _$TrackerEvent {
       {required String binId, required Entry entryDetails}) = _AddEntryToBin;
   const factory TrackerEvent.fetchBinDetails({required String binId}) =
       _FetchBinDetails;
+  const factory TrackerEvent.sortEntries({
+    required String binId,
+    required EntrySortOption sortOption,
+  }) = _SortEntries;
 }

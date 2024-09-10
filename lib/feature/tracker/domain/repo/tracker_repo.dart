@@ -2,6 +2,7 @@ import 'package:maze_app/core/network/model/api_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
 import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
+import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 
 abstract interface class TrackerRepo {
   Future<ApiResponse<List<Bin>>> getBinsList();
@@ -14,4 +15,8 @@ abstract interface class TrackerRepo {
   Future<ApiResponse<List<EditEntry>>> getBinEntryList({required String binId});
   Future<ApiResponse<Bin>> getBinDetails({required String binId});
   Future<ApiResponse<BinChartData>> getBinChartData({required String binId});
+  Future<ApiResponse<List<EditEntry>>> sortBinEntries({
+    required String binId,
+    required EntrySortOption sortOption,
+  });
 }

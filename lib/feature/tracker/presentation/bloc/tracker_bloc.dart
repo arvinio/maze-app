@@ -142,3 +142,5 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
     emit(TrackerState.navigateToAddNewEntryPage(bin: event.bin));
   }
 }
+
+enum EntrySortOption { dateNewest, dateOldest, type }

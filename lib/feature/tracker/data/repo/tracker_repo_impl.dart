@@ -6,6 +6,7 @@ import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
 import 'package:maze_app/feature/tracker/domain/entity/chart_data.dart';
 import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
 import 'package:maze_app/feature/tracker/domain/repo/tracker_repo.dart';
+import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 
 @Injectable(as: TrackerRepo)
 class TrackerRepoImpl implements TrackerRepo {
@@ -202,5 +203,25 @@ class TrackerRepoImpl implements TrackerRepo {
         return ApiResponse.error(apiError: apiError);
       },
     );
+  }
+
+  @override
+  Future<ApiResponse<List<EditEntry>>> sortBinEntries({
+    required String binId,
+    required EntrySortOption sortOption,
+  }) async {
+    throw UnimplementedError();
+    // try {
+    //   // Implement the API call to sort entries
+    //   // For now, we'll simulate an API call with a delay
+    //   await Future.delayed(Duration(seconds: 1));
+
+    //   // Simulated sorted entries
+    //   List<EditEntry> sortedEntries = []; // Replace with actual sorted entries
+
+    //   return ApiResponse.completed(sortedEntries);
+    // } catch (e) {
+    //   return ApiResponse.error(ApiError(message: e.toString()));
+    // }
   }
 }

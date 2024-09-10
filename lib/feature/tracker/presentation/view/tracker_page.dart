@@ -119,207 +119,210 @@ class _TrackerPageState extends State<TrackerPage>
                   NewEntryPageRoute(bin: bin),
                 );
               },
+              sortingEntries: () {},
             );
           },
           builder: (context, state) {
             return state.when(
-                initial: () {
-                  return const SizedBox.shrink();
-                },
-                loadInProgress: () => const PageLoading(),
-                binsLoaded: (bins) {
-                  return LayoutBuilder(builder: (context, constraints) {
-                    return ListView(
-                      children: [
-                        (!bloc.hasLandfill && !bloc.hasCompost
-                            // !bloc.hasRecycling &&
-                            // !bloc.hasOrganic
+              initial: () {
+                return const SizedBox.shrink();
+              },
+              loadInProgress: () => const PageLoading(),
+              binsLoaded: (bins) {
+                return LayoutBuilder(builder: (context, constraints) {
+                  return ListView(
+                    children: [
+                      (!bloc.hasLandfill && !bloc.hasCompost
+                          // !bloc.hasRecycling &&
+                          // !bloc.hasOrganic
+                          )
+                          ? ShadowTooltip(
+                              message:
+                                  "You must at least add a landfil bin to get started with your tracking journey.",
+                              child: TrackerInfoWidget(bloc: bloc),
                             )
-                            ? ShadowTooltip(
-                                message:
-                                    "You must at least add a landfil bin to get started with your tracking journey.",
-                                child: TrackerInfoWidget(bloc: bloc),
-                              )
-                            : TrackerInfoWidget(bloc: bloc),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomText(
-                              "Your bins",
-                              style: context.titleTitle3.copyWith(
-                                  color: context.scheme().primaryText),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return Container(
-                                      height: 250.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(20.sp),
-                                        color:
-                                            context.scheme().neutralsBackground,
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          // SizedBox(
-                                          //   height: 20.h,
-                                          // ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              const ExitButton(),
-                                              Center(
-                                                child: CustomText(
-                                                  "Options",
-                                                  style: context.titleHeadline,
-                                                ),
+                          : TrackerInfoWidget(bloc: bloc),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomText(
+                            "Your bins",
+                            style: context.titleTitle3
+                                .copyWith(color: context.scheme().primaryText),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return Container(
+                                    height: 250.h,
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(20.sp),
+                                      color:
+                                          context.scheme().neutralsBackground,
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        // SizedBox(
+                                        //   height: 20.h,
+                                        // ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const ExitButton(),
+                                            Center(
+                                              child: CustomText(
+                                                "Options",
+                                                style: context.titleHeadline,
                                               ),
-                                              SizedBox(
-                                                width: 50.w,
-                                              )
-                                            ],
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.all(20.sp),
-                                            decoration: BoxDecoration(
+                                            ),
+                                            SizedBox(
+                                              width: 50.w,
+                                            )
+                                          ],
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.all(20.sp),
+                                          decoration: BoxDecoration(
+                                            color: context
+                                                .scheme()
+                                                .neutralsBackground,
+                                            border: Border.all(
                                               color: context
                                                   .scheme()
-                                                  .neutralsBackground,
-                                              border: Border.all(
-                                                color: context
-                                                    .scheme()
-                                                    .neutralsBorderDivider,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(
-                                                          Dimen.defaultRadius)),
+                                                  .neutralsBorderDivider,
                                             ),
-                                            child: Column(
-                                              children: [
-                                                BottomSheetItem(
-                                                  onTap: () {
-                                                    openModalBottomSheet(
-                                                      context,
-                                                      AddBinWidget(
-                                                        addWasteBin: () {
-                                                          openModalBottomSheet(
-                                                            context,
-                                                            AddWasteBinWidget(
-                                                              func: () {
-                                                                openModalBottomSheet(
-                                                                  context,
-                                                                  NewLandfillWasteBinWidget(
-                                                                    haveBin:
-                                                                        () {
-                                                                      openModalBottomSheet(
-                                                                        context,
-                                                                        CouncilLandfillBinWidget(
-                                                                            bloc:
-                                                                                bloc),
-                                                                      );
-                                                                    },
-                                                                    dontHaveBin:
-                                                                        () {
-                                                                      openModalBottomSheet(
-                                                                          context,
-                                                                          LandfillBinWidget(
-                                                                              bloc: bloc));
-                                                                    },
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ),
-                                                          );
-                                                        },
-                                                        addCompostBin: () {
-                                                          openModalBottomSheet(
-                                                              context,
-                                                              HaveCompostBinWidget(
-                                                                haveBinFunc:
-                                                                    () {
-                                                                  openModalBottomSheet(
-                                                                      context,
-                                                                      NewCompostBinWidget(
-                                                                          bloc:
-                                                                              bloc));
-                                                                },
-                                                                dontHaveBinFunc:
-                                                                    () {},
-                                                              ));
-                                                        },
-                                                      ),
-                                                    );
-                                                  },
-                                                  title: 'Add new bin',
-                                                  leading:
-                                                      appAssets.addBin.svg(),
-                                                ),
-                                                const CustomeDivider(),
-                                                BottomSheetItem(
-                                                  onTap: () {},
-                                                  title: 'Manage bins',
-                                                  leading: appAssets.trashIcon2
-                                                      .svg(),
-                                                ),
-                                              ],
-                                            ),
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(
+                                                        Dimen.defaultRadius)),
                                           ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                              icon: const Icon(Icons.more_vert_outlined),
-                            ),
+                                          child: Column(
+                                            children: [
+                                              BottomSheetItem(
+                                                onTap: () {
+                                                  openModalBottomSheet(
+                                                    context,
+                                                    AddBinWidget(
+                                                      addWasteBin: () {
+                                                        openModalBottomSheet(
+                                                          context,
+                                                          AddWasteBinWidget(
+                                                            func: () {
+                                                              openModalBottomSheet(
+                                                                context,
+                                                                NewLandfillWasteBinWidget(
+                                                                  haveBin: () {
+                                                                    openModalBottomSheet(
+                                                                      context,
+                                                                      CouncilLandfillBinWidget(
+                                                                          bloc:
+                                                                              bloc),
+                                                                    );
+                                                                  },
+                                                                  dontHaveBin:
+                                                                      () {
+                                                                    openModalBottomSheet(
+                                                                        context,
+                                                                        LandfillBinWidget(
+                                                                            bloc:
+                                                                                bloc));
+                                                                  },
+                                                                ),
+                                                              );
+                                                            },
+                                                          ),
+                                                        );
+                                                      },
+                                                      addCompostBin: () {
+                                                        openModalBottomSheet(
+                                                            context,
+                                                            HaveCompostBinWidget(
+                                                              haveBinFunc: () {
+                                                                openModalBottomSheet(
+                                                                    context,
+                                                                    NewCompostBinWidget(
+                                                                        bloc:
+                                                                            bloc));
+                                                              },
+                                                              dontHaveBinFunc:
+                                                                  () {},
+                                                            ));
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                                title: 'Add new bin',
+                                                leading: appAssets.addBin.svg(),
+                                              ),
+                                              const CustomeDivider(),
+                                              BottomSheetItem(
+                                                onTap: () {},
+                                                title: 'Manage bins',
+                                                leading:
+                                                    appAssets.trashIcon2.svg(),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            icon: const Icon(Icons.more_vert_outlined),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      TrackerTabbar(
+                        tabController: _tabController,
+                        title1: 'Waste',
+                        title2: 'Compost',
+                      ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      SizedBox(
+                        height: constraints.maxHeight * .7,
+                        child: TabBarView(
+                          controller: _tabController,
+                          children: [
+                            Waste(bloc: bloc),
+                            Compost(bloc: bloc),
                           ],
                         ),
-                        SizedBox(
-                          height: 5.h,
-                        ),
-                        TrackerTabbar(
-                          tabController: _tabController,
-                          title1: 'Waste',
-                          title2: 'Compost',
-                        ),
-                        SizedBox(
-                          height: 15.h,
-                        ),
-                        SizedBox(
-                          height: constraints.maxHeight * .7,
-                          child: TabBarView(
-                            controller: _tabController,
-                            children: [
-                              Waste(bloc: bloc),
-                              Compost(bloc: bloc),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  });
-                },
-                loadingError: (ApiError error) {
-                  return BasePageWidget(
-                    child: Center(
-                      child: Text(error.message),
-                    ),
+                      ),
+                    ],
                   );
-                },
-                binDetailsLoaded: (_, __, ___) {
-                  return const SizedBox.shrink();
-                },
-                navigateToAddNewEntryPage: (_) {
-                  return const SizedBox.shrink();
                 });
+              },
+              loadingError: (ApiError error) {
+                return BasePageWidget(
+                  child: Center(
+                    child: Text(error.message),
+                  ),
+                );
+              },
+              binDetailsLoaded: (_, __, ___) {
+                return const SizedBox.shrink();
+              },
+              navigateToAddNewEntryPage: (_) {
+                return const SizedBox.shrink();
+              },
+              sortingEntries: () {
+                return const PageLoading(); // Or any other appropriate widget to show while sorting
+              },
+            );
           },
         ));
   }

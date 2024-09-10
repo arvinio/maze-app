@@ -19,6 +19,7 @@ import 'package:maze_app/feature/tracker/presentation/widgets/custom_container_l
 import 'package:maze_app/feature/tracker/presentation/widgets/custome_items.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/get_entry_type_icon.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/custom_bottom_sheet.dart';
 
 enum TimeRange { month, year, week }
 
@@ -64,6 +65,9 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
           navigateToAddNewEntryPage: (bin) {
             context.pushRoute(NewEntryPageRoute(bin: bin));
           },
+          sortingEntries: () {
+            // You can add any UI updates here while sorting is in progress
+          },
         );
       },
       child: BasePageWidget(
@@ -89,22 +93,39 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
             SizedBox(
               height: 20.h,
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              CustomText(
-                'Entries',
-                style: context.titleTitle3,
-              ),
-              IconButton(
-                onPressed: () {
-                  context.read<TrackerBloc>().add(
-                      TrackerEvent.navigateToAddNewEntryPage(bin: widget.bin));
-                },
-                icon: Icon(
-                  Icons.add_circle_outlined,
-                  color: context.scheme().primary,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomText(
+                  'Entries',
+                  style: context.titleTitle3,
                 ),
-              ),
-            ]),
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        _showSortOptions(context);
+                      },
+                      icon: Icon(
+                        Icons.sort,
+                        color: context.scheme().primary,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        context.read<TrackerBloc>().add(
+                            TrackerEvent.navigateToAddNewEntryPage(
+                                bin: widget.bin));
+                      },
+                      icon: Icon(
+                        Icons.add_circle_outlined,
+                        color: context.scheme().primary,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
             _buildEntriesList(context),
           ],
         ),
@@ -396,6 +417,55 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
               ),
             ],
           ),
+        );
+      },
+    );
+  }
+
+  void _showSortOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return CustomBottomSheet(
+          title: 'Sort Options',
+          children: [
+            ListTile(
+              title: Text('Sort by Date (Newest First)'),
+              onTap: () {
+                context.read<TrackerBloc>().add(
+                      TrackerEvent.sortEntries(
+                        binId: widget.bin.id!,
+                        sortOption: EntrySortOption.dateNewest,
+                      ),
+                    );
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Sort by Date (Oldest First)'),
+              onTap: () {
+                context.read<TrackerBloc>().add(
+                      TrackerEvent.sortEntries(
+                        binId: widget.bin.id!,
+                        sortOption: EntrySortOption.dateOldest,
+                      ),
+                    );
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Sort by Type'),
+              onTap: () {
+                context.read<TrackerBloc>().add(
+                      TrackerEvent.sortEntries(
+                        binId: widget.bin.id!,
+                        sortOption: EntrySortOption.type,
+                      ),
+                    );
+                Navigator.pop(context);
+              },
+            ),
+          ],
         );
       },
     );
