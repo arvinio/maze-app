@@ -4,8 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:maze_app/di/injection_container.dart';
 
 @LazySingleton()
-class AssetsBase  {
-
+class AssetsBase {
   static const String fontFamily = 'Urbanist';
 
   //AssetSvg get appIcon => const AssetSvg('assets/icons/app.png');
@@ -34,7 +33,8 @@ class AssetsBase  {
       const AssetSvg('assets/icons/search-normal-icon.svg');
   AssetSvg get avatar => const AssetSvg('assets/icons/user.svg');
   AssetSvg get avatarPng => const AssetSvg('assets/icons/user.png');
-  AssetSvg get floatingActionButtons => const AssetSvg('assets/icons/floating_action_buttons.svg');
+  AssetSvg get floatingActionButtons =>
+      const AssetSvg('assets/icons/floating_action_buttons.svg');
   AssetSvg get notif1 => const AssetSvg('assets/icons/notif1.svg');
   AssetSvg get notif2 => const AssetSvg('assets/icons/notif2.svg');
   AssetSvg get notif3 => const AssetSvg('assets/icons/notif3.svg');
@@ -42,7 +42,6 @@ class AssetsBase  {
   AssetSvg get dropUp => const AssetSvg('assets/icons/dropup.svg');
   AssetSvg get infoCircle => const AssetSvg('assets/icons/info-circle.svg');
   AssetSvg get close => const AssetSvg('assets/icons/close.svg');
-
 
   AssetSvg get rightArrow => const AssetSvg('assets/icons/right_arrow.svg');
   AssetSvg get editProfile => const AssetSvg('assets/icons/edit_profile.svg');
@@ -53,18 +52,46 @@ class AssetsBase  {
   AssetSvg get addReport => const AssetSvg('assets/icons/add_report.svg');
   AssetSvg get cover => const AssetSvg('assets/images/cover.jpg');
 
-   AssetSvg get add => const AssetSvg('assets/icons/add.svg');
-   AssetSvg get faq1 => const AssetSvg('assets/icons/faq.svg');
-   AssetSvg get faq => const AssetSvg('assets/icons/faq.png');
-   AssetSvg get message => const AssetSvg('assets/icons/message.svg');
-   AssetSvg get messageNotify => const AssetSvg('assets/icons/message_notify.svg');
-   AssetSvg get more => const AssetSvg('assets/icons/more.svg');
-   AssetSvg get sendMsgInactive => const AssetSvg('assets/icons/send_msg_inactive.svg');
-   AssetSvg get sendMsgActive => const AssetSvg('assets/icons/send_msg_active.svg');
+  AssetSvg get add => const AssetSvg('assets/icons/add.svg');
+  AssetSvg get faq1 => const AssetSvg('assets/icons/faq.svg');
+  AssetSvg get faq => const AssetSvg('assets/icons/faq.png');
+  AssetSvg get message => const AssetSvg('assets/icons/message.svg');
+  AssetSvg get messageNotify =>
+      const AssetSvg('assets/icons/message_notify.svg');
+  AssetSvg get more => const AssetSvg('assets/icons/more.svg');
+  AssetSvg get sendMsgInactive =>
+      const AssetSvg('assets/icons/send_msg_inactive.svg');
+  AssetSvg get sendMsgActive =>
+      const AssetSvg('assets/icons/send_msg_active.svg');
   // AssetSvg get chatBot => const AssetSvg('assets/icons/chatBot.svg');
-   AssetSvg get chatBot => const AssetSvg('assets/icons/chatBot.png');
+  AssetSvg get chatBot => const AssetSvg('assets/icons/chatBot.png');
 
+  // Tracker assets
+  AssetSvg get messageQuestion =>
+      const AssetSvg('assets/icons/tracker/message-question.svg');
+  AssetSvg get compostBin =>
+      const AssetSvg('assets/icons/tracker/compost-bin.png');
+  AssetSvg get compostIcon =>
+      const AssetSvg('assets/icons/tracker/compost-icon.png');
+  AssetSvg get organicIcon =>
+      const AssetSvg('assets/icons/tracker/organic-icon.png');
+  AssetSvg get recycleIcon =>
+      const AssetSvg('assets/icons/tracker/recycle-icon.png');
+  AssetSvg get redBin => const AssetSvg('assets/icons/tracker/red-bin.png');
+  AssetSvg get landfillIcon =>
+      const AssetSvg('assets/icons/tracker/landfill-icon.png');
+  AssetSvg get trashIcon2 =>
+      const AssetSvg('assets/icons/tracker/trash-icon2.svg');
+  AssetSvg get addBin => const AssetSvg('assets/icons/tracker/add-bin.svg');
 
+  AssetSvg get generalNoteIcon =>
+      const AssetSvg('assets/icons/tracker/general-note-icon.svg');
+  AssetSvg get emptiedCompostIcon =>
+      const AssetSvg('assets/icons/tracker/emptied-compost-icon.svg');
+  AssetSvg get addWasteIcon =>
+      const AssetSvg('assets/icons/tracker/add_waste_icon.svg');
+  AssetSvg get calendarIcon =>
+      const AssetSvg('assets/icons/tracker/calendar-icon.svg');
 }
 
 class AssetImage {
@@ -157,7 +184,7 @@ class AssetSvg {
   }) {
     return SvgPicture.asset(
       _assetName,
-     // ((isDark ?? inject<ThemeService>().isDark) ? (assetNameDark ?? _assetName) : _assetName),
+      // ((isDark ?? inject<ThemeService>().isDark) ? (assetNameDark ?? _assetName) : _assetName),
       key: key,
       matchTextDirection: matchTextDirection,
       bundle: bundle,

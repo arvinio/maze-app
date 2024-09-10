@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maze_app/core/config/dimen.dart';
 
-
 class BasePageWidget extends StatefulWidget {
   const BasePageWidget({
     super.key,
@@ -20,10 +19,9 @@ class BasePageWidget extends StatefulWidget {
     this.failureMessage,
     this.resizeToAvoidBottomInset = true,
     this.floatingActionButton,
-    this.appBarHeight
-  }) ;
-
-
+    this.appBarHeight,
+    this.floatingActionButtonLocation,
+  });
 
   final Widget child;
   final Widget? bottomNav;
@@ -40,7 +38,7 @@ class BasePageWidget extends StatefulWidget {
   final bool? resizeToAvoidBottomInset;
   final Widget? floatingActionButton;
   final double? appBarHeight;
-
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
 
   @override
   State<BasePageWidget> createState() => _BasePageWidgetState();
@@ -55,14 +53,16 @@ class _BasePageWidgetState extends State<BasePageWidget> {
   getScaffold() {
     return Scaffold(
       floatingActionButton: widget.floatingActionButton,
-      floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
+      floatingActionButtonLocation: widget.floatingActionButtonLocation ??
+          FloatingActionButtonLocation.startDocked,
       resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset ?? true,
       backgroundColor: widget.backgroundColor,
       appBar: widget.appBar != null
           ? PreferredSize(
-        preferredSize:  Size.fromHeight(widget.appBarHeight ?? Dimen.appBarHeight),
-        child: widget.appBar ?? const SizedBox(),
-      )
+              preferredSize:
+                  Size.fromHeight(widget.appBarHeight ?? Dimen.appBarHeight),
+              child: widget.appBar ?? const SizedBox(),
+            )
           : null,
       bottomNavigationBar: widget.bottomNav,
       body: SafeArea(
@@ -71,12 +71,11 @@ class _BasePageWidgetState extends State<BasePageWidget> {
     );
   }
 
-
   Widget _getMainWidget(BuildContext context) {
-   return Container(
-           padding:  const EdgeInsets.symmetric(
-             horizontal: Dimen.pagePaddingHorizontal,
-           ),
-       child: widget.child);
+    return Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: Dimen.pagePaddingHorizontal,
+        ),
+        child: widget.child);
   }
 }

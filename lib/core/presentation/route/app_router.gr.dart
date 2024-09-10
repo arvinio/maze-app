@@ -82,6 +82,19 @@ abstract class _$AppRouter extends RootStackRouter {
         child: WrappedRoute(child: const ArticlePage()),
       );
     },
+    BinDetailsPageRoute.name: (routeData) {
+      final args = routeData.argsAs<BinDetailsPageRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: BinDetailsPage(
+          key: args.key,
+          bin: args.bin,
+          entries: args.entries,
+          chartData: args.chartData,
+        )),
+      );
+    },
     BookmarksPageRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -103,6 +116,24 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           email: args.email,
           currentPass: args.currentPass,
+        )),
+      );
+    },
+    ChatBotHomePageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const ChatBotHomePage()),
+      );
+    },
+    ChatPageRoute.name: (routeData) {
+      final args = routeData.argsAs<ChatPageRouteArgs>(
+          orElse: () => const ChatPageRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: ChatPage(
+          key: args.key,
+          chatId: args.chatId,
         )),
       );
     },
@@ -170,6 +201,17 @@ abstract class _$AppRouter extends RootStackRouter {
         child: WrappedRoute(child: const NewEmailAddressPage()),
       );
     },
+    NewEntryPageRoute.name: (routeData) {
+      final args = routeData.argsAs<NewEntryPageRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: NewEntryPage(
+          key: args.key,
+          bin: args.bin,
+        )),
+      );
+    },
     ProfileHomePageRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -194,6 +236,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: WrappedRoute(child: const SplashLoadingPage()),
       );
     },
+    TrackerPageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const TrackerPage(),
+      );
+    },
     VerificationCodePageRoute.name: (routeData) {
       final args = routeData.argsAs<VerificationCodePageRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -214,9 +262,14 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     WelcomePageRoute.name: (routeData) {
+      final args = routeData.argsAs<WelcomePageRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const WelcomePage(),
+        child: WelcomePage(
+          key: args.key,
+          userName: args.userName,
+          avatarUrl: args.avatarUrl,
+        ),
       );
     },
     YourDetailsPageRoute.name: (routeData) {
@@ -446,6 +499,54 @@ class ArticlePageRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [BinDetailsPage]
+class BinDetailsPageRoute extends PageRouteInfo<BinDetailsPageRouteArgs> {
+  BinDetailsPageRoute({
+    Key? key,
+    required Bin bin,
+    required List<EditEntry> entries,
+    required BinChartData chartData,
+    List<PageRouteInfo>? children,
+  }) : super(
+          BinDetailsPageRoute.name,
+          args: BinDetailsPageRouteArgs(
+            key: key,
+            bin: bin,
+            entries: entries,
+            chartData: chartData,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'BinDetailsPageRoute';
+
+  static const PageInfo<BinDetailsPageRouteArgs> page =
+      PageInfo<BinDetailsPageRouteArgs>(name);
+}
+
+class BinDetailsPageRouteArgs {
+  const BinDetailsPageRouteArgs({
+    this.key,
+    required this.bin,
+    required this.entries,
+    required this.chartData,
+  });
+
+  final Key? key;
+
+  final Bin bin;
+
+  final List<EditEntry> entries;
+
+  final BinChartData chartData;
+
+  @override
+  String toString() {
+    return 'BinDetailsPageRouteArgs{key: $key, bin: $bin, entries: $entries, chartData: $chartData}';
+  }
+}
+
+/// generated route for
 /// [BookmarksPage]
 class BookmarksPageRoute extends PageRouteInfo<void> {
   const BookmarksPageRoute({List<PageRouteInfo>? children})
@@ -514,6 +615,58 @@ class ChangePasswordPageRouteArgs {
   @override
   String toString() {
     return 'ChangePasswordPageRouteArgs{key: $key, email: $email, currentPass: $currentPass}';
+  }
+}
+
+/// generated route for
+/// [ChatBotHomePage]
+class ChatBotHomePageRoute extends PageRouteInfo<void> {
+  const ChatBotHomePageRoute({List<PageRouteInfo>? children})
+      : super(
+          ChatBotHomePageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ChatBotHomePageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ChatPage]
+class ChatPageRoute extends PageRouteInfo<ChatPageRouteArgs> {
+  ChatPageRoute({
+    Key? key,
+    String? chatId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ChatPageRoute.name,
+          args: ChatPageRouteArgs(
+            key: key,
+            chatId: chatId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ChatPageRoute';
+
+  static const PageInfo<ChatPageRouteArgs> page =
+      PageInfo<ChatPageRouteArgs>(name);
+}
+
+class ChatPageRouteArgs {
+  const ChatPageRouteArgs({
+    this.key,
+    this.chatId,
+  });
+
+  final Key? key;
+
+  final String? chatId;
+
+  @override
+  String toString() {
+    return 'ChatPageRouteArgs{key: $key, chatId: $chatId}';
   }
 }
 
@@ -709,6 +862,44 @@ class NewEmailAddressPageRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [NewEntryPage]
+class NewEntryPageRoute extends PageRouteInfo<NewEntryPageRouteArgs> {
+  NewEntryPageRoute({
+    Key? key,
+    required Bin bin,
+    List<PageRouteInfo>? children,
+  }) : super(
+          NewEntryPageRoute.name,
+          args: NewEntryPageRouteArgs(
+            key: key,
+            bin: bin,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'NewEntryPageRoute';
+
+  static const PageInfo<NewEntryPageRouteArgs> page =
+      PageInfo<NewEntryPageRouteArgs>(name);
+}
+
+class NewEntryPageRouteArgs {
+  const NewEntryPageRouteArgs({
+    this.key,
+    required this.bin,
+  });
+
+  final Key? key;
+
+  final Bin bin;
+
+  @override
+  String toString() {
+    return 'NewEntryPageRouteArgs{key: $key, bin: $bin}';
+  }
+}
+
+/// generated route for
 /// [ProfileHomePage]
 class ProfileHomePageRoute extends PageRouteInfo<void> {
   const ProfileHomePageRoute({List<PageRouteInfo>? children})
@@ -760,6 +951,20 @@ class SplashLoadingPageRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SplashLoadingPageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [TrackerPage]
+class TrackerPageRoute extends PageRouteInfo<void> {
+  const TrackerPageRoute({List<PageRouteInfo>? children})
+      : super(
+          TrackerPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TrackerPageRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -829,16 +1034,45 @@ class WelcomeAccountSetupPageRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [WelcomePage]
-class WelcomePageRoute extends PageRouteInfo<void> {
-  const WelcomePageRoute({List<PageRouteInfo>? children})
-      : super(
+class WelcomePageRoute extends PageRouteInfo<WelcomePageRouteArgs> {
+  WelcomePageRoute({
+    Key? key,
+    required String? userName,
+    required String? avatarUrl,
+    List<PageRouteInfo>? children,
+  }) : super(
           WelcomePageRoute.name,
+          args: WelcomePageRouteArgs(
+            key: key,
+            userName: userName,
+            avatarUrl: avatarUrl,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'WelcomePageRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<WelcomePageRouteArgs> page =
+      PageInfo<WelcomePageRouteArgs>(name);
+}
+
+class WelcomePageRouteArgs {
+  const WelcomePageRouteArgs({
+    this.key,
+    required this.userName,
+    required this.avatarUrl,
+  });
+
+  final Key? key;
+
+  final String? userName;
+
+  final String? avatarUrl;
+
+  @override
+  String toString() {
+    return 'WelcomePageRouteArgs{key: $key, userName: $userName, avatarUrl: $avatarUrl}';
+  }
 }
 
 /// generated route for

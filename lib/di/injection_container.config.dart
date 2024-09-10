@@ -8,341 +8,396 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:dio/dio.dart' as _i15;
-import 'package:get_it/get_it.dart' as _i1;
-import 'package:injectable/injectable.dart' as _i2;
-import 'package:logger/logger.dart' as _i4;
-import 'package:maze_app/core/config/assets/assets.dart' as _i7;
-import 'package:maze_app/core/config/strings.dart' as _i6;
-import 'package:maze_app/core/local/setting_manager.dart' as _i14;
-import 'package:maze_app/core/local/user/user_manager.dart' as _i17;
-import 'package:maze_app/core/network/dio_caller.dart' as _i18;
+import 'package:dio/dio.dart' as _i361;
+import 'package:get_it/get_it.dart' as _i174;
+import 'package:injectable/injectable.dart' as _i526;
+import 'package:logger/logger.dart' as _i974;
+import 'package:maze_app/core/config/assets/assets.dart' as _i253;
+import 'package:maze_app/core/config/strings.dart' as _i713;
+import 'package:maze_app/core/local/setting_manager.dart' as _i283;
+import 'package:maze_app/core/local/user/user_manager.dart' as _i547;
+import 'package:maze_app/core/network/dio_caller.dart' as _i874;
 import 'package:maze_app/core/network/util/expire_token_interceptor.dart'
-    as _i11;
-import 'package:maze_app/core/presentation/route/app_router.dart' as _i9;
-import 'package:maze_app/core/style/app_color.dart' as _i8;
-import 'package:maze_app/core/style/app_theme.dart' as _i16;
-import 'package:maze_app/core/util/app_log.dart' as _i12;
-import 'package:maze_app/core/util/crypto/encrypt_helper.dart' as _i5;
-import 'package:maze_app/core/util/shared_preferences_helper.dart' as _i13;
+    as _i198;
+import 'package:maze_app/core/presentation/route/app_router.dart' as _i112;
+import 'package:maze_app/core/style/app_color.dart' as _i751;
+import 'package:maze_app/core/style/app_theme.dart' as _i283;
+import 'package:maze_app/core/util/app_log.dart' as _i234;
+import 'package:maze_app/core/util/crypto/encrypt_helper.dart' as _i1014;
+import 'package:maze_app/core/util/shared_preferences_helper.dart' as _i1055;
 import 'package:maze_app/data_provider/refresh_token/data/data_source/token_remote_data_source.dart'
-    as _i49;
+    as _i494;
 import 'package:maze_app/data_provider/refresh_token/data/repository/token_repository_impl.dart'
-    as _i72;
+    as _i179;
 import 'package:maze_app/data_provider/refresh_token/domain/token_repository.dart'
-    as _i71;
+    as _i278;
 import 'package:maze_app/data_provider/refresh_token/token_manager.dart'
-    as _i84;
-import 'package:maze_app/di/injection_container.dart' as _i85;
+    as _i265;
+import 'package:maze_app/di/injection_container.dart' as _i825;
 import 'package:maze_app/feature/account_info/data/data_source/account_info_remote_data_source.dart'
-    as _i43;
+    as _i253;
 import 'package:maze_app/feature/account_info/data/data_source/account_info_remote_data_source_impl.dart'
-    as _i44;
+    as _i501;
 import 'package:maze_app/feature/account_info/data/repository/account_info_repository_impl.dart'
-    as _i56;
+    as _i197;
 import 'package:maze_app/feature/account_info/domain/entity/user_info.dart'
-    as _i10;
+    as _i735;
 import 'package:maze_app/feature/account_info/domain/repository/account_info_repository.dart'
-    as _i55;
+    as _i691;
 import 'package:maze_app/feature/account_info/presentation/bloc/account_info_bloc.dart'
-    as _i74;
+    as _i613;
 import 'package:maze_app/feature/auth/create_password/data/data_source/create_password_remote_data_source.dart'
-    as _i31;
+    as _i19;
 import 'package:maze_app/feature/auth/create_password/data/data_source/create_password_remote_data_source_impl.dart'
-    as _i32;
+    as _i75;
 import 'package:maze_app/feature/auth/create_password/data/repository/create_password_repository_impl.dart'
-    as _i77;
+    as _i679;
 import 'package:maze_app/feature/auth/create_password/domain/repository/create_password_repository.dart'
-    as _i76;
+    as _i16;
 import 'package:maze_app/feature/auth/create_password/forgot_password/data/data_source/forgot_pass_remote_data_source.dart'
-    as _i22;
+    as _i1046;
 import 'package:maze_app/feature/auth/create_password/forgot_password/data/data_source/forgot_pass_remote_data_source_impl.dart'
     as _i23;
 import 'package:maze_app/feature/auth/create_password/forgot_password/data/repository/forgot_pass_repository_impl.dart'
-    as _i28;
+    as _i404;
 import 'package:maze_app/feature/auth/create_password/forgot_password/domain/repository/forgot_pass_repository.dart'
-    as _i27;
+    as _i557;
 import 'package:maze_app/feature/auth/create_password/forgot_password/presentation/bloc/forgot_pass_bloc.dart'
-    as _i40;
+    as _i507;
 import 'package:maze_app/feature/auth/create_password/presentation/bloc/create_pass_bloc.dart'
-    as _i79;
+    as _i1008;
 import 'package:maze_app/feature/auth/login/data/data_source/login_remote_data_source.dart'
-    as _i19;
+    as _i635;
 import 'package:maze_app/feature/auth/login/data/data_source/login_remote_data_source_impl.dart'
-    as _i20;
+    as _i410;
 import 'package:maze_app/feature/auth/login/data/repository/login_repository_impl.dart'
-    as _i42;
+    as _i720;
 import 'package:maze_app/feature/auth/login/domain/repository/login_repository.dart'
-    as _i41;
+    as _i268;
 import 'package:maze_app/feature/auth/login/presentation/bloc/login_bloc.dart'
-    as _i78;
+    as _i263;
 import 'package:maze_app/feature/auth/signing_up/data/data_source/verify_remote_data_source.dart'
-    as _i24;
+    as _i557;
 import 'package:maze_app/feature/auth/signing_up/data/data_source/verify_remote_data_source_impl.dart'
-    as _i25;
+    as _i793;
 import 'package:maze_app/feature/auth/signing_up/data/repository/verify_repository_impl.dart'
-    as _i46;
+    as _i889;
 import 'package:maze_app/feature/auth/signing_up/domain/repository/verify_repository.dart'
-    as _i45;
+    as _i1006;
 import 'package:maze_app/feature/auth/signing_up/presentation/bloc/verify_bloc.dart'
-    as _i50;
+    as _i406;
 import 'package:maze_app/feature/auth/signup/data/data_source/signup_remote_data_source.dart'
-    as _i67;
+    as _i88;
 import 'package:maze_app/feature/auth/signup/data/data_source/signup_remote_data_source_impl.dart'
-    as _i68;
+    as _i893;
 import 'package:maze_app/feature/auth/signup/data/repository/signup_repository_impl.dart'
-    as _i81;
+    as _i145;
 import 'package:maze_app/feature/auth/signup/domain/repository/signup_repository.dart'
-    as _i80;
+    as _i468;
 import 'package:maze_app/feature/auth/signup/presentation/bloc/signup_bloc.dart'
-    as _i83;
-import 'package:maze_app/feature/intro/data/datasource/intro_local_datasource.dart'
-    as _i26;
-import 'package:maze_app/feature/intro/data/repo/intro_repo_impl.dart' as _i30;
-import 'package:maze_app/feature/intro/domain/repo/intro_repo.dart' as _i29;
-import 'package:maze_app/feature/intro/domain/usecase/get_is_first_run.dart'
-    as _i52;
-import 'package:maze_app/feature/intro/domain/usecase/set_is_first_run.dart'
-    as _i51;
-import 'package:maze_app/feature/intro/presentation/bloc/splash_bloc.dart'
-    as _i21;
-import 'package:maze_app/feature/knowledge/data/datasource/knowledge_remote_datasource.dart'
-    as _i37;
-import 'package:maze_app/feature/knowledge/data/repo/knowledge_repo_impl.dart'
-    as _i39;
-import 'package:maze_app/feature/knowledge/domain/repo/knowledge_repo.dart'
-    as _i38;
-import 'package:maze_app/feature/knowledge/domain/usecase/create_article.dart'
-    as _i61;
-import 'package:maze_app/feature/knowledge/domain/usecase/delete_article.dart'
-    as _i65;
-import 'package:maze_app/feature/knowledge/domain/usecase/edit_article.dart'
-    as _i66;
-import 'package:maze_app/feature/knowledge/domain/usecase/get_article.dart'
+    as _i118;
+import 'package:maze_app/feature/chatbot/data/data_source/chatbot_remote_data_source.dart'
+    as _i211;
+import 'package:maze_app/feature/chatbot/data/data_source/chatbot_remote_data_source_impl.dart'
+    as _i277;
+import 'package:maze_app/feature/chatbot/data/repository/chatbot_repository_impl.dart'
+    as _i589;
+import 'package:maze_app/feature/chatbot/domain/repository/chatbot_repository.dart'
+    as _i529;
+import 'package:maze_app/feature/chatbot/presentation/bloc/chat_bot_bloc.dart'
+    as _i726;
+import 'package:maze_app/feature/chatbot/presentation/view/chat/data/data_source/chat_remote_data_source.dart'
+    as _i1033;
+import 'package:maze_app/feature/chatbot/presentation/view/chat/data/data_source/chat_remote_data_source_impl.dart'
+    as _i324;
+import 'package:maze_app/feature/chatbot/presentation/view/chat/data/repository/chat_repository_impl.dart'
+    as _i586;
+import 'package:maze_app/feature/chatbot/presentation/view/chat/domain/repository/chat_repository.dart'
     as _i63;
+import 'package:maze_app/feature/chatbot/presentation/view/chat/presentation/bloc/chat_bloc.dart'
+    as _i358;
+import 'package:maze_app/feature/intro/data/datasource/intro_local_datasource.dart'
+    as _i191;
+import 'package:maze_app/feature/intro/data/repo/intro_repo_impl.dart' as _i202;
+import 'package:maze_app/feature/intro/domain/repo/intro_repo.dart' as _i178;
+import 'package:maze_app/feature/intro/domain/usecase/get_is_first_run.dart'
+    as _i351;
+import 'package:maze_app/feature/intro/domain/usecase/set_is_first_run.dart'
+    as _i847;
+import 'package:maze_app/feature/intro/presentation/bloc/splash_bloc.dart'
+    as _i1072;
+import 'package:maze_app/feature/knowledge/data/datasource/knowledge_remote_datasource.dart'
+    as _i66;
+import 'package:maze_app/feature/knowledge/data/repo/knowledge_repo_impl.dart'
+    as _i226;
+import 'package:maze_app/feature/knowledge/domain/repo/knowledge_repo.dart'
+    as _i490;
+import 'package:maze_app/feature/knowledge/domain/usecase/create_article.dart'
+    as _i575;
+import 'package:maze_app/feature/knowledge/domain/usecase/delete_article.dart'
+    as _i657;
+import 'package:maze_app/feature/knowledge/domain/usecase/edit_article.dart'
+    as _i976;
+import 'package:maze_app/feature/knowledge/domain/usecase/get_article.dart'
+    as _i41;
 import 'package:maze_app/feature/knowledge/domain/usecase/get_articles.dart'
-    as _i62;
+    as _i885;
 import 'package:maze_app/feature/knowledge/domain/usecase/get_bookmarks.dart'
-    as _i60;
+    as _i507;
 import 'package:maze_app/feature/knowledge/domain/usecase/get_categories.dart'
-    as _i59;
+    as _i375;
 import 'package:maze_app/feature/knowledge/domain/usecase/remove_bookmark.dart'
-    as _i64;
+    as _i1021;
 import 'package:maze_app/feature/knowledge/domain/usecase/search_articles.dart'
-    as _i58;
+    as _i754;
 import 'package:maze_app/feature/knowledge/domain/usecase/set_bookmark.dart'
-    as _i57;
+    as _i672;
 import 'package:maze_app/feature/knowledge/presentation/article/cubit/article_cubit.dart'
-    as _i70;
+    as _i591;
 import 'package:maze_app/feature/knowledge/presentation/bookmarks/cubit/bookmarks_cubit.dart'
-    as _i75;
+    as _i888;
 import 'package:maze_app/feature/knowledge/presentation/knowledge/cubit/knowledge_cubit.dart'
-    as _i82;
+    as _i827;
 import 'package:maze_app/feature/profile/data/data_source/profile_remote_data_source.dart'
-    as _i35;
+    as _i392;
 import 'package:maze_app/feature/profile/data/data_source/profile_remote_data_source_impl.dart'
-    as _i36;
+    as _i1052;
 import 'package:maze_app/feature/profile/data/repository/profile_repository_impl.dart'
-    as _i54;
+    as _i26;
 import 'package:maze_app/feature/profile/domain/repository/profile_repository.dart'
-    as _i53;
+    as _i30;
 import 'package:maze_app/feature/profile/presentation/bloc/profile_bloc.dart'
-    as _i69;
+    as _i491;
 import 'package:maze_app/feature/profile/presentation/view/report/data/data_source/report_remote_data_source.dart'
-    as _i33;
+    as _i17;
 import 'package:maze_app/feature/profile/presentation/view/report/data/data_source/report_remote_data_source_impl.dart'
-    as _i34;
+    as _i573;
 import 'package:maze_app/feature/profile/presentation/view/report/data/repository/report_repository_impl.dart'
-    as _i48;
+    as _i468;
 import 'package:maze_app/feature/profile/presentation/view/report/domain/repository/report_repository.dart'
-    as _i47;
+    as _i675;
 import 'package:maze_app/feature/profile/presentation/view/report/presentation/bloc/report_bloc.dart'
-    as _i73;
-import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i3;
+    as _i334;
+import 'package:maze_app/feature/tracker/data/datasource/tracker_remote_data_source.dart'
+    as _i446;
+import 'package:maze_app/feature/tracker/data/datasource/tracker_remote_data_source_impl.dart'
+    as _i596;
+import 'package:maze_app/feature/tracker/data/repo/tracker_repo_impl.dart'
+    as _i536;
+import 'package:maze_app/feature/tracker/domain/repo/tracker_repo.dart'
+    as _i1012;
+import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart'
+    as _i566;
+import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 
-extension GetItInjectableX on _i1.GetIt {
+extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
-  _i1.GetIt init({
+  _i174.GetIt init({
     String? environment,
-    _i2.EnvironmentFilter? environmentFilter,
+    _i526.EnvironmentFilter? environmentFilter,
   }) {
-    final gh = _i2.GetItHelper(
+    final gh = _i526.GetItHelper(
       this,
       environment,
       environmentFilter,
     );
     final networkModule = _$NetworkModule();
-    gh.factory<_i3.PrettyDioLogger>(() => networkModule.prettyDioLogger);
-    gh.lazySingleton<_i4.Logger>(() => networkModule.logger);
-    gh.lazySingleton<_i5.EncryptHelper>(() => _i5.EncryptHelper());
-    gh.lazySingleton<_i6.StringsBase>(() => _i6.StringsBase());
-    gh.lazySingleton<_i7.AssetsBase>(() => _i7.AssetsBase());
-    gh.lazySingleton<_i8.AppColorsBase>(() => _i8.AppColorsBase());
-    gh.lazySingleton<_i9.AppRouter>(() => _i9.AppRouter());
-    gh.lazySingleton<_i10.UserInfo>(() => _i10.UserInfo());
-    gh.lazySingleton<_i11.ExpireTokenInterceptor>(
-        () => _i11.ExpireTokenInterceptor(gh<_i5.EncryptHelper>()));
-    gh.lazySingleton<_i12.AppLog>(() => _i12.AppLog(gh<_i4.Logger>()));
-    gh.factory<_i13.SharedPreferencesHelper>(() =>
-        _i13.SharedPreferencesHelper(encryptHelper: gh<_i5.EncryptHelper>()));
-    gh.factory<_i14.SettingsManager>(
-        () => _i14.SettingsManager(gh<_i13.SharedPreferencesHelper>()));
-    gh.lazySingleton<_i15.Dio>(
-      () => networkModule.provideBaseDio(gh<_i3.PrettyDioLogger>()),
-      instanceName: 'maze',
-    );
-    gh.lazySingleton<_i15.Dio>(
-      () => networkModule.provideMazeDio(gh<_i3.PrettyDioLogger>()),
+    gh.factory<_i528.PrettyDioLogger>(() => networkModule.prettyDioLogger);
+    gh.lazySingleton<_i974.Logger>(() => networkModule.logger);
+    gh.lazySingleton<_i1014.EncryptHelper>(() => _i1014.EncryptHelper());
+    gh.lazySingleton<_i713.StringsBase>(() => _i713.StringsBase());
+    gh.lazySingleton<_i253.AssetsBase>(() => _i253.AssetsBase());
+    gh.lazySingleton<_i751.AppColorsBase>(() => _i751.AppColorsBase());
+    gh.lazySingleton<_i112.AppRouter>(() => _i112.AppRouter());
+    gh.lazySingleton<_i735.UserInfo>(() => _i735.UserInfo());
+    gh.lazySingleton<_i361.Dio>(
+      () => networkModule.provideMazeDio(gh<_i528.PrettyDioLogger>()),
       instanceName: 'versioning0',
     );
-    gh.factory<_i16.AppTheme>(
-        () => _i16.AppTheme(appColors: gh<_i8.AppColorsBase>()));
-    gh.lazySingleton<_i15.Dio>(
-      () => networkModule.provideTokenDio(gh<_i3.PrettyDioLogger>()),
+    gh.lazySingleton<_i198.ExpireTokenInterceptor>(
+        () => _i198.ExpireTokenInterceptor(gh<_i1014.EncryptHelper>()));
+    gh.lazySingleton<_i234.AppLog>(() => _i234.AppLog(gh<_i974.Logger>()));
+    gh.lazySingleton<_i361.Dio>(
+      () => networkModule.provideTokenDio(gh<_i528.PrettyDioLogger>()),
       instanceName: 'token',
     );
-    gh.lazySingleton<_i17.UserManager>(
-        () => _i17.UserManager(gh<_i14.SettingsManager>()));
-    gh.lazySingleton<_i18.DioCaller>(
+    gh.lazySingleton<_i874.DioCaller>(
       () => networkModule
-          .provideBaseDioCaller(gh<_i15.Dio>(instanceName: 'maze')),
+          .provideTokenDioCaller(gh<_i361.Dio>(instanceName: 'token')),
+      instanceName: 'token',
+    );
+    gh.lazySingleton<_i874.DioCaller>(
+      () => networkModule
+          .provideMazeDioCaller(gh<_i361.Dio>(instanceName: 'versioning0')),
+      instanceName: 'versioning0',
+    );
+    gh.factory<_i1055.SharedPreferencesHelper>(() =>
+        _i1055.SharedPreferencesHelper(
+            encryptHelper: gh<_i1014.EncryptHelper>()));
+    gh.lazySingleton<_i361.Dio>(
+      () => networkModule.provideBaseDio(gh<_i528.PrettyDioLogger>()),
       instanceName: 'maze',
     );
-    gh.factory<_i19.LoginRemoteDataSource>(() => _i20.LoginRemoteDataSourceImpl(
-        dioCaller: gh<_i18.DioCaller>(instanceName: 'maze')));
-    gh.factory<_i21.SplashBloc>(() => _i21.SplashBloc(gh<_i17.UserManager>()));
-    gh.factory<_i22.ForgotPassRemoteDataSource>(() =>
+    gh.factory<_i19.CreatePasswordRemoteDataSource>(() =>
+        _i75.CreatePasswordRemoteDataSourceImpl(
+            dioCaller: gh<_i874.DioCaller>(instanceName: 'token')));
+    gh.factory<_i211.ChatBotRemoteRemoteDataSource>(() =>
+        _i277.ChatBotRemoteRemoteDataSourceImpl(
+            dioCaller: gh<_i874.DioCaller>(instanceName: 'token')));
+    gh.factory<_i17.ReportRemoteDataSource>(() =>
+        _i573.ReportRemoteDataSourceImpl(
+            dioCaller: gh<_i874.DioCaller>(instanceName: 'token')));
+    gh.factory<_i1033.ChatRemoteRemoteDataSource>(() =>
+        _i324.ChatBotRemoteRemoteDataSourceImpl(
+            dioCaller: gh<_i874.DioCaller>(instanceName: 'token')));
+    gh.factory<_i392.ProfileRemoteDataSource>(() =>
+        _i1052.ProfileRemoteDataSourceImpl(
+            dioCaller: gh<_i874.DioCaller>(instanceName: 'token')));
+    gh.factory<_i66.KnowledgeRemoteDatasource>(() =>
+        _i66.KnowledgeRemoteDataSourceImpl(
+            dioCaller: gh<_i874.DioCaller>(instanceName: 'token')));
+    gh.factory<_i490.KnowledgeRepo>(() => _i226.KnowledgeRepoImpl(
+        remoteDatasource: gh<_i66.KnowledgeRemoteDatasource>()));
+    gh.factory<_i283.SettingsManager>(
+        () => _i283.SettingsManager(gh<_i1055.SharedPreferencesHelper>()));
+    gh.factory<_i253.AccountInfoRemoteRemoteDataSource>(() =>
+        _i501.AccountInfoRemoteRemoteDataSourceImpl(
+            dioCaller: gh<_i874.DioCaller>(instanceName: 'token')));
+    gh.factory<_i283.AppTheme>(
+        () => _i283.AppTheme(appColors: gh<_i751.AppColorsBase>()));
+    gh.factory<_i675.ReportRepository>(
+        () => _i468.ReportRepositoryImpl(gh<_i17.ReportRemoteDataSource>()));
+    gh.factory<_i446.TrackerRemoteDataSource>(() =>
+        _i596.TrackerRemoteDataSourceImpl(
+            dioCaller: gh<_i874.DioCaller>(instanceName: 'token')));
+    gh.factory<_i30.ProfileRepository>(
+        () => _i26.ProfileRepositoryImpl(gh<_i392.ProfileRemoteDataSource>()));
+    gh.factory<_i691.AccountInfoRepository>(() =>
+        _i197.AccountInfoRepositoryImpl(
+            gh<_i253.AccountInfoRemoteRemoteDataSource>()));
+    gh.factory<_i672.SetBookmark>(
+        () => _i672.SetBookmark(repo: gh<_i490.KnowledgeRepo>()));
+    gh.factory<_i754.SearchArticles>(
+        () => _i754.SearchArticles(repo: gh<_i490.KnowledgeRepo>()));
+    gh.factory<_i375.GetCategories>(
+        () => _i375.GetCategories(repo: gh<_i490.KnowledgeRepo>()));
+    gh.factory<_i507.GetBookmarks>(
+        () => _i507.GetBookmarks(repo: gh<_i490.KnowledgeRepo>()));
+    gh.factory<_i575.CreateArticle>(
+        () => _i575.CreateArticle(repo: gh<_i490.KnowledgeRepo>()));
+    gh.factory<_i885.GetArticles>(
+        () => _i885.GetArticles(repo: gh<_i490.KnowledgeRepo>()));
+    gh.factory<_i41.GetArticle>(
+        () => _i41.GetArticle(repo: gh<_i490.KnowledgeRepo>()));
+    gh.factory<_i1021.RemoveBookmark>(
+        () => _i1021.RemoveBookmark(repo: gh<_i490.KnowledgeRepo>()));
+    gh.factory<_i657.DeleteArticle>(
+        () => _i657.DeleteArticle(repo: gh<_i490.KnowledgeRepo>()));
+    gh.factory<_i976.EditArticle>(
+        () => _i976.EditArticle(repo: gh<_i490.KnowledgeRepo>()));
+    gh.lazySingleton<_i547.UserManager>(
+        () => _i547.UserManager(gh<_i283.SettingsManager>()));
+    gh.lazySingleton<_i874.DioCaller>(
+      () => networkModule
+          .provideBaseDioCaller(gh<_i361.Dio>(instanceName: 'maze')),
+      instanceName: 'maze',
+    );
+    gh.factory<_i491.ProfileBloc>(
+        () => _i491.ProfileBloc(gh<_i30.ProfileRepository>()));
+    gh.factory<_i591.ArticleCubit>(() => _i591.ArticleCubit(
+          setBookmark: gh<_i672.SetBookmark>(),
+          removeBookmark: gh<_i1021.RemoveBookmark>(),
+          getArticle: gh<_i41.GetArticle>(),
+          router: gh<_i112.AppRouter>(),
+        ));
+    gh.factory<_i635.LoginRemoteDataSource>(() =>
+        _i410.LoginRemoteDataSourceImpl(
+            dioCaller: gh<_i874.DioCaller>(instanceName: 'maze')));
+    gh.factory<_i1072.SplashBloc>(
+        () => _i1072.SplashBloc(gh<_i547.UserManager>()));
+    gh.factory<_i1012.TrackerRepo>(() => _i536.TrackerRepoImpl(
+        trackerRemoteDataSource: gh<_i446.TrackerRemoteDataSource>()));
+    gh.factory<_i1046.ForgotPassRemoteDataSource>(() =>
         _i23.ForgotPassRemoteDataSourceImpl(
-            dioCaller: gh<_i18.DioCaller>(instanceName: 'maze')));
-    gh.factory<_i24.VerifyRemoteDataSource>(() =>
-        _i25.VerifyRemoteDataSourceImpl(
-            dioCaller: gh<_i18.DioCaller>(instanceName: 'maze')));
-    gh.factory<_i26.IntroLocalDatasource>(() => _i26.IntroLocalDatasourceImpl(
-        helper: gh<_i13.SharedPreferencesHelper>()));
-    gh.lazySingleton<_i18.DioCaller>(
-      () => networkModule
-          .provideTokenDioCaller(gh<_i15.Dio>(instanceName: 'token')),
-      instanceName: 'token',
-    );
-    gh.factory<_i27.ForgotPassRepository>(() =>
-        _i28.ForgotPassRepositoryImpl(gh<_i22.ForgotPassRemoteDataSource>()));
-    gh.lazySingleton<_i18.DioCaller>(
-      () => networkModule
-          .provideMazeDioCaller(gh<_i15.Dio>(instanceName: 'versioning0')),
-      instanceName: 'versioning0',
-    );
-    gh.factory<_i29.IntroRepo>(
-        () => _i30.IntroRepoImpl(datasource: gh<_i26.IntroLocalDatasource>()));
-    gh.factory<_i31.CreatePasswordRemoteDataSource>(() =>
-        _i32.CreatePasswordRemoteDataSourceImpl(
-            dioCaller: gh<_i18.DioCaller>(instanceName: 'token')));
-    gh.factory<_i33.ReportRemoteDataSource>(() =>
-        _i34.ReportRemoteDataSourceImpl(
-            dioCaller: gh<_i18.DioCaller>(instanceName: 'token')));
-    gh.factory<_i35.ProfileRemoteDataSource>(() =>
-        _i36.ProfileRemoteDataSourceImpl(
-            dioCaller: gh<_i18.DioCaller>(instanceName: 'token')));
-    gh.factory<_i37.KnowledgeRemoteDatasource>(() =>
-        _i37.KnowledgeRemoteDataSourceImpl(
-            dioCaller: gh<_i18.DioCaller>(instanceName: 'token')));
-    gh.factory<_i38.KnowledgeRepo>(() => _i39.KnowledgeRepoImpl(
-        remoteDatasource: gh<_i37.KnowledgeRemoteDatasource>()));
-    gh.factory<_i40.ForgotPassBloc>(
-        () => _i40.ForgotPassBloc(gh<_i27.ForgotPassRepository>()));
-    gh.factory<_i41.LoginRepository>(
-        () => _i42.LoginRepositoryImpl(gh<_i19.LoginRemoteDataSource>()));
-    gh.factory<_i43.AccountInfoRemoteRemoteDataSource>(() =>
-        _i44.AccountInfoRemoteRemoteDataSourceImpl(
-            dioCaller: gh<_i18.DioCaller>(instanceName: 'token')));
-    gh.factory<_i45.VerifyRepository>(
-        () => _i46.VerifyRepositoryImpl(gh<_i24.VerifyRemoteDataSource>()));
-    gh.factory<_i47.ReportRepository>(
-        () => _i48.ReportRepositoryImpl(gh<_i33.ReportRemoteDataSource>()));
-    gh.factory<_i49.TokenRemoteDataSource>(() => _i49.TokenRemoteDataSourceImpl(
-        gh<_i18.DioCaller>(instanceName: 'maze')));
-    gh.factory<_i50.VerifyBloc>(
-        () => _i50.VerifyBloc(gh<_i45.VerifyRepository>()));
-    gh.factory<_i51.SetIsFirstRun>(
-        () => _i51.SetIsFirstRun(repo: gh<_i29.IntroRepo>()));
-    gh.factory<_i52.GetIsFirstRun>(
-        () => _i52.GetIsFirstRun(repo: gh<_i29.IntroRepo>()));
-    gh.factory<_i53.ProfileRepository>(
-        () => _i54.ProfileRepositoryImpl(gh<_i35.ProfileRemoteDataSource>()));
-    gh.factory<_i55.AccountInfoRepository>(() => _i56.AccountInfoRepositoryImpl(
-        gh<_i43.AccountInfoRemoteRemoteDataSource>()));
-    gh.factory<_i57.SetBookmark>(
-        () => _i57.SetBookmark(repo: gh<_i38.KnowledgeRepo>()));
-    gh.factory<_i58.SearchArticles>(
-        () => _i58.SearchArticles(repo: gh<_i38.KnowledgeRepo>()));
-    gh.factory<_i59.GetCategories>(
-        () => _i59.GetCategories(repo: gh<_i38.KnowledgeRepo>()));
-    gh.factory<_i60.GetBookmarks>(
-        () => _i60.GetBookmarks(repo: gh<_i38.KnowledgeRepo>()));
-    gh.factory<_i61.CreateArticle>(
-        () => _i61.CreateArticle(repo: gh<_i38.KnowledgeRepo>()));
-    gh.factory<_i62.GetArticles>(
-        () => _i62.GetArticles(repo: gh<_i38.KnowledgeRepo>()));
-    gh.factory<_i63.GetArticle>(
-        () => _i63.GetArticle(repo: gh<_i38.KnowledgeRepo>()));
-    gh.factory<_i64.RemoveBookmark>(
-        () => _i64.RemoveBookmark(repo: gh<_i38.KnowledgeRepo>()));
-    gh.factory<_i65.DeleteArticle>(
-        () => _i65.DeleteArticle(repo: gh<_i38.KnowledgeRepo>()));
-    gh.factory<_i66.EditArticle>(
-        () => _i66.EditArticle(repo: gh<_i38.KnowledgeRepo>()));
-    gh.factory<_i67.SignupRemoteDataSource>(() =>
-        _i68.SignupRemoteDataSourceImpl(
-            dioCaller: gh<_i18.DioCaller>(instanceName: 'maze')));
-    gh.factory<_i69.ProfileBloc>(
-        () => _i69.ProfileBloc(gh<_i53.ProfileRepository>()));
-    gh.factory<_i70.ArticleCubit>(() => _i70.ArticleCubit(
-          setBookmark: gh<_i57.SetBookmark>(),
-          removeBookmark: gh<_i64.RemoveBookmark>(),
-          getArticle: gh<_i63.GetArticle>(),
-          router: gh<_i9.AppRouter>(),
+            dioCaller: gh<_i874.DioCaller>(instanceName: 'maze')));
+    gh.factory<_i557.VerifyRemoteDataSource>(() =>
+        _i793.VerifyRemoteDataSourceImpl(
+            dioCaller: gh<_i874.DioCaller>(instanceName: 'maze')));
+    gh.factory<_i191.IntroLocalDatasource>(() => _i191.IntroLocalDatasourceImpl(
+        helper: gh<_i1055.SharedPreferencesHelper>()));
+    gh.factory<_i334.ReportBloc>(
+        () => _i334.ReportBloc(gh<_i675.ReportRepository>()));
+    gh.factory<_i613.AccountInfoBloc>(
+        () => _i613.AccountInfoBloc(gh<_i691.AccountInfoRepository>()));
+    gh.factory<_i529.CharBotRepository>(() =>
+        _i589.CharBotRepositoryImpl(gh<_i211.ChatBotRemoteRemoteDataSource>()));
+    gh.factory<_i557.ForgotPassRepository>(() => _i404.ForgotPassRepositoryImpl(
+        gh<_i1046.ForgotPassRemoteDataSource>()));
+    gh.factory<_i178.IntroRepo>(() =>
+        _i202.IntroRepoImpl(datasource: gh<_i191.IntroLocalDatasource>()));
+    gh.factory<_i888.BookmarksCubit>(() => _i888.BookmarksCubit(
+          getBookmarks: gh<_i507.GetBookmarks>(),
+          router: gh<_i112.AppRouter>(),
+          removeBookmark: gh<_i1021.RemoveBookmark>(),
+          setBookmark: gh<_i672.SetBookmark>(),
         ));
-    gh.factory<_i71.TokenRepository>(
-        () => _i72.TokenRepositoryImpl(gh<_i49.TokenRemoteDataSource>()));
-    gh.factory<_i73.ReportBloc>(
-        () => _i73.ReportBloc(gh<_i47.ReportRepository>()));
-    gh.factory<_i74.AccountInfoBloc>(
-        () => _i74.AccountInfoBloc(gh<_i55.AccountInfoRepository>()));
-    gh.factory<_i75.BookmarksCubit>(() => _i75.BookmarksCubit(
-          getBookmarks: gh<_i60.GetBookmarks>(),
-          router: gh<_i9.AppRouter>(),
-          removeBookmark: gh<_i64.RemoveBookmark>(),
-          setBookmark: gh<_i57.SetBookmark>(),
+    gh.factory<_i16.CreatePasswordRepository>(() =>
+        _i679.CreatePasswordRepositoryImpl(
+            gh<_i19.CreatePasswordRemoteDataSource>()));
+    gh.factory<_i63.ChatRepository>(() =>
+        _i586.CharRepositoryImpl(gh<_i1033.ChatRemoteRemoteDataSource>()));
+    gh.factory<_i1008.CreatePassBloc>(
+        () => _i1008.CreatePassBloc(gh<_i16.CreatePasswordRepository>()));
+    gh.factory<_i507.ForgotPassBloc>(
+        () => _i507.ForgotPassBloc(gh<_i557.ForgotPassRepository>()));
+    gh.factory<_i268.LoginRepository>(
+        () => _i720.LoginRepositoryImpl(gh<_i635.LoginRemoteDataSource>()));
+    gh.factory<_i1006.VerifyRepository>(
+        () => _i889.VerifyRepositoryImpl(gh<_i557.VerifyRemoteDataSource>()));
+    gh.factory<_i494.TokenRemoteDataSource>(() =>
+        _i494.TokenRemoteDataSourceImpl(
+            gh<_i874.DioCaller>(instanceName: 'maze')));
+    gh.factory<_i406.VerifyBloc>(
+        () => _i406.VerifyBloc(gh<_i1006.VerifyRepository>()));
+    gh.factory<_i726.ChatBotBloc>(
+        () => _i726.ChatBotBloc(gh<_i529.CharBotRepository>()));
+    gh.factory<_i847.SetIsFirstRun>(
+        () => _i847.SetIsFirstRun(repo: gh<_i178.IntroRepo>()));
+    gh.factory<_i351.GetIsFirstRun>(
+        () => _i351.GetIsFirstRun(repo: gh<_i178.IntroRepo>()));
+    gh.factory<_i566.TrackerBloc>(
+        () => _i566.TrackerBloc(gh<_i1012.TrackerRepo>()));
+    gh.factory<_i827.KnowledgeCubit>(() => _i827.KnowledgeCubit(
+          getArticles: gh<_i885.GetArticles>(),
+          router: gh<_i112.AppRouter>(),
+          searchArticles: gh<_i754.SearchArticles>(),
+          getCategories: gh<_i375.GetCategories>(),
+          setBookmark: gh<_i672.SetBookmark>(),
+          removeBookmark: gh<_i1021.RemoveBookmark>(),
+          getArticle: gh<_i41.GetArticle>(),
+          createArticle: gh<_i575.CreateArticle>(),
+          deleteArticle: gh<_i657.DeleteArticle>(),
+          editArticle: gh<_i976.EditArticle>(),
         ));
-    gh.factory<_i76.CreatePasswordRepository>(() =>
-        _i77.CreatePasswordRepositoryImpl(
-            gh<_i31.CreatePasswordRemoteDataSource>()));
-    gh.factory<_i78.LoginBloc>(
-        () => _i78.LoginBloc(gh<_i41.LoginRepository>()));
-    gh.factory<_i79.CreatePassBloc>(
-        () => _i79.CreatePassBloc(gh<_i76.CreatePasswordRepository>()));
-    gh.factory<_i80.SignupRepository>(
-        () => _i81.SignupRepositoryImpl(gh<_i67.SignupRemoteDataSource>()));
-    gh.factory<_i82.KnowledgeCubit>(() => _i82.KnowledgeCubit(
-          getArticles: gh<_i62.GetArticles>(),
-          router: gh<_i9.AppRouter>(),
-          searchArticles: gh<_i58.SearchArticles>(),
-          getCategories: gh<_i59.GetCategories>(),
-          setBookmark: gh<_i57.SetBookmark>(),
-          removeBookmark: gh<_i64.RemoveBookmark>(),
-          getArticle: gh<_i63.GetArticle>(),
-          createArticle: gh<_i61.CreateArticle>(),
-          deleteArticle: gh<_i65.DeleteArticle>(),
-          editArticle: gh<_i66.EditArticle>(),
-        ));
-    gh.factory<_i83.SignupBloc>(
-        () => _i83.SignupBloc(gh<_i80.SignupRepository>()));
-    gh.factory<_i84.TokenManager>(() => _i84.TokenManager(
-          gh<_i14.SettingsManager>(),
-          gh<_i71.TokenRepository>(),
-          gh<_i12.AppLog>(),
+    gh.factory<_i88.SignupRemoteDataSource>(() =>
+        _i893.SignupRemoteDataSourceImpl(
+            dioCaller: gh<_i874.DioCaller>(instanceName: 'maze')));
+    gh.factory<_i278.TokenRepository>(
+        () => _i179.TokenRepositoryImpl(gh<_i494.TokenRemoteDataSource>()));
+    gh.factory<_i263.LoginBloc>(
+        () => _i263.LoginBloc(gh<_i268.LoginRepository>()));
+    gh.factory<_i358.ChatBloc>(() => _i358.ChatBloc(gh<_i63.ChatRepository>()));
+    gh.factory<_i468.SignupRepository>(
+        () => _i145.SignupRepositoryImpl(gh<_i88.SignupRemoteDataSource>()));
+    gh.factory<_i118.SignupBloc>(
+        () => _i118.SignupBloc(gh<_i468.SignupRepository>()));
+    gh.factory<_i265.TokenManager>(() => _i265.TokenManager(
+          gh<_i283.SettingsManager>(),
+          gh<_i278.TokenRepository>(),
+          gh<_i234.AppLog>(),
         ));
     return this;
   }
 }
 
-class _$NetworkModule extends _i85.NetworkModule {}
+class _$NetworkModule extends _i825.NetworkModule {}

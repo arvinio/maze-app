@@ -15,6 +15,8 @@ import 'package:maze_app/feature/chatbot/presentation/view/chatBot_home_page.dar
 import 'package:maze_app/feature/profile/presentation/view/profile_home_page.dart';
 import 'package:maze_app/feature/knowledge/presentation/knowledge/cubit/knowledge_cubit.dart';
 import 'package:maze_app/feature/knowledge/presentation/knowledge/view/knowledge_page.dart';
+import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/view/tracker_page.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import 'custom_button.dart';
@@ -29,13 +31,19 @@ class BottomNavigation extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(create: (_) => inject<KnowledgeCubit>(), child: this);
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => inject<TrackerBloc>(), child: this),
+        BlocProvider(create: (_) => inject<KnowledgeCubit>(), child: this),
+      ],
+      child: this,
+    );
   }
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedIndex = 0;
-  int index=0;
+  int index = 0;
 
   static const List<Widget> _pages = <Widget>[
     Scaffold(
@@ -44,21 +52,15 @@ class _BottomNavigationState extends State<BottomNavigation> {
       ),
     ),
     KnowledgePage(),
-   ChatBotHomePage(),
-    Scaffold(
-      body: Center(
-        child: Text("page must be added here"),
-      ),
-    ),
+    ChatBotHomePage(),
+    TrackerPage(),
     ProfileHomePage()
-
   ];
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
-
 
   late TutorialCoachMark tutorialCoachMark;
 
@@ -68,18 +70,15 @@ class _BottomNavigationState extends State<BottomNavigation> {
   GlobalKey keyBottomTracker = GlobalKey();
   GlobalKey keyBottomProfile = GlobalKey();
   GlobalKey keyBottomThanksForListening = GlobalKey();
-  final isShowTutorial =inject<SettingsManager>().isShowTutorial() ?? 0;
+  final isShowTutorial = inject<SettingsManager>().isShowTutorial() ?? 0;
 
   @override
   void initState() {
     super.initState();
-    if(isShowTutorial==1) {
+    if (isShowTutorial == 1) {
       modalBottomSheetApp();
     }
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -156,13 +155,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
           reverseDuration: const Duration(seconds: 1),
         ),
         builder: (BuildContext context) {
-          return  Container(
-              height: MediaQuery.of(context).size.height*0.4,
+          return Container(
+              height: MediaQuery.of(context).size.height * 0.4,
               padding: const EdgeInsets.all(20),
-              child: initialDialogTutorial(context,appStrings.tutorialTitleMsg,appStrings.tutorialSubTitleMsg));
+              child: initialDialogTutorial(context, appStrings.tutorialTitleMsg,
+                  appStrings.tutorialSubTitleMsg));
         },
       );
-
     });
   }
 
@@ -187,8 +186,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       onClickTargetWithTapPosition: (target, tapDetails) {
         print("target: $target");
         print(
-            "clicked at position local: ${tapDetails
-                .localPosition} - global: ${tapDetails.globalPosition}");
+            "clicked at position local: ${tapDetails.localPosition} - global: ${tapDetails.globalPosition}");
       },
       onClickOverlay: (target) {
         print('onClickOverlay: $target');
@@ -199,19 +197,25 @@ class _BottomNavigationState extends State<BottomNavigation> {
   List<TargetFocus> _createTargets() {
     List<TargetFocus> targets = [];
     targets.addAll([
-      targetFocusWidget(keyBottomCommunity,appStrings.community,appStrings.communityTutorial,appStrings.next),
-      targetFocusWidget(keyBottomKnowledge,appStrings.knowledge,appStrings.knowledgeTutorial,appStrings.next),
-      targetFocusWidget(keyBottomLiveChat,appStrings.liveChat,appStrings.liveChatTutorial,appStrings.next),
-      targetFocusWidget(keyBottomTracker,appStrings.tracker,appStrings.trackerTutorial,appStrings.next),
-      targetFocusWidget(keyBottomProfile,appStrings.profile,appStrings.profileTutorial,appStrings.next),
-      targetFocusWidget(keyBottomProfile,appStrings.thanksForListening,appStrings.finishTutorial,appStrings.finishWalkthrough),
-
+      targetFocusWidget(keyBottomCommunity, appStrings.community,
+          appStrings.communityTutorial, appStrings.next),
+      targetFocusWidget(keyBottomKnowledge, appStrings.knowledge,
+          appStrings.knowledgeTutorial, appStrings.next),
+      targetFocusWidget(keyBottomLiveChat, appStrings.liveChat,
+          appStrings.liveChatTutorial, appStrings.next),
+      targetFocusWidget(keyBottomTracker, appStrings.tracker,
+          appStrings.trackerTutorial, appStrings.next),
+      targetFocusWidget(keyBottomProfile, appStrings.profile,
+          appStrings.profileTutorial, appStrings.next),
+      targetFocusWidget(keyBottomProfile, appStrings.thanksForListening,
+          appStrings.finishTutorial, appStrings.finishWalkthrough),
     ]);
 
     return targets;
   }
 
-  TargetFocus targetFocusWidget(GlobalKey<State<StatefulWidget>>? keyTarget,String title,String subTitle,String? buttonText) {
+  TargetFocus targetFocusWidget(GlobalKey<State<StatefulWidget>>? keyTarget,
+      String title, String subTitle, String? buttonText) {
     return TargetFocus(
       enableTargetTab: false,
       keyTarget: keyTarget,
@@ -224,25 +228,22 @@ class _BottomNavigationState extends State<BottomNavigation> {
         TargetContent(
           align: ContentAlign.top,
           builder: (context, controller) {
-
-            return tutorialWidget(context,title,subTitle,buttonText);
-
+            return tutorialWidget(context, title, subTitle, buttonText);
           },
         ),
       ],
     );
   }
 
-  Column tutorialWidget(BuildContext context,String title,String subTitle,String? buttonText) {
+  Column tutorialWidget(
+      BuildContext context, String title, String subTitle, String? buttonText) {
     return Column(
       children: [
         ListTile(
           title: Container(
             padding: const EdgeInsets.fromLTRB(20, 20, 12, 20),
             decoration: BoxDecoration(
-              color: context
-                  .scheme()
-                  .neutralsFieldsTags,
+              color: context.scheme().neutralsFieldsTags,
               borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(Dimen.defaultRadius),
                   topLeft: Radius.circular(Dimen.defaultRadius),
@@ -253,97 +254,83 @@ class _BottomNavigationState extends State<BottomNavigation> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
-                  title, style: context.titleHeadline,),
+                  title,
+                  style: context.titleHeadline,
+                ),
                 const SizedBox(height: 10),
-
                 CustomText(
                   subTitle,
-                  style: context.subheadlineSubheadline,),
+                  style: context.subheadlineSubheadline,
+                ),
               ],
             ),
           ),
           leading: Image.asset(
-            appAssets.chatBot.path, width: 32, height: 32,),
+            appAssets.chatBot.path,
+            width: 32,
+            height: 32,
+          ),
           contentPadding: const EdgeInsets.fromLTRB(0, 12, 10, 12),
           horizontalTitleGap: 8,
         ),
-
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(width: MediaQuery
-                .of(context)
-                .size
-                .width * 0.43,
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.43,
               height: 40,
-
               child: Center(
                 child: CustomButton.outline(
-                  text:appStrings.back,
-                  textStyle: context.subheadlineSubheadlineSemibold.copyWith(
-                      color: context
-                          .scheme()
-                          .primary),
+                  text: appStrings.back,
+                  textStyle: context.subheadlineSubheadlineSemibold
+                      .copyWith(color: context.scheme().primary),
                   onPressed: () {
                     if (_selectedIndex != 4) {
-                      if(_selectedIndex==0)
-                        {
-                          tutorialCoachMark.goTo(-1);
-                        }else {
+                      if (_selectedIndex == 0) {
+                        tutorialCoachMark.goTo(-1);
+                      } else {
                         index = _selectedIndex - 1;
                         tutorialCoachMark.goTo(index);
                         _onItemTapped(index);
                       }
                     } else {
-                      if (index ==5) {
+                      if (index == 5) {
                         index = index - 1;
                         tutorialCoachMark.goTo(index);
                         _onItemTapped(index);
-                      }else if(index==4)
-                          {
-                            index = index - 1;
-                            tutorialCoachMark.goTo(index);
-                            _onItemTapped(index);
-                          }
+                      } else if (index == 4) {
+                        index = index - 1;
+                        tutorialCoachMark.goTo(index);
+                        _onItemTapped(index);
+                      }
                     }
                   },
                 ),
               ),
             ),
-            const SizedBox(
-                width: 10),
+            const SizedBox(width: 10),
             SizedBox(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width * 0.43,
+              width: MediaQuery.of(context).size.width * 0.43,
               height: 40,
               child: CustomButton.submit(
-                textStyle: context.subheadlineSubheadlineSemibold.copyWith(
-                    color: context
-                        .scheme()
-                        .whiteText),
-                text:buttonText ?? appStrings.next,
+                textStyle: context.subheadlineSubheadlineSemibold
+                    .copyWith(color: context.scheme().whiteText),
+                text: buttonText ?? appStrings.next,
                 onPressed: () {
-
-                  if(_selectedIndex!=4) {
+                  if (_selectedIndex != 4) {
                     index = _selectedIndex + 1;
                     tutorialCoachMark.goTo(index);
                     _onItemTapped(index);
-
-                  }else
-                    {
-                      if(index<5) {
-                        index=index+1;
-                        tutorialCoachMark.goTo(5);
-                        _onItemTapped(4);
-                      }else
-                        {
-                          tutorialCoachMark.goTo(-1);
-                        }
-
+                  } else {
+                    if (index < 5) {
+                      index = index + 1;
+                      tutorialCoachMark.goTo(5);
+                      _onItemTapped(4);
+                    } else {
+                      tutorialCoachMark.goTo(-1);
                     }
+                  }
                 },
               ),
             ),
@@ -353,16 +340,15 @@ class _BottomNavigationState extends State<BottomNavigation> {
     );
   }
 
-  Column initialDialogTutorial(BuildContext context,String title,String subTitle) {
+  Column initialDialogTutorial(
+      BuildContext context, String title, String subTitle) {
     return Column(
       children: [
         ListTile(
           title: Container(
             padding: const EdgeInsets.fromLTRB(20, 20, 12, 20),
             decoration: BoxDecoration(
-              color: context
-                  .scheme()
-                  .neutralsFieldsTags,
+              color: context.scheme().neutralsFieldsTags,
               borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(Dimen.defaultRadius),
                   topLeft: Radius.circular(Dimen.defaultRadius),
@@ -373,51 +359,46 @@ class _BottomNavigationState extends State<BottomNavigation> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
-                  title, style: context.titleHeadline,),
+                  title,
+                  style: context.titleHeadline,
+                ),
                 const SizedBox(height: 10),
-
                 CustomText(
                   subTitle,
-                  style: context.subheadlineSubheadline,),
+                  style: context.subheadlineSubheadline,
+                ),
               ],
             ),
           ),
           leading: Image.asset(
-            appAssets.chatBot.path, width: 32, height: 32,),
+            appAssets.chatBot.path,
+            width: 32,
+            height: 32,
+          ),
           contentPadding: const EdgeInsets.fromLTRB(0, 12, 10, 12),
           horizontalTitleGap: 8,
         ),
         Row(
           children: [
-            SizedBox(width: MediaQuery
-                .of(context)
-                .size
-                .width * 0.4,
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.4,
               child: Center(
                 child: CustomButton.outline(
                   text: appStrings.noThanks,
-                  textStyle: context.subheadlineSubheadlineSemibold.copyWith(
-                      color: context
-                          .scheme()
-                          .primary),
+                  textStyle: context.subheadlineSubheadlineSemibold
+                      .copyWith(color: context.scheme().primary),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                 ),
               ),
             ),
-            const SizedBox(
-                width: 20),
+            const SizedBox(width: 20),
             SizedBox(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width * 0.4,
+              width: MediaQuery.of(context).size.width * 0.4,
               child: CustomButton.submit(
-                textStyle: context.subheadlineSubheadlineSemibold.copyWith(
-                    color: context
-                        .scheme()
-                        .whiteText),
+                textStyle: context.subheadlineSubheadlineSemibold
+                    .copyWith(color: context.scheme().whiteText),
                 text: appStrings.yesPlease,
                 onPressed: () {
                   Navigator.pop(context);
@@ -432,4 +413,3 @@ class _BottomNavigationState extends State<BottomNavigation> {
     );
   }
 }
-

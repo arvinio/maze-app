@@ -41,7 +41,10 @@ dependencies:
   grouped_list: ^6.0.0
   sentry_flutter: ^8.7.0
   sentry_logging: ^8.0.0
+
+  fl_chart: ^0.68.0
   tutorial_coach_mark: ^1.2.11
+  intl: ^0.19.0
   
   
 
@@ -66,6 +69,7 @@ flutter:
      - assets/
      - assets/images/
      - assets/icons/
+     - assets/icons/tracker/
      - assets/images/intro/
      
   fonts:

@@ -13,26 +13,31 @@ class ExpireTokenInterceptor implements Interceptor {
   final EncryptHelper encryptHelper;
 
   @override
-  Future<void> onError(DioException dioError, ErrorInterceptorHandler handler) async {
+  Future<void> onError(
+      DioException dioError, ErrorInterceptorHandler handler) async {
     handler.next(dioError);
   }
 
   @override
-  Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    Map<String, String> currentHeader = Map<String, String>.from(options.headers);
-      TokenManager tokenManager = inject();
-      String? validToken = await tokenManager.getToken();
-      if (validToken!.isNotEmpty) {
-        String token = 'Bearer $validToken';
-        currentHeader['Authorization'] = token;
+  Future<void> onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
+    Map<String, String> currentHeader =
+        Map<String, String>.from(options.headers);
+    TokenManager tokenManager = inject();
+    String? validToken = await tokenManager.getToken();
+    if (validToken!.isNotEmpty) {
+      String token = 'Bearer $validToken';
+      currentHeader['Authorization'] = token;
 
-        options.headers = currentHeader;
-        handler.next(options);
-      } else {
-        var dioErr = DioException(error: const ServerError('server err'), requestOptions: options, response: null);
+      options.headers = currentHeader;
+      handler.next(options);
+    } else {
+      var dioErr = DioException(
+          error: const ServerError('server err'),
+          requestOptions: options,
+          response: null);
 
-        handler.reject(dioErr);
-
+      handler.reject(dioErr);
     }
   }
 

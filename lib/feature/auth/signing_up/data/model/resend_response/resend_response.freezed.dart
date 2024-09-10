@@ -22,8 +22,6 @@ ResendResponse _$ResendResponseFromJson(Map<String, dynamic> json) {
 mixin _$ResendResponse {
   @JsonKey(name: "userId")
   String? get userId => throw _privateConstructorUsedError;
-  @JsonKey(name: "message")
-  String? get message => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,9 +35,7 @@ abstract class $ResendResponseCopyWith<$Res> {
           ResendResponse value, $Res Function(ResendResponse) then) =
       _$ResendResponseCopyWithImpl<$Res, ResendResponse>;
   @useResult
-  $Res call(
-      {@JsonKey(name: "userId") String? userId,
-      @JsonKey(name: "message") String? message});
+  $Res call({@JsonKey(name: "userId") String? userId});
 }
 
 /// @nodoc
@@ -56,16 +52,11 @@ class _$ResendResponseCopyWithImpl<$Res, $Val extends ResendResponse>
   @override
   $Res call({
     Object? userId = freezed,
-    Object? message = freezed,
   }) {
     return _then(_value.copyWith(
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -79,9 +70,7 @@ abstract class _$$ResendResponseImplCopyWith<$Res>
       __$$ResendResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: "userId") String? userId,
-      @JsonKey(name: "message") String? message});
+  $Res call({@JsonKey(name: "userId") String? userId});
 }
 
 /// @nodoc
@@ -96,16 +85,11 @@ class __$$ResendResponseImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? userId = freezed,
-    Object? message = freezed,
   }) {
     return _then(_$ResendResponseImpl(
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -114,9 +98,7 @@ class __$$ResendResponseImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ResendResponseImpl implements _ResendResponse {
-  const _$ResendResponseImpl(
-      {@JsonKey(name: "userId") this.userId,
-      @JsonKey(name: "message") this.message});
+  const _$ResendResponseImpl({@JsonKey(name: "userId") this.userId});
 
   factory _$ResendResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$ResendResponseImplFromJson(json);
@@ -124,13 +106,10 @@ class _$ResendResponseImpl implements _ResendResponse {
   @override
   @JsonKey(name: "userId")
   final String? userId;
-  @override
-  @JsonKey(name: "message")
-  final String? message;
 
   @override
   String toString() {
-    return 'ResendResponse(userId: $userId, message: $message)';
+    return 'ResendResponse(userId: $userId)';
   }
 
   @override
@@ -138,13 +117,12 @@ class _$ResendResponseImpl implements _ResendResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ResendResponseImpl &&
-            (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.userId, userId) || other.userId == userId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, userId, message);
+  int get hashCode => Object.hash(runtimeType, userId);
 
   @JsonKey(ignore: true)
   @override
@@ -163,8 +141,7 @@ class _$ResendResponseImpl implements _ResendResponse {
 
 abstract class _ResendResponse implements ResendResponse {
   const factory _ResendResponse(
-      {@JsonKey(name: "userId") final String? userId,
-      @JsonKey(name: "message") final String? message}) = _$ResendResponseImpl;
+      {@JsonKey(name: "userId") final String? userId}) = _$ResendResponseImpl;
 
   factory _ResendResponse.fromJson(Map<String, dynamic> json) =
       _$ResendResponseImpl.fromJson;
@@ -172,9 +149,6 @@ abstract class _ResendResponse implements ResendResponse {
   @override
   @JsonKey(name: "userId")
   String? get userId;
-  @override
-  @JsonKey(name: "message")
-  String? get message;
   @override
   @JsonKey(ignore: true)
   _$$ResendResponseImplCopyWith<_$ResendResponseImpl> get copyWith =>
