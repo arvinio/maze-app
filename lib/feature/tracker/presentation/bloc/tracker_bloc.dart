@@ -27,6 +27,7 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
   int wasteRecycled = 0;
   bool hasCompost = false;
   bool hasLandfill = false;
+
   var bins = <Bin>[];
 
   TrackerBloc(this.repo) : super(const TrackerState.initial()) {
