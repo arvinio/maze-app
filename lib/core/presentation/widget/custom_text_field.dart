@@ -495,7 +495,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         break;
     }
     return CustomOutlineInputBorder(
-      borderRadius: BorderRadius.circular(Dimen.defaultRadius),
+      borderRadius: BorderRadius.circular(widget.borderRadius ?? Dimen.defaultRadius),
         borderSide: BorderSide(color: widget.borderColor ?? borderColor, width: widget.borderWidth ?? width),
        );
 

@@ -13,6 +13,11 @@ class StringsBase {
   String get yesterday => 'ِِYesterday';
   String get older => 'Older';
   String get emptyList => 'No data available';
+  String get options => 'Options';
+  String get create => 'Create';
+  String get edit => 'Edit';
+  String get delete => 'Delete';
+
 
   //SignUp
   String get mazeComposting => 'Maze Composting';
@@ -121,15 +126,23 @@ class StringsBase {
   String get verifyNewEmail => 'Verify New Email';
   String get notPublicShow => 'Your full name and birthday isn’t shown publicly';
   String get detailsPublicProfile => 'These details will be shown on your public profile';
-  String get profileUpdatedMsg => 'Profile successfully updated';
-  String get householdUpdatedMsg => 'Your household successfully updated';
-  String get yourDetailsUpdatedMsg => 'your Details successfully updated';
-  String get reportSendMsg => 'Report successfully sent';
+  String get profileUpdatedMsg => 'Profile updated successfully';
+  String get householdUpdatedMsg => 'Information updated successfully';
+  String get yourDetailsUpdatedMsg => 'Information updated successfully';
+  String get reportSendMsg => 'Report sent successfully';
 
   //chatbot
   String get chatHomeTitle => 'Messages';
   String get newChat => 'New chat';
   String get faqTitle => 'FAQ';
+  String get newFaq => 'New FAQ';
+  String get updateFaq => 'Update FAQ';
+  String get createFaq => 'Create FAQ';
+  String get deleteFaq => 'Delete FAQ';
+  String get question => 'Question';
+  String get answer => 'Answer';
+  String get faqCreatedMsg => 'FAQ created successfully';
+  String get faqUpdatedMsg => 'FAQ updated successfully';
   String get faqSubTitle => 'View common questions';
   String get chatBotTitle => 'Chat Bot';
   String get message => 'Message';

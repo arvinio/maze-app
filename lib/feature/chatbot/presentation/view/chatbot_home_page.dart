@@ -14,13 +14,15 @@ import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/chatbot/data/model/chat_history/chat_history_response.dart';
-import 'package:maze_app/feature/chatbot/data/model/faq/faq_response.dart';
+import 'package:maze_app/feature/chatbot/data/model/faq_response/faq_response.dart';
 import 'package:maze_app/feature/chatbot/presentation/bloc/chat_bot_bloc.dart';
-import 'package:maze_app/feature/chatbot/presentation/view/faq/faq_page.dart';
 import 'package:intl/intl.dart';
 
 import 'package:grouped_list/grouped_list.dart';
 import 'package:maze_app/feature/chatbot/presentation/widgets/chat_history_widget.dart';
+
+import 'package:maze_app/feature/chatbot/presentation/view/faq/presentation/view/faq_page.dart';
+
 
 
 @RoutePage()

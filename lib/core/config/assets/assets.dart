@@ -15,6 +15,8 @@ class AssetsBase {
   AssetSvg get eyeOff => const AssetSvg('assets/icons/eye-off.svg');
   AssetSvg get profile1 => const AssetSvg('assets/images/profile.svg');
   AssetSvg get profile => const AssetSvg('assets/icons/profile.png');
+  AssetSvg get delete => const AssetSvg('assets/icons/delete.svg');
+  AssetSvg get logoPng => const AssetSvg('assets/icons/logo.png');
   // Bottom nav icons
   AssetSvg get profileIcon => const AssetSvg(
         'assets/icons/profile-icon.svg',
