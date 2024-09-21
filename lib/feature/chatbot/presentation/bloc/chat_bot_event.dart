@@ -4,5 +4,4 @@ part of 'chat_bot_bloc.dart';
 class ChatBotEvent with _$ChatBotEvent{
   const factory ChatBotEvent.init() = _Init;
   const factory ChatBotEvent.fetchChatHistoryListEvent() = _FetchChatHistoryListEvent;
-  const factory ChatBotEvent.fetchFaqListEvent() = _FetchFaqListEvent;
 }

@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final faqResponse = faqResponseFromJson(jsonString);
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
 
@@ -11,8 +15,10 @@ String faqResponseToJson(FaqResponse data) => json.encode(data.toJson());
 @freezed
 class FaqResponse with _$FaqResponse {
   const factory FaqResponse({
+    @JsonKey(name: "success")
+    bool? success,
     @JsonKey(name: "result")
-    List<FaqResult>? result,
+    FaqResult? result,
   }) = _FaqResponse;
 
   factory FaqResponse.fromJson(Map<String, dynamic> json) => _$FaqResponseFromJson(json);
