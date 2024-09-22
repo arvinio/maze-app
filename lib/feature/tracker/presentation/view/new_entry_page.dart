@@ -15,16 +15,22 @@ import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
+import 'package:maze_app/feature/tracker/domain/entity/compost_use.dart';
 import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
+import 'package:maze_app/feature/tracker/domain/entity/what_did_add.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/compost_use_sheet.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/custom_container_list.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/custome_items.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/feed_filter_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/get_entry_type_icon.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/what_did_add_selection_sheet.dart';
 
 @RoutePage()
 class NewEntryPage extends StatefulWidget implements AutoRouteWrapper {
   const NewEntryPage({super.key, required this.bin});
+  // const NewEntryPage.edit({super.key, required this.bin});
   final Bin bin;
 
   @override
@@ -173,9 +179,9 @@ class _NewEntryPageState extends State<NewEntryPage> {
             SizedBox(
               height: 15.h,
             ),
-            CustomContainerList(children: [
+            CustomContainerList(height: _getEntrySelectionHeight, children: [
               CustomeItem(
-                title: _entryType.toString().replaceFirst('-', ' '),
+                title: _entryType.displayText,
                 height: 60.h,
                 func: () {
                   openModalBottomSheet(context, entrySelection(context).$1,
@@ -397,20 +403,91 @@ class _NewEntryPageState extends State<NewEntryPage> {
     );
   }
 
+// Example function to open the CompostSelectionSheet and handle the result
+
+// Define _selectedItems to store the result
+  List<WhatDidAddItem> _selectedItems = [];
+  List<CompostUseItem> _selectedCompostUseItems = [];
+  bool _didYouMixit = false;
+
   List<Widget> showEntryRelatedWidgets() {
-    switch (_entryType) {
-      case EntryType.emptiedCompost:
-      case EntryType.addedWaste:
-        return [];
-      case EntryType.emptiedBin:
-      case EntryType.generalNote:
-      default:
-        return [];
+    if (widget.bin.type == BinType.compost) {
+      switch (_entryType) {
+        case EntryType.emptiedCompost:
+          return [
+            CustomeItem(
+              title: 'Compost use',
+              height: 60.h,
+              func: () async {
+                final List<CompostUseItem>? result = await openModalBottomSheet(
+                    context,
+                    CompostUseSheet(
+                      selectedItems: _selectedCompostUseItems,
+                    ),
+                    height: 500.h,
+                    hasHeader: false);
+                if (result != null) {
+                  // Handle the selected items
+                  setState(() {
+                    _selectedCompostUseItems = result;
+                  });
+                }
+              },
+              trailing: const Icon(Icons.arrow_drop_down_rounded),
+            ),
+          ];
+        case EntryType.addedWaste:
+          return [
+            CustomeItem(
+              title: 'What did you add?',
+              height: 60.h,
+              func: () async {
+                final List<WhatDidAddItem>? result = await openModalBottomSheet(
+                    context,
+                    WhatDidYouAddSheet(
+                      selectedItems: _selectedItems,
+                    ),
+                    height: 650.h,
+                    hasHeader: false);
+                if (result != null) {
+                  // Handle the selected items
+                  setState(() {
+                    _selectedItems = result;
+                  });
+                }
+              },
+              trailing: const Icon(Icons.arrow_drop_down_rounded),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 5.dg),
+              child: ListTile(
+                  title: CustomText('Did you mix it?'),
+                  subtitle: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.dg),
+                    child: CustomText(_didYouMixit ? 'Yes' : 'No'),
+                  ),
+                  trailing: Switch.adaptive(
+                    value: _didYouMixit,
+                    onChanged: (value) {
+                      setState(() {
+                        _didYouMixit = value;
+                      });
+                    },
+                  )),
+            )
+          ];
+        case EntryType.emptiedBin:
+        case EntryType.generalNote:
+        default:
+          return [];
+      }
+    } else {
+      return [];
     }
   }
 
   (CustomContainerList, double) entrySelection(BuildContext context) {
-    if (widget.bin.type == BinType.organic) {
+    if (widget.bin.type == BinType.compost) {
       return (
         CustomContainerList(
           height: 200.h,
@@ -485,8 +562,12 @@ class _NewEntryPageState extends State<NewEntryPage> {
     );
   }
 
-  Future<dynamic> openModalBottomSheet(BuildContext context, Widget child,
-      {double? height}) {
+  Future<dynamic> openModalBottomSheet(
+    BuildContext context,
+    Widget child, {
+    double? height,
+    bool hasHeader = true,
+  }) {
     return showModalBottomSheet(
       isScrollControlled: true,
       backgroundColor: context.scheme().neutralsBackground,
@@ -504,11 +585,13 @@ class _NewEntryPageState extends State<NewEntryPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ExitButton(),
-                  CustomText('Entry type'),
-                  SizedBox(
-                    width: 70.w,
-                  ),
+                  if (hasHeader) ...[
+                    const ExitButton(),
+                    CustomText('Entry type'),
+                    SizedBox(
+                      width: 70.w,
+                    ),
+                  ]
                 ],
               ),
               child,
@@ -550,4 +633,13 @@ class _NewEntryPageState extends State<NewEntryPage> {
     centerAlignModePicker: true,
     customModePickerIcon: const SizedBox(),
   );
+
+  double get _getEntrySelectionHeight {
+    if (widget.bin.type == BinType.compost) {
+      if (_entryType == EntryType.addedWaste) return 200.h;
+      if (_entryType == EntryType.emptiedCompost) return 150.h;
+    }
+
+    return 60.h;
+  }
 }

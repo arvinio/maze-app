@@ -122,7 +122,7 @@ abstract class _$AppRouter extends RootStackRouter {
     ChatBotHomePageRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: WrappedRoute(child: const ChatBotHomePage()),
+        child: const ChatBotHomePage(),
       );
     },
     ChatPageRoute.name: (routeData) {
