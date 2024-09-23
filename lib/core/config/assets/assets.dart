@@ -94,6 +94,29 @@ class AssetsBase {
       const AssetSvg('assets/icons/tracker/add_waste_icon.svg');
   AssetSvg get calendarIcon =>
       const AssetSvg('assets/icons/tracker/calendar-icon.svg');
+
+
+
+  //Community
+  AssetSvg get create => const AssetSvg('assets/icons/community/create.svg');
+  AssetSvg get photoClose => const AssetSvg('assets/icons/community/photo_close.svg');
+  AssetSvg get searchNormal => const AssetSvg('assets/icons/community/search_normal.svg');
+  AssetSvg get recycleBin => const AssetSvg('assets/icons/community/recycle-bin.png');
+  AssetSvg get banner => const AssetSvg('assets/icons/community/community_banner.png');
+  AssetSvg get closeCircle => const AssetSvg('assets/icons/community/close-circle.svg');
+  AssetSvg get friendsAvatar => const AssetSvg('assets/icons/community/avatar.png');
+  AssetSvg get notify => const AssetSvg('assets/icons/community/notify.svg');
+  AssetSvg get community => const AssetSvg('assets/icons/community/community_icon.svg');
+  AssetSvg get createCommunity => const AssetSvg('assets/icons/community/create_community.svg');
+  AssetSvg get createCommunityPng => const AssetSvg('assets/icons/community/create_community.png');
+  AssetSvg get streaks => const AssetSvg('assets/icons/community/streaks.svg');
+  AssetSvg get tracking => const AssetSvg('assets/icons/community/tracking.svg');
+  AssetSvg get communitiesBg => const AssetSvg('assets/icons/community/maze-communities-bg.png');
+  AssetSvg get dislike => const AssetSvg('assets/icons/community/dislike.svg');
+  AssetSvg get report => const AssetSvg('assets/icons/community/flag.svg');
+  AssetSvg get noImage => const AssetSvg('assets/icons/community/no_image.svg');
+
+
 }
 
 class AssetImage {

@@ -12,6 +12,7 @@ import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/chatbot/presentation/view/chatBot_home_page.dart';
+import 'package:maze_app/feature/community/presentation/view/community_home_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/profile_home_page.dart';
 import 'package:maze_app/feature/knowledge/presentation/knowledge/cubit/knowledge_cubit.dart';
 import 'package:maze_app/feature/knowledge/presentation/knowledge/view/knowledge_page.dart';
@@ -46,11 +47,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int index = 0;
 
   static const List<Widget> _pages = <Widget>[
-    Scaffold(
-      body: Center(
-        child: Text("page must be added here"),
-      ),
-    ),
+    CommunityHomePage(),
     KnowledgePage(),
     ChatBotHomePage(),
     TrackerPage(),

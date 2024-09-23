@@ -71,7 +71,8 @@ flutter:
      - assets/icons/
      - assets/icons/tracker/
      - assets/images/intro/
-     
+     - assets/icons/community/
+
   fonts:
     - family: Urbanist
       fonts:

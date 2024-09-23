@@ -175,6 +175,43 @@ class StringsBase {
   String get profile =>'Profile';
   String get thanksForListening =>'Thanks for listening ';
 
+  // Community
+  String get newPost => 'New post';
+  String get post => 'Post';
+  String get wherePost => 'Where do you want to post this?';
+  String get titleOfPost => 'Title of post';
+  String get postTo => 'Post to';
+  String get findOtherCommunities=> 'Find other Communities';
+  String get postSent => 'Post sent!';
+  String get postSuccessMsg => 'Thanks for using Maze Composting';
+  String get newCommunity => 'New community';
+  String get newCommunitySubTitle => 'Enter in the details below to create your own community.';
+  String get communityName => 'Community name';
+  String get descriptionYourCommunity => 'Description of your community';
+  String get groupType => 'Group type';
+  String get skip => 'Skip';
+  String get communityBannerTitle => 'Community banner\n and profile';
+  String get communityBannerSubTitle => 'Customise your community, by adding a \nbanner and profile picture.';
+  String get inviteFriendsTitle => 'Invite friends';
+  String get inviteFriendsSubTitle => 'Customise your community, by adding a \nbanner and profile picture.';
+  String get emailUsername => 'Email, username';
+  String get inviteCommunityButton => 'Invite and create community';
+  String get communityCreated => 'Community created!';
+  String get communityStarted => 'Let’s get this party started';
+  String get publicTitle => 'Public';
+  String get publicSubTitle => 'Anyone can join your group';
+  String get privateTitle => 'Private';
+  String get privateSubTitle => 'Only people you invite can join the group';
+  String get members => 'Members';
+  String get myCommunities => 'My Communities';
+  String get communities => 'Communities';
+  String get maze => 'Maze';
+  String get streaks => 'Streaks';
+  String get tracking => 'Tracking';
+  String get follow => 'Follow';
+  String get notInterested => 'Not interested';
+  String get report => 'Report';
+
 
 
 
