@@ -104,6 +104,11 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
               } else   if (state.communityStatus.isOtherCommunitiesSuccess) {
                 otherCommunities!.clear();
                 otherCommunities!.addAll(state.otherCommunities!.details!);
+                if(otherCommunities!.isNotEmpty) {
+                  context.read<CommunityBloc>().add(
+                      CommunityEvent.getCommunityDetailsEvent(
+                          id: otherCommunities![0].id!));
+                }
 
               } else if (state.communityStatus.isFailure || state.communityStatus.isMyCommunityFailure
                   || state.communityStatus.isOtherCommunitiesFailure  ) {
@@ -264,31 +269,7 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
               .width * 0.9,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                InkWell(
-                  onTap: (){
-
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        width: 74,
-                        height: 74,
-                        decoration: BoxDecoration(
-                            color: const Color(0xffEDEEF0),
-                            borderRadius: BorderRadius.circular(
-                                Dimen.defaultRadius),
-                            image: DecorationImage(image: ExactAssetImage(
-                                appAssets.logoPng.path))),
-                      ),
-                      CustomText(appStrings.maze)
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 20,),
-                ListView.separated(
+            child: ListView.separated(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemCount: otherCommunities!.length,
@@ -305,8 +286,7 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
                   },
 
                 ),
-              ],
-            ),
+
           ),
         ),
 
