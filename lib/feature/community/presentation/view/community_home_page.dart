@@ -280,7 +280,8 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
                             color: const Color(0xffEDEEF0),
                             borderRadius: BorderRadius.circular(
                                 Dimen.defaultRadius),
-                            image: DecorationImage(image: ExactAssetImage(appAssets.logoPng.path))),
+                            image: DecorationImage(image: ExactAssetImage(
+                                appAssets.logoPng.path))),
                       ),
                       CustomText(appStrings.maze)
                     ],
@@ -293,7 +294,7 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
                   itemCount: otherCommunities!.length,
                   itemBuilder: (BuildContext context, int index) {
                     return _communityItem(
-                        context:context,
+                      context: context,
                       isMyCommunity: false,
                       details: otherCommunities[index],
 
@@ -312,46 +313,62 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
         Stack(
           children: [
             Container(
-              padding:const EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 20),
               height: 238,
               decoration: BoxDecoration(
-                  color: const Color(0xffEDEEF0),
-                  borderRadius: BorderRadius.circular(Dimen.defaultRadius),
-                  image: DecorationImage(fit: BoxFit.fill,
-                      image:details!=null?NetworkImage(details!.cover!): ExactAssetImage(appAssets.communitiesBg.path)),
+                color: const Color(0xffEDEEF0),
+                borderRadius: BorderRadius.circular(Dimen.defaultRadius),
+                image: DecorationImage(fit: BoxFit.fill,
+                    image: (details != null && details!.cover != null)
+                        ? NetworkImage(details!.cover!)
+                        : ExactAssetImage(appAssets.communitiesBg.path)),
               ),
               child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(height: 70,
-                      margin: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: const Color(0xff0404044d).withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    child:  ListTile(
-                      title: CustomText(appStrings.maze,style: context.titleTitle3.copyWith(color: context.scheme().neutralsBackground),),
-                      subtitle: CustomText('${details!=null?details!.memberCount!:0} Members',style: context.footnoteFootnote.copyWith(color:const Color(0xffF2F2F7)),),
-                      trailing: SizedBox(width:74,height:36,child: CustomButton.submit(text: appStrings.follow,borderRadius: 100, onPressed: (){})),
+                    margin: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: const Color(0xff0404044d).withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ListTile(
+                      title: CustomText(appStrings.maze,
+                        style: context.titleTitle3.copyWith(color: context
+                            .scheme()
+                            .neutralsBackground),),
+                      subtitle: CustomText('${details != null
+                          ? details!.memberCount!
+                          : 0} Members',
+                        style: context.footnoteFootnote.copyWith(
+                            color: const Color(0xffF2F2F7)),),
+                      trailing: SizedBox(width: 74,
+                          height: 36,
+                          child: CustomButton.submit(text: appStrings.follow,
+                              borderRadius: 100,
+                              onPressed: () {})),
                     ),
                   )),
             ),
             Align(alignment: Alignment.topRight,
-            child: InkWell(
-              onTap: (){},
-              child: Container(
-                margin: const EdgeInsets.only(top:20,right: 20),
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                      borderRadius:BorderRadius.circular(50),
-                      color: context.scheme().neutralsBackground.withOpacity(0.3)
-                  ),
-                  child: InkWell(child: appAssets.more.svg(),
-                  onTap: (){
-                    _showLikeReportCommunityDialog(context);
-                  },
-                  )),
-            ),
+              child: InkWell(
+                onTap: () {},
+                child: Container(
+                    margin: const EdgeInsets.only(top: 20, right: 20),
+                    width: 24,
+                    height: 24,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: context
+                            .scheme()
+                            .neutralsBackground
+                            .withOpacity(0.3)
+                    ),
+                    child: InkWell(child: appAssets.more.svg(),
+                      onTap: () {
+                        _showLikeReportCommunityDialog(context);
+                      },
+                    )),
+              ),
             )
           ],
         ),
