@@ -6,6 +6,7 @@ import 'package:maze_app/feature/account_info/domain/entity/user_info.dart';
 import 'package:maze_app/feature/account_info/presentation/view/account_details/account_details_page.dart';
 import 'package:maze_app/feature/chatbot/presentation/view/chat/presentation/view/chat_page.dart';
 import 'package:maze_app/feature/community/presentation/view/community_home_page.dart';
+import 'package:maze_app/feature/community/presentation/view/view_post/view/view_post_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/about/about_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/change_password/change_password_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/change_password/current_password_page.dart';
@@ -106,5 +107,6 @@ class AppRouter extends _$AppRouter {
     AutoRoute(path: '/BinDetailsPage', page: BinDetailsPageRoute.page),
     AutoRoute(path: '/NewEntryPage', page: NewEntryPageRoute.page),
     AutoRoute(path: '/CommunityHomePage', page:CommunityHomePageRoute.page),
+    AutoRoute(path: '/ViewPostPage', page:ViewPostPageRoute.page),
   ];
 }

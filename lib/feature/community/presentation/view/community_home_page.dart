@@ -10,10 +10,8 @@ import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
 import 'package:maze_app/core/presentation/widget/custom_button.dart';
-import 'package:maze_app/core/presentation/widget/custom_menu_items.dart';
 import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
-import 'package:maze_app/core/presentation/widget/menu_dialog_content.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
@@ -270,22 +268,22 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: ListView.separated(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: otherCommunities!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return _communityItem(
-                      context: context,
-                      isMyCommunity: false,
-                      details: otherCommunities[index],
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: otherCommunities!.length,
+              itemBuilder: (BuildContext context, int index) {
+                return _communityItem(
+                  context: context,
+                  isMyCommunity: false,
+                  details: otherCommunities[index],
 
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(width: 15,);
-                  },
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(width: 15,);
+              },
 
-                ),
+            ),
 
           ),
         ),
@@ -312,7 +310,8 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: ListTile(
-                      title: CustomText(appStrings.maze,
+                      title: CustomText(
+                        details != null ? details!.name! : appStrings.maze,
                         style: context.titleTitle3.copyWith(color: context
                             .scheme()
                             .neutralsBackground),),
@@ -321,35 +320,17 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
                           : 0} Members',
                         style: context.footnoteFootnote.copyWith(
                             color: const Color(0xffF2F2F7)),),
-                      trailing: SizedBox(width: 74,
-                          height: 36,
-                          child: CustomButton.submit(text: appStrings.follow,
-                              borderRadius: 100,
-                              onPressed: () {})),
+                      trailing: Visibility(
+                        visible: details != null,
+                        child: SizedBox(width: 74,
+                            height: 36,
+                            child: CustomButton.submit(text: appStrings.follow,
+                                borderRadius: 100,
+                                onPressed: () {})),
+                      ),
                     ),
                   )),
             ),
-            Align(alignment: Alignment.topRight,
-              child: InkWell(
-                onTap: () {},
-                child: Container(
-                    margin: const EdgeInsets.only(top: 20, right: 20),
-                    width: 24,
-                    height: 24,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: context
-                            .scheme()
-                            .neutralsBackground
-                            .withOpacity(0.3)
-                    ),
-                    child: InkWell(child: appAssets.more.svg(),
-                      onTap: () {
-                        _showLikeReportCommunityDialog(context);
-                      },
-                    )),
-              ),
-            )
           ],
         ),
       ],
@@ -360,7 +341,7 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
     return  InkWell(
       onTap: (){
         isMyCommunity!
-            ? context.pushRoute( ProfileHomePageRoute())
+            ? context.pushRoute(ViewPostPageRoute())
             :context.read<CommunityBloc>().add(CommunityEvent.getCommunityDetailsEvent(id:details!.id!));
       },
       child: Column(
@@ -414,46 +395,4 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
       ),
     );
   }
-}
-
-
-void _showLikeReportCommunityDialog(BuildContext context) {
-  showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (builder) {
-        return MenuDialogContent(
-          header: appStrings.options,
-          dialogHeightPercent: 0.35,
-          child: Column(children: [
-            CustomMenuItems(
-              title: appStrings.notInterested,
-
-              leading: appAssets.dislike.svg(),
-              onTap: () {
-              },
-            ),
-            Divider(
-              height: 1,
-              thickness: 1,
-              color: context
-                  .scheme()
-                  .neutralsBorderDivider,
-              indent: 60,
-              endIndent: 30,
-            ),
-            CustomMenuItems(
-              title: appStrings.report,
-              titleColor: context
-                  .scheme()
-                  .error,
-              leading: appAssets.report.svg(),
-              onTap: () {},
-            ),
-
-          ],),
-        );
-      });
-  // else toast
 }

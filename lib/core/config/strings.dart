@@ -211,6 +211,11 @@ class StringsBase {
   String get follow => 'Follow';
   String get notInterested => 'Not interested';
   String get report => 'Report';
+  String get share => 'Share';
+  String get comments => 'Comments';
+  String get comment => 'Comment';
+  String get reportUser => 'Report user';
+  String get muteUser => 'Mute user';
 
 
 

@@ -115,6 +115,9 @@ class AssetsBase {
   AssetSvg get dislike => const AssetSvg('assets/icons/community/dislike.svg');
   AssetSvg get report => const AssetSvg('assets/icons/community/flag.svg');
   AssetSvg get noImage => const AssetSvg('assets/icons/community/no_image.svg');
+  AssetSvg get share => const AssetSvg('assets/icons/community/share.svg');
+  AssetSvg get heart => const AssetSvg('assets/icons/community/heart.svg');
+  AssetSvg get mute => const AssetSvg('assets/icons/community/mute.svg');
 
 
 }
