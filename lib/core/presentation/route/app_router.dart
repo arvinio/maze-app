@@ -93,8 +93,6 @@ class AppRouter extends _$AppRouter {
         path: '/CurrentPasswordPage', page: CurrentPasswordPageRoute.page),
     AutoRoute(path: '/ChatBotHomePage', page: ChatBotHomePageRoute.page),
     AutoRoute(path: '/ChatPage', page: ChatPageRoute.page),
-    AutoRoute(
-        path: '/AccountSettingsPage', page: AccountSettingsPageRoute.page),
     AutoRoute(path: '/BinDetailsPage', page: BinDetailsPageRoute.page),
     AutoRoute(path: '/NewEntryPage', page: NewEntryPageRoute.page),
     AutoRoute(path: '/CommunityHomePage', page:CommunityHomePageRoute.page),
