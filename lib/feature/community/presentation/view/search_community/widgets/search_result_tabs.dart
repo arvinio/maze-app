@@ -35,6 +35,7 @@ class SearchResultTabs extends StatelessWidget {
               splashBorderRadius: borderRadius,
               splashFactory: InkSplash.splashFactory,
               indicatorSize: TabBarIndicatorSize.tab,
+              unselectedLabelColor: context.scheme().tertiaryText,
               indicator: BoxDecoration(
                 borderRadius: borderRadius,
                 border: Border.all(
