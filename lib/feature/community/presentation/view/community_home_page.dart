@@ -326,7 +326,9 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
                             height: 36,
                             child: CustomButton.submit(text: appStrings.follow,
                                 borderRadius: 100,
-                                onPressed: () {})),
+                                onPressed: () {
+                              context.pushRoute(ViewCommunityPageRoute(communityDetails: details!));
+                                })),
                       ),
                     ),
                   )),
@@ -341,7 +343,7 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
     return  InkWell(
       onTap: (){
         isMyCommunity!
-            ? context.pushRoute(ViewPostPageRoute())
+            ? context.pushRoute(ViewCommunityPageRoute(communityDetails: details, isOwnCommunity: true))
             :context.read<CommunityBloc>().add(CommunityEvent.getCommunityDetailsEvent(id:details!.id!));
       },
       child: Column(

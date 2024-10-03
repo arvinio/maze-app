@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maze_app/core/presentation/widget/custom_text.dart';
@@ -24,7 +23,7 @@ class CustomMenuItems extends StatelessWidget {
       title: CustomText(title, style: context.bodyBody),
       tileColor: titleColor,
       subtitle:subTitle,
-      leading: SizedBox(width: 24, height: 64, child: leading),
+      leading: leading != null ? SizedBox(width: 24, height: 64, child: leading) : null,
       trailing: SizedBox(width: 24, height: 64, child: trailing),
       contentPadding: const EdgeInsets.only(left: 20,top: 10,bottom: 10),
     );

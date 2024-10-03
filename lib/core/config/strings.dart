@@ -209,13 +209,25 @@ class StringsBase {
   String get streaks => 'Streaks';
   String get tracking => 'Tracking';
   String get follow => 'Follow';
+  String get following => 'Following';
   String get notInterested => 'Not interested';
   String get report => 'Report';
+  String get communityPost => 'Community Posts';
+  String get leaderBoard => 'Leaderboard';
+  String get leaderBoardTitle => 'Leader board';
   String get share => 'Share';
+  String get wasteSaved => 'Waste Saved';
+  String get compostMade => 'Compost Made';
   String get comments => 'Comments';
   String get comment => 'Comment';
   String get reportUser => 'Report user';
   String get muteUser => 'Mute user';
+  String get networkError => 'We got an error! Please Try Again.';
+  String get listIsEmpty => 'the current list is empty';
+  String get deleteCommunity => 'Delete Community';
+  String get editCommunity => 'Edit Community';
+  String get editCommunityProfile => 'Edit Community Profile';
+  String get communityDeleted => 'Successfully Deleted';
 
 
 
