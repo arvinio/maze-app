@@ -110,8 +110,7 @@ class _SearchCommunityPageState extends State<SearchCommunityPage> {
                 value: _searchCommunityBloc,
                 child: BasePageWidget(
                   backgroundColor: backgroundColor,
-                  appBarHeight:
-                      mediaQueryData.padding.top + (hasTabs ? 72.0 : 24.0),
+                  appBarHeight: (hasTabs ? 117.0 : 69.0),
                   appBar: SearchAppBar(
                     tabs: tabs,
                     searchTextField: CustomTextField.slim(

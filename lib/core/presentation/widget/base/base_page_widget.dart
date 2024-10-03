@@ -65,7 +65,7 @@ class _BasePageWidgetState extends State<BasePageWidget> {
             ? PreferredSize(
                 preferredSize:
                     Size.fromHeight(widget.appBarHeight ?? Dimen.appBarHeight),
-                child: widget.appBar ?? const SizedBox(),
+                child: widget.appBar!,
               )
             : null,
         bottomNavigationBar: widget.bottomNav,

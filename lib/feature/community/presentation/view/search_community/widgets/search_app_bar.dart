@@ -28,14 +28,17 @@ class SearchAppBar extends StatelessWidget {
           children: [
             const BackButton(),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsetsDirectional.only(end: 16.0),
-                child: Hero(
-                  tag: HeroTags.searchCommunityPage,
-                  flightShuttleBuilder: heroFlightShuttleBuilderFromWidget,
-                  child: Material(
-                    color: Colors.transparent,
-                    child: searchTextField,
+              child: SizedBox(
+                height: 40.0,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(end: 16.0),
+                  child: Hero(
+                    tag: HeroTags.searchCommunityPage,
+                    flightShuttleBuilder: heroFlightShuttleBuilderFromWidget,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: searchTextField,
+                    ),
                   ),
                 ),
               ),

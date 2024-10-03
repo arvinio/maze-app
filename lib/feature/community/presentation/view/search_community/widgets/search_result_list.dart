@@ -18,7 +18,9 @@ class SearchResultList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: EdgeInsets.zero,
+      padding: EdgeInsets.only(
+        top: MediaQuery.of(context).padding.top,
+      ),
       itemBuilder: (context, index) {
         final item = items[index];
         return SearchResultItem(searchResponse: item);
