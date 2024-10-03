@@ -42,6 +42,8 @@ import 'package:maze_app/feature/tracker/presentation/view/bin_details_page.dart
 import 'package:maze_app/feature/tracker/presentation/view/new_entry_page.dart';
 import 'package:maze_app/feature/tracker/presentation/view/tracker_page.dart';
 
+import '../../../feature/community/presentation/view/search_community/search_community_page.dart';
+
 part 'app_router.gr.dart';
 
 @AutoRouterConfig(
@@ -105,6 +107,17 @@ class AppRouter extends _$AppRouter {
         path: '/CurrentPasswordPage', page: CurrentPasswordPageRoute.page),
     AutoRoute(path: '/BinDetailsPage', page: BinDetailsPageRoute.page),
     AutoRoute(path: '/NewEntryPage', page: NewEntryPageRoute.page),
-    AutoRoute(path: '/CommunityHomePage', page:CommunityHomePageRoute.page),
+    AutoRoute(path: '/CommunityHomePage', page: CommunityHomePageRoute.page),
+    CustomRoute(
+      path: '/CommunityHomePage/Search',
+      page: SearchCommunityPageRoute.page,
+      transitionsBuilder: TransitionsBuilders.noTransition,
+      // To disable the previous page fade out transition!
+      fullscreenDialog: true,
+      // Although this route's TransitionsBuilders is noTransition,
+      // it needs to be set for hero animation to work! so this is the hero animation duration
+      durationInMilliseconds: 350,
+      reverseDurationInMilliseconds: 350,
+    ),
   ];
 }

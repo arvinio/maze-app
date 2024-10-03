@@ -4,28 +4,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:maze_app/core/config/assets/assets.dart';
-import 'package:maze_app/core/config/dimen.dart';
-import 'package:maze_app/core/config/strings.dart';
-import 'package:maze_app/core/presentation/route/app_router.dart';
-import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
-import 'package:maze_app/core/presentation/widget/custom_button.dart';
-import 'package:maze_app/core/presentation/widget/custom_menu_items.dart';
-import 'package:maze_app/core/presentation/widget/custom_text.dart';
-import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
-import 'package:maze_app/core/presentation/widget/menu_dialog_content.dart';
-import 'package:maze_app/core/style/app_theme.dart';
-import 'package:maze_app/core/util/extentsion/context_ext.dart';
-import 'package:maze_app/di/injection_container.dart';
-import 'package:maze_app/feature/community/data/model/community_details_response/community_details_response.dart';
-import 'package:maze_app/feature/community/presentation/bloc/community_bloc.dart';
+import '../../../../core/config/assets/assets.dart';
+import '../../../../core/config/dimen.dart';
+import '../../../../core/config/strings.dart';
+import '../../../../core/presentation/route/app_router.dart';
+import '../../../../core/presentation/widget/base/base_page_widget.dart';
+import '../../../../core/presentation/widget/custom_button.dart';
+import '../../../../core/presentation/widget/custom_menu_items.dart';
+import '../../../../core/presentation/widget/custom_text.dart';
+import '../../../../core/presentation/widget/custom_text_field.dart';
+import '../../../../core/presentation/widget/menu_dialog_content.dart';
+import '../../../../core/style/app_theme.dart';
+import '../../../../core/util/extentsion/context_ext.dart';
+import '../../../../di/injection_container.dart';
+import '../../data/model/community_details_response/community_details_response.dart';
+import '../bloc/community_bloc/community_bloc.dart';
+import 'search_community/search_community_page.dart';
 
+import '../../../../core/config/hero_tags.dart';
+import '../../../../core/util/hero_flight_suttle.dart';
 import 'create_community/presention/view/create_community_dialog_content.dart';
 import 'create_post/presentation/view/create_post_dialog_content.dart';
 
-
 @RoutePage()
-class CommunityHomePage extends StatefulWidget  {
+class CommunityHomePage extends StatefulWidget {
   const CommunityHomePage({super.key});
 
   @override
@@ -33,11 +35,10 @@ class CommunityHomePage extends StatefulWidget  {
 }
 
 class _CommunityHomePageState extends State<CommunityHomePage> {
-
   final _searchFocusNode = FocusNode();
   final TextEditingController _searchController = TextEditingController();
-  List<CommunityDetails>? myCommunities=[];
-  List<CommunityDetails>? otherCommunities=[];
+  List<CommunityDetails>? myCommunities = [];
+  List<CommunityDetails>? otherCommunities = [];
   CommunityDetails? details;
 
   @override
@@ -52,61 +53,51 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    double w = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double h = MediaQuery
-        .of(context)
-        .size
-        .height;
-
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
 
     return BlocProvider(
-      create: (_) =>
-      inject<CommunityBloc>()
-        ..add(const  CommunityEvent.getMyCommunitiesEvent())
+      create: (_) => inject<CommunityBloc>()
+        ..add(const CommunityEvent.getMyCommunitiesEvent())
         ..add(const CommunityEvent.getOtherCommunitiesEvent()),
-
-  child: BasePageWidget(
+      child: BasePageWidget(
           appBarHeight: 100,
           appBar: Padding(
               padding: const EdgeInsets.only(
-                  top: 70, bottom: 14, left: 15,right: 15),
-              child:Row(
+                  top: 70, bottom: 14, left: 15, right: 15),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-              CustomText(
-              appStrings.community,
-                style: context.titleTitle2,),
-                      SizedBox(width: w*0.3,),
-                      appAssets.community.svg(width: 34, height: 34),
-                      appAssets.notify.svg(width: 34, height: 34),
-                      InkWell(
-                        onTap: () {
-                          _showCreatePost(context);
-                        },
-                        child: appAssets.create.svg(width: 34, height: 34),
-                      ),
-                    ],
-                  )
-          ),
-
+                children: [
+                  CustomText(
+                    appStrings.community,
+                    style: context.titleTitle2,
+                  ),
+                  SizedBox(
+                    width: w * 0.3,
+                  ),
+                  appAssets.community.svg(width: 34, height: 34),
+                  appAssets.notify.svg(width: 34, height: 34),
+                  InkWell(
+                    onTap: () {
+                      _showCreatePost(context);
+                    },
+                    child: appAssets.create.svg(width: 34, height: 34),
+                  ),
+                ],
+              )),
           child: BlocConsumer<CommunityBloc, CommunityState>(
             listener: (context, state) async {
               if (state.communityStatus.isSuccess) {
-                details=state.details!.communityDetails;
-
-              } else   if (state.communityStatus.isMyCommunitySuccess) {
+                details = state.details!.communityDetails;
+              } else if (state.communityStatus.isMyCommunitySuccess) {
                 myCommunities!.clear();
                 myCommunities!.addAll(state.myCommunities!.details!);
-
-              } else   if (state.communityStatus.isOtherCommunitiesSuccess) {
+              } else if (state.communityStatus.isOtherCommunitiesSuccess) {
                 otherCommunities!.clear();
                 otherCommunities!.addAll(state.otherCommunities!.details!);
-
-              } else if (state.communityStatus.isFailure || state.communityStatus.isMyCommunityFailure
-                  || state.communityStatus.isOtherCommunitiesFailure  ) {
+              } else if (state.communityStatus.isFailure ||
+                  state.communityStatus.isMyCommunityFailure ||
+                  state.communityStatus.isOtherCommunitiesFailure) {
                 Fluttertoast.showToast(
                     msg: state.errorMessage!,
                     toastLength: Toast.LENGTH_LONG,
@@ -119,59 +110,90 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
             },
             builder: (context, state) {
               return SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-            const SizedBox( height:10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 10),
+                    Hero(
+                      tag: HeroTags.searchCommunityPage,
+                      flightShuttleBuilder: heroFlightShuttleBuilderFromWidget,
+                      transitionOnUserGestures: true,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: CustomTextField.slim(
+                          textEditingController: _searchController,
+                          borderRadius: 18.0,
+                          enabled: false,
+                          onTapWithContext: (context) {
+                            final renderObject =
+                                context.findRenderObject() as RenderBox?;
+                            final offset =
+                                renderObject?.localToGlobal(Offset.zero) ??
+                                    Offset.zero;
+                            final size = renderObject?.size ?? Size.zero;
 
-                   CustomTextField.outline(
-                    textEditingController: _searchController,
-                    borderRadius: 100,
-                    label: appStrings.search,
-                    focusNode: _searchFocusNode,
-                    labelTextColor: context
-                        .scheme()
-                        .secondaryText,
-                    prefixIcon: Padding(
-                        padding: const EdgeInsets.only(left:15,right: 10),
-                        child: appAssets.searchNormalIcon
-                            .svg(/*width: 20,height: 20,*/
-                            color: context
-                            .scheme()
-                            .secondaryText)) ),
-
-                const SizedBox( height:20),
-                Divider(color: context.scheme().neutralsBorderDivider,indent: 0,endIndent: 0,),
-                const SizedBox( height:10),
-                CustomText(appStrings.myCommunities, style: context.titleTitle3.copyWith(color: const Color(0xff0A0A0A))),
-                _buildMyCommunities(myCommunities),
-                const SizedBox( height:10),
-                CustomText(appStrings.communities, style: context.titleTitle3.copyWith(color: const Color(0xff0A0A0A))),
-                _buildOtherCommunities(otherCommunities),
-                const SizedBox( height:10),
-                CustomText(appStrings.streaks, style: context.titleTitle3.copyWith(color: const Color(0xff0A0A0A))),
-                const SizedBox( height:20),
-                buildStreaks(context),
-                const SizedBox( height:10),
-                CustomText(appStrings.tracking, style: context.titleTitle3.copyWith(color: const Color(0xff0A0A0A))),
-                const SizedBox( height:20),
-                buildTracking(context),
-                const SizedBox( height:20)
-
-
-              ],),
-          );
-  },
-)
-      ),
-);
-
+                            // Not to push two routes when users taps twice immidiately
+                            if (!context.router.canPop()) {
+                              context.router.push(SearchCommunityPageRoute(
+                                buttonOffset: offset,
+                                buttonSize: size,
+                                buttonRadius: const Radius.circular(24.0),
+                              ));
+                            }
+                          },
+                          label: appStrings.search,
+                          focusNode: _searchFocusNode,
+                          labelTextColor: context.scheme().secondaryText,
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.only(left: 15, right: 10),
+                            child: appAssets.searchNormalIcon.svg(
+                              /*width: 20,height: 20,*/
+                              color: context.scheme().secondaryText,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Divider(
+                      color: context.scheme().neutralsBorderDivider,
+                      indent: 0,
+                      endIndent: 0,
+                    ),
+                    const SizedBox(height: 10),
+                    CustomText(appStrings.myCommunities,
+                        style: context.titleTitle3
+                            .copyWith(color: const Color(0xff0A0A0A))),
+                    _buildMyCommunities(myCommunities),
+                    const SizedBox(height: 10),
+                    CustomText(appStrings.communities,
+                        style: context.titleTitle3
+                            .copyWith(color: const Color(0xff0A0A0A))),
+                    _buildOtherCommunities(otherCommunities),
+                    const SizedBox(height: 10),
+                    CustomText(appStrings.streaks,
+                        style: context.titleTitle3
+                            .copyWith(color: const Color(0xff0A0A0A))),
+                    const SizedBox(height: 20),
+                    buildStreaks(context),
+                    const SizedBox(height: 10),
+                    CustomText(appStrings.tracking,
+                        style: context.titleTitle3
+                            .copyWith(color: const Color(0xff0A0A0A))),
+                    const SizedBox(height: 20),
+                    buildTracking(context),
+                    const SizedBox(height: 20)
+                  ],
+                ),
+              );
+            },
+          )),
+    );
   }
 
-
-  void _showCreatePost(BuildContext context)  {
-     showModalBottomSheet(
+  void _showCreatePost(BuildContext context) {
+    showModalBottomSheet(
         isScrollControlled: true,
         context: context,
         backgroundColor: Colors.transparent,
@@ -182,8 +204,8 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
     // else toast
   }
 
-  void _showCreateCommunity(BuildContext context)  {
-     showModalBottomSheet(
+  void _showCreateCommunity(BuildContext context) {
+    showModalBottomSheet(
         isScrollControlled: true,
         context: context,
         backgroundColor: Colors.transparent,
@@ -196,61 +218,61 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
 
   Widget _buildMyCommunities(List<CommunityDetails>? myCommunities) {
     return SizedBox(
-          height: 130,
-          width: MediaQuery.of(context).size.width*0.9,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-              Column(
+      height: 130,
+      width: MediaQuery.of(context).size.width * 0.9,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
-                    width: 74,
-                    height: 74,
-                    decoration: BoxDecoration(
-                        color: const Color(0xffEDEEF0) ,
-                        borderRadius:BorderRadius.circular(Dimen.defaultRadius),
-                        image: DecorationImage(image: ExactAssetImage(
-
-                            appAssets.createCommunityPng.path))),
-                    child: Align(
-                      alignment: const Alignment(2,2),
-                      child: IconButton(
-                        icon: appAssets.create.svg(width: 30,height: 30),
-                        onPressed: ()   {
-                          _showCreateCommunity(context);
-                        },
-                      ),
+                  width: 74,
+                  height: 74,
+                  decoration: BoxDecoration(
+                      color: const Color(0xffEDEEF0),
+                      borderRadius: BorderRadius.circular(Dimen.defaultRadius),
+                      image: DecorationImage(
+                          image: ExactAssetImage(
+                              appAssets.createCommunityPng.path))),
+                  child: Align(
+                    alignment: const Alignment(2, 2),
+                    child: IconButton(
+                      icon: appAssets.create.svg(width: 30, height: 30),
+                      onPressed: () {
+                        _showCreateCommunity(context);
+                      },
                     ),
-
+                  ),
                 ),
-
-                CustomText( appStrings.create)
+                CustomText(appStrings.create)
               ],
             ),
-                const SizedBox(width: 20,),
-                ListView.separated(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: myCommunities!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return _communityItem(
-                      context:context,
-                      isMyCommunity: true,
-                      details: myCommunities[index],
-
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                   return const SizedBox(width: 10,);
-                  },
-
-                ),
-              ],
+            const SizedBox(
+              width: 20,
             ),
-          ),
-        );
+            ListView.separated(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: myCommunities!.length,
+              itemBuilder: (BuildContext context, int index) {
+                return _communityItem(
+                  context: context,
+                  isMyCommunity: true,
+                  details: myCommunities[index],
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(
+                  width: 10,
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildOtherCommunities(List<CommunityDetails>? otherCommunities) {
@@ -258,18 +280,13 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
       children: [
         SizedBox(
           height: 130,
-          width: MediaQuery
-              .of(context)
-              .size
-              .width * 0.9,
+          width: MediaQuery.of(context).size.width * 0.9,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
                 InkWell(
-                  onTap: (){
-
-                  },
+                  onTap: () {},
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -278,16 +295,19 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
                         height: 74,
                         decoration: BoxDecoration(
                             color: const Color(0xffEDEEF0),
-                            borderRadius: BorderRadius.circular(
-                                Dimen.defaultRadius),
-                            image: DecorationImage(image: ExactAssetImage(
-                                appAssets.logoPng.path))),
+                            borderRadius:
+                                BorderRadius.circular(Dimen.defaultRadius),
+                            image: DecorationImage(
+                                image:
+                                    ExactAssetImage(appAssets.logoPng.path))),
                       ),
                       CustomText(appStrings.maze)
                     ],
                   ),
                 ),
-                const SizedBox(width: 20,),
+                const SizedBox(
+                  width: 20,
+                ),
                 ListView.separated(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
@@ -297,19 +317,18 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
                       context: context,
                       isMyCommunity: false,
                       details: otherCommunities[index],
-
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(width: 15,);
+                    return const SizedBox(
+                      width: 15,
+                    );
                   },
-
                 ),
               ],
             ),
           ),
         ),
-
         Stack(
           children: [
             Container(
@@ -318,38 +337,44 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
               decoration: BoxDecoration(
                 color: const Color(0xffEDEEF0),
                 borderRadius: BorderRadius.circular(Dimen.defaultRadius),
-                image: DecorationImage(fit: BoxFit.fill,
+                image: DecorationImage(
+                    fit: BoxFit.fill,
                     image: (details != null && details!.cover != null)
                         ? NetworkImage(details!.cover!)
                         : ExactAssetImage(appAssets.communitiesBg.path)),
               ),
               child: Align(
                   alignment: Alignment.bottomCenter,
-                  child: Container(height: 70,
+                  child: Container(
+                    height: 70,
                     margin: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       color: const Color(0xff0404044d).withOpacity(0.3),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: ListTile(
-                      title: CustomText(appStrings.maze,
-                        style: context.titleTitle3.copyWith(color: context
-                            .scheme()
-                            .neutralsBackground),),
-                      subtitle: CustomText('${details != null
-                          ? details!.memberCount!
-                          : 0} Members',
-                        style: context.footnoteFootnote.copyWith(
-                            color: const Color(0xffF2F2F7)),),
-                      trailing: SizedBox(width: 74,
+                      title: CustomText(
+                        appStrings.maze,
+                        style: context.titleTitle3.copyWith(
+                            color: context.scheme().neutralsBackground),
+                      ),
+                      subtitle: CustomText(
+                        '${details != null ? details!.memberCount! : 0} Members',
+                        style: context.footnoteFootnote
+                            .copyWith(color: const Color(0xffF2F2F7)),
+                      ),
+                      trailing: SizedBox(
+                          width: 74,
                           height: 36,
-                          child: CustomButton.submit(text: appStrings.follow,
+                          child: CustomButton.submit(
+                              text: appStrings.follow,
                               borderRadius: 100,
                               onPressed: () {})),
                     ),
                   )),
             ),
-            Align(alignment: Alignment.topRight,
+            Align(
+              alignment: Alignment.topRight,
               child: InkWell(
                 onTap: () {},
                 child: Container(
@@ -361,9 +386,9 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
                         color: context
                             .scheme()
                             .neutralsBackground
-                            .withOpacity(0.3)
-                    ),
-                    child: InkWell(child: appAssets.more.svg(),
+                            .withOpacity(0.3)),
+                    child: InkWell(
+                      child: appAssets.more.svg(),
                       onTap: () {
                         _showLikeReportCommunityDialog(context);
                       },
@@ -376,12 +401,17 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
     );
   }
 
-  Widget _communityItem({required BuildContext context,CommunityDetails? details,bool? isMyCommunity}) {
-    return  InkWell(
-      onTap: (){
+  Widget _communityItem(
+      {required BuildContext context,
+      CommunityDetails? details,
+      bool? isMyCommunity}) {
+    return InkWell(
+      onTap: () {
         isMyCommunity!
-            ? context.pushRoute( ProfileHomePageRoute())
-            :context.read<CommunityBloc>().add(CommunityEvent.getCommunityDetailsEvent(id:details!.id!));
+            ? context.pushRoute(ProfileHomePageRoute())
+            : context
+                .read<CommunityBloc>()
+                .add(CommunityEvent.getCommunityDetailsEvent(id: details!.id!));
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -392,14 +422,20 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
             decoration: BoxDecoration(
                 color: const Color(0xffEDEEF0),
                 borderRadius: BorderRadius.circular(Dimen.defaultRadius),
-                image: DecorationImage(image: details!.avatar != null
-                    ? NetworkImage(details!.avatar!)
-                    : ExactAssetImage(appAssets.noImage.path),fit: BoxFit.cover)),
+                image: DecorationImage(
+                    image: details!.avatar != null
+                        ? NetworkImage(details!.avatar!)
+                        : ExactAssetImage(appAssets.noImage.path),
+                    fit: BoxFit.cover)),
           ),
-          SizedBox(  width: 74,child: CustomText(details!.name!,
-            textAlign: TextAlign.center,
-            overflow:TextOverflow.ellipsis,
-            style: context.footnoteFootnote,))
+          SizedBox(
+              width: 74,
+              child: CustomText(
+                details!.name!,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: context.footnoteFootnote,
+              ))
         ],
       ),
     );
@@ -409,13 +445,18 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
     return Container(
       height: 76,
       decoration: BoxDecoration(
-          borderRadius:BorderRadius.circular(Dimen.defaultRadius),
-          border: Border.all(color: context.scheme().neutralsBorderDivider)
-      ),
+          borderRadius: BorderRadius.circular(Dimen.defaultRadius),
+          border: Border.all(color: context.scheme().neutralsBorderDivider)),
       child: ListTile(
         leading: appAssets.streaks.svg(),
-        title: CustomText('5 Week Streak',style: context.titleHeadline,),
-        subtitle: CustomText('2 more weeks till you reach your goal',style: context.footnoteFootnote,),
+        title: CustomText(
+          '5 Week Streak',
+          style: context.titleHeadline,
+        ),
+        subtitle: CustomText(
+          '2 more weeks till you reach your goal',
+          style: context.footnoteFootnote,
+        ),
       ),
     );
   }
@@ -424,18 +465,22 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
     return Container(
       height: 76,
       decoration: BoxDecoration(
-          borderRadius:BorderRadius.circular(Dimen.defaultRadius),
-          border: Border.all(color: context.scheme().neutralsBorderDivider)
-      ),
+          borderRadius: BorderRadius.circular(Dimen.defaultRadius),
+          border: Border.all(color: context.scheme().neutralsBorderDivider)),
       child: ListTile(
         leading: appAssets.tracking.svg(),
-        title: CustomText('120 kg Waste Saved',style: context.titleHeadline,),
-        subtitle: CustomText('80 kg left to reach your goal',style: context.footnoteFootnote,),
+        title: CustomText(
+          '120 kg Waste Saved',
+          style: context.titleHeadline,
+        ),
+        subtitle: CustomText(
+          '80 kg left to reach your goal',
+          style: context.footnoteFootnote,
+        ),
       ),
     );
   }
 }
-
 
 void _showLikeReportCommunityDialog(BuildContext context) {
   showModalBottomSheet(
@@ -446,33 +491,28 @@ void _showLikeReportCommunityDialog(BuildContext context) {
         return MenuDialogContent(
           header: appStrings.options,
           dialogHeightPercent: 0.35,
-          child: Column(children: [
-            CustomMenuItems(
-              title: appStrings.notInterested,
-
-              leading: appAssets.dislike.svg(),
-              onTap: () {
-              },
-            ),
-            Divider(
-              height: 1,
-              thickness: 1,
-              color: context
-                  .scheme()
-                  .neutralsBorderDivider,
-              indent: 60,
-              endIndent: 30,
-            ),
-            CustomMenuItems(
-              title: appStrings.report,
-              titleColor: context
-                  .scheme()
-                  .error,
-              leading: appAssets.report.svg(),
-              onTap: () {},
-            ),
-
-          ],),
+          child: Column(
+            children: [
+              CustomMenuItems(
+                title: appStrings.notInterested,
+                leading: appAssets.dislike.svg(),
+                onTap: () {},
+              ),
+              Divider(
+                height: 1,
+                thickness: 1,
+                color: context.scheme().neutralsBorderDivider,
+                indent: 60,
+                endIndent: 30,
+              ),
+              CustomMenuItems(
+                title: appStrings.report,
+                titleColor: context.scheme().error,
+                leading: appAssets.report.svg(),
+                onTap: () {},
+              ),
+            ],
+          ),
         );
       });
   // else toast

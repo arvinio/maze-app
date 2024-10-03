@@ -137,6 +137,12 @@ abstract class _$AppRouter extends RootStackRouter {
         )),
       );
     },
+    CommunityHomePageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const CommunityHomePage(),
+      );
+    },
     CreatePasswordPageRoute.name: (routeData) {
       final args = routeData.argsAs<CreatePasswordPageRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -222,6 +228,18 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(child: const ReportPage()),
+      );
+    },
+    SearchCommunityPageRoute.name: (routeData) {
+      final args = routeData.argsAs<SearchCommunityPageRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: SearchCommunityPage(
+          key: args.key,
+          buttonOffset: args.buttonOffset,
+          buttonSize: args.buttonSize,
+          buttonRadius: args.buttonRadius,
+        ),
       );
     },
     SignupPageRoute.name: (routeData) {
@@ -671,6 +689,20 @@ class ChatPageRouteArgs {
 }
 
 /// generated route for
+/// [CommunityHomePage]
+class CommunityHomePageRoute extends PageRouteInfo<void> {
+  const CommunityHomePageRoute({List<PageRouteInfo>? children})
+      : super(
+          CommunityHomePageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CommunityHomePageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [CreatePasswordPage]
 class CreatePasswordPageRoute
     extends PageRouteInfo<CreatePasswordPageRouteArgs> {
@@ -925,6 +957,55 @@ class ReportPageRoute extends PageRouteInfo<void> {
   static const String name = 'ReportPageRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SearchCommunityPage]
+class SearchCommunityPageRoute
+    extends PageRouteInfo<SearchCommunityPageRouteArgs> {
+  SearchCommunityPageRoute({
+    Key? key,
+    required Offset buttonOffset,
+    required Size buttonSize,
+    required Radius buttonRadius,
+    List<PageRouteInfo>? children,
+  }) : super(
+          SearchCommunityPageRoute.name,
+          args: SearchCommunityPageRouteArgs(
+            key: key,
+            buttonOffset: buttonOffset,
+            buttonSize: buttonSize,
+            buttonRadius: buttonRadius,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'SearchCommunityPageRoute';
+
+  static const PageInfo<SearchCommunityPageRouteArgs> page =
+      PageInfo<SearchCommunityPageRouteArgs>(name);
+}
+
+class SearchCommunityPageRouteArgs {
+  const SearchCommunityPageRouteArgs({
+    this.key,
+    required this.buttonOffset,
+    required this.buttonSize,
+    required this.buttonRadius,
+  });
+
+  final Key? key;
+
+  final Offset buttonOffset;
+
+  final Size buttonSize;
+
+  final Radius buttonRadius;
+
+  @override
+  String toString() {
+    return 'SearchCommunityPageRouteArgs{key: $key, buttonOffset: $buttonOffset, buttonSize: $buttonSize, buttonRadius: $buttonRadius}';
+  }
 }
 
 /// generated route for

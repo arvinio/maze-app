@@ -1,7 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/di/injection_container.dart';
 
-
 @LazySingleton()
 class StringsBase {
   //public
@@ -18,10 +17,10 @@ class StringsBase {
   String get edit => 'Edit';
   String get delete => 'Delete';
 
-
   //SignUp
   String get mazeComposting => 'Maze Composting';
-  String get doNotHaveAnAccountMsg => 'Enter your email. If you don’t have an account we’ll create one for you.';
+  String get doNotHaveAnAccountMsg =>
+      'Enter your email. If you don’t have an account we’ll create one for you.';
   String get loginAsGuest => 'Login as guest';
   String get agreeMessage => 'By continuing you agree to our';
   String get termsOfService => 'Terms of Service\n';
@@ -48,8 +47,8 @@ class StringsBase {
   String get forgotPassword => 'Forgot password';
 
   //WellcomPage
-   String get welcomeTitle => 'Welcome ';
-   String get welcomeSubTitle => 'Let’s get back into it!';
+  String get welcomeTitle => 'Welcome ';
+  String get welcomeSubTitle => 'Let’s get back into it!';
 
   //Forgot Password
   String get newPasswordTitle => ' New Password';
@@ -64,18 +63,24 @@ class StringsBase {
   String get birthday => 'Birthday';
   String get showBirthday => 'Your birthday isn’t shown on your public profile';
   String get yourProfileTitle => 'Your profile';
-  String get yourProfileSubTitle => 'Add a profile picture and username to get\n started. You’ll be able to add more later';
+  String get yourProfileSubTitle =>
+      'Add a profile picture and username to get\n started. You’ll be able to add more later';
   String get userName => 'User Name';
-  String get showPublicProfile => 'These details will be shown on your public profile';
+  String get showPublicProfile =>
+      'These details will be shown on your public profile';
   String get notificationTitle => 'Notifications';
-  String get notificationSubTitle => 'Allow us to send you notifications. These will\n help you throughout your composting journey!';
-  String get notMsg1 => 'Reminders to take your council bins\n out for collection.';
-  String get notMsg2 => 'Keep up to date with the\n communities you follow and create.';
+  String get notificationSubTitle =>
+      'Allow us to send you notifications. These will\n help you throughout your composting journey!';
+  String get notMsg1 =>
+      'Reminders to take your council bins\n out for collection.';
+  String get notMsg2 =>
+      'Keep up to date with the\n communities you follow and create.';
   String get notMsg3 => 'Get helpful tips throughout your\n composting journey';
   String get enableNotifications => 'Enable notifications';
   String get noThanks => 'No thank you';
   String get householdTitle => 'Household info';
-  String get householdSubTitle => 'Please enter the following information, this\n helps us properly calculate your waste saved.';
+  String get householdSubTitle =>
+      'Please enter the following information, this\n helps us properly calculate your waste saved.';
   String get country => 'Country';
   String get state => 'State';
   String get council => 'Council';
@@ -90,7 +95,8 @@ class StringsBase {
   String get errorFetchInformation => 'Error in receiving information';
   String get tryAgain => 'Try Again';
   String get householdSizeInfoTitle => 'Info';
-  String get householdSizeInfoSubTitle => 'By knowing the amount of members of your\n household, it allows us to more accurately\n calculate waste per person.';
+  String get householdSizeInfoSubTitle =>
+      'By knowing the amount of members of your\n household, it allows us to more accurately\n calculate waste per person.';
 
 //Account Info
   String get account => 'Account';
@@ -124,8 +130,10 @@ class StringsBase {
   String get newEmailSubTitle => 'Enter your new email address.';
   String get newEmailAddress => 'New email address';
   String get verifyNewEmail => 'Verify New Email';
-  String get notPublicShow => 'Your full name and birthday isn’t shown publicly';
-  String get detailsPublicProfile => 'These details will be shown on your public profile';
+  String get notPublicShow =>
+      'Your full name and birthday isn’t shown publicly';
+  String get detailsPublicProfile =>
+      'These details will be shown on your public profile';
   String get profileUpdatedMsg => 'Profile updated successfully';
   String get householdUpdatedMsg => 'Information updated successfully';
   String get yourDetailsUpdatedMsg => 'Information updated successfully';
@@ -147,33 +155,42 @@ class StringsBase {
   String get chatBotTitle => 'Chat Bot';
   String get message => 'Message';
   String get chatTitleMsg => 'Hey there';
-  String get chatDescMsg => 'Feel free to ask me a question\n and I’ll try my best to answer it!';
+  String get chatDescMsg =>
+      'Feel free to ask me a question\n and I’ll try my best to answer it!';
   String get regenerateAnswer => 'Regenerate Answer';
   String get speakToHuman => 'Speak to a human';
-  String get chatMsg => 'Hey there 👋\n \nFeel free to ask me a question\n and I’ll try my best to answer it!';
+  String get chatMsg =>
+      'Hey there 👋\n \nFeel free to ask me a question\n and I’ll try my best to answer it!';
 
   //Tutorial
 
   String get tutorialTitleMsg => 'Hey there 👋';
-  String get tutorialSubTitleMsg => 'Welcome to Maze Composting, I’m \nwormy, would you like a quick walk \nthrough of the app?';
+  String get tutorialSubTitleMsg =>
+      'Welcome to Maze Composting, I’m \nwormy, would you like a quick walk \nthrough of the app?';
   String get noThanksTutorial => 'No thanks';
   String get yesPlease => 'Yes please';
   String get back => 'Back';
   String get next => 'Next';
-  String get finishWalkthrough =>'Finish Walkthrough';
-  String get communityTutorial => 'Here is where you can interact with\n others in the composting community\n and ask questions to get help on your\n journey.';
-  String get knowledgeTutorial => 'This is where you can browse through articles, on all things composting. This is a great place to get started if you’re new to composting.';
-  String get liveChatTutorial =>'This is where I live, I’ll try my best to answer all of your questions. If I’m not able to, I’ll transfer you to a human.';
-  String get trackerTutorial =>'This is where you can track all of your waste and compost bins. If you’re new to composting, I recommend checking out the Knowledge area first and getting to know the basics.';
-  String get profileTutorial =>'Lastly, here you’ll find your public profile and access to your account settings at the top.';
-  String get finishTutorial =>'Lastly, If you ever have any questions, feel free to ask the community or myself. Have fun and welcome to Maze Composting! 🎉 ';
+  String get finishWalkthrough => 'Finish Walkthrough';
+  String get communityTutorial =>
+      'Here is where you can interact with\n others in the composting community\n and ask questions to get help on your\n journey.';
+  String get knowledgeTutorial =>
+      'This is where you can browse through articles, on all things composting. This is a great place to get started if you’re new to composting.';
+  String get liveChatTutorial =>
+      'This is where I live, I’ll try my best to answer all of your questions. If I’m not able to, I’ll transfer you to a human.';
+  String get trackerTutorial =>
+      'This is where you can track all of your waste and compost bins. If you’re new to composting, I recommend checking out the Knowledge area first and getting to know the basics.';
+  String get profileTutorial =>
+      'Lastly, here you’ll find your public profile and access to your account settings at the top.';
+  String get finishTutorial =>
+      'Lastly, If you ever have any questions, feel free to ask the community or myself. Have fun and welcome to Maze Composting! 🎉 ';
 
   String get community => 'Community';
   String get knowledge => 'Knowledge';
-  String get liveChat =>'Live chat';
-  String get tracker =>'Tracker';
-  String get profile =>'Profile';
-  String get thanksForListening =>'Thanks for listening ';
+  String get liveChat => 'Live chat';
+  String get tracker => 'Tracker';
+  String get profile => 'Profile';
+  String get thanksForListening => 'Thanks for listening ';
 
   // Community
   String get newPost => 'New post';
@@ -181,19 +198,22 @@ class StringsBase {
   String get wherePost => 'Where do you want to post this?';
   String get titleOfPost => 'Title of post';
   String get postTo => 'Post to';
-  String get findOtherCommunities=> 'Find other Communities';
+  String get findOtherCommunities => 'Find other Communities';
   String get postSent => 'Post sent!';
   String get postSuccessMsg => 'Thanks for using Maze Composting';
   String get newCommunity => 'New community';
-  String get newCommunitySubTitle => 'Enter in the details below to create your own community.';
+  String get newCommunitySubTitle =>
+      'Enter in the details below to create your own community.';
   String get communityName => 'Community name';
   String get descriptionYourCommunity => 'Description of your community';
   String get groupType => 'Group type';
   String get skip => 'Skip';
   String get communityBannerTitle => 'Community banner\n and profile';
-  String get communityBannerSubTitle => 'Customise your community, by adding a \nbanner and profile picture.';
+  String get communityBannerSubTitle =>
+      'Customise your community, by adding a \nbanner and profile picture.';
   String get inviteFriendsTitle => 'Invite friends';
-  String get inviteFriendsSubTitle => 'Customise your community, by adding a \nbanner and profile picture.';
+  String get inviteFriendsSubTitle =>
+      'Customise your community, by adding a \nbanner and profile picture.';
   String get emailUsername => 'Email, username';
   String get inviteCommunityButton => 'Invite and create community';
   String get communityCreated => 'Community created!';
@@ -203,6 +223,7 @@ class StringsBase {
   String get privateTitle => 'Private';
   String get privateSubTitle => 'Only people you invite can join the group';
   String get members => 'Members';
+  String get member => 'Member';
   String get myCommunities => 'My Communities';
   String get communities => 'Communities';
   String get maze => 'Maze';
@@ -211,12 +232,7 @@ class StringsBase {
   String get follow => 'Follow';
   String get notInterested => 'Not interested';
   String get report => 'Report';
-
-
-
-
-
-
+  String get noResultsFound => 'No results found';
 }
 
 StringsBase appStrings = inject<StringsBase>();

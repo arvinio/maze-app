@@ -4,13 +4,16 @@ import 'package:maze_app/feature/community/data/model/create_community/create_co
 import 'package:maze_app/feature/community/core/util/community_data_request/comunity.dart';
 import 'package:maze_app/feature/community/data/model/create_post/create_post_response.dart';
 
+import '../../data/model/search/search_response.dart';
+
 abstract class CommunityRepository {
-  Future<ApiResponse<CreateCommunityResponse>> createCommunity({required Community request});
-  Future<ApiResponse<CreatePostResponse>> createPost({required PostDataRequest request});
-  Future<ApiResponse>  communityDetails({required String id});
-  Future<ApiResponse>  myCommunities();
-  Future<ApiResponse>  otherCommunities();
-
-
-
+  Future<ApiResponse<CreateCommunityResponse>> createCommunity(
+      {required Community request});
+  Future<ApiResponse<CreatePostResponse>> createPost(
+      {required PostDataRequest request});
+  Future<ApiResponse> communityDetails({required String id});
+  Future<ApiResponse> myCommunities();
+  Future<ApiResponse> otherCommunities();
+  Future<ApiResponse<Map<String, List<SearchResponse>>>> search(
+      {required String query});
 }
