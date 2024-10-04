@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import '../../../data/model/community_details_response/community_details_response.dart';
-import '../../../data/model/my_communities/my_communities_response.dart';
-import '../../../data/model/other_communities/other_communities_response.dart';
-import '../../../domain/repository/community_repository.dart';
+import 'package:maze_app/feature/community/data/model/community_details_response/community_details_response.dart';
+import 'package:maze_app/feature/community/data/model/my_communities/my_communities_response.dart';
+import 'package:maze_app/feature/community/data/model/other_communities/other_communities_response.dart';
+import 'package:maze_app/feature/community/domain/repository/community_repository.dart';
 
 part 'community_event.dart';
 part 'community_state.dart';

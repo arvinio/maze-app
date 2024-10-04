@@ -14,7 +14,7 @@ import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/community/data/model/community_details_response/community_details_response.dart';
-import 'package:maze_app/feature/community/presentation/bloc/community_bloc/community_bloc.dart';
+import 'package:maze_app/feature/community/presentation/bloc/community_bloc.dart';
 import 'package:maze_app/feature/community/presentation/view/create_post/presentation/view/widgets/post_to_item.dart';
 
 class PostToDialogContent extends StatefulWidget implements AutoRouteWrapper {

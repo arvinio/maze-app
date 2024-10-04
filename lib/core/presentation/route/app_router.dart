@@ -101,7 +101,7 @@ class AppRouter extends _$AppRouter {
     AutoRoute(path: '/NewEntryPage', page: NewEntryPageRoute.page),
 
     AutoRoute(path: '/CommunityHomePage', page: CommunityHomePageRoute.page),
-    AutoRoute(path: '/ViewCommunityPage/:communityId' ,page: ViewCommunityPageRoute.page)
+    AutoRoute(path: '/ViewCommunityPage/:communityId' ,page: ViewCommunityPageRoute.page),
     // AutoRoute(path: '/ViewPostPage', page:ViewPostPageRoute.page),
     CustomRoute(
       path: '/CommunityHomePage/Search',
@@ -113,6 +113,6 @@ class AppRouter extends _$AppRouter {
       // it needs to be set for hero animation to work! so this is the hero animation duration
       durationInMilliseconds: 350,
       reverseDurationInMilliseconds: 350,
-    ),
+    )
   ];
 }

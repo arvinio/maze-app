@@ -15,7 +15,6 @@ import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/community/core/util/community_data_request/comunity.dart';
-import 'package:maze_app/feature/community/presentation/view/community_home_page.dart';
 import 'package:maze_app/feature/community/presentation/view/create_community/presention/bloc/create_community_bloc.dart';
 
 class InviteFriendsDialogContent extends StatefulWidget implements AutoRouteWrapper{

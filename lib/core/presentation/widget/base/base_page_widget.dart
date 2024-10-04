@@ -81,7 +81,7 @@ class _BasePageWidgetState extends State<BasePageWidget> {
   Widget _getMainWidget(BuildContext context) {
     return Container(
         padding: widget.bodyPadding ??
-            const EdgeInsets.symmetric(
+             EdgeInsets.symmetric(
                horizontal: widget.pagePaddingHorizontal ?? Dimen.pagePaddingHorizontal,
             ),
         child: widget.child);
