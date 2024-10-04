@@ -15,10 +15,10 @@ import 'package:maze_app/feature/community/core/util/community_data_request/comu
 import 'package:maze_app/feature/community/data/model/create_post/create_post_response.dart';
 import 'package:maze_app/feature/community/data/model/my_communities/my_communities_response.dart';
 import 'package:maze_app/feature/community/data/model/other_communities/other_communities_response.dart';
+import 'package:maze_app/feature/community/data/model/search/search_response.dart';
 import 'community_remote_data_source.dart';
 
-
-@Injectable(as:CommunityRemoteDataSource)
+@Injectable(as: CommunityRemoteDataSource)
 class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
   final DioCaller dioCaller;
 
@@ -26,85 +26,76 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
       {@Named(DiConst.dioNamedToken) required this.dioCaller});
 
   @override
-  Future<ApiResponse<CreateCommunityResponse>> createCommunity({required Community request}) async {
-
-    FormData formData = FormData.fromMap({
-      'description':request.description
-    });
+  Future<ApiResponse<CreateCommunityResponse>> createCommunity(
+      {required Community request}) async {
+    FormData formData = FormData.fromMap({'description': request.description});
 
     if (request.name!.isNotEmpty) {
-      formData.fields.add(
-          MapEntry("name",request.name!));
+      formData.fields.add(MapEntry("name", request.name!));
     }
-
 
     if (request.avatar != null) {
       File file = request.avatar!;
-      var fileName = file.path
-          .split('/')
-          .last;
+      var fileName = file.path.split('/').last;
 
-      formData.files.add(MapEntry("avatar", await MultipartFile.fromFile(file.path, filename: fileName)));
+      formData.files.add(MapEntry("avatar",
+          await MultipartFile.fromFile(file.path, filename: fileName)));
     }
 
     if (request.cover != null) {
       File file = request.cover!;
-      var fileName = file.path
-          .split('/')
-          .last;
+      var fileName = file.path.split('/').last;
 
-      formData.files.add(MapEntry("cover", await MultipartFile.fromFile(file.path, filename: fileName)));
+      formData.files.add(MapEntry("cover",
+          await MultipartFile.fromFile(file.path, filename: fileName)));
     }
 
-
-    return await dioCaller.post<CreateCommunityResponse>(
-        'api/community', fromJson: CreateCommunityResponse.fromJson,
-        data: formData
-    );
+    return await dioCaller.post<CreateCommunityResponse>('api/community',
+        fromJson: CreateCommunityResponse.fromJson, data: formData);
   }
 
   @override
-  Future<ApiResponse<CreatePostResponse>> createPost({required PostDataRequest request}) async{
+  Future<ApiResponse<CreatePostResponse>> createPost(
+      {required PostDataRequest request}) async {
     FormData formData = FormData.fromMap({
       'title': request.title,
       'content': request.content,
     });
 
-    if (request.communityId !=null ) {
-      formData.fields.add(
-          MapEntry("communityId",request.communityId!));
+    if (request.communityId != null) {
+      formData.fields.add(MapEntry("communityId", request.communityId!));
     }
 
     for (int i = 0; i < request.photos!.length; i++) {
       var path = request.photos![i].path;
       formData.files.addAll([
-        MapEntry("photos", await MultipartFile.fromFile(path, filename: path.split('/')
-            .last))
+        MapEntry("photos",
+            await MultipartFile.fromFile(path, filename: path.split('/').last))
       ]);
     }
 
-    return await dioCaller.post<CreatePostResponse>(
-        'api/community/post', fromJson: CreatePostResponse.fromJson,
-        data: formData
-    );
-  }
-  @override
-  Future<ApiResponse> communityDetails({required String id}) async{
-    return await dioCaller.get(
-        'api/community/$id', fromJson: CommunityDetailsResponse.fromJson);
+    return await dioCaller.post<CreatePostResponse>('api/community/post',
+        fromJson: CreatePostResponse.fromJson, data: formData);
   }
 
   @override
-  Future<ApiResponse> myCommunities() async{
-    return await dioCaller.get(
-        'api/community', fromJson: MyCommunitiesResponse.fromJson);
+  Future<ApiResponse> communityDetails({required String id}) async {
+    return await dioCaller.get('api/community/$id',
+        fromJson: CommunityDetailsResponse.fromJson);
   }
 
   @override
-  Future<ApiResponse> otherCommunities() async{
-    return await dioCaller.get(
-        'api/community/list', fromJson: OtherCommunitiesResponse.fromJson);
+  Future<ApiResponse> myCommunities() async {
+    return await dioCaller.get('api/community',
+        fromJson: MyCommunitiesResponse.fromJson);
   }
+
+  @override
+  Future<ApiResponse> otherCommunities() async {
+    return await dioCaller.get('api/community/list',
+        fromJson: OtherCommunitiesResponse.fromJson);
+  }
+
   @override
   Future<ApiResponse> joinCommunity({required String id}) async{
     return await dioCaller.post(
@@ -166,4 +157,12 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
         data: mapData,
         '/api/like', fromJson: CommunityPostResponse.fromJson);
   }
+
+  @override
+  Future<ApiResponse<Map<String, List<SearchResponse>>>> search(
+      {required String query}) async {
+    return await dioCaller.get('api/community/search?query=$query',
+        fromJson: SearchResponse.fromResultJson);
+  }
 }
+

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:maze_app/core/config/dimen.dart';
+
+import '../dismissible_focus.dart';
 
 class BasePageWidget extends StatefulWidget {
   const BasePageWidget({
@@ -22,6 +23,7 @@ class BasePageWidget extends StatefulWidget {
     this.appBarHeight,
     this.pagePaddingHorizontal,
     this.floatingActionButtonLocation,
+    this.bodyPadding,
   });
 
   final Widget child;
@@ -41,6 +43,7 @@ class BasePageWidget extends StatefulWidget {
   final double? appBarHeight;
   final double? pagePaddingHorizontal;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
+  final EdgeInsetsGeometry? bodyPadding;
 
   @override
   State<BasePageWidget> createState() => _BasePageWidgetState();
@@ -53,31 +56,34 @@ class _BasePageWidgetState extends State<BasePageWidget> {
   }
 
   getScaffold() {
-    return Scaffold(
-      floatingActionButton: widget.floatingActionButton,
-      floatingActionButtonLocation: widget.floatingActionButtonLocation ??
-          FloatingActionButtonLocation.startDocked,
-      resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset ?? true,
-      backgroundColor: widget.backgroundColor,
-      appBar: widget.appBar != null
-          ? PreferredSize(
-              preferredSize:
-                  Size.fromHeight(widget.appBarHeight ?? Dimen.appBarHeight),
-              child: widget.appBar ?? const SizedBox(),
-            )
-          : null,
-      bottomNavigationBar: widget.bottomNav,
-      body: SafeArea(
-        child: _getMainWidget(context),
+    return DismissibleFocus(
+      child: Scaffold(
+        floatingActionButton: widget.floatingActionButton,
+        floatingActionButtonLocation: widget.floatingActionButtonLocation ??
+            FloatingActionButtonLocation.startDocked,
+        resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset ?? true,
+        backgroundColor: widget.backgroundColor,
+        appBar: widget.appBar != null
+            ? PreferredSize(
+                preferredSize:
+                    Size.fromHeight(widget.appBarHeight ?? Dimen.appBarHeight),
+                child: widget.appBar!,
+              )
+            : null,
+        bottomNavigationBar: widget.bottomNav,
+        body: SafeArea(
+          child: _getMainWidget(context),
+        ),
       ),
     );
   }
 
   Widget _getMainWidget(BuildContext context) {
     return Container(
-        padding:  EdgeInsets.symmetric(
-          horizontal: widget.pagePaddingHorizontal ?? Dimen.pagePaddingHorizontal,
-        ),
+        padding: widget.bodyPadding ??
+            const EdgeInsets.symmetric(
+               horizontal: widget.pagePaddingHorizontal ?? Dimen.pagePaddingHorizontal,
+            ),
         child: widget.child);
   }
 }

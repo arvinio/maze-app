@@ -6,14 +6,15 @@ import '../../config/dimen.dart';
 import 'custom_text.dart';
 
 class CustomDropDown extends StatelessWidget {
-  const CustomDropDown(
-      {super.key,
-      required this.title,
-      this.isSelected = false,
-      this.isInputInValid = false,
-      this.errorText = '',
-      this.isEnabled = true,
-      required this.onTap});
+  const CustomDropDown({
+    super.key,
+    required this.title,
+    this.isSelected = false,
+    this.isInputInValid = false,
+    this.errorText = '',
+    this.isEnabled = true,
+    required this.onTap,
+  });
 
   final String title;
   final bool isSelected;
@@ -68,12 +69,11 @@ class CustomDropDown extends StatelessWidget {
               visible: errorText.isNotEmpty,
               child: Padding(
                 padding: const EdgeInsets.only(top: 6, right: 16),
-                child: CustomText(
-                    errorText,
+                child: CustomText(errorText,
                     style: context.bodyBody.copyWith(
-                  color: context.scheme().error,
-                  height: 1,
-                )),
+                      color: context.scheme().error,
+                      height: 1,
+                    )),
               ),
             )
           ],

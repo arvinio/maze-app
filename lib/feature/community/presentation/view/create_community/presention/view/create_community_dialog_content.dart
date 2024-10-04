@@ -2,35 +2,36 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maze_app/core/config/assets/assets.dart';
-import 'package:maze_app/core/config/dimen.dart';
-import 'package:maze_app/core/config/strings.dart';
-import 'package:maze_app/core/presentation/widget/bottom_sheet_header.dart';
-import 'package:maze_app/core/presentation/widget/custom_button.dart';
-import 'package:maze_app/core/presentation/widget/custom_text.dart';
-import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
-import 'package:maze_app/core/style/app_theme.dart';
-import 'package:maze_app/core/util/extentsion/context_ext.dart';
-import 'package:maze_app/di/injection_container.dart';
-import 'package:maze_app/feature/community/core/util/community_data_request/comunity.dart';
-import 'package:maze_app/feature/community/presentation/bloc/community_bloc.dart';
+import '../../../../../../../core/config/assets/assets.dart';
+import '../../../../../../../core/config/dimen.dart';
+import '../../../../../../../core/config/strings.dart';
+import '../../../../../../../core/presentation/widget/bottom_sheet_header.dart';
+import '../../../../../../../core/presentation/widget/custom_button.dart';
+import '../../../../../../../core/presentation/widget/custom_text.dart';
+import '../../../../../../../core/presentation/widget/custom_text_field.dart';
+import '../../../../../../../core/style/app_theme.dart';
+import '../../../../../../../core/util/extentsion/context_ext.dart';
+import '../../../../../../../di/injection_container.dart';
+import '../../../../../core/util/community_data_request/comunity.dart';
+import '../../../../bloc/community_bloc/community_bloc.dart';
 import 'community_banner__dialog_content.dart';
 
-
-
-class CreateCommunityDialogContent extends StatefulWidget implements AutoRouteWrapper{
+class CreateCommunityDialogContent extends StatefulWidget
+    implements AutoRouteWrapper {
   const CreateCommunityDialogContent({super.key});
 
   @override
-  State<CreateCommunityDialogContent> createState() => _CreateCommunityDialogContentState();
+  State<CreateCommunityDialogContent> createState() =>
+      _CreateCommunityDialogContentState();
 
-@override
+  @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(create: (_) => inject<CommunityBloc>(), child: this);
   }
 }
 
-class _CreateCommunityDialogContentState extends State<CreateCommunityDialogContent> {
+class _CreateCommunityDialogContentState
+    extends State<CreateCommunityDialogContent> {
   double dialogHeightPercent = 0.92;
   final _nameFocusNode = FocusNode();
   final _descFocusNode = FocusNode();
@@ -39,13 +40,11 @@ class _CreateCommunityDialogContentState extends State<CreateCommunityDialogCont
   late final ValueNotifier<bool> _keyboardVisibilityValueNotifier;
   Community? community;
 
-
-
   @override
   void initState() {
     super.initState();
     _keyboardVisibilityValueNotifier = ValueNotifier(false);
-    community =Community();
+    community = Community();
   }
 
   @override
@@ -55,45 +54,28 @@ class _CreateCommunityDialogContentState extends State<CreateCommunityDialogCont
     super.dispose();
   }
 
-  final List<int>? list=[];
-
+  final List<int>? list = [];
 
   @override
   Widget build(BuildContext context) {
-    double w = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double h = MediaQuery
-        .of(context)
-        .size
-        .height;
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
 
-    _keyboardVisibilityValueNotifier.value = MediaQuery
-        .of(context)
-        .viewInsets
-        .bottom != 0;
-
+    _keyboardVisibilityValueNotifier.value =
+        MediaQuery.of(context).viewInsets.bottom != 0;
 
     return ScrollConfiguration(
       behavior: CustomScrollBehavior(),
       child: Container(
         color: Colors.transparent,
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
+        width: MediaQuery.of(context).size.width,
         height: h * dialogHeightPercent,
         child: Container(
             decoration: BoxDecoration(
-                color: context
-                    .scheme()
-                    .neutralsBackground,
+                color: context.scheme().neutralsBackground,
                 boxShadow: [
                   BoxShadow(
-                    color: context
-                        .scheme()
-                        .selectIconDropDown,
+                    color: context.scheme().selectIconDropDown,
                     spreadRadius: 1,
                     blurRadius: 4,
                   )
@@ -133,9 +115,7 @@ class _CreateCommunityDialogContentState extends State<CreateCommunityDialogCont
                             label: appStrings.communityName,
                             focusNode: _nameFocusNode,
                             readOnly: false,
-                            labelTextColor: context
-                                .scheme()
-                                .secondaryText,
+                            labelTextColor: context.scheme().secondaryText,
                           ),
                           SizedBox(
                               height: (!_keyboardVisibilityValueNotifier.value)
@@ -150,11 +130,12 @@ class _CreateCommunityDialogContentState extends State<CreateCommunityDialogCont
                           SizedBox(
                             height: (!_keyboardVisibilityValueNotifier.value)
                                 ? h * 0.25
-                                : h * 0.01,),
+                                : h * 0.01,
+                          ),
                           _buildContinueButton()
-                        ],),
+                        ],
+                      ),
                     )
-
                   ],
                 ))),
       ),
@@ -162,37 +143,37 @@ class _CreateCommunityDialogContentState extends State<CreateCommunityDialogCont
   }
 
   Padding _buildContinueButton() {
-    return  Padding(
-            padding: const EdgeInsets.only(top: 30,bottom: 10),
-            child:CustomButton.submit(
-              text: appStrings.continueSteps,
-              onPressed: () {
-                _showCreateBanner(context);
-              },
-            ),
-          );
-
+    return Padding(
+      padding: const EdgeInsets.only(top: 30, bottom: 10),
+      child: CustomButton.submit(
+        text: appStrings.continueSteps,
+        onPressed: () {
+          _showCreateBanner(context);
+        },
+      ),
+    );
   }
-  void _showCreateBanner(BuildContext context)  {
+
+  void _showCreateBanner(BuildContext context) {
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
         backgroundColor: Colors.transparent,
         builder: (builder) {
-           community!.name=_nameController.text.trim();
-           community!.description=_descController.text.trim();
+          community!.name = _nameController.text.trim();
+          community!.description = _descController.text.trim();
 
-          return  CommunityBannerDialogContent(community:community);
+          return CommunityBannerDialogContent(community: community);
         });
 
     // else toast
   }
-
 }
 
 class CustomScrollBehavior extends ScrollBehavior {
   @override
-  Widget buildViewportChrome(BuildContext context, Widget child, AxisDirection axisDirection) {
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
     return child;
   }
 }

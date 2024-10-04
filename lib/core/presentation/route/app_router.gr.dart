@@ -230,6 +230,18 @@ abstract class _$AppRouter extends RootStackRouter {
         child: WrappedRoute(child: const ReportPage()),
       );
     },
+    SearchCommunityPageRoute.name: (routeData) {
+      final args = routeData.argsAs<SearchCommunityPageRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: SearchCommunityPage(
+          key: args.key,
+          buttonOffset: args.buttonOffset,
+          buttonSize: args.buttonSize,
+          buttonRadius: args.buttonRadius,
+        ),
+      );
+    },
     SignupPageRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -963,6 +975,55 @@ class ReportPageRoute extends PageRouteInfo<void> {
   static const String name = 'ReportPageRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SearchCommunityPage]
+class SearchCommunityPageRoute
+    extends PageRouteInfo<SearchCommunityPageRouteArgs> {
+  SearchCommunityPageRoute({
+    Key? key,
+    required Offset buttonOffset,
+    required Size buttonSize,
+    required Radius buttonRadius,
+    List<PageRouteInfo>? children,
+  }) : super(
+          SearchCommunityPageRoute.name,
+          args: SearchCommunityPageRouteArgs(
+            key: key,
+            buttonOffset: buttonOffset,
+            buttonSize: buttonSize,
+            buttonRadius: buttonRadius,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'SearchCommunityPageRoute';
+
+  static const PageInfo<SearchCommunityPageRouteArgs> page =
+      PageInfo<SearchCommunityPageRouteArgs>(name);
+}
+
+class SearchCommunityPageRouteArgs {
+  const SearchCommunityPageRouteArgs({
+    this.key,
+    required this.buttonOffset,
+    required this.buttonSize,
+    required this.buttonRadius,
+  });
+
+  final Key? key;
+
+  final Offset buttonOffset;
+
+  final Size buttonSize;
+
+  final Radius buttonRadius;
+
+  @override
+  String toString() {
+    return 'SearchCommunityPageRouteArgs{key: $key, buttonOffset: $buttonOffset, buttonSize: $buttonSize, buttonRadius: $buttonRadius}';
+  }
 }
 
 /// generated route for

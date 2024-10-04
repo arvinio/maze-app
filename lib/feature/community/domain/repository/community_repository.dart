@@ -5,6 +5,8 @@ import 'package:maze_app/feature/community/core/util/community_post_data_request
 import 'package:maze_app/feature/community/data/model/create_community/create_community_response.dart';
 import 'package:maze_app/feature/community/core/util/community_data_request/comunity.dart';
 import 'package:maze_app/feature/community/data/model/create_post/create_post_response.dart';
+import 'package:maze_app/feature/community/data/model/search/search_response.dart';
+
 
 abstract class CommunityRepository {
   Future<ApiResponse<CreateCommunityResponse>> createCommunity({required Community request});
@@ -19,4 +21,7 @@ abstract class CommunityRepository {
   Future<ApiResponse>  communityPostList({required CommunityPostDataRequest request});
   Future<ApiResponse>  likePost({required String postId});
   Future<ApiResponse>  unLikePost({required String postId});
+  Future<ApiResponse<Map<String, List<SearchResponse>>>> search(
+      {required String query});
+
 }

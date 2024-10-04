@@ -7,10 +7,10 @@ import 'package:maze_app/feature/community/data/data_source/community_remote_dat
 import 'package:maze_app/feature/community/data/model/create_community/create_community_response.dart';
 import 'package:maze_app/feature/community/core/util/community_data_request/comunity.dart';
 import 'package:maze_app/feature/community/data/model/create_post/create_post_response.dart';
+import 'package:maze_app/feature/community/data/model/search/search_response.dart';
 import 'package:maze_app/feature/community/domain/repository/community_repository.dart';
 
-
-@Injectable(as:CommunityRepository)
+@Injectable(as: CommunityRepository)
 class CommunityRepositoryImpl implements CommunityRepository {
   final CommunityRemoteDataSource remoteDataSource;
 
@@ -23,14 +23,14 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }
 
   @override
-  Future<ApiResponse<CreatePostResponse>> createPost({required PostDataRequest request}) {
+  Future<ApiResponse<CreatePostResponse>> createPost(
+      {required PostDataRequest request}) {
     return remoteDataSource.createPost(request: request);
   }
 
   @override
   Future<ApiResponse> communityDetails({required String id}) {
     return remoteDataSource.communityDetails(id: id);
-
   }
 
   @override
@@ -43,7 +43,6 @@ class CommunityRepositoryImpl implements CommunityRepository {
     return remoteDataSource.otherCommunities();
   }
 
-  @override
   Future<ApiResponse> joinCommunity({required String id}) {
     return remoteDataSource.joinCommunity(id: id);
   }
@@ -74,4 +73,11 @@ class CommunityRepositoryImpl implements CommunityRepository {
   Future<ApiResponse> unLikePost({required String postId}) {
     return remoteDataSource.unLikePost(postId: postId);
   }
+  
+   @override
+  Future<ApiResponse<Map<String, List<SearchResponse>>>> search(
+      {required String query}) {
+    return remoteDataSource.search(query: query);
+  }
 }
+
