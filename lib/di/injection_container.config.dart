@@ -116,6 +116,28 @@ import 'package:maze_app/feature/chatbot/presentation/view/chat/domain/repositor
     as _i63;
 import 'package:maze_app/feature/chatbot/presentation/view/chat/presentation/bloc/chat_bloc.dart'
     as _i358;
+import 'package:maze_app/feature/chatbot/presentation/view/faq/presentation/bloc/faq_bloc.dart'
+    as _i411;
+import 'package:maze_app/feature/community/data/data_source/community_remote_data_source.dart'
+    as _i1061;
+import 'package:maze_app/feature/community/data/data_source/community_remote_data_source_impl.dart'
+    as _i1024;
+import 'package:maze_app/feature/community/data/repository/community_repository_impl.dart'
+    as _i91;
+import 'package:maze_app/feature/community/domain/repository/community_repository.dart'
+    as _i343;
+import 'package:maze_app/feature/community/presentation/bloc/community_bloc.dart'
+    as _i186;
+import 'package:maze_app/feature/community/presentation/view/create_community/presention/bloc/create_community_bloc.dart'
+    as _i245;
+import 'package:maze_app/feature/community/presentation/view/create_post/presentation/bloc/create_post_bloc.dart'
+    as _i16;
+import 'package:maze_app/feature/community/presentation/view/view_community/presentation/bloc/view_community_bloc.dart'
+    as _i1011;
+import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/community_leaderboard/bloc/community_leaderboard_bloc.dart'
+    as _i138;
+import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/community_post/bloc/community_post_bloc.dart'
+    as _i981;
 import 'package:maze_app/feature/intro/data/datasource/intro_local_datasource.dart'
     as _i191;
 import 'package:maze_app/feature/intro/data/repo/intro_repo_impl.dart' as _i202;
@@ -263,6 +285,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i253.AccountInfoRemoteRemoteDataSource>(() =>
         _i501.AccountInfoRemoteRemoteDataSourceImpl(
             dioCaller: gh<_i874.DioCaller>(instanceName: 'token')));
+    gh.factory<_i1061.CommunityRemoteDataSource>(() =>
+        _i1024.CommunityRemoteDataSourceImpl(
+            dioCaller: gh<_i874.DioCaller>(instanceName: 'token')));
     gh.factory<_i283.AppTheme>(
         () => _i283.AppTheme(appColors: gh<_i751.AppColorsBase>()));
     gh.factory<_i675.ReportRepository>(
@@ -317,6 +342,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1072.SplashBloc(gh<_i547.UserManager>()));
     gh.factory<_i1012.TrackerRepo>(() => _i536.TrackerRepoImpl(
         trackerRemoteDataSource: gh<_i446.TrackerRemoteDataSource>()));
+    gh.factory<_i343.CommunityRepository>(() =>
+        _i91.CommunityRepositoryImpl(gh<_i1061.CommunityRemoteDataSource>()));
     gh.factory<_i1046.ForgotPassRemoteDataSource>(() =>
         _i23.ForgotPassRemoteDataSourceImpl(
             dioCaller: gh<_i874.DioCaller>(instanceName: 'maze')));
@@ -359,6 +386,8 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i874.DioCaller>(instanceName: 'maze')));
     gh.factory<_i406.VerifyBloc>(
         () => _i406.VerifyBloc(gh<_i1006.VerifyRepository>()));
+    gh.factory<_i411.FaqBloc>(
+        () => _i411.FaqBloc(gh<_i529.CharBotRepository>()));
     gh.factory<_i726.ChatBotBloc>(
         () => _i726.ChatBotBloc(gh<_i529.CharBotRepository>()));
     gh.factory<_i847.SetIsFirstRun>(
@@ -382,6 +411,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i88.SignupRemoteDataSource>(() =>
         _i893.SignupRemoteDataSourceImpl(
             dioCaller: gh<_i874.DioCaller>(instanceName: 'maze')));
+    gh.factory<_i245.CreateCommunityBloc>(
+        () => _i245.CreateCommunityBloc(gh<_i343.CommunityRepository>()));
+    gh.factory<_i16.CreatePostBloc>(
+        () => _i16.CreatePostBloc(gh<_i343.CommunityRepository>()));
+    gh.factory<_i981.CommunityPostBloc>(
+        () => _i981.CommunityPostBloc(gh<_i343.CommunityRepository>()));
+    gh.factory<_i138.CommunityLeaderboardBloc>(
+        () => _i138.CommunityLeaderboardBloc(gh<_i343.CommunityRepository>()));
+    gh.factory<_i1011.ViewCommunityBloc>(
+        () => _i1011.ViewCommunityBloc(gh<_i343.CommunityRepository>()));
+    gh.factory<_i186.CommunityBloc>(
+        () => _i186.CommunityBloc(gh<_i343.CommunityRepository>()));
     gh.factory<_i278.TokenRepository>(
         () => _i179.TokenRepositoryImpl(gh<_i494.TokenRemoteDataSource>()));
     gh.factory<_i263.LoginBloc>(

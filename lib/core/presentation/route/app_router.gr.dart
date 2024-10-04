@@ -137,6 +137,12 @@ abstract class _$AppRouter extends RootStackRouter {
         )),
       );
     },
+    CommunityHomePageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const CommunityHomePage(),
+      );
+    },
     CreatePasswordPageRoute.name: (routeData) {
       final args = routeData.argsAs<CreatePasswordPageRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -253,6 +259,24 @@ abstract class _$AppRouter extends RootStackRouter {
           userName: args.userName,
           entryMode: args.entryMode,
         )),
+      );
+    },
+    ViewCommunityPageRoute.name: (routeData) {
+      final args = routeData.argsAs<ViewCommunityPageRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(
+            child: ViewCommunityPage(
+          key: args.key,
+          communityDetails: args.communityDetails,
+          isOwnCommunity: args.isOwnCommunity,
+        )),
+      );
+    },
+    ViewPostPageRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ViewPostPage(),
       );
     },
     WelcomeAccountSetupPageRoute.name: (routeData) {
@@ -671,6 +695,20 @@ class ChatPageRouteArgs {
 }
 
 /// generated route for
+/// [CommunityHomePage]
+class CommunityHomePageRoute extends PageRouteInfo<void> {
+  const CommunityHomePageRoute({List<PageRouteInfo>? children})
+      : super(
+          CommunityHomePageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CommunityHomePageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [CreatePasswordPage]
 class CreatePasswordPageRoute
     extends PageRouteInfo<CreatePasswordPageRouteArgs> {
@@ -1016,6 +1054,63 @@ class VerificationCodePageRouteArgs {
   String toString() {
     return 'VerificationCodePageRouteArgs{key: $key, userId: $userId, userName: $userName, entryMode: $entryMode}';
   }
+}
+
+/// generated route for
+/// [ViewCommunityPage]
+class ViewCommunityPageRoute extends PageRouteInfo<ViewCommunityPageRouteArgs> {
+  ViewCommunityPageRoute({
+    Key? key,
+    required CommunityDetails communityDetails,
+    bool isOwnCommunity = false,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ViewCommunityPageRoute.name,
+          args: ViewCommunityPageRouteArgs(
+            key: key,
+            communityDetails: communityDetails,
+            isOwnCommunity: isOwnCommunity,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ViewCommunityPageRoute';
+
+  static const PageInfo<ViewCommunityPageRouteArgs> page =
+      PageInfo<ViewCommunityPageRouteArgs>(name);
+}
+
+class ViewCommunityPageRouteArgs {
+  const ViewCommunityPageRouteArgs({
+    this.key,
+    required this.communityDetails,
+    this.isOwnCommunity = false,
+  });
+
+  final Key? key;
+
+  final CommunityDetails communityDetails;
+
+  final bool isOwnCommunity;
+
+  @override
+  String toString() {
+    return 'ViewCommunityPageRouteArgs{key: $key, communityDetails: $communityDetails, isOwnCommunity: $isOwnCommunity}';
+  }
+}
+
+/// generated route for
+/// [ViewPostPage]
+class ViewPostPageRoute extends PageRouteInfo<void> {
+  const ViewPostPageRoute({List<PageRouteInfo>? children})
+      : super(
+          ViewPostPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ViewPostPageRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

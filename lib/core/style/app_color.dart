@@ -41,7 +41,6 @@ class AppColor{
  AppColor get error =>
      const AppColor(light: Color(0xffDD2541), dark: Color(0xffDD2541));
 
-
  // text
  AppColor get primaryText =>
      const AppColor(light: Color(0xff001543), dark: Color(0xff001543));
@@ -71,10 +70,20 @@ class AppColor{
  AppColor get neutralsBorderDivider =>
      const AppColor(light: Color(0xff000000), dark: Color(0xff000000));
 
+ AppColor get tabBarBorderDivider =>
+     const AppColor(light: Color(0xffebebeb), dark: Color(0xffebebeb));
+
+ AppColor get goldMedalColor =>
+     const AppColor(light: Color(0xFFF1CA00), dark: Color(0xFFF1CA00));
+
+ AppColor get silverMedalColor =>
+     const AppColor(light: Color(0xFF7F8AA1), dark: Color(0xFF7F8AA1));
+
+ AppColor get bronzeMedalColor =>
+     const AppColor(light: Color(0xFFB77E4A), dark: Color(0xFFB77E4A));
 
  AppColor get mainBackground =>
      const AppColor(light: Color(0xffFFFFFF), dark: Color(0xff202123));
-
  //DropDown
 
  AppColor get expandMoreDropDown =>
