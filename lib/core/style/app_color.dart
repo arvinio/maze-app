@@ -37,12 +37,12 @@ class AppColorsBase {
   AppColor get error =>
       const AppColor(light: Color(0xffDD2541), dark: Color(0xffDD2541));
 
-  // text
   AppColor get primaryText =>
       const AppColor(light: Color(0xff001543), dark: Color(0xff001543));
 
   AppColor get secondaryText =>
       const AppColor(light: Color(0xff405072), dark: Color(0xff405072));
+
 
   AppColor get tertiaryText =>
       const AppColor(light: Color(0xff7F8AA1), dark: Color(0xff7F8AA1));
@@ -66,15 +66,22 @@ class AppColorsBase {
   AppColor get neutralsBorderDivider =>
       const AppColor(light: Color(0xff000000), dark: Color(0xff000000));
 
-  AppColor get dividerColor =>
-      const AppColor(light: Color(0x14000000), dark: Color(0x14ffffff));
+ AppColor get tabBarBorderDivider =>
+     const AppColor(light: Color(0xffebebeb), dark: Color(0xffebebeb));
 
-  AppColor get mainBackground =>
-      const AppColor(light: Color(0xffFFFFFF), dark: Color(0xff202123));
+ AppColor get goldMedalColor =>
+     const AppColor(light: Color(0xFFF1CA00), dark: Color(0xFFF1CA00));
 
-  //DropDown
+ AppColor get silverMedalColor =>
+     const AppColor(light: Color(0xFF7F8AA1), dark: Color(0xFF7F8AA1));
 
-  AppColor get expandMoreDropDown =>
+ AppColor get bronzeMedalColor =>
+     const AppColor(light: Color(0xFFB77E4A), dark: Color(0xFFB77E4A));
+
+ AppColor get mainBackground =>
+     const AppColor(light: Color(0xffFFFFFF), dark: Color(0xff202123));
+  
+    AppColor get expandMoreDropDown =>
       const AppColor(light: Color(0xff252729), dark: Color(0xff252729));
 
   AppColor get selectIconDropDown =>
@@ -83,6 +90,10 @@ class AppColorsBase {
   //progressbar
   AppColor get progress =>
       const AppColor(light: Color(0xFFF18A00), dark: Color(0xFFF18A00));
+  
+   AppColor get dividerColor =>
+      const AppColor(light: Color(0x14000000), dark: Color(0x14ffffff));
+ 
 }
 
 AppColorsBase appColors = inject<AppColorsBase>();

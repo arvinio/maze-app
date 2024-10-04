@@ -5,7 +5,11 @@ import 'package:maze_app/core/network/dio_caller.dart';
 import 'package:maze_app/core/network/model/api_response.dart';
 import 'package:maze_app/di/di_const.dart';
 import 'package:maze_app/feature/community/core/util/Post_data_request/post_data_request.dart';
+import 'package:maze_app/feature/community/core/util/community_leaderboard_data_request/community_leaderboard_data_request.dart';
+import 'package:maze_app/feature/community/core/util/community_post_data_request/community_post_data_request.dart';
 import 'package:maze_app/feature/community/data/model/community_details_response/community_details_response.dart';
+import 'package:maze_app/feature/community/data/model/community_leaderboard/community_leaderboard_response.dart';
+import 'package:maze_app/feature/community/data/model/community_post/community_post_response.dart';
 import 'package:maze_app/feature/community/data/model/create_community/create_community_response.dart';
 import 'package:maze_app/feature/community/core/util/community_data_request/comunity.dart';
 import 'package:maze_app/feature/community/data/model/create_post/create_post_response.dart';
@@ -93,9 +97,72 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
   }
 
   @override
+  Future<ApiResponse> joinCommunity({required String id}) async{
+    return await dioCaller.post(
+        data: {"communityId": id},
+        '/api/community/join', fromJson: OtherCommunitiesResponse.fromJson);
+  }
+  @override
+  Future<ApiResponse> leaveCommunity({required String id}) async{
+    return await dioCaller.post(
+        data: {"communityId": id},
+        '/api/community/leave', fromJson: OtherCommunitiesResponse.fromJson);
+  }
+  @override
+  Future<ApiResponse> deleteCommunity({required String id}) async{
+    return await dioCaller.delete(
+        // data: {"id": id},
+        '/api/community/$id', fromJson: OtherCommunitiesResponse.fromJson);
+  }
+  @override
+  Future<ApiResponse> communityLeaderboardList({required CommunityLeaderboardDataRequest request}) async{
+    Map<String, dynamic> mapData = {
+      'page': request.page,
+      'communityId': request.communityId,
+      'type' : request.type,
+    };
+    return await dioCaller.get(
+        queryParameters: mapData,
+        '/api/community/leaderboard', fromJson: CommunityLeaderboardResponse.fromJson);
+  }
+  @override
+  Future<ApiResponse> communityPostList({required CommunityPostDataRequest request}) async{
+    Map<String, dynamic> mapData = {
+      'page': request.page,
+      'communityId': request.communityId,
+    };
+    return await dioCaller.get(
+        queryParameters: mapData,
+        '/api/community/posts', fromJson: CommunityPostResponse.fromJson);
+  }
+  @override
+  Future<ApiResponse> likePost({required String postId}) async{
+    Map<String, dynamic> mapData = {
+      "element": "post", // post,comment,comment-reply
+      "elementId": postId,
+      "action": "like" //like,unlike
+    };
+    return await dioCaller.post(
+        data: mapData,
+        '/api/like', fromJson: CommunityPostResponse.fromJson);
+  }
+  @override
+  Future<ApiResponse> unLikePost({required String postId}) async{
+    Map<String, dynamic> mapData = {
+      "element": "post", // post,comment,comment-reply
+      "elementId": postId,
+      "action": "unlike"
+    };
+    return await dioCaller.post(
+        data: mapData,
+        '/api/like', fromJson: CommunityPostResponse.fromJson);
+  }
+
+  @override
   Future<ApiResponse<Map<String, List<SearchResponse>>>> search(
       {required String query}) async {
     return await dioCaller.get('api/community/search?query=$query',
         fromJson: SearchResponse.fromResultJson);
   }
 }
+

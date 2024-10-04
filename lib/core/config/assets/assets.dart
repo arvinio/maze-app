@@ -115,6 +115,37 @@ class AssetsBase {
   AssetSvg get dislike => const AssetSvg('assets/icons/community/dislike.svg');
   AssetSvg get report => const AssetSvg('assets/icons/community/flag.svg');
   AssetSvg get noImage => const AssetSvg('assets/icons/community/no_image.svg');
+  AssetSvg get medalStarIcon => const AssetSvg('assets/icons/community/medal-star.svg',);
+  AssetSvg get backIcon => const AssetSvg('assets/icons/community/back.svg',);
+  AssetSvg get searchIcon => const AssetSvg('assets/icons/community/search.svg',);
+  AssetSvg get menuIcon => const AssetSvg('assets/icons/community/menu.svg',);
+  AssetSvg get messageIcon => const AssetSvg('assets/icons/community/message2.svg',);
+  AssetSvg get shareIcon => const AssetSvg('assets/icons/community/send-2.svg',);
+  AssetSvg get share => const AssetSvg('assets/icons/community/share.svg');
+  AssetSvg get heart => const AssetSvg('assets/icons/community/heart.svg');
+  AssetSvg get mute => const AssetSvg('assets/icons/community/mute.svg');
+  AssetSvg get dot => const AssetSvg('assets/icons/community/dot.svg');
+  AssetSvg get trash => const AssetSvg('assets/icons/community/trash.svg');
+
+
+
+  // community image
+  AssetImage get placeHolderImage => const AssetImage('assets/images/placeholder-image.webp');
+  AssetImage get personPlaceHolderImage => const AssetImage('assets/images/person-placeholder.png');
+
+
+  AssetSvg  communityPostIcon({bool enabled = true}) =>
+      AssetSvg(enabled ?
+      'assets/icons/community/community-post-green.svg' :
+      'assets/icons//community/community-post.svg');
+  AssetSvg  leaderBoardIcon({bool enabled = true}) =>
+      AssetSvg(enabled ?
+      'assets/icons/community/leader-board-enabled.svg' :
+      'assets/icons/community/leader-board.svg');
+  AssetSvg  heartIcon({bool isLiked = false}) =>
+      AssetSvg(isLiked ?
+      'assets/icons/community/heart_liked.svg' :
+      'assets/icons/community/heart.svg',);
 
 
 }

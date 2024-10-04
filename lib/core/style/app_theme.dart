@@ -360,4 +360,11 @@ extension ColorSchemeExtension on ColorScheme {
   Color get progress => brightness == Brightness.light
       ? appColors.progress.light
       : appColors.progress.dark;
+
+  Color get tabBarBorderDivider =>
+      brightness == Brightness.light
+          ? appColors.tabBarBorderDivider.light
+          : appColors.tabBarBorderDivider.dark;
+
 }
+
