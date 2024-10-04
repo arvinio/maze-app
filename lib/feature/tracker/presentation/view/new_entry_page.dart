@@ -8,9 +8,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/dimen.dart';
+import 'package:maze_app/core/config/strings.dart';
+import 'package:maze_app/core/presentation/widget/app_arrow.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
+import 'package:maze_app/core/presentation/widget/custom_add_photo.dart';
 import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
+import 'package:maze_app/core/presentation/widget/custom_view_photo.dart';
+import 'package:maze_app/core/presentation/widget/menu_dialog_content.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
@@ -21,9 +26,11 @@ import 'package:maze_app/feature/tracker/domain/entity/what_did_add.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/compost_use_sheet.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/custom_container_list.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/custome_items.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/custom_item.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/feed_filter_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/get_entry_type_icon.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/what_did_add_selection_sheet.dart';
 
@@ -83,10 +90,15 @@ class _NewEntryPageState extends State<NewEntryPage> {
   @override
   Widget build(BuildContext context) {
     return BasePageWidget(
-      appBar: AppBar(
-        title: const Text('entry'),
-        centerTitle: true,
-        actions: [
+      appBar: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 40, 16, 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+           InkWell(child: appAssets.arrowLeft.svg(width: 24,height: 24),onTap: (){
+             context.maybePop();
+           },),
+          CustomText('5 Jan 2024', style: context.titleHeadline,),
           TextButton(
             onPressed: (() {
               fillEntry();
@@ -95,166 +107,193 @@ class _NewEntryPageState extends State<NewEntryPage> {
               context.maybePop();
             }),
             child: CustomText(
-              'Save',
+              appStrings.save,
               style: context.titleHeadline.copyWith(
-                color: context.scheme().primary,
+                color: context
+                    .scheme()
+                    .primary,
               ),
             ),
-          ),
-          SizedBox(
-            width: 20.w,
           )
-        ],
+        ],),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          // crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TrackerField(
-              title: widget.bin.nickName,
-              onTap: null,
-              leadingIcon: widget.bin.imageUrl == null
-                  ? null
-                  : SizedBox(
-                      width: 40.dg,
-                      height: 40.dg,
-                      child: Image.network(widget.bin.imageUrl!),
-                    ),
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-            CustomText(
-              "Date",
-              style: context.titleHeadline,
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-            InkWell(
-              onTap: () {
-                _selectDate(context, (date) {
-                  _dialogCalendarPickerValue = date!;
-                  setState(() {
-                    _dateController.text =
-                        DateFormat('dd MMM yyyy').format(date[0]!).toString();
-                  });
 
-                  // '${date![0]!.day} ${monthList[date![0]!.month -
-                  //     1]} ${date![0]!.year}';
-                });
-              },
-              child: Container(
-                height: 60.h,
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                decoration: BoxDecoration(
-                  border:
-                      Border.all(color: context.scheme().neutralsBorderDivider),
-                  borderRadius: BorderRadius.circular(15.sp),
+      child: BasePageWidget(
+        child: SingleChildScrollView(
+          child: Column(
+             crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TrackerField(
+                title: widget.bin.nickName,
+                titleStyle: context.titleHeadline,
+                subTitle: '${120} ${appStrings.litres}',
+                subTitleStyle: context.captionCaption.copyWith(color: context.scheme().secondaryText),
+                onTap: null,
+                leadingIcon: widget.bin.imageUrl == null
+                    ? null
+                    : SizedBox(
+                  height: 80.dg,
+                  width: 80.dg,
+                  child: ClipRRect(
+                   borderRadius: BorderRadius.all(Radius.circular(15.sp)),
+                    child: Image.network(widget.bin.imageUrl!,fit: BoxFit.cover,)),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      _dateController.text,
-                      style: context.subheadlineSubheadline.copyWith(
-                        color: context.scheme().primaryText,
-                      ),
-                    ),
-                    SizedBox(
-                      child: appAssets.calendarIcon.svg(),
-                    )
-                  ],
-                ),
+                containerPadding: EdgeInsets.zero,
+                trailing: SizedBox(width: 24,height: 24 ,child: appAssets.dropDown.svg()),
               ),
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-            CustomText(
-              "Entry",
-              style: context.titleHeadline,
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-            CustomContainerList(height: _getEntrySelectionHeight, children: [
-              CustomeItem(
-                title: _entryType.displayText,
-                height: 60.h,
-                func: () {
-                  openModalBottomSheet(context, entrySelection(context).$1,
-                      height: entrySelection(context).$2);
+              SizedBox(
+                height: 15.h,
+              ),
+              CustomText(
+                appStrings.date,
+                style: context.titleHeadline,
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              InkWell(
+                onTap: () {
+                  _selectDate(context, (date) {
+                    _dialogCalendarPickerValue = date!;
+                    setState(() {
+                      _dateController.text =
+                          DateFormat('dd MMM yyyy').format(date[0]!).toString();
+                    });
+          
+                    // '${date![0]!.day} ${monthList[date![0]!.month -
+                    //     1]} ${date![0]!.year}';
+                  });
                 },
-                trailing: Icon(Icons.arrow_drop_down_rounded),
-                leading: GetEntryTypeIcon(entryType: _entryType),
-              ),
-              ...showEntryRelatedWidgets()
-            ]),
-            // if (_entryType == EntryType.emptiedCompost ||
-            //     _entryType == EntryType.emptiedBin)
-            SizedBox(
-              height: 15.h,
-            ),
-            if (_entryType == EntryType.emptiedCompost ||
-                _entryType == EntryType.emptiedBin) ...[
-              CustomText(
-                "How full was the bin before the council picked it up?",
-                style: context.titleHeadline,
+                child: Container(
+                  height: 60.h,
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  decoration: BoxDecoration(
+                    border:
+                    Border.all(color: context
+                        .scheme()
+                        .neutralsBorderDivider),
+                    borderRadius: BorderRadius.circular(15.sp),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        _dateController.text,
+                        style: context.subheadlineSubheadline.copyWith(
+                          color: context
+                              .scheme()
+                              .primaryText,
+                        ),
+                      ),
+                      SizedBox(
+                        child: appAssets.calendarIcon.svg(),
+                      )
+                    ],
+                  ),
+                ),
               ),
               SizedBox(
                 height: 15.h,
               ),
-              CustomContainerList(children: [
-                amountPercentage(100),
-                amountPercentage(75),
-                amountPercentage(50),
-                amountPercentage(25),
+              CustomText(
+                appStrings.entry,
+                style: context.titleHeadline,
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              CustomContainerList(height: _getEntrySelectionHeight, children: [
+                CustomItem(
+                  title: _entryType.displayText,
+                  height: 60.h,
+                  func: () {
+                    openModalBottomSheet(context, entrySelection(context).$1,
+                        height: entrySelection(context).$2);
+                  },
+                  trailing: appAssets.dropDown.svg(),
+                  leading: GetEntryTypeIcon(entryType: _entryType),
+                ),
+                ...showEntryRelatedWidgets()
               ]),
+              // if (_entryType == EntryType.emptiedCompost ||
+              //     _entryType == EntryType.emptiedBin)
               SizedBox(
                 height: 15.h,
               ),
+              if (_entryType == EntryType.emptiedCompost ||
+                  _entryType == EntryType.emptiedBin) ...[
+                CustomText(
+               // appStrings.howFullPickedUp,
+                 appStrings.howFullCompost,
+                  style: context.titleHeadline,
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+                CustomContainerList(children: [
+                  amountPercentage(100),
+                  amountPercentage(75),
+                  amountPercentage(50),
+                  amountPercentage(25),
+                ]),
+                SizedBox(
+                  height: 15.h,
+                ),
+                CustomText(
+                 // appStrings.amountOfWaste,
+                 appStrings.amountOfCompost,
+                  style: context.titleHeadline
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+                CustomTextField.outline(
+                  textEditingController: _amountController,
+                  label: appStrings.estimatedWeight,
+                  labelTextColor: context
+                      .scheme()
+                      .secondaryText,
+                    suffixIcon: IconButton(iconSize: 20,
+                      padding: EdgeInsets.zero,
+                      highlightColor: Colors.transparent,
+                      constraints: const BoxConstraints(
+                          maxHeight: 24, maxWidth: 24),
+                      icon: appAssets.infoSize.svg(),
+                      onPressed: () {
+                        ShowDialog.sizeInfo(context);
+                      },)
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+              ],
               CustomText(
-                "Amount of compost emptied",
+               appStrings.note,
                 style: context.titleHeadline,
               ),
               SizedBox(
-                height: 15.h,
+                height: 10.h,
               ),
               CustomTextField.outline(
-                textEditingController: _amountController,
-                label: "Amount of litres",
-                labelTextColor: context.scheme().secondaryText,
+                textEditingController: _noteController,
+                hint: appStrings.noteDesc,
+                maxLines: 5,
+                padding: const EdgeInsets.all(16),
               ),
               SizedBox(
                 height: 15.h,
               ),
+          
+              CustomText(
+                appStrings.photos,
+                style: context.titleHeadline,
+              ),
+              SizedBox(
+                height: 15.h,
+              ),
+              photosSection(context),
             ],
-            CustomText(
-              "Note",
-              style: context.titleHeadline,
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-            CustomTextField.outline(
-              textEditingController: _noteController,
-              maxLines: 5,
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-
-            CustomText(
-              "Photos",
-              style: context.titleHeadline,
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-            photosSection(context),
-          ],
+          ),
         ),
       ),
     );
@@ -263,121 +302,76 @@ class _NewEntryPageState extends State<NewEntryPage> {
   Row photosSection(BuildContext context) {
     return Row(
       children: [
-        if (photos.length < 3)
-          Container(
-            height: 90.dg,
-            width: 90.dg,
-            decoration: BoxDecoration(
-              color: context.scheme().neutralsBackground,
-              border: Border.all(color: context.scheme().neutralsBorderDivider),
-              borderRadius:
-                  const BorderRadius.all(Radius.circular(Dimen.defaultRadius)),
-            ),
-            child: Center(
-              child: SizedBox(
-                height: 40,
-                width: 40,
-                child: IconButton.filled(
-                  onPressed: () async {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (context) => SizedBox(
-                              height: 150.h,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  SizedBox(
-                                    height: 70.h,
-                                    child: FittedBox(
-                                      fit: BoxFit.cover,
-                                      child: IconButton(
-                                        onPressed: () async {
-                                          XFile? result = await ImagePicker()
-                                              .pickImage(
-                                                  source: ImageSource.camera);
-                                          if (result != null) {
-                                            setState(() {
-                                              photos.add(File(result.path));
-                                              Navigator.pop(context);
-                                            });
-                                          }
-                                        },
-                                        icon: const Icon(Icons.camera_alt),
-                                      ),
-                                    ),
-                                  ),
-                                  IconButton(
-                                    onPressed: () async {
-                                      XFile? result = await ImagePicker()
-                                          .pickImage(
-                                              source: ImageSource.gallery);
-                                      if (result != null) {
-                                        setState(() {
-                                          photos.add(File(result.path));
-                                          Navigator.pop(context);
-                                        });
-                                      }
-                                    },
-                                    icon: const Icon(Icons.photo),
-                                  ),
-                                ],
+        IconButton(
+          onPressed: () async {
+            showModalBottomSheet(
+                context: context,
+                builder: (context) =>
+                    SizedBox(
+                      height: 150.h,
+                      child: Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceAround,
+                        children: [
+                          SizedBox(
+                            height: 70.h,
+                            child: FittedBox(
+                              fit: BoxFit.cover,
+                              child: IconButton(
+                                onPressed: () async {
+                                  XFile? result = await ImagePicker()
+                                      .pickImage(
+                                      source: ImageSource.camera);
+                                  if (result != null) {
+                                    setState(() {
+                                      photos.add(File(result.path));
+                                      Navigator.pop(context);
+                                    });
+                                  }
+                                },
+                                icon: const Icon(Icons.camera_alt),
                               ),
-                            ));
-                  },
-                  icon: const Icon(Icons.add),
-                ),
-              ),
-            ),
-          ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () async {
+                              XFile? result = await ImagePicker()
+                                  .pickImage(
+                                  source: ImageSource.gallery);
+                              if (result != null) {
+                                setState(() {
+                                  photos.add(File(result.path));
+                                  Navigator.pop(context);
+                                });
+                              }
+                            },
+                            icon: const Icon(Icons.photo),
+                          ),
+                        ],
+                      ),
+                    ));
+          },
+          icon: const CustomAddPhoto(),
+        ),
         SizedBox(
           width: 10.w,
         ),
         if (photos.isNotEmpty)
           SizedBox(
             height: 100.h,
-            width: photos.length == 3 ? 300.w : 200.w,
+            width: 200.w,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: photos.length,
               itemBuilder: (context, index) {
-                return Stack(children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: context.scheme().neutralsBackground,
-                      border: Border.all(
-                          color: context.scheme().neutralsBorderDivider),
-                      borderRadius: const BorderRadius.all(
-                          Radius.circular(Dimen.defaultRadius)),
+                return CustomViewPhoto(
+                    child: Image.file(
+                      photos[index]!,
                     ),
-                    height: 90.h,
-                    width: 90.h,
-                    margin: EdgeInsets.only(right: 15.w),
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.all(
-                          Radius.circular(Dimen.defaultRadius)),
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      child: FittedBox(
-                        fit: BoxFit.cover,
-                        child: Image.file(
-                          photos[index]!,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    right: 10,
-                    child: IconButton(
-                      onPressed: () => setState(() {
-                        photos.removeAt(index);
-                      }),
-                      icon: const Icon(
-                        Icons.cancel,
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
-                ]);
+                    onPressed: () =>
+                        setState(() {
+                          photos.removeAt(index);
+                        }));
               },
             ),
           ),
@@ -385,8 +379,8 @@ class _NewEntryPageState extends State<NewEntryPage> {
     );
   }
 
-  CustomeItem amountPercentage(int amount) {
-    return CustomeItem(
+  CustomItem amountPercentage(int amount) {
+    return CustomItem(
       height: 50.h,
       title: '$amount%',
       trailing: Radio(
@@ -415,8 +409,8 @@ class _NewEntryPageState extends State<NewEntryPage> {
       switch (_entryType) {
         case EntryType.emptiedCompost:
           return [
-            CustomeItem(
-              title: 'Compost use',
+            CustomItem(
+              title: appStrings.compostUse,
               height: 60.h,
               func: () async {
                 final List<CompostUseItem>? result = await openModalBottomSheet(
@@ -433,13 +427,13 @@ class _NewEntryPageState extends State<NewEntryPage> {
                   });
                 }
               },
-              trailing: const Icon(Icons.arrow_drop_down_rounded),
+              trailing:appAssets.dropDown.svg(),
             ),
           ];
         case EntryType.addedWaste:
           return [
-            CustomeItem(
-              title: 'What did you add?',
+            CustomItem(
+              title: appStrings.whatDidYouAdd,
               height: 60.h,
               func: () async {
                 final List<WhatDidAddItem>? result = await openModalBottomSheet(
@@ -461,10 +455,10 @@ class _NewEntryPageState extends State<NewEntryPage> {
             Padding(
               padding: EdgeInsets.only(left: 5.dg),
               child: ListTile(
-                  title: CustomText('Did you mix it?'),
+                  title: CustomText(appStrings.didYouMixIt),
                   subtitle: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.dg),
-                    child: CustomText(_didYouMixit ? 'Yes' : 'No'),
+                    child: CustomText(_didYouMixit ? appStrings.yes : appStrings.no),
                   ),
                   trailing: Switch.adaptive(
                     value: _didYouMixit,
@@ -492,9 +486,10 @@ class _NewEntryPageState extends State<NewEntryPage> {
         CustomContainerList(
           height: 200.h,
           children: [
-            CustomeItem(
-              title: EntryType.addedWaste.toString().replaceFirst('-', ' '),
-              height: 60.h,
+            CustomItem(
+              title: EntryType.addedWaste.displayText,
+              titleStyle: context.bodyBody,
+              height: 65.h,
               func: () {
                 setState(() {
                   _entryType = EntryType.addedWaste;
@@ -503,9 +498,10 @@ class _NewEntryPageState extends State<NewEntryPage> {
               },
               leading: appAssets.addWasteIcon.svg(),
             ),
-            CustomeItem(
-              title: EntryType.emptiedCompost.toString().replaceFirst('-', ' '),
-              height: 60.h,
+            CustomItem(
+              title: EntryType.emptiedCompost.displayText,
+              titleStyle: context.bodyBody,
+              height: 65.h,
               func: () {
                 setState(() {
                   _entryType = EntryType.emptiedCompost;
@@ -514,9 +510,10 @@ class _NewEntryPageState extends State<NewEntryPage> {
               },
               leading: appAssets.emptiedCompostIcon.svg(),
             ),
-            CustomeItem(
-              title: EntryType.generalNote.toString().replaceFirst('-', ' '),
-              height: 60.h,
+            CustomItem(
+              title: EntryType.generalNote.displayText,
+              titleStyle: context.bodyBody,
+              height: 65.h,
               func: () {
                 setState(() {
                   _entryType = EntryType.generalNote;
@@ -527,14 +524,14 @@ class _NewEntryPageState extends State<NewEntryPage> {
             ),
           ],
         ),
-        300.h
+        308.h
       );
     }
     return (
       CustomContainerList(
         height: 140.h,
         children: [
-          CustomeItem(
+          CustomItem(
             title: EntryType.emptiedBin.toString().replaceFirst('-', ' '),
             height: 60.h,
             func: () {
@@ -545,9 +542,9 @@ class _NewEntryPageState extends State<NewEntryPage> {
             },
             leading: appAssets.addWasteIcon.svg(),
           ),
-          CustomeItem(
+          CustomItem(
             title: EntryType.generalNote.toString().replaceFirst('-', ' '),
-            height: 60.h,
+            height: 90.h,
             func: () {
               setState(() {
                 _entryType = EntryType.generalNote;
@@ -586,14 +583,15 @@ class _NewEntryPageState extends State<NewEntryPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (hasHeader) ...[
-                    const ExitButton(),
-                    CustomText('Entry type'),
+                    const ExitButton(padding: EdgeInsets.only(top: 13),),
+                    CustomText(appStrings.entryType,style: context.titleHeadline,),
                     SizedBox(
                       width: 70.w,
                     ),
                   ]
                 ],
               ),
+              SizedBox(height: 10.h,),
               child,
             ],
           ),

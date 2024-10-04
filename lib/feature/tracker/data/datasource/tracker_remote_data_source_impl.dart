@@ -8,6 +8,7 @@ import 'package:maze_app/feature/tracker/data/datasource/tracker_remote_data_sou
 import 'package:maze_app/feature/tracker/data/model/get_bin_chart_data_resp.dart';
 import 'package:maze_app/feature/tracker/data/model/get_bin_entry_list_resp.dart';
 import 'package:maze_app/feature/tracker/data/model/get_bins_list_resp.dart';
+import 'package:maze_app/feature/tracker/data/model/success_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
 
@@ -19,7 +20,7 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
     @Named(DiConst.dioNamedToken) required this.dioCaller,
   });
   @override
-  Future<ApiResponse> createBin(Bin bin) async {
+  Future<ApiResponse<SuccessResponse>> createBin(Bin bin) async {
     final data = FormData.fromMap({
       'photo': [
         await MultipartFile.fromFile(bin.imageUrl ?? '', filename: bin.imageUrl)
@@ -36,8 +37,8 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
       'height': bin.height ?? '3',
       'length': bin.length ?? '33'
     });
-    return await dioCaller.post('api/bin',
-        fromJson: RespEmptyModel.fromJson, data: data);
+    return await dioCaller.post<SuccessResponse>('api/bin',
+        fromJson: SuccessResponse.fromJson, data: data);
   }
 
   @override

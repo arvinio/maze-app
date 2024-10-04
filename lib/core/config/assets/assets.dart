@@ -94,6 +94,29 @@ class AssetsBase {
       const AssetSvg('assets/icons/tracker/add_waste_icon.svg');
   AssetSvg get calendarIcon =>
       const AssetSvg('assets/icons/tracker/calendar-icon.svg');
+  AssetSvg get compost =>
+      const AssetSvg('assets/icons/tracker/compost.png');
+  AssetSvg get compost1=>
+      const AssetSvg('assets/icons/tracker/compost1.png');
+  AssetSvg get compost2 =>
+      const AssetSvg('assets/icons/tracker/compost2.png');
+  AssetSvg get compost3 =>
+      const AssetSvg('assets/icons/tracker/compost3.png');
+  AssetSvg get information =>
+      const AssetSvg('assets/icons/tracker/information.svg');
+  AssetSvg get apMaze => const AssetSvg('assets/icons/app.png');
+  AssetSvg get infoSize =>
+      const AssetSvg('assets/icons/tracker/info-size.svg');
+  AssetSvg get sort =>
+      const AssetSvg('assets/icons/tracker/sort.svg');
+  AssetSvg get addEntry =>
+      const AssetSvg('assets/icons/tracker/add-entry.svg');
+  AssetSvg get mute =>
+      const AssetSvg('assets/icons/tracker/notification.svg');
+  AssetSvg get deleteBin =>
+      const AssetSvg('assets/icons/tracker/delete_bin.svg');
+
+
 }
 
 class AssetImage {

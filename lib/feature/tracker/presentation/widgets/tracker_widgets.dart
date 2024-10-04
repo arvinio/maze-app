@@ -1,5 +1,5 @@
 export 'package:maze_app/feature/tracker/presentation/view/tracker_page.dart';
-export 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/add_bin_widget.dart';
+export 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/add_bin_widget.dart';
 export 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheet_item.dart';
 export 'package:maze_app/feature/tracker/presentation/widgets/compost.dart';
 export 'package:maze_app/feature/tracker/presentation/widgets/exit_button.dart';
@@ -16,4 +16,4 @@ export 'package:flutter_screenutil/flutter_screenutil.dart';
 export 'package:maze_app/core/presentation/widget/custom_text.dart';
 export 'package:maze_app/core/presentation/widget/info_icon.dart';
 export 'package:maze_app/core/style/app_theme.dart';
-export 'custome_divider.dart';
+export 'custom_divider.dart';

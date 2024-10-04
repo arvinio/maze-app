@@ -7,8 +7,8 @@ part 'get_bins_list_resp.g.dart';
 @freezed
 class GetBinsListResp with _$GetBinsListResp {
   factory GetBinsListResp({
-    required bool success,
-    required List<BinModel> result,
+    required bool? success,
+    required List<BinModel>? result,
   }) = _GetBinsListResp;
 
   factory GetBinsListResp.fromJson(Map<String, dynamic> json) =>
@@ -18,8 +18,8 @@ class GetBinsListResp with _$GetBinsListResp {
 @freezed
 class GetBinResp with _$GetBinResp {
   factory GetBinResp({
-    required bool success,
-    required BinModel result,
+    required bool? success,
+    required BinModel? result,
   }) = _GetBinResp;
 
   factory GetBinResp.fromJson(Map<String, dynamic> json) =>
@@ -30,18 +30,18 @@ class GetBinResp with _$GetBinResp {
 class BinModel with _$BinModel {
   factory BinModel({
     @JsonKey(name: "_id") required String id,
-    required String type,
-    required String nickname,
-    required String pickupDate,
-    required String sizeType,
-    required int amountOfLitres,
-    required int width,
-    required int height,
-    required int length,
-    required String typeOfCompostBin,
-    required bool is2Compostement,
-    required bool isShare,
-    required DateTime createdDate,
+    required String? type,
+    required String? nickname,
+    required String? pickupDate,
+    required String? sizeType,
+    required int? amountOfLitres,
+    required int? width,
+    required int? height,
+    required int? length,
+    required String? typeOfCompostBin,
+    required bool? is2Compostement,
+    required bool? isShare,
+    required DateTime? createdDate,
     @Default(null) String? photo,
     List<ChartDataModel>? chartData,
     int? totalAmount,

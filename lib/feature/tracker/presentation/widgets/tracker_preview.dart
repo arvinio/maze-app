@@ -2,6 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:maze_app/core/config/dimen.dart';
+import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/widget/app_arrow.dart';
 import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/style/app_theme.dart';
@@ -25,7 +27,7 @@ class TrackerPreview extends StatelessWidget {
         border: Border.all(color: context.scheme().neutralsBorderDivider),
         borderRadius: BorderRadius.circular(15.sp),
       ),
-      height: 160.h,
+      height: 165.h,
       child: Column(
         children: [
           SizedBox(
@@ -33,36 +35,44 @@ class TrackerPreview extends StatelessWidget {
             child: Center(
               child: ListTile(
                 onTap: onTap,
-                title: Text(
+                title: CustomText(
                   bin.nickName,
-                  style: context.subheadlineSubheadline.copyWith(
-                    color: context.scheme().primaryText,
-                  ),
+                  style: context.titleHeadline
                 ),
                 subtitle: CustomText(
-                  '${bin.type.name} waste',
+                  bin.type ==BinType.landfill?
+                  '${bin.type.name} waste'
+                  :appStrings.compostTumbler,
                   style: context.footnoteFootnote
                       .copyWith(color: context.scheme().secondaryText),
                 ),
                 leading: Container(
-                  padding: EdgeInsets.all(3.sp),
-                  height: 50.sp,
-                  width: 50.sp,
                   decoration: BoxDecoration(
+                    color: context.scheme().neutralsBackground,
                     border: Border.all(
                         color: context.scheme().neutralsBorderDivider),
-                    borderRadius: BorderRadius.circular(15.sp),
+                    borderRadius: const BorderRadius.all(
+                        Radius.circular(Dimen.defaultRadius)),
                   ),
-                  child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: bin.imageUrl == null
-                          ? const SizedBox(
-                              child: Text('no image'),
-                            )
-                          : Image.network(
-                              bin.imageUrl!,
-                              fit: BoxFit.contain,
-                            )),
+                  height: 50.sp,
+                  width: 50.sp,
+                  margin: EdgeInsets.only(right: 15.w),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                        Radius.circular(Dimen.defaultRadius)),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: FittedBox(
+                        fit: BoxFit.cover,
+                        child: bin.imageUrl == null
+                            ? const SizedBox(
+                          child: Text('no image'),
+                        )
+                            : Image.network(
+                          bin.imageUrl!,
+                          fit: BoxFit.cover,
+                        ),
+                    ),
+                  ),
                 ),
                 trailing: const AppArrow(),
               ),
@@ -74,12 +84,13 @@ class TrackerPreview extends StatelessWidget {
             ),
             child: ListTile(
               title: CustomText(
-                '${bin.totalAmount}kg',
-                style: context.subheadlineSubheadline
-                    .copyWith(color: context.scheme().primaryText),
+                '${bin.totalAmount} kg',
+                style: context.subheadlineSubheadlineSemibold,
               ),
               subtitle: CustomText(
-                'Waste',
+                bin.totalAmount==0
+                    ? appStrings.noDataAddedYet
+                :'Waste',
                 style: context.captionCaption
                     .copyWith(color: context.scheme().tertiaryText),
               ),

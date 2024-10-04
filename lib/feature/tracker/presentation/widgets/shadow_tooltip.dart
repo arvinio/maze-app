@@ -40,7 +40,7 @@ class ShadowTooltip extends StatelessWidget {
                       flex: 10,
                       child: Text(
                         message,
-                        style: context.subheadlineSubheadline.copyWith(
+                        style: context.subheadlineSubheadlineMedium.copyWith(
                           color: context.scheme().info,
                         ),
                       ),

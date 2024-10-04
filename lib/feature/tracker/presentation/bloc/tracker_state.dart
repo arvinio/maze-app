@@ -15,4 +15,5 @@ class TrackerState with _$TrackerState {
   const factory TrackerState.navigateToAddNewEntryPage({required Bin bin}) =
       _NavigateToAddNewEntryPageState;
   const factory TrackerState.sortingEntries() = _SortingEntries;
+  const factory TrackerState.binsCreated() = _BinsCreated;
 }

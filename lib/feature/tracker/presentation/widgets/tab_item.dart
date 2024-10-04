@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maze_app/core/presentation/widget/custom_text.dart';
 
 class TabItem extends StatelessWidget {
   final String title;
@@ -14,14 +15,14 @@ class TabItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          CustomText(
             title,
             overflow: TextOverflow.ellipsis,
           ),
           Container(
             margin: const EdgeInsetsDirectional.only(start: 5),
             padding: const EdgeInsets.all(3),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
             ),
           )

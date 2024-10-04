@@ -41,10 +41,10 @@ class Bin {
 }
 
 enum BinType {
-  organic,
+ // organic,
   landfill,
-  recycling,
-  compost,
+  //recycling,
+  compost
 }
 
 enum SizeType {

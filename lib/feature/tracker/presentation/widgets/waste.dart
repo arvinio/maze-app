@@ -1,11 +1,22 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
+import 'package:maze_app/core/config/dimen.dart';
+import 'package:maze_app/core/config/strings.dart';
+import 'package:maze_app/core/style/app_theme.dart';
+import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_field.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_preview.dart';
+
+import 'bottom_sheets/add_waste_bin_widget.dart';
+import 'bottom_sheets/council_landfill_bin_widget.dart';
+import 'bottom_sheets/landfill_bin_widget.dart';
+import 'bottom_sheets/new_landfill_waste_bin_widget.dart';
 
 class Waste extends StatelessWidget {
   const Waste({
@@ -22,10 +33,39 @@ class Waste extends StatelessWidget {
         !bloc.hasLandfill
             ? TrackerField(
                 leadingIcon: Image.asset(appAssets.landfillIcon.path),
-                title: 'Add a landfill bin',
-                subTitle:
-                    'Storeswaste that will later be emptied intro your council landfill bin',
-                onTap: () {},
+                title: appStrings.addLandfillBinTitle,
+                subTitle:appStrings.addLandfillBinSubTitle,
+                horizontalTitleGap: 14,
+                onTap: () {
+                  ShowDialog.openModalBottomSheet(
+                    context,
+                    AddWasteBinWidget(
+                      func: () {
+                        ShowDialog.openModalBottomSheet(
+                          context,
+                          NewLandfillWasteBinWidget(
+                            haveBin: () {
+                              ShowDialog.openModalBottomSheet(
+                                context,
+                                CouncilLandfillBinWidget(
+                                    bloc:
+                                    bloc),
+                              );
+                            },
+                            dontHaveBin:
+                                () {
+                                  ShowDialog.openModalBottomSheet(
+                                  context,
+                                  LandfillBinWidget(
+                                      bloc:
+                                      bloc));
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
               )
             : TrackerPreview(
                 onTap: () {
@@ -65,4 +105,6 @@ class Waste extends StatelessWidget {
       ],
     );
   }
+
+
 }

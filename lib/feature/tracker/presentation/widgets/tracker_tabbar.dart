@@ -6,8 +6,8 @@ import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tab_item.dart';
 
-class TrackerTabbar extends StatelessWidget {
-  const TrackerTabbar({
+class TrackerTabBar extends StatelessWidget {
+  const TrackerTabBar({
     super.key,
     required TabController tabController,
     required this.title1,
@@ -26,20 +26,23 @@ class TrackerTabbar extends StatelessWidget {
         height: 35.h,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(30.sp)),
-            color: context.scheme().tertiaryText.withOpacity(0.3)),
+            color: context.scheme().neutralsFieldsTags),
         child: Padding(
           padding: EdgeInsets.all(1.sp),
           child: TabBar(
             indicatorSize: TabBarIndicatorSize.tab,
             dividerColor: Colors.transparent,
             indicator: BoxDecoration(
-              border: Border.all(color: context.scheme().tertiaryText),
+              border: Border.all(color:  context.scheme().tabBorder),
               color: context.scheme().whiteText,
               borderRadius: BorderRadius.all(Radius.circular(30.sp)),
             ),
-            labelStyle: context.footnoteFootnote,
+            labelStyle: context.footnoteFootnoteBold,
             labelColor: context.scheme().primaryText,
-            unselectedLabelColor: Colors.black54,
+            //unselectedLabelColor: Colors.black54,
+            unselectedLabelColor:  context.scheme().secondaryText,
+            unselectedLabelStyle: context.footnoteFootnote.copyWith(color: context.scheme().secondaryText),
+
             controller: _tabController,
             tabs: [
               TabItem(title: title1),

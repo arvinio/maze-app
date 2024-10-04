@@ -7,12 +7,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/network/model/api_error.dart';
 import 'package:maze_app/core/network/model/api_response.dart';
+import 'package:maze_app/feature/tracker/data/model/success_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
 import 'package:maze_app/feature/tracker/domain/entity/chart_data.dart';
 import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
 
-import 'package:maze_app/feature/tracker/domain/repo/tracker_repo.dart';
+import 'package:maze_app/feature/tracker/domain/repo/tracker_repository.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
 part 'tracker_state.dart';
@@ -21,7 +22,7 @@ part 'tracker_bloc.freezed.dart';
 
 @injectable
 class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
-  final TrackerRepo repo;
+  final TrackerRepository repo;
   int wasteSaved = 0;
   int compostSaved = 0;
   int wasteRecycled = 0;
@@ -60,16 +61,15 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
   }
 
   _onAddBin(_AddBin event, Emitter<TrackerState> emit) async {
+    emit(const TrackerState.loadInProgress());
     final response = await repo.createBin(bin: event.bin);
-    response.when(
-      completed: (data, statusCode) {
-        // Handle add bin logic here
-      },
-      error: (apiError) {
-        // Handle error
-      },
-    );
-  }
+    response.when(completed: (data, int? statusCode) {
+      SuccessResponse response = data;
+      emit(const TrackerState.binsCreated());
+    }, error: (apiError) {
+      emit(TrackerState.loadingError(error: apiError));
+    });
+}
 
   _onAddEntryToBin(_AddEntryToBin event, Emitter<TrackerState> emit) async {
     // emit(const TrackerState.loadInProgress());

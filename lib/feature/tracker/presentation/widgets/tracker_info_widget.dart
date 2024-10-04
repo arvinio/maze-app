@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
@@ -32,19 +33,19 @@ class TrackerInfoWidget extends StatelessWidget {
         children: [
           TrackerItem(
             amount: bloc.wasteSaved,
-            title: "Waste saved",
+            title: appStrings.wasteSaved,
             isGrayed: !bloc.hasLandfill,
           ),
           const TrackerItemDivider(),
           TrackerItem(
             amount: bloc.compostSaved,
-            title: "Compost made",
+            title: appStrings.compostMade,
             isGrayed: !bloc.hasCompost,
           ),
           const TrackerItemDivider(),
           TrackerItem(
               amount: bloc.wasteRecycled,
-              title: "Waste recycled",
+              title:appStrings.wasteRecycled,
               isGrayed: false
               // !bloc.hasRecycling,
               ),

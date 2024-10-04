@@ -11,10 +11,11 @@ class MenuDialogContent extends StatelessWidget {
   final String header;
   final Widget? child;
   final double dialogHeightPercent;
+  final Color? color;
 
   MenuDialogContent({
     super.key,
-    required this.header, this.child, required this.dialogHeightPercent
+    required this.header, this.child, required this.dialogHeightPercent, this.color
   });
 
 
@@ -66,7 +67,7 @@ class MenuDialogContent extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: context.scheme().neutralsBackground,
                           border:
-                          Border.all(color: context.scheme().neutralsBorderDivider),
+                          Border.all(color: color ?? context.scheme().neutralsBorderDivider),
                           borderRadius: const BorderRadius.all(
                               Radius.circular(Dimen.defaultRadius)),
                         ),

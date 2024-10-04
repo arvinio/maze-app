@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/dimen.dart';
+import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/network/model/api_error.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
@@ -14,12 +16,16 @@ import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/add_waste_bin_widget.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/council_landfill_bin_widget.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/have_compost_bin_widget.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/landfill_bin_widget.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/new_compost_bin_widget.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/bottom%20sheets/new_landfill_waste_bin_widget.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/add_bin_widget.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/add_waste_bin_widget.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/council_landfill_bin_widget.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/have_compost_bin_widget.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/landfill_bin_widget.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/new_compost_bin_widget.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/new_landfill_waste_bin_widget.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/do_not_have_compost_bin_widget.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/have_compost_bin_widget.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/new_compost_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
 @RoutePage()
@@ -57,7 +63,7 @@ class _TrackerPageState extends State<TrackerPage>
                 side: WidgetStatePropertyAll(
                     BorderSide(color: context.scheme().neutralsBorderDivider))),
             onPressed: () {},
-            label: const Text('need help?'),
+            label:  CustomText(appStrings.needHelp),
             iconAlignment: IconAlignment.start,
             icon: appAssets.messageQuestion.svg(),
           ),
@@ -67,8 +73,8 @@ class _TrackerPageState extends State<TrackerPage>
           child: AppBar(
             centerTitle: false,
             backgroundColor: Colors.transparent,
-            title: Text(
-              'Tracker',
+            title: CustomText(
+             appStrings.tracker,
               style: context.titleTitle2,
             ),
             actions: [
@@ -81,10 +87,12 @@ class _TrackerPageState extends State<TrackerPage>
                             //     const TrackerEvent.navigateToAddNewEntryPage(bin: ));
                           }
                         : null,
-                    label: const Text('new entry'),
+                    label:  CustomText(appStrings.newEntry,style: context.subheadlineSubheadlineMedium.copyWith(color:context.scheme().whiteText ),),
                     iconAlignment: IconAlignment.start,
-                    icon: const Icon(Icons.add_circle),
-                  );
+                    icon:  Icon(Icons.add_circle,color:context.scheme().whiteText,),
+                    style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(context.scheme().disabledText),
+                  ));
                 },
               )
             ],
@@ -96,7 +104,15 @@ class _TrackerPageState extends State<TrackerPage>
               initial: () {},
               loadInProgress: () {},
               binsLoaded: (bins) {},
-              loadingError: (error) {},
+              loadingError: (error) {
+                Fluttertoast.showToast(msg:error.message,
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+              },
               binDetailsLoaded: (bin, details, chartData) {
                 context
                     .pushRoute(
@@ -120,6 +136,10 @@ class _TrackerPageState extends State<TrackerPage>
                 );
               },
               sortingEntries: () {},
+              binsCreated: () {
+                context.pushRoute(
+                    const TrackerPageRoute());
+              },
             );
           },
           builder: (context, state) {
@@ -138,7 +158,7 @@ class _TrackerPageState extends State<TrackerPage>
                           )
                           ? ShadowTooltip(
                               message:
-                                  "You must at least add a landfil bin to get started with your tracking journey.",
+                                 appStrings.tooltipMsg,
                               child: TrackerInfoWidget(bloc: bloc),
                             )
                           : TrackerInfoWidget(bloc: bloc),
@@ -149,7 +169,7 @@ class _TrackerPageState extends State<TrackerPage>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            "Your bins",
+                            appStrings.yourBins,
                             style: context.titleTitle3
                                 .copyWith(color: context.scheme().primaryText),
                           ),
@@ -175,10 +195,10 @@ class _TrackerPageState extends State<TrackerPage>
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const ExitButton(),
+                                            const ExitButton(padding:  EdgeInsets.only(top: 20,left: 20) ),
                                             Center(
                                               child: CustomText(
-                                                "Options",
+                                                appStrings.options,
                                                 style: context.titleHeadline,
                                               ),
                                             ),
@@ -251,20 +271,26 @@ class _TrackerPageState extends State<TrackerPage>
                                                                         bloc:
                                                                             bloc));
                                                               },
-                                                              dontHaveBinFunc:
-                                                                  () {},
+                                                              doNotHaveBinFunc:
+                                                                  () {
+                                                                openModalBottomSheet(
+                                                                    context,
+                                                                    DoNotHaveCompostBinWidget(
+                                                                        bloc:
+                                                                        bloc));
+                                                              },
                                                             ));
                                                       },
                                                     ),
                                                   );
                                                 },
-                                                title: 'Add new bin',
+                                                title:appStrings.addNewBin ,
                                                 leading: appAssets.addBin.svg(),
                                               ),
-                                              const CustomeDivider(),
+                                              const CustomDivider(),
                                               BottomSheetItem(
                                                 onTap: () {},
-                                                title: 'Manage bins',
+                                                title: appStrings.manageBins,
                                                 leading:
                                                     appAssets.trashIcon2.svg(),
                                               ),
@@ -284,10 +310,10 @@ class _TrackerPageState extends State<TrackerPage>
                       SizedBox(
                         height: 5.h,
                       ),
-                      TrackerTabbar(
+                      TrackerTabBar(
                         tabController: _tabController,
-                        title1: 'Waste',
-                        title2: 'Compost',
+                        title1:appStrings.waste,
+                        title2: appStrings.compost,
                       ),
                       SizedBox(
                         height: 15.h,
@@ -321,7 +347,11 @@ class _TrackerPageState extends State<TrackerPage>
               },
               sortingEntries: () {
                 return const PageLoading(); // Or any other appropriate widget to show while sorting
-              },
+              }, binsCreated: () {  return  BasePageWidget(
+              child: Center(
+                child: CustomText('success'),
+              ),
+            );; },
             );
           },
         ));

@@ -79,7 +79,7 @@ class _WhatDidYouAddSheetState extends State<WhatDidYouAddSheet> {
                     Radius.circular(Dimen.defaultRadius)),
               ),
               child: ListView.separated(
-                separatorBuilder: (context, index) => CustomeDivider(),
+                separatorBuilder: (context, index) => CustomDivider(),
                 itemCount: categories.length,
                 itemBuilder: (context, index) {
                   return _buildCategoryTile(categories[index]);
@@ -148,7 +148,7 @@ class _WhatDidYouAddSheetState extends State<WhatDidYouAddSheet> {
           return Column(
             children: [
               _buildItemTile(item),
-              if (index < category.items.length - 1) CustomeDivider(),
+              if (index < category.items.length - 1) CustomDivider(),
             ],
           );
         }).toList(),

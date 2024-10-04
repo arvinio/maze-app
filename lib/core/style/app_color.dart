@@ -84,6 +84,7 @@ class AppColor{
 
  //progressbar
  AppColor get  progress=> const AppColor(light: Color(0xFFF18A00), dark: Color(0xFFF18A00));
+ AppColor get  tabBorder=> const AppColor(light: Color(0xFF3C3C43), dark: Color(0xFF3C3C43));
 
 }
 

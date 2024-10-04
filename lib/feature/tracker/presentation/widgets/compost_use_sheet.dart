@@ -83,7 +83,7 @@ class _CompostUseSheetState extends State<CompostUseSheet> {
                   if (isOtherSelected && index == items.length - 1) {
                     return const SizedBox.shrink();
                   }
-                  return const CustomeDivider();
+                  return const CustomDivider();
                 },
                 itemCount: items.length +
                     (isOtherSelected

@@ -14,6 +14,12 @@ class TrackerField extends StatelessWidget {
     this.subTitle,
     required this.onTap,
     this.height,
+    this.horizontalTitleGap,
+    this.titleStyle,
+    this.subTitleStyle,
+    this.isInfoIcon = false,
+    this.containerPadding,
+    this.trailing,
   });
 
   final Widget? leadingIcon;
@@ -21,45 +27,56 @@ class TrackerField extends StatelessWidget {
   final String? subTitle;
   final VoidCallback? onTap;
   final double? height;
+  final double? horizontalTitleGap;
+  final TextStyle? titleStyle;
+  final TextStyle? subTitleStyle;
+  final bool? isInfoIcon;
+  final EdgeInsetsGeometry? containerPadding;
+  final Widget? trailing;
 
-  @override
+@override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: context.scheme().neutralsBorderDivider),
+        border: Border.all(color: context
+            .scheme()
+            .neutralsBorderDivider),
         borderRadius: BorderRadius.circular(15.sp),
       ),
-      height: height ?? (leadingIcon == null ? 70.h : 88.h),
+      height: height ?? (leadingIcon == null || isInfoIcon! ? 70.h : 88.h),
       child: Center(
         child: ListTile(
           onTap: onTap,
-          title: Text(
-            title,
-            style: context.subheadlineSubheadline.copyWith(
-              color: context.scheme().primaryText,
-            ),
+          title: CustomText(
+              title,
+              style: titleStyle ?? context.subheadlineSubheadlineSemibold
           ),
           subtitle: subTitle == null
               ? null
               : CustomText(
-                  subTitle!,
-                  style: context.footnoteFootnote
-                      .copyWith(color: context.scheme().secondaryText),
-                ),
+            subTitle!,
+            style:subTitleStyle ?? context.footnoteFootnote
+                .copyWith(color: context
+                .scheme()
+                .secondaryText),
+          ),
           leading: leadingIcon == null
               ? null
               : Container(
-                  height: 50.sp,
-                  width: 50.sp,
-                  padding: EdgeInsets.all(3.sp),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: context.scheme().neutralsBorderDivider),
-                    borderRadius: BorderRadius.circular(15.sp),
-                  ),
-                  child: Center(child: leadingIcon),
-                ),
-          trailing: const AppArrow(),
+            height: 50.sp,
+            width: 50.sp,
+            padding:containerPadding ?? EdgeInsets.all(3.sp),
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: isInfoIcon! ? Colors.transparent : context
+                      .scheme()
+                      .neutralsBorderDivider),
+              borderRadius: BorderRadius.circular(15.sp),
+            ),
+            child: Center(child: leadingIcon),
+          ),
+          trailing: trailing ?? const AppArrow(),
+          horizontalTitleGap: horizontalTitleGap ?? 16,
         ),
       ),
     );

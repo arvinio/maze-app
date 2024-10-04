@@ -346,5 +346,10 @@ extension ColorSchemeExtension on ColorScheme {
           ? appColors.progress.light
           : appColors.progress.dark;
 
+  Color get tabBorder =>
+      brightness == Brightness.light
+          ? appColors.tabBorder.light.withOpacity(0.36)
+          : appColors.tabBorder.dark;
+
 
 }

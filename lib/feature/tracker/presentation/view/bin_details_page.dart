@@ -4,20 +4,23 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/dimen.dart';
+import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/core/presentation/widget/app_arrow.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
+import 'package:maze_app/core/presentation/widget/custom_menu_items.dart';
+import 'package:maze_app/core/presentation/widget/menu_dialog_content.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
-import 'package:maze_app/feature/tracker/domain/entity/chart_data.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/custom_container_list.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/custome_items.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/get_entry_type_icon.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/custom_bottom_sheet.dart';
 
@@ -67,138 +70,146 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
           },
           sortingEntries: () {
             // You can add any UI updates here while sorting is in progress
-          },
+          }, binsCreated: () {  },
         );
       },
       child: BasePageWidget(
-        backgroundColor: context.scheme().neutralsBackground,
-        appBar: AppBar(
-          title: Text(widget.bin.nickName),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.more_vert),
-              onPressed: () {
-                _showOptions(context);
-              },
-            ),
-          ],
+        backgroundColor: context.scheme().neutralsFieldsTags,
+        pagePaddingHorizontal: 0,
+        appBar:ListTile(
+          leading: const PreviousButton(),
+          trailing: InkWell(child: appAssets.more.svg(),onTap: (){_showOptions(context);},),
+          contentPadding: const EdgeInsets.fromLTRB(16, 40, 16, 10)
         ),
-        child: ListView(
-          children: [
-            _buildBinDetails(context),
-            SizedBox(
-              height: 20.h,
-            ),
-            _buildCompostChart(context),
-            SizedBox(
-              height: 20.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomText(
-                  'Entries',
-                  style: context.titleTitle3,
-                ),
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        _showSortOptions(context);
-                      },
-                      icon: Icon(
-                        Icons.sort,
-                        color: context.scheme().primary,
-                      ),
+
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              _buildBinDetails(context),
+              SizedBox(
+                height: 20.h,
+              ),
+              _buildCompostChart(context),
+              SizedBox(
+                height: 20.h,
+              ),
+              Divider(color: context.scheme().neutralsBorderDivider,thickness: 0.5,),
+              Container(
+                color: context.scheme().neutralsBackground,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 16),
+                  child: Column(children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomText(
+                          appStrings.entries,
+                          style: context.titleTitle3,
+                        ),
+                        Row(
+                          children: [
+                            InkWell(
+                                onTap: () {
+                                  _showSortOptions(context);
+                                },
+                                child: appAssets.sort.svg(color: context.scheme().primaryText)
+                            ),
+                            const SizedBox(width: 8,),
+                            InkWell(
+                                onTap: () {
+                                  context.read<TrackerBloc>().add(
+                                      TrackerEvent.navigateToAddNewEntryPage(
+                                          bin: widget.bin));
+                                },
+                                child: appAssets.addEntry.svg(width: 24,height: 24)
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    IconButton(
-                      onPressed: () {
-                        context.read<TrackerBloc>().add(
-                            TrackerEvent.navigateToAddNewEntryPage(
-                                bin: widget.bin));
-                      },
-                      icon: Icon(
-                        Icons.add_circle_outlined,
-                        color: context.scheme().primary,
-                      ),
+                    SizedBox(
+                      height: 20.h,
                     ),
-                  ],
+                    _buildEntriesList(context),
+                  ],),
                 ),
-              ],
-            ),
-            _buildEntriesList(context),
-          ],
+              ),
+
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget _buildBinDetails(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 10.h,
-        ),
-        SizedBox(
-          height: 80.dg,
-          width: 80.dg,
-          child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(20.r)),
-              child: Image.network(
-                widget.bin.imageUrl ?? '',
-                fit: BoxFit.cover,
-              )),
-        ),
-        SizedBox(
-          height: 10.h,
-        ),
-        Text(widget.bin.nickName, style: context.titleTitle3),
-        Text(
-          widget.bin.type.toString().split('.').last,
-          style: context.footnoteFootnote,
-        ),
-        SizedBox(
-          height: 10.h,
-        ),
-        Container(
-          height: 70.h,
-          width: 350.w,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: context.scheme().neutralsBorderDivider),
-            borderRadius:
-                const BorderRadius.all(Radius.circular(Dimen.defaultRadius)),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 10.h,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildDetailCard(context, 'Bin size',
-                  '${widget.bin.amountOfLiters ?? 'N/A'} Litres'),
-              VerticalDivider(
-                color: context.scheme().neutralsBorderDivider,
-                indent: 10.w,
-                endIndent: 10.w,
-              ),
-              _buildDetailCard(context, '${widget.bin.totalAmount ?? 'N/A'} kg',
-                  'Total sent to landfill'),
-            ],
+          SizedBox(
+            height: 80.dg,
+            width: 80.dg,
+            child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(20.r)),
+                child: Image.network(
+                  widget.bin.imageUrl ?? '',
+                  fit: BoxFit.cover,
+                )),
           ),
-        ),
-      ],
+          SizedBox(
+            height: 15.h,
+          ),
+          CustomText(widget.bin.nickName, style: context.titleTitle3),
+          CustomText(
+            widget.bin.type.toString().split('.').last,
+            style: context.footnoteFootnote.copyWith(color: context.scheme().secondaryText),
+          ),
+          SizedBox(
+            height: 15.h,
+          ),
+          Container(
+            height: 70.h,
+            width: 350.w,
+            decoration: BoxDecoration(
+              color: context.scheme().neutralsBackground,
+              border: Border.all(color: context.scheme().neutralsBorderDivider.withOpacity(0.08),width: 1),
+              borderRadius:
+                  const BorderRadius.all(Radius.circular(Dimen.defaultRadius)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildDetailCard(context,'${widget.bin.amountOfLiters ?? 'N/A'} ${appStrings.litres}'  ,appStrings.binSize ),
+                VerticalDivider(
+                  color: context.scheme().neutralsBorderDivider,
+                  indent: 13.w,
+                  endIndent: 13.w,
+                ),
+                _buildDetailCard(context, '${widget.bin.totalAmount ?? 'N/A'} ${appStrings.kg}',
+                    appStrings.compostMade),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildDetailCard(BuildContext context, String title, String value) {
+  Widget _buildDetailCard(BuildContext context, String value ,String title) {
     return SizedBox(
       width: 100.w,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(title, style: context.subheadlineSubheadline),
-          SizedBox(height: 4.w),
-          Text(
-            value,
-            style: context.captionCaption,
+          CustomText(value, style: context.subheadlineSubheadlineSemibold),
+          SizedBox(height: 4.h),
+          CustomText(
+            title,
+            style: context.captionCaption.copyWith(color: context.scheme().tertiaryText),
           ),
         ],
       ),
@@ -207,17 +218,13 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
 
   Widget _buildCompostChart(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.scheme().neutralsBackground,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 5,
-          ),
-        ],
+        border: Border.all(color: context.scheme().neutralsBorderDivider.withOpacity(0.08),width: 1),
+
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,11 +232,22 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Waste Saved', style: context.titleHeadline),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomText(appStrings.compostMade, style: context.footnoteFootnoteBold),
+                  CustomText(
+                    '7-14 January',
+                    style: context.footnoteFootnote.copyWith(color: context.scheme().tertiaryText),
+                  ),
+              ],
+              ),
+
               _buildDateRangeAndTimeButtons(context),
+
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           SizedBox(
             height: 200,
             child: BarChart(
@@ -320,27 +338,19 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
   }
 
   Widget _buildDateRangeAndTimeButtons(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          'Date Range',
-          style: context.titleHeadline,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: context.scheme().neutralsBackground,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Row(
-            children: [
-              _buildTimeButton(context, 'M', TimeRange.month),
-              _buildTimeButton(context, 'Y', TimeRange.year),
-              _buildTimeButton(context, 'W', TimeRange.week),
-            ],
-          ),
-        ),
-      ],
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(100),
+        border: Border.all(color: context.scheme().neutralsBorderDivider.withOpacity(0.08),width: 1),
+      ),
+      child: Row(
+        children: [
+          _buildTimeButton(context, 'W', TimeRange.week),
+          _buildTimeButton(context, 'M', TimeRange.month),
+          _buildTimeButton(context, 'Y', TimeRange.year),
+        ],
+      ),
     );
   }
 
@@ -349,17 +359,14 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
     return GestureDetector(
       onTap: () => setState(() => _selectedTimeRange = range),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? context.scheme().primary : Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
+          color: isSelected ? context.scheme().primariesShade02 : Colors.transparent,
+          borderRadius: BorderRadius.circular(100),
         ),
-        child: Text(
+        child: CustomText(
           label,
-          style: TextStyle(
-            color: isSelected ? Colors.white : context.scheme().primaryText,
-            fontWeight: FontWeight.bold,
-          ),
+          style: isSelected? context.footnoteFootnoteBold.copyWith(color: context.scheme().primary):context.footnoteFootnote.copyWith(color: context.scheme().tertiaryText),
         ),
       ),
     );
@@ -370,8 +377,8 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
     for (var element in widget.entries) {
       children.add(ListTile(
         leading: GetEntryTypeIcon(entryType: element.type),
-        title: Text(DateFormat('dd MMM yyyy').format(element.entryDate)),
-        subtitle: Text(element.type.toDisplayString()),
+        title: CustomText(element.entryDate.day <10 ?DateFormat('d MM yyyy').format(element.entryDate):DateFormat('dd MM yyyy').format(element.entryDate),style: context.bodyBody,),
+        subtitle: CustomText(element.type.toDisplayString(),style: context.footnoteFootnote.copyWith(color: context.scheme().secondaryText)),
         onTap: () {
           context
               .read<TrackerBloc>()
@@ -383,6 +390,7 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
     return CustomContainerList(
       height: 300.h,
       children: children,
+        indent:53.w, endIndent:20.w
     );
   }
 
@@ -390,33 +398,18 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                leading: Icon(Icons.edit),
-                title: Text('Edit details'),
-                onTap: () {
-                  // Handle edit
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.notifications_off),
-                title: Text('Mute notifications'),
-                onTap: () {
-                  // Handle mute notifications
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.delete, color: Colors.red),
-                title: Text('Delete ${widget.bin.nickName}'),
-                onTap: () {
-                  // Handle delete
-                },
-              ),
-            ],
-          ),
+        return MenuDialogContent(
+          header: appStrings.options,
+          dialogHeightPercent:0.38,
+          color: Colors.transparent,
+          child: Column(children: [
+            CustomMenuItems(title: appStrings.editDetails,leading: appAssets.editProfile.svg(),padding:const  EdgeInsets.all(5)),
+            Divider(color: context.scheme().neutralsBorderDivider,indent: 45.w,endIndent: 5.w,),
+            CustomMenuItems(title: appStrings.muteNotifications,leading: appAssets.mute.svg(),padding:const  EdgeInsets.all(5)),
+            Divider(color: context.scheme().neutralsBorderDivider,indent: 45.w,endIndent: 5.w,),
+            CustomMenuItems(title: appStrings.deleteTumbler,
+              leading: appAssets.deleteBin.svg(),titleColor:context.scheme().error ,padding:const  EdgeInsets.all(5)),
+          ],)
         );
       },
     );

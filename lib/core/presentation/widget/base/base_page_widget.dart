@@ -20,6 +20,7 @@ class BasePageWidget extends StatefulWidget {
     this.resizeToAvoidBottomInset = true,
     this.floatingActionButton,
     this.appBarHeight,
+    this.pagePaddingHorizontal,
     this.floatingActionButtonLocation,
   });
 
@@ -38,6 +39,7 @@ class BasePageWidget extends StatefulWidget {
   final bool? resizeToAvoidBottomInset;
   final Widget? floatingActionButton;
   final double? appBarHeight;
+  final double? pagePaddingHorizontal;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
 
   @override
@@ -59,10 +61,10 @@ class _BasePageWidgetState extends State<BasePageWidget> {
       backgroundColor: widget.backgroundColor,
       appBar: widget.appBar != null
           ? PreferredSize(
-              preferredSize:
-                  Size.fromHeight(widget.appBarHeight ?? Dimen.appBarHeight),
-              child: widget.appBar ?? const SizedBox(),
-            )
+        preferredSize:
+        Size.fromHeight(widget.appBarHeight ?? Dimen.appBarHeight),
+        child: widget.appBar ?? const SizedBox(),
+      )
           : null,
       bottomNavigationBar: widget.bottomNav,
       body: SafeArea(
@@ -73,8 +75,8 @@ class _BasePageWidgetState extends State<BasePageWidget> {
 
   Widget _getMainWidget(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Dimen.pagePaddingHorizontal,
+        padding:  EdgeInsets.symmetric(
+          horizontal: widget.pagePaddingHorizontal ?? Dimen.pagePaddingHorizontal,
         ),
         child: widget.child);
   }

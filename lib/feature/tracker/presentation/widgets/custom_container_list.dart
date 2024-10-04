@@ -5,9 +5,11 @@ import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
 class CustomContainerList extends StatelessWidget {
-  const CustomContainerList({super.key, required this.children, this.height});
+  const CustomContainerList({super.key, required this.children, this.height, this.indent, this.endIndent});
   final List<Widget> children;
   final double? height;
+  final double? indent;
+  final double? endIndent;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,7 +26,8 @@ class CustomContainerList extends StatelessWidget {
             return children[index];
           },
           separatorBuilder: (context, index) {
-            return CustomeDivider();
+            return CustomDivider(
+              indent: indent ?? 15.w, endIndent: endIndent ?? 15.w,);
           },
           itemCount: children.length),
     );
