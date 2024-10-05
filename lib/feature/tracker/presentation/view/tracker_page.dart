@@ -24,8 +24,7 @@ import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/land
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/new_compost_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/new_landfill_waste_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/do_not_have_compost_bin_widget.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/have_compost_bin_widget.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/new_compost_bin_widget.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/new_entry_dialog_content.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
 @RoutePage()
@@ -83,15 +82,29 @@ class _TrackerPageState extends State<TrackerPage>
                   return ElevatedButton.icon(
                     onPressed: (bloc.hasCompost || bloc.hasLandfill)
                         ? () {
-                            // context.read<TrackerBloc>().add(
-                            //     const TrackerEvent.navigateToAddNewEntryPage(bin: ));
-                          }
-                        : null,
-                    label:  CustomText(appStrings.newEntry,style: context.subheadlineSubheadlineMedium.copyWith(color:context.scheme().whiteText ),),
+                      Future<dynamic> future =  openModalBottomSheet(
+                        context,
+                        NewEntryDialogContent(bloc: bloc));
+
+                      future.then((index)  {
+                        if(context.mounted) {
+                          context.read<TrackerBloc>()
+                              .add(TrackerEvent.navigateToAddNewEntryPage(
+                              bin: bloc.bins[index]));
+                          /* context.read<TrackerBloc>().add(
+                            TrackerEvent.fetchBinDetails(
+                                binId: bloc.bins[index].id!));*/
+                        }
+                      });
+                    }: null,
+                    label:  CustomText(appStrings.newEntry,
+                      style: context.subheadlineSubheadlineMedium.copyWith(color:context.scheme().whiteText ),),
                     iconAlignment: IconAlignment.start,
                     icon:  Icon(Icons.add_circle,color:context.scheme().whiteText,),
                     style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(context.scheme().disabledText),
+                    backgroundColor:( bloc.hasCompost || bloc.hasLandfill)
+                        ?WidgetStateProperty.all(context.scheme().primary)
+                        :WidgetStateProperty.all(context.scheme().disabledText)
                   ));
                 },
               )

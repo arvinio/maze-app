@@ -5,9 +5,10 @@ import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 
 class CustomViewPhoto extends StatelessWidget {
-  const CustomViewPhoto({super.key, this.child, this.onPressed});
+  const CustomViewPhoto({super.key, this.child, this.onPressed, this.isClose=true});
   final Widget? child;
   final void Function()? onPressed;
+  final bool? isClose;
   @override
   Widget build(BuildContext context) {
     return  Stack(
@@ -33,7 +34,8 @@ class CustomViewPhoto extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
+        isClose!
+            ?  Positioned(
             right: 10,
             child: IconButton(
               onPressed: onPressed,
@@ -43,6 +45,7 @@ class CustomViewPhoto extends StatelessWidget {
               ),
             ),
           )
+            :const SizedBox.shrink()
         ]);
   }
 }

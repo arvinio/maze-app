@@ -51,6 +51,7 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
       completed: (data, statusCode) {
         hasCompost = data.any((bin) => bin.type == BinType.compost);
         hasLandfill = data.any((bin) => bin.type == BinType.landfill);
+        bins.clear();
         bins.addAll(data);
         emit(TrackerState.binsLoaded(bins: data));
       },
