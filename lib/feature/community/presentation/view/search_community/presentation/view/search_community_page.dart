@@ -4,17 +4,17 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maze_app/core/config/strings.dart';
-import 'package:maze_app/core/style/app_theme.dart';
-import 'package:maze_app/core/util/extentsion/context_ext.dart';
-import 'package:maze_app/feature/community/presentation/view/search_community/widgets/search_app_bar.dart';
 
-import '../../../../../core/config/assets/assets.dart';
-import '../../../../../core/presentation/widget/base/base_page_widget.dart';
-import '../../../../../core/presentation/widget/clip_r_rect_transitions_builder.dart';
-import '../../../../../core/presentation/widget/custom_text_field.dart';
-import '../../../../../di/injection_container.dart';
-import '../../bloc/search_bloc/search_community_bloc.dart';
+import '../../../../../../../core/config/assets/assets.dart';
+import '../../../../../../../core/config/strings.dart';
+import '../../../../../../../core/presentation/widget/base/base_page_widget.dart';
+import '../../../../../../../core/presentation/widget/clip_r_rect_transitions_builder.dart';
+import '../../../../../../../core/presentation/widget/custom_text_field.dart';
+import '../../../../../../../core/style/app_theme.dart';
+import '../../../../../../../core/util/extentsion/context_ext.dart';
+import '../../../../../../../di/injection_container.dart';
+import '../bloc/search_community_bloc.dart';
+import 'widgets/search_app_bar.dart';
 import 'widgets/search_result_multiple_tabs.dart';
 import 'widgets/search_result_single_tab.dart';
 

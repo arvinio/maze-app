@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../core/style/app_theme.dart';
-import '../../../../../../core/util/extentsion/context_ext.dart';
+import '../../../../../../../../core/style/app_theme.dart';
+import '../../../../../../../../core/util/extentsion/context_ext.dart';
 
 class SearchResultTabs extends StatelessWidget {
   const SearchResultTabs({super.key, required this.tabs});

@@ -132,6 +132,8 @@ import 'package:maze_app/feature/community/presentation/view/create_community/pr
     as _i245;
 import 'package:maze_app/feature/community/presentation/view/create_post/presentation/bloc/create_post_bloc.dart'
     as _i16;
+import 'package:maze_app/feature/community/presentation/view/search_community/presentation/bloc/search_community_bloc.dart'
+    as _i141;
 import 'package:maze_app/feature/community/presentation/view/view_community/presentation/bloc/view_community_bloc.dart'
     as _i1011;
 import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/community_leaderboard/bloc/community_leaderboard_bloc.dart'
@@ -421,6 +423,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i138.CommunityLeaderboardBloc(gh<_i343.CommunityRepository>()));
     gh.factory<_i1011.ViewCommunityBloc>(
         () => _i1011.ViewCommunityBloc(gh<_i343.CommunityRepository>()));
+    gh.factory<_i141.SearchCommunityBloc>(
+        () => _i141.SearchCommunityBloc(gh<_i343.CommunityRepository>()));
     gh.factory<_i186.CommunityBloc>(
         () => _i186.CommunityBloc(gh<_i343.CommunityRepository>()));
     gh.factory<_i278.TokenRepository>(

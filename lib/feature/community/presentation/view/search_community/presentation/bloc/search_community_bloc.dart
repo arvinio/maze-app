@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/feature/community/domain/repository/community_repository.dart';
 
-import '../../../data/model/search/search_response.dart';
+import '../../../../../data/model/search/search_response.dart';
 
 part 'search_community_bloc.freezed.dart';
 part 'search_community_event.dart';

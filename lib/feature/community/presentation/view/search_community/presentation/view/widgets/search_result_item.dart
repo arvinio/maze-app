@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 
-import '../../../../../../core/config/strings.dart';
-import '../../../../../../core/util/date_utils.dart';
-import '../../../../../../core/util/extentsion/context_ext.dart';
-import '../../../../data/model/search/search_response.dart';
+import '../../../../../../../../core/config/strings.dart';
+import '../../../../../../../../core/util/date_utils.dart';
+import '../../../../../../../../core/util/extentsion/context_ext.dart';
+import '../../../../../../data/model/search/search_response.dart';
 
 class SearchResultItem extends StatelessWidget {
   const SearchResultItem({super.key, required this.searchResponse});

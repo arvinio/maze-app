@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:maze_app/core/style/app_theme.dart';
-import 'package:maze_app/feature/community/presentation/view/search_community/widgets/search_result_list.dart';
 
-import '../../../../../../core/config/dimen.dart';
-import '../../../../data/model/search/search_response.dart';
+import '../../../../../../../../core/config/dimen.dart';
+import '../../../../../../../../core/style/app_theme.dart';
+import '../../../../../../data/model/search/search_response.dart';
+import 'search_result_list.dart';
 
 class SearchResultSingleTab extends StatelessWidget {
   const SearchResultSingleTab({

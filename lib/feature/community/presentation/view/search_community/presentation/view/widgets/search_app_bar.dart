@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../core/config/hero_tags.dart';
-import '../../../../../../core/style/app_theme.dart';
-import '../../../../../../core/util/extentsion/context_ext.dart';
-import '../../../../../../core/util/hero_flight_suttle.dart';
+import '../../../../../../../../core/config/hero_tags.dart';
+import '../../../../../../../../core/style/app_theme.dart';
+import '../../../../../../../../core/util/extentsion/context_ext.dart';
+import '../../../../../../../../core/util/hero_flight_suttle.dart';
 import 'search_result_tabs.dart';
 
 class SearchAppBar extends StatelessWidget {
