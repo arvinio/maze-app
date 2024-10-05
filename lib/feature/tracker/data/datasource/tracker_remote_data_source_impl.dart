@@ -22,9 +22,6 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   @override
   Future<ApiResponse<SuccessResponse>> createBin(Bin bin) async {
     final data = FormData.fromMap({
-      'photo': [
-        await MultipartFile.fromFile(bin.imageUrl ?? '', filename: bin.imageUrl)
-      ],
       'type': bin.type.name,
       'nickname': bin.nickName,
       'sizeType': bin.sizeType.name,
@@ -37,8 +34,11 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
       'height': bin.height ?? '3',
       'length': bin.length ?? '33'
     });
-    return await dioCaller.post<SuccessResponse>('api/bin',
-        fromJson: SuccessResponse.fromJson, data: data);
+
+    if (bin.imageUrl != null) {
+      data.files.add(MapEntry("photo",await MultipartFile.fromFile(bin.imageUrl!, filename: bin.imageUrl)));
+    }
+    return await dioCaller.post<SuccessResponse>('api/bin', fromJson: SuccessResponse.fromJson, data: data);
   }
 
   @override
@@ -49,11 +49,6 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   @override
   Future<ApiResponse> createBinEntry(Entry entry) async {
     var data = FormData.fromMap({
-      if (entry.photo!.isNotEmpty)
-        'files': [
-          await MultipartFile.fromFile(entry.photo!.first,
-              filename: entry.photo!.first)
-        ],
       'binId': entry.binId,
       'entryDate': DateTime.now(),
       'type': entry.type.toString(),
@@ -72,6 +67,14 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
       // if (entry.type == EntryType.addedWaste)
       'isMixed': entry.mixed
     });
+
+    for (int i = 0; i < entry.photo!.length; i++) {
+      data.files.addAll([
+        MapEntry("photos", await MultipartFile.fromFile(entry.photo![i],
+            filename: entry.photo![i]))
+
+      ]);
+    }
 
     return await dioCaller.post(
       'api/bin/entry',
