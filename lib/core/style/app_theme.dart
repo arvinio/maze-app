@@ -40,7 +40,8 @@ class AppTheme {
 
       ),
       radioTheme: defaultTheme.radioTheme.copyWith(
-          fillColor: WidgetStateProperty.all(appColors.primary.light)),
+          fillColor: WidgetStateProperty.all(appColors.tertiaryText.light),
+      ),
       checkboxTheme: CheckboxThemeData(
         fillColor: WidgetStateProperty.resolveWith(
                 (states) =>
@@ -117,7 +118,7 @@ class AppTheme {
         bodyMedium: context.bodyBody,
       ),
       radioTheme: defaultTheme.radioTheme.copyWith(
-          fillColor: MaterialStateProperty.all(appColors.primary.dark)),
+          fillColor: WidgetStateProperty.all(appColors.tertiaryText.dark)),
       checkboxTheme: CheckboxThemeData(
         fillColor: WidgetStateProperty.resolveWith(
                 (states) =>

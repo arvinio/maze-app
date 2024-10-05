@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/dimen.dart';
+import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
@@ -28,9 +30,9 @@ class _CompostUseSheetState extends State<CompostUseSheet> {
   void _initializeItems() {
     // Example initialization (replace with your actual data)
     items = [
-      CompostUseItem(name: 'My garden'),
-      CompostUseItem(name: 'Donated'),
-      CompostUseItem(name: 'Other'),
+      CompostUseItem(name: appStrings.myGarden),
+      CompostUseItem(name: appStrings.donated),
+      CompostUseItem(name: appStrings.other),
     ];
 
     // Update items based on the pre-selected items
@@ -40,9 +42,9 @@ class _CompostUseSheetState extends State<CompostUseSheet> {
 
     // If 'Other' was previously selected, pre-fill the note field
     CompostUseItem otherItem = items.firstWhere(
-      (item) => item.name == 'Other',
+      (item) => item.name == appStrings.other,
       orElse: () =>
-          CompostUseItem(name: 'Other', isSelected: false), // Fallback item
+          CompostUseItem(name:  appStrings.other, isSelected: false), // Fallback item
     );
 
     if (otherItem.isSelected) {
@@ -68,6 +70,7 @@ class _CompostUseSheetState extends State<CompostUseSheet> {
       child: Column(
         children: [
           _buildHeader(context),
+          const SizedBox(height: 10),
           Expanded(
             child: Container(
               padding: EdgeInsets.all(10.dg),
@@ -83,7 +86,7 @@ class _CompostUseSheetState extends State<CompostUseSheet> {
                   if (isOtherSelected && index == items.length - 1) {
                     return const SizedBox.shrink();
                   }
-                  return const CustomDivider();
+                  return  CustomDivider(indent: 10.w,endIndent: 10.w);
                 },
                 itemCount: items.length +
                     (isOtherSelected
@@ -97,6 +100,7 @@ class _CompostUseSheetState extends State<CompostUseSheet> {
                       child: CustomTextField.outline(
                         textEditingController: _noteController,
                         maxLines: 5,
+                        hint: appStrings.compostUseNote,
                       ),
                     );
                   } else {
@@ -116,20 +120,22 @@ class _CompostUseSheetState extends State<CompostUseSheet> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
-          icon: Icon(Icons.close),
+          icon: appAssets.close.svg(width: 24,height: 24),
+          padding: const EdgeInsets.only(top:10),
+          alignment: Alignment.topLeft,
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        Text(
-          'Compost Use',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        CustomText(
+          appStrings.compostUse,
+          style:context.titleHeadline,
         ),
         TextButton(
           onPressed: () {
             _handleSaveAction();
           },
-          child: Text('Save', style: TextStyle(color: Colors.green)),
+          child: CustomText(appStrings.save, style: context.titleHeadline.copyWith(color: context.scheme().primary)),
         ),
       ],
     );
@@ -140,7 +146,7 @@ class _CompostUseSheetState extends State<CompostUseSheet> {
 
     for (var item in items) {
       if (item.isSelected) {
-        if (item.name == 'Other') {
+        if (item.name == appStrings.other) {
           // Save the note if "Other" is selected
           item.note = _noteController.text;
         }
@@ -153,8 +159,10 @@ class _CompostUseSheetState extends State<CompostUseSheet> {
 
   Widget _buildItemTile(CompostUseItem item) {
     return CheckboxListTile(
-      title: Text(item.name),
+      title: CustomText(item.name,style: context.bodyBody,),
       value: item.isSelected,
+      side:  BorderSide(color:context.scheme().tertiaryText,width: 2),
+      contentPadding: const EdgeInsets.fromLTRB(15,5,0,5),
       onChanged: (bool? newValue) {
         setState(() {
           item.isSelected = newValue ?? false;

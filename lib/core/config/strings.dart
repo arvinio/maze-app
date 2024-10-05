@@ -260,6 +260,20 @@ class StringsBase {
   String get estimatedWeight=>'Estimated Weight';
   String get howFullCompost=>'How full was bin/compartment\nbefore emptying it?';
   String get howFullPickedUp=>'How full was the bin\nbefore the council picked it up?';
+  String get greens=>'Greens';
+  String get kitchenScraps=>'Kitchenscraps';
+  String get fruits=>'Fruits, Vegetables, etc';
+  String get freshYardWaste=>'Fresh yard waste';
+  String get grassClippings=>'Grass clippings, plant trimmings, etc';
+  String get other=>'Other';
+  String get browns=>'Browns';
+  String get paperProducts=>'Paper products';
+  String get newspaper=>'Newspaper, cardboard, napkins, etc';
+  String get dryYardWaste=>'Dry yard waste';
+  String get straw=>'Straw, dry grass, wood chip, dead plants, etc';
+  String get myGarden=>'My garden';
+  String get donated=>'Donated';
+  String get compostUseNote=>'Gave it to a friend of mine who\nneeded some soil.';
 
 
 

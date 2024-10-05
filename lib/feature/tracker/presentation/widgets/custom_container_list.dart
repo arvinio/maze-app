@@ -22,6 +22,7 @@ class CustomContainerList extends StatelessWidget {
             const BorderRadius.all(Radius.circular(Dimen.defaultRadius)),
       ),
       child: ListView.separated(
+        physics:const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             return children[index];
           },

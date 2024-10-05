@@ -16,6 +16,7 @@ import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
 import 'package:maze_app/core/presentation/widget/custom_view_photo.dart';
 import 'package:maze_app/core/presentation/widget/menu_dialog_content.dart';
+import 'package:maze_app/core/style/app_color.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
@@ -98,12 +99,13 @@ class _NewEntryPageState extends State<NewEntryPage> {
            InkWell(child: appAssets.arrowLeft.svg(width: 24,height: 24),onTap: (){
              context.maybePop();
            },),
-          CustomText('5 Jan 2024', style: context.titleHeadline,),
+          CustomText('5 Jan 2024', style: context.titleHeadline),
           TextButton(
             onPressed: (() {
               fillEntry();
               context.read<TrackerBloc>().add(TrackerEvent.addEntryToBin(
-                  binId: widget.bin.id!, entryDetails: _entry));
+                  binId: widget.bin.id!, entryDetails: _entry)
+              );
               context.maybePop();
             }),
             child: CustomText(
@@ -383,9 +385,11 @@ class _NewEntryPageState extends State<NewEntryPage> {
     return CustomItem(
       height: 50.h,
       title: '$amount%',
+      titleStyle: context.bodyBodyMedium,
       trailing: Radio(
         value: amount,
         groupValue: _radioAmount,
+          activeColor:context.scheme().primary,
         onChanged: (value) {
           setState(() {
             _radioAmount = value!;
