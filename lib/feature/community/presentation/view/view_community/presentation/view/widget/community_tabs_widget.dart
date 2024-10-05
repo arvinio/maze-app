@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
-import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/community_leaderboard/community_leaderboard_list_widget.dart';
-import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/community_post/community_post_list_widget.dart';
+import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/community_leaderboard/community_leaderboard_list_widget.dart';
+import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/community_post/community_post_list_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
 class CommunityTabsWidget extends StatefulWidget {

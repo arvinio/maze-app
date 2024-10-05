@@ -6,9 +6,9 @@ import 'package:maze_app/core/config/dimen.dart';
 import 'package:maze_app/core/network/util/timeago_extention.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/community/data/model/community_post/community_post_response.dart';
+import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/community_post/bloc/community_post_bloc.dart';
+import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/community_post/photos_carousel_widget.dart';
 import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/circle_avatar_widget.dart';
-import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/community_post/bloc/community_post_bloc.dart';
-import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/community_post/photos_carousel_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
 class CommunityPostWidget extends StatefulWidget {
@@ -126,6 +126,6 @@ class _CommunityPostWidgetState extends State<CommunityPostWidget> {
           ],
         )
       ],),
-    );;
+    );
   }
 }

@@ -4,8 +4,8 @@ import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/community/core/util/community_post_data_request/community_post_data_request.dart';
 import 'package:maze_app/feature/community/data/model/community_post/community_post_response.dart';
-import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/community_post/bloc/community_post_bloc.dart';
-import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/community_post/cummunity_post_widget.dart';
+import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/community_post/bloc/community_post_bloc.dart';
+import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/community_post/cummunity_post_widget.dart';
 import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/try_again_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
