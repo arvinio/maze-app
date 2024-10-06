@@ -115,6 +115,11 @@ class AssetsBase {
       const AssetSvg('assets/icons/tracker/notification.svg');
   AssetSvg get deleteBin =>
       const AssetSvg('assets/icons/tracker/delete_bin.svg');
+  AssetSvg get liveChat =>
+      const AssetSvg('assets/icons/tracker/live-chat.svg');
+  AssetSvg get browse =>
+      const AssetSvg('assets/icons/tracker/browse.svg');
+
 
 
 }

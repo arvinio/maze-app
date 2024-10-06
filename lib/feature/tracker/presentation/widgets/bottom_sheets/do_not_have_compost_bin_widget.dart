@@ -5,6 +5,8 @@ import 'package:maze_app/core/presentation/widget/app_arrow.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/help_header.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -26,12 +28,11 @@ class _DoNotHaveCompostBinWidgetState extends State<DoNotHaveCompostBinWidget>{
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top:40.0,left: 8),
+      padding: const EdgeInsets.only(top:24.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          InkWell(onTap:(){Navigator.of(context).pop();},child: appAssets.arrowLeft.svg()),
-          const SizedBox(height: 10),
+          const HelpHeader(leadingIcon: PreviousButton()),
           CustomText(
           appStrings.doNotHaveCompostBinTitle,
             style: context.titleTitle1,

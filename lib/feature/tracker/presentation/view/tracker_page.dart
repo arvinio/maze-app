@@ -25,6 +25,7 @@ import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/new_
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/new_landfill_waste_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/do_not_have_compost_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/new_entry_dialog_content.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
 @RoutePage()
@@ -54,6 +55,7 @@ class _TrackerPageState extends State<TrackerPage>
   @override
   Widget build(BuildContext context) {
     return BasePageWidget(
+      appBarHeight: 70,
         floatingActionButtonLocation:
         FloatingActionButtonLocation.miniCenterDocked,
         floatingActionButton: Padding(
@@ -64,7 +66,7 @@ class _TrackerPageState extends State<TrackerPage>
                     BorderSide(color: context
                         .scheme()
                         .neutralsBorderDivider))),
-            onPressed: () {},
+            onPressed: () {ShowDialog.needHelpContent(context);},
             label: CustomText(appStrings.needHelp),
             iconAlignment: IconAlignment.start,
             icon: appAssets.messageQuestion.svg(),

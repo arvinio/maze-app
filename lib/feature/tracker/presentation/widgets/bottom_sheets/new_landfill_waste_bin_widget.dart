@@ -1,4 +1,5 @@
 import 'package:maze_app/core/config/strings.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/help_header.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
 class NewLandfillWasteBinWidget extends StatelessWidget {
@@ -18,7 +19,7 @@ class NewLandfillWasteBinWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const ExitButton(),
+          const HelpHeader(leadingIcon: ExitButton()),
           CustomText(
             appStrings.newWasteBinTitle,
             style: context.titleTitle1,

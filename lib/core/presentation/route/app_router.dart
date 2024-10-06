@@ -93,5 +93,6 @@ class AppRouter extends _$AppRouter {
     AutoRoute(path: '/ChatPage', page: ChatPageRoute.page),
     AutoRoute(path: '/BinDetailsPage', page: BinDetailsPageRoute.page),
     AutoRoute(path: '/NewEntryPage', page: NewEntryPageRoute.page),
+    AutoRoute(path: '/KnowledgePage', page: KnowledgePageRoute.page),
   ];
 }

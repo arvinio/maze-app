@@ -276,6 +276,9 @@ class StringsBase {
   String get donated=>'Donated';
   String get compostUseNote=>'Gave it to a friend of mine who\nneeded some soil.';
   String get newEntryFor=>'New entry for';
+  String get startLiveChat=>'Start a live chat with us';
+  String get browseOurBeginnerArticles=>'Browse our beginner articles';
+  String get help=>'Help';
 
 
 

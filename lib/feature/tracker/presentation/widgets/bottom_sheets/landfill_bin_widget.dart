@@ -12,6 +12,7 @@ import 'package:maze_app/core/presentation/widget/custom_view_photo.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/help_header.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
@@ -68,7 +69,7 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const PreviousButton(),
+            const HelpHeader(leadingIcon: PreviousButton()),
             CustomText(
               appStrings.landfillBinTitle,
               style: context.titleTitle1,

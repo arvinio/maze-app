@@ -14,6 +14,7 @@ import 'package:maze_app/core/util/extentsion/context_ext.dart';
 
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/help_header.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
 
@@ -77,7 +78,7 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PreviousButton(),
+          const HelpHeader(leadingIcon: PreviousButton()),
           Expanded(
             child: ListView(
               children: [

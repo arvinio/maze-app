@@ -6,6 +6,7 @@ import 'package:maze_app/core/presentation/widget/app_arrow.dart';
 import 'package:maze_app/core/presentation/widget/custom_button.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/tracker/presentation/view/bin_details_page.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/help_header.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
@@ -21,7 +22,7 @@ class HaveCompostBinWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PreviousButton(),
+          const HelpHeader(leadingIcon: PreviousButton()),
           CustomText(
            appStrings.haveCompostBinTitle,
             style: context.titleTitle1,
