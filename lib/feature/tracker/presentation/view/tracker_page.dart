@@ -40,6 +40,7 @@ class _TrackerPageState extends State<TrackerPage>
   late final TabController _tabController;
 
   late final TrackerBloc bloc;
+
   @override
   void initState() {
     context.read<TrackerBloc>().add(const TrackerEvent.getBinsList());
@@ -54,15 +55,17 @@ class _TrackerPageState extends State<TrackerPage>
   Widget build(BuildContext context) {
     return BasePageWidget(
         floatingActionButtonLocation:
-            FloatingActionButtonLocation.miniCenterDocked,
+        FloatingActionButtonLocation.miniCenterDocked,
         floatingActionButton: Padding(
           padding: EdgeInsets.all(20.h),
           child: OutlinedButton.icon(
             style: ButtonStyle(
                 side: WidgetStatePropertyAll(
-                    BorderSide(color: context.scheme().neutralsBorderDivider))),
+                    BorderSide(color: context
+                        .scheme()
+                        .neutralsBorderDivider))),
             onPressed: () {},
-            label:  CustomText(appStrings.needHelp),
+            label: CustomText(appStrings.needHelp),
             iconAlignment: IconAlignment.start,
             icon: appAssets.messageQuestion.svg(),
           ),
@@ -73,39 +76,48 @@ class _TrackerPageState extends State<TrackerPage>
             centerTitle: false,
             backgroundColor: Colors.transparent,
             title: CustomText(
-             appStrings.tracker,
+              appStrings.tracker,
               style: context.titleTitle2,
             ),
             actions: [
               BlocBuilder<TrackerBloc, TrackerState>(
                 builder: (context, state) {
                   return ElevatedButton.icon(
-                    onPressed: (bloc.hasCompost || bloc.hasLandfill)
-                        ? () {
-                      Future<dynamic> future =  openModalBottomSheet(
-                        context,
-                        NewEntryDialogContent(bloc: bloc));
+                      onPressed: (bloc.hasCompost || bloc.hasLandfill)
+                          ? () {
+                        Future<dynamic> future = openModalBottomSheet(
+                            context,
+                            NewEntryDialogContent(bloc: bloc));
 
-                      future.then((index)  {
-                        if(context.mounted) {
-                          context.read<TrackerBloc>()
-                              .add(TrackerEvent.navigateToAddNewEntryPage(
-                              bin: bloc.bins[index]));
-                          /* context.read<TrackerBloc>().add(
+                        future.then((index) {
+                          if (context.mounted) {
+                            context.read<TrackerBloc>()
+                                .add(TrackerEvent.navigateToAddNewEntryPage(
+                                bin: bloc.bins[index]));
+                            /* context.read<TrackerBloc>().add(
                             TrackerEvent.fetchBinDetails(
                                 binId: bloc.bins[index].id!));*/
-                        }
-                      });
-                    }: null,
-                    label:  CustomText(appStrings.newEntry,
-                      style: context.subheadlineSubheadlineMedium.copyWith(color:context.scheme().whiteText ),),
-                    iconAlignment: IconAlignment.start,
-                    icon:  Icon(Icons.add_circle,color:context.scheme().whiteText,),
-                    style: ButtonStyle(
-                    backgroundColor:( bloc.hasCompost || bloc.hasLandfill)
-                        ?WidgetStateProperty.all(context.scheme().primary)
-                        :WidgetStateProperty.all(context.scheme().disabledText)
-                  ));
+                          }
+                        });
+                      } : null,
+                      label: CustomText(appStrings.newEntry,
+                        style: context.subheadlineSubheadlineMedium.copyWith(
+                            color: context
+                                .scheme()
+                                .whiteText),),
+                      iconAlignment: IconAlignment.start,
+                      icon: Icon(Icons.add_circle, color: context
+                          .scheme()
+                          .whiteText,),
+                      style: ButtonStyle(
+                          backgroundColor: (bloc.hasCompost || bloc.hasLandfill)
+                              ? WidgetStateProperty.all(context
+                              .scheme()
+                              .primary)
+                              : WidgetStateProperty.all(context
+                              .scheme()
+                              .disabledText)
+                      ));
                 },
               )
             ],
@@ -118,7 +130,7 @@ class _TrackerPageState extends State<TrackerPage>
               loadInProgress: () {},
               binsLoaded: (bins) {},
               loadingError: (error) {
-                Fluttertoast.showToast(msg:error.message,
+                Fluttertoast.showToast(msg: error.message,
                     toastLength: Toast.LENGTH_LONG,
                     gravity: ToastGravity.BOTTOM,
                     timeInSecForIosWeb: 1,
@@ -136,10 +148,12 @@ class _TrackerPageState extends State<TrackerPage>
                   ),
                 )
                     .then(
-                  (value) {
-                    context
-                        .read<TrackerBloc>()
-                        .add(const TrackerEvent.getBinsList());
+                      (value) {
+                    if (context.mounted) {
+                      context
+                          .read<TrackerBloc>()
+                          .add(const TrackerEvent.getBinsList());
+                    }
                   },
                 );
               },
@@ -168,12 +182,12 @@ class _TrackerPageState extends State<TrackerPage>
                       (!bloc.hasLandfill && !bloc.hasCompost
                           // !bloc.hasRecycling &&
                           // !bloc.hasOrganic
-                          )
+                      )
                           ? ShadowTooltip(
-                              message:
-                                 appStrings.tooltipMsg,
-                              child: TrackerInfoWidget(bloc: bloc),
-                            )
+                        message:
+                        appStrings.tooltipMsg,
+                        child: TrackerInfoWidget(bloc: bloc),
+                      )
                           : TrackerInfoWidget(bloc: bloc),
                       SizedBox(
                         height: 10.h,
@@ -184,7 +198,9 @@ class _TrackerPageState extends State<TrackerPage>
                           CustomText(
                             appStrings.yourBins,
                             style: context.titleTitle3
-                                .copyWith(color: context.scheme().primaryText),
+                                .copyWith(color: context
+                                .scheme()
+                                .primaryText),
                           ),
                           IconButton(
                             onPressed: () {
@@ -195,9 +211,11 @@ class _TrackerPageState extends State<TrackerPage>
                                     height: 250.h,
                                     decoration: BoxDecoration(
                                       borderRadius:
-                                          BorderRadius.circular(20.sp),
+                                      BorderRadius.circular(20.sp),
                                       color:
-                                          context.scheme().neutralsBackground,
+                                      context
+                                          .scheme()
+                                          .neutralsBackground,
                                     ),
                                     child: Column(
                                       children: [
@@ -206,9 +224,11 @@ class _TrackerPageState extends State<TrackerPage>
                                         // ),
                                         Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const ExitButton(padding:  EdgeInsets.only(top: 20,left: 20) ),
+                                            const ExitButton(
+                                                padding: EdgeInsets.only(
+                                                    top: 20, left: 20)),
                                             Center(
                                               child: CustomText(
                                                 appStrings.options,
@@ -232,9 +252,9 @@ class _TrackerPageState extends State<TrackerPage>
                                                   .neutralsBorderDivider,
                                             ),
                                             borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(
-                                                        Dimen.defaultRadius)),
+                                            const BorderRadius.all(
+                                                Radius.circular(
+                                                    Dimen.defaultRadius)),
                                           ),
                                           child: Column(
                                             children: [
@@ -256,7 +276,7 @@ class _TrackerPageState extends State<TrackerPage>
                                                                       context,
                                                                       CouncilLandfillBinWidget(
                                                                           bloc:
-                                                                              bloc),
+                                                                          bloc),
                                                                     );
                                                                   },
                                                                   dontHaveBin:
@@ -265,7 +285,7 @@ class _TrackerPageState extends State<TrackerPage>
                                                                         context,
                                                                         LandfillBinWidget(
                                                                             bloc:
-                                                                                bloc));
+                                                                            bloc));
                                                                   },
                                                                 ),
                                                               );
@@ -282,7 +302,7 @@ class _TrackerPageState extends State<TrackerPage>
                                                                     context,
                                                                     NewCompostBinWidget(
                                                                         bloc:
-                                                                            bloc));
+                                                                        bloc));
                                                               },
                                                               doNotHaveBinFunc:
                                                                   () {
@@ -297,7 +317,7 @@ class _TrackerPageState extends State<TrackerPage>
                                                     ),
                                                   );
                                                 },
-                                                title:appStrings.addNewBin ,
+                                                title: appStrings.addNewBin,
                                                 leading: appAssets.addBin.svg(),
                                               ),
                                               const CustomDivider(),
@@ -305,7 +325,7 @@ class _TrackerPageState extends State<TrackerPage>
                                                 onTap: () {},
                                                 title: appStrings.manageBins,
                                                 leading:
-                                                    appAssets.trashIcon2.svg(),
+                                                appAssets.trashIcon2.svg(),
                                               ),
                                             ],
                                           ),
@@ -325,7 +345,7 @@ class _TrackerPageState extends State<TrackerPage>
                       ),
                       TrackerTabBar(
                         tabController: _tabController,
-                        title1:appStrings.waste,
+                        title1: appStrings.waste,
                         title2: appStrings.compost,
                       ),
                       SizedBox(
@@ -360,11 +380,14 @@ class _TrackerPageState extends State<TrackerPage>
               },
               sortingEntries: () {
                 return const PageLoading(); // Or any other appropriate widget to show while sorting
-              }, binsCreated: () {  return  BasePageWidget(
-              child: Center(
-                child: CustomText('success'),
-              ),
-            );; },
+              },
+              binsCreated: () {
+                return BasePageWidget(
+                  child: Center(
+                    child: CustomText('success'),
+                  ),
+                );
+              },
             );
           },
         ));
@@ -373,7 +396,9 @@ class _TrackerPageState extends State<TrackerPage>
   Future<dynamic> openModalBottomSheet(BuildContext context, Widget child) {
     return showModalBottomSheet(
       isScrollControlled: true,
-      backgroundColor: context.scheme().neutralsBackground,
+      backgroundColor: context
+          .scheme()
+          .neutralsBackground,
       context: context,
       builder: (context) {
         return Container(
