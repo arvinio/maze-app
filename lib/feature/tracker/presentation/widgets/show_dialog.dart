@@ -29,7 +29,7 @@ class ShowDialog {
   }
 
   static Future<dynamic> openModalBottomSheet(BuildContext context,
-      Widget child) {
+      {Widget? child}) {
     return showModalBottomSheet(
       isScrollControlled: true,
       backgroundColor: context

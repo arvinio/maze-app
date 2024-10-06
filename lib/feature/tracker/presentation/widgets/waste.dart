@@ -39,15 +39,15 @@ class Waste extends StatelessWidget {
                 onTap: () {
                   ShowDialog.openModalBottomSheet(
                     context,
-                    AddWasteBinWidget(
+                    child:AddWasteBinWidget(
                       func: () {
                         ShowDialog.openModalBottomSheet(
                           context,
-                          NewLandfillWasteBinWidget(
+                          child: NewLandfillWasteBinWidget(
                             haveBin: () {
                               ShowDialog.openModalBottomSheet(
                                 context,
-                                CouncilLandfillBinWidget(
+                                child: CouncilLandfillBinWidget(
                                     bloc:
                                     bloc),
                               );
@@ -56,7 +56,7 @@ class Waste extends StatelessWidget {
                                 () {
                                   ShowDialog.openModalBottomSheet(
                                   context,
-                                  LandfillBinWidget(
+                                      child: LandfillBinWidget(
                                       bloc:
                                       bloc));
                             },

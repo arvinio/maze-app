@@ -45,11 +45,11 @@ class Compost extends StatelessWidget {
 
                 ShowDialog.openModalBottomSheet(
                     context,
-                    HaveCompostBinWidget(
+                   child: HaveCompostBinWidget(
                       haveBinFunc: () {
                         ShowDialog.openModalBottomSheet(
                             context,
-                            NewCompostBinWidget(
+                            child: NewCompostBinWidget(
                                 bloc:
                                 bloc));
                       },
@@ -57,7 +57,7 @@ class Compost extends StatelessWidget {
                           () {
                             ShowDialog.openModalBottomSheet(
                               context,
-                              DoNotHaveCompostBinWidget(bloc: bloc,));},
+                                child: DoNotHaveCompostBinWidget(bloc: bloc,));},
                     ));
               },
             ),
