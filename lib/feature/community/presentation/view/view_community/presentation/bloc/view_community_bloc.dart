@@ -1,13 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/feature/community/data/model/other_communities/other_communities_response.dart';
 import 'package:maze_app/feature/community/domain/repository/community_repository.dart';
-
 part 'view_community_event.dart';
 part 'view_community_state.dart';
 part 'view_community_bloc.freezed.dart';
@@ -41,14 +38,6 @@ class ViewCommunityBloc extends Bloc<ViewCommunityEvent , ViewCommunityState> {
        }
 
      }, error: (apiError) {
-       Fluttertoast.showToast(
-           msg: apiError.message,
-           toastLength: Toast.LENGTH_LONG,
-           gravity: ToastGravity.BOTTOM,
-           timeInSecForIosWeb: 1,
-           backgroundColor: Colors.red,
-           textColor: Colors.white,
-           fontSize: 16.0);
        emit(state.copyWith(viewCommunityStatus: ViewCommunityStatus.joinCommunityFailure,
            errorMessage: apiError.message));
      });
@@ -68,14 +57,6 @@ class ViewCommunityBloc extends Bloc<ViewCommunityEvent , ViewCommunityState> {
       }
 
     }, error: (apiError) {
-      Fluttertoast.showToast(
-          msg: apiError.message,
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
       emit(state.copyWith(viewCommunityStatus: ViewCommunityStatus.joinCommunityFailure,
           errorMessage: apiError.message));
     });
@@ -90,25 +71,9 @@ class ViewCommunityBloc extends Bloc<ViewCommunityEvent , ViewCommunityState> {
       OtherCommunitiesResponse  response = data;
       if(response.success == true){
         emit(state.copyWith(viewCommunityStatus: ViewCommunityStatus.deleteCommunitySuccess,));
-        Fluttertoast.showToast(
-            msg: appStrings.communityDeleted,
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.green,
-            textColor: Colors.white,
-            fontSize: 16.0);
       }
-
     }, error: (apiError) {
-      Fluttertoast.showToast(
-          msg: apiError.message,
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      emit(state.copyWith(viewCommunityStatus: ViewCommunityStatus.deleteCommunityFailure, errorMessage: apiError.message ));
     });
   }
 

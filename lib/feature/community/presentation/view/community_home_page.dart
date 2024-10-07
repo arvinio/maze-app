@@ -366,7 +366,7 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
       onTap: () {
         isMyCommunity!
             ? context.pushRoute(ViewCommunityPageRoute(
-                communityDetails: details, isOwnCommunity: true))
+                communityDetails: details, isFollowedCommunity: true))
             : context
                 .read<CommunityBloc>()
                 .add(CommunityEvent.getCommunityDetailsEvent(id: details!.id!));

@@ -281,7 +281,7 @@ abstract class _$AppRouter extends RootStackRouter {
             child: ViewCommunityPage(
           key: args.key,
           communityDetails: args.communityDetails,
-          isOwnCommunity: args.isOwnCommunity,
+          isFollowedCommunity: args.isFollowedCommunity,
         )),
       );
     },
@@ -1123,14 +1123,14 @@ class ViewCommunityPageRoute extends PageRouteInfo<ViewCommunityPageRouteArgs> {
   ViewCommunityPageRoute({
     Key? key,
     required CommunityDetails communityDetails,
-    bool isOwnCommunity = false,
+    bool isFollowedCommunity = false,
     List<PageRouteInfo>? children,
   }) : super(
           ViewCommunityPageRoute.name,
           args: ViewCommunityPageRouteArgs(
             key: key,
             communityDetails: communityDetails,
-            isOwnCommunity: isOwnCommunity,
+            isFollowedCommunity: isFollowedCommunity,
           ),
           initialChildren: children,
         );
@@ -1145,18 +1145,18 @@ class ViewCommunityPageRouteArgs {
   const ViewCommunityPageRouteArgs({
     this.key,
     required this.communityDetails,
-    this.isOwnCommunity = false,
+    this.isFollowedCommunity = false,
   });
 
   final Key? key;
 
   final CommunityDetails communityDetails;
 
-  final bool isOwnCommunity;
+  final bool isFollowedCommunity;
 
   @override
   String toString() {
-    return 'ViewCommunityPageRouteArgs{key: $key, communityDetails: $communityDetails, isOwnCommunity: $isOwnCommunity}';
+    return 'ViewCommunityPageRouteArgs{key: $key, communityDetails: $communityDetails, isFollowedCommunity: $isFollowedCommunity}';
   }
 }
 

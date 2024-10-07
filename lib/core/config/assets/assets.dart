@@ -126,6 +126,7 @@ class AssetsBase {
   AssetSvg get mute => const AssetSvg('assets/icons/community/mute.svg');
   AssetSvg get dot => const AssetSvg('assets/icons/community/dot.svg');
   AssetSvg get trash => const AssetSvg('assets/icons/community/trash.svg');
+  AssetSvg get lockCircle => const AssetSvg('assets/icons/community/lock-circle.svg');
 
 
 

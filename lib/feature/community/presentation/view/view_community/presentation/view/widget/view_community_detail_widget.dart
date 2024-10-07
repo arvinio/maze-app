@@ -16,12 +16,12 @@ class ViewCommunityDetailWidget extends StatefulWidget {
     super.key,
     required this.communityDetails,
     required this.communityState,
-    this.isOwnCommunity = false,
+    this.isFollowedCommunity = false,
   });
 
   final CommunityDetails communityDetails;
   final ViewCommunityState communityState;
-  final bool isOwnCommunity;
+  final bool isFollowedCommunity;
 
   @override
   State<ViewCommunityDetailWidget> createState() =>
@@ -31,6 +31,7 @@ class ViewCommunityDetailWidget extends StatefulWidget {
 class _ViewCommunityDetailWidgetState extends State<ViewCommunityDetailWidget> {
   bool isFollowing = false;
   bool joinCommunityLoading = false;
+  bool showLockIcon = false;
 
   @override
   void didUpdateWidget(covariant ViewCommunityDetailWidget oldWidget) {
@@ -59,6 +60,8 @@ class _ViewCommunityDetailWidgetState extends State<ViewCommunityDetailWidget> {
   @override
   void initState() {
     super.initState();
+    isFollowing = widget.isFollowedCommunity;
+    showLockIcon = (widget.isFollowedCommunity && widget.communityDetails.isOwner == false);
     _updateStateBasedOnCommunityStatus(
         widget.communityState.viewCommunityStatus);
   }
@@ -77,9 +80,15 @@ class _ViewCommunityDetailWidgetState extends State<ViewCommunityDetailWidget> {
                   widget.communityDetails.name ?? '',
                   style: context.titleTitle3,
                 ),
-                Text(
-                  widget.communityDetails.memberCount.toString(),
-                  style: context.subheadlineSubheadline,
+                Row(
+                  children: [
+                   if(showLockIcon) appAssets.lockCircle.svg(),
+                    if(showLockIcon) SizedBox(width: 8.w,),
+                    Text(
+                      '${widget.communityDetails.memberCount.toString()} ${appStrings.members}',
+                      style: context.subheadlineSubheadline,
+                    ),
+                  ],
                 )
               ],
             ),
@@ -96,7 +105,7 @@ class _ViewCommunityDetailWidgetState extends State<ViewCommunityDetailWidget> {
         SizedBox(
           height: 12.h,
         ),
-        !widget.isOwnCommunity
+        widget.communityDetails.isOwner == false
             ? CustomButton.outline(
                 borderRadius: 16,
                 minSize: 40.h,

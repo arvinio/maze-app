@@ -39,6 +39,8 @@ class CommunityDetails with _$CommunityDetails {
     String? avatar,
     @JsonKey(name: "cover")
     String? cover,
+    @JsonKey(name: "isOwner")
+    bool? isOwner,
   }) = _CommunityDetails;
 
   factory CommunityDetails.fromJson(Map<String, dynamic> json) => _$CommunityDetailsFromJson(json);
