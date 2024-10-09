@@ -279,6 +279,18 @@ class StringsBase {
   String get startLiveChat=>'Start a live chat with us';
   String get browseOurBeginnerArticles=>'Browse our beginner articles';
   String get help=>'Help';
+  String get deletedBins=>'Deleted bins';
+  String get viewRecoverDeletedBins=>'View / recover deleted bins';
+  String get transferData=>'Transfer Data to another bin';
+  String get deleteBinTitle=>'Delete Bin';
+  String get deleteBinSubTitle=>'The data of the bin won’t be deleted';
+  String get permanentDeleteTitle=>'Permanent delete';
+  String get permanentDeleteSubTitle=>'The data of the bin will be deleted';
+  String get restoreDeletedBin=>'Restore deleted bin';
+  String get permanentDeleteDialog=>'Delete this bin?';
+  String get permanentDeleteDialog2=>'This is permanent and can’t be undone';
+  String get noImage=>'No image';
+  String get restoredMsg=>'It was restored';
 
 
 

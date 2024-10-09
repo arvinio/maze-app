@@ -9,6 +9,7 @@ import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/no_image.dart';
 
 class TrackerPreview extends StatelessWidget {
   const TrackerPreview({
@@ -64,9 +65,7 @@ class TrackerPreview extends StatelessWidget {
                     child: FittedBox(
                         fit: BoxFit.cover,
                         child: bin.imageUrl == null
-                            ? const SizedBox(
-                          child: Text('no image'),
-                        )
+                            ? const NoImage()
                             : Image.network(
                           bin.imageUrl!,
                           fit: BoxFit.cover,

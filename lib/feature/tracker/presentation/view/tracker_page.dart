@@ -14,8 +14,11 @@ import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/presentation/widget/page_loading.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
+import 'package:maze_app/di/injection_container.dart';
+import 'package:maze_app/feature/tracker/data/model/deleted_bins/deleted_bins_response.dart';
 
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/view/manage_bins/presentation/bloc/manage_bins_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/add_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/add_waste_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/council_landfill_bin_widget.dart';
@@ -24,7 +27,8 @@ import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/land
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/new_compost_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/new_landfill_waste_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/do_not_have_compost_bin_widget.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/new_entry_dialog_content.dart';
+import 'package:maze_app/feature/tracker/presentation/view/manage_bins/presentation/view/manage_bins_dialog_content.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/bins_list.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
@@ -56,75 +60,78 @@ class _TrackerPageState extends State<TrackerPage>
   Widget build(BuildContext context) {
     return BasePageWidget(
       appBarHeight: 70,
-        floatingActionButtonLocation:
-        FloatingActionButtonLocation.miniCenterDocked,
-        floatingActionButton: Padding(
-          padding: EdgeInsets.all(20.h),
-          child: OutlinedButton.icon(
-            style: ButtonStyle(
-                side: WidgetStatePropertyAll(
-                    BorderSide(color: context
-                        .scheme()
-                        .neutralsBorderDivider))),
-            onPressed: () {ShowDialog.needHelpContent(context);},
-            label: CustomText(appStrings.needHelp),
-            iconAlignment: IconAlignment.start,
-            icon: appAssets.messageQuestion.svg(),
-          ),
+      floatingActionButtonLocation:
+      FloatingActionButtonLocation.miniCenterDocked,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.all(20.h),
+        child: OutlinedButton.icon(
+          style: ButtonStyle(
+              side: WidgetStatePropertyAll(
+                  BorderSide(color: context
+                      .scheme()
+                      .neutralsBorderDivider))),
+          onPressed: () {ShowDialog.needHelpContent(context);},
+          label: CustomText(appStrings.needHelp),
+          iconAlignment: IconAlignment.start,
+          icon: appAssets.messageQuestion.svg(),
         ),
-        appBar: Padding(
-          padding: EdgeInsets.only(right: 13.w),
-          child: AppBar(
-            centerTitle: false,
-            backgroundColor: Colors.transparent,
-            title: CustomText(
-              appStrings.tracker,
-              style: context.titleTitle2,
-            ),
-            actions: [
-              BlocBuilder<TrackerBloc, TrackerState>(
-                builder: (context, state) {
-                  return ElevatedButton.icon(
-                      onPressed: (bloc.hasCompost || bloc.hasLandfill)
-                          ? () {
-                        Future<dynamic> future = openModalBottomSheet(
-                            context,
-                            NewEntryDialogContent(bloc: bloc));
+      ),
+      appBar: Padding(
+        padding: EdgeInsets.only(right: 13.w),
+        child: AppBar(
+          centerTitle: false,
+          backgroundColor: Colors.transparent,
+          title: CustomText(
+            appStrings.tracker,
+            style: context.titleTitle2,
+          ),
+          actions: [
+            BlocBuilder<TrackerBloc, TrackerState>(
+              builder: (context, state) {
+                return ElevatedButton.icon(
+                    onPressed: (bloc.hasCompost || bloc.hasLandfill)
+                        ? () {
+                      Future<dynamic> future = openModalBottomSheet(
+                          context,
+                          BinsList(title:appStrings.newEntryFor,bins: bloc.bins));
 
-                        future.then((index) {
-                          if (context.mounted) {
-                            context.read<TrackerBloc>()
-                                .add(TrackerEvent.navigateToAddNewEntryPage(
-                                bin: bloc.bins[index]));
-                            /* context.read<TrackerBloc>().add(
-                            TrackerEvent.fetchBinDetails(
-                                binId: bloc.bins[index].id!));*/
-                          }
-                        });
-                      } : null,
-                      label: CustomText(appStrings.newEntry,
-                        style: context.subheadlineSubheadlineMedium.copyWith(
-                            color: context
-                                .scheme()
-                                .whiteText),),
-                      iconAlignment: IconAlignment.start,
-                      icon: Icon(Icons.add_circle, color: context
-                          .scheme()
-                          .whiteText,),
-                      style: ButtonStyle(
-                          backgroundColor: (bloc.hasCompost || bloc.hasLandfill)
-                              ? WidgetStateProperty.all(context
+                      future.then((index) {
+                        if (context.mounted) {
+                          context.read<TrackerBloc>()
+                              .add(TrackerEvent.navigateToAddNewEntryPage(
+                              bin: bloc.bins[index]));
+                          /* context.read<TrackerBloc>().add(
+                          TrackerEvent.fetchBinDetails(
+                              binId: bloc.bins[index].id!));*/
+                        }
+                      });
+                    } : null,
+                    label: CustomText(appStrings.newEntry,
+                      style: context.subheadlineSubheadlineMedium.copyWith(
+                          color: context
                               .scheme()
-                              .primary)
-                              : WidgetStateProperty.all(context
-                              .scheme()
-                              .disabledText)
-                      ));
-                },
-              )
-            ],
-          ),
+                              .whiteText),),
+                    iconAlignment: IconAlignment.start,
+                    icon: Icon(Icons.add_circle, color: context
+                        .scheme()
+                        .whiteText,),
+                    style: ButtonStyle(
+                        backgroundColor: (bloc.hasCompost || bloc.hasLandfill)
+                            ? WidgetStateProperty.all(context
+                            .scheme()
+                            .primary)
+                            : WidgetStateProperty.all(context
+                            .scheme()
+                            .disabledText)
+                    ));
+              },
+            )
+          ],
         ),
+      ),
+      child: BlocProvider(
+        create: (_) =>
+          inject<ManageBinsBloc>(),
         child: BlocConsumer<TrackerBloc, TrackerState>(
           listener: (context, state) {
             state.when(
@@ -169,6 +176,10 @@ class _TrackerPageState extends State<TrackerPage>
                 context.pushRoute(
                     const TrackerPageRoute());
               },
+              deleteSuccess: () {  },
+              deleteFailure: () {  },
+              restoreSuccess: () {  },
+              restoreFailure: () {  }, deletedBinsLoaded: (List<DeletedBin> bins) {  },
             );
           },
           builder: (context, state) {
@@ -323,12 +334,38 @@ class _TrackerPageState extends State<TrackerPage>
                                                 leading: appAssets.addBin.svg(),
                                               ),
                                               const CustomDivider(),
-                                              BottomSheetItem(
-                                                onTap: () {},
-                                                title: appStrings.manageBins,
-                                                leading:
-                                                appAssets.trashIcon2.svg(),
-                                              ),
+                                    MultiBlocProvider(
+                                      providers: [
+                                        BlocProvider(create: (_) => inject<TrackerBloc>(), child: BottomSheetItem(
+                                          onTap: () {
+                                            ShowDialog.openModalBottomSheet(context,
+                                                child:ManageBinsDialogContent(bloc: bloc).wrappedRoute(context));
+                                          },
+                                          title: appStrings.manageBins,
+                                          leading:
+                                          appAssets.trashIcon2.svg(),
+                                        )),
+                                        BlocProvider(create: (_) => inject<ManageBinsBloc>(),
+                                          child: BottomSheetItem(
+                                            onTap: () {
+                                              ShowDialog.openModalBottomSheet(context,
+                                                  child:ManageBinsDialogContent(bloc: bloc).wrappedRoute(context));
+                                            },
+                                            title: appStrings.manageBins,
+                                            leading:
+                                            appAssets.trashIcon2.svg(),
+                                          ),),
+                                      ], child: BottomSheetItem(
+                                      onTap: () {
+                                        ShowDialog.openModalBottomSheet(context,
+                                            child:ManageBinsDialogContent(bloc: bloc).wrappedRoute(context));
+                                      },
+                                      title: appStrings.manageBins,
+                                      leading:
+                                      appAssets.trashIcon2.svg(),
+                                    ),
+                                      
+),
                                             ],
                                           ),
                                         ),
@@ -389,10 +426,26 @@ class _TrackerPageState extends State<TrackerPage>
                     child: CustomText('success'),
                   ),
                 );
-              },
+              }, deleteSuccess: () {
+              return const SizedBox.shrink();
+
+            }, deleteFailure: () {
+              return const SizedBox.shrink();
+
+            }, restoreSuccess: () {
+              return const SizedBox.shrink();
+
+            }, restoreFailure: () {
+              return const SizedBox.shrink();
+
+            }, deletedBinsLoaded: (List<DeletedBin> bins) {
+              return const SizedBox.shrink();
+            },
             );
           },
-        ));
+        ),
+      ),
+    );
   }
 
   Future<dynamic> openModalBottomSheet(BuildContext context, Widget child) {

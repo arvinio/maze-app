@@ -5,6 +5,7 @@ import 'package:maze_app/core/network/model/api_response.dart';
 import 'package:maze_app/di/di_const.dart';
 import 'package:maze_app/feature/knowledge/data/model/resp_empty_model.dart';
 import 'package:maze_app/feature/tracker/data/datasource/tracker_remote_data_source.dart';
+import 'package:maze_app/feature/tracker/data/model/deleted_bins/deleted_bins_response.dart';
 import 'package:maze_app/feature/tracker/data/model/get_bin_chart_data_resp.dart';
 import 'package:maze_app/feature/tracker/data/model/get_bin_entry_list_resp.dart';
 import 'package:maze_app/feature/tracker/data/model/get_bins_list_resp.dart';
@@ -19,6 +20,7 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   TrackerRemoteDataSourceImpl({
     @Named(DiConst.dioNamedToken) required this.dioCaller,
   });
+
   @override
   Future<ApiResponse<SuccessResponse>> createBin(Bin bin) async {
     final data = FormData.fromMap({
@@ -86,8 +88,27 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   @override
   Future<ApiResponse> deleteBin(String binId) async {
     return await dioCaller.delete('api/bin/$binId',
-        fromJson: RespEmptyModel.fromJson);
+        fromJson: SuccessResponse.fromJson);
   }
+
+  @override
+  Future<ApiResponse> deleteBinPermanently(String binId) async{
+    return await dioCaller.delete('api/bin/permanent/$binId',
+        fromJson: SuccessResponse.fromJson);
+  }
+
+  @override
+  Future<ApiResponse> restoreDeletedBin(String binId) async{
+    return await dioCaller.put('api/bin/$binId',
+        fromJson: SuccessResponse.fromJson);
+  }
+
+  @override
+  Future<ApiResponse> getDeletedBins() async{
+    return await dioCaller.get('api/bin/deleted',
+        fromJson: DeletedBinsResponse.fromJson);
+  }
+
 
   @override
   Future<ApiResponse> deleteBinEntry(String entryId) async {
@@ -144,7 +165,7 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse> editbin(Bin bin) {
+  Future<ApiResponse> editBin(Bin bin) {
     // TODO: implement editbin
     throw UnimplementedError();
   }
@@ -166,4 +187,17 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
     return await dioCaller.get('api/bin/chart?binId=$binId',
         fromJson: GetBinChartDataResp.fromJson);
   }
+
+  @override
+  Future<ApiResponse<SuccessResponse>> transferBinData(String sourceBinId, String targetBinId) async {
+    return await dioCaller.put<SuccessResponse>('api/bin/transfer',
+        fromJson: SuccessResponse.fromJson,
+        data: {
+          'sourceBinId': sourceBinId,
+          'targetBinId': targetBinId
+        }
+    );
+  }
+
+
 }

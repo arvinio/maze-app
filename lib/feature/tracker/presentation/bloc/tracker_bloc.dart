@@ -1,16 +1,14 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/network/model/api_error.dart';
 import 'package:maze_app/core/network/model/api_response.dart';
+import 'package:maze_app/feature/tracker/data/model/deleted_bins/deleted_bins_response.dart';
 import 'package:maze_app/feature/tracker/data/model/success_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
-import 'package:maze_app/feature/tracker/domain/entity/chart_data.dart';
 import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
 
 import 'package:maze_app/feature/tracker/domain/repo/tracker_repository.dart';
@@ -22,7 +20,7 @@ part 'tracker_bloc.freezed.dart';
 
 @injectable
 class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
-  final TrackerRepository repo;
+  final TrackerRepository repository;
   int wasteSaved = 0;
   int compostSaved = 0;
   int wasteRecycled = 0;
@@ -31,7 +29,7 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
 
   var bins = <Bin>[];
 
-  TrackerBloc(this.repo) : super(const TrackerState.initial()) {
+  TrackerBloc(this.repository) : super(const TrackerState.initial()) {
     on<_AddEntryToBin>(_onAddEntryToBin);
     on<_FetchBinDetails>(_onFetchBinDetails);
     on<_initEvent>(_onInit);
@@ -46,7 +44,7 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
 
   _onGetBinsList(_GetBinsList event, Emitter<TrackerState> emit) async {
     emit(const TrackerState.loadInProgress());
-    final response = await repo.getBinsList();
+    final response = await repository.getBinsList();
     response.when(
       completed: (data, statusCode) {
         hasCompost = data.any((bin) => bin.type == BinType.compost);
@@ -63,7 +61,7 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
 
   _onAddBin(_AddBin event, Emitter<TrackerState> emit) async {
     emit(const TrackerState.loadInProgress());
-    final response = await repo.createBin(bin: event.bin);
+    final response = await repository.createBin(bin: event.bin);
     response.when(completed: (data, int? statusCode) {
       SuccessResponse response = data;
       emit(const TrackerState.binsCreated());
@@ -74,7 +72,7 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
 
   _onAddEntryToBin(_AddEntryToBin event, Emitter<TrackerState> emit) async {
     // emit(const TrackerState.loadInProgress());
-    final updatedBin = await repo.createBinEntry(entry: event.entryDetails);
+    final updatedBin = await repository.createBinEntry(entry: event.entryDetails);
     updatedBin.when(
       completed: (data, statusCode) {},
       error: (apiError) {
@@ -86,9 +84,9 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
   _onFetchBinDetails(_FetchBinDetails event, Emitter<TrackerState> emit) async {
     emit(const TrackerState.loadInProgress());
     var hasError = false;
-    final binDetailsFuture = repo.getBinDetails(binId: event.binId);
-    final entriesFuture = repo.getBinEntryList(binId: event.binId);
-    final chartDataFuture = repo.getBinChartData(binId: event.binId);
+    final binDetailsFuture = repository.getBinDetails(binId: event.binId);
+    final entriesFuture = repository.getBinEntryList(binId: event.binId);
+    final chartDataFuture = repository.getBinChartData(binId: event.binId);
 
     final results = await Future.wait([
       binDetailsFuture,

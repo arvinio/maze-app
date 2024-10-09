@@ -16,4 +16,13 @@ class TrackerState with _$TrackerState {
       _NavigateToAddNewEntryPageState;
   const factory TrackerState.sortingEntries() = _SortingEntries;
   const factory TrackerState.binsCreated() = _BinsCreated;
+  const factory TrackerState.deleteSuccess() = _DeleteSuccess;
+  const factory TrackerState.deleteFailure() = _DeleteFailure;
+  const factory TrackerState.restoreSuccess() = _RestoreSuccess;
+  const factory TrackerState.restoreFailure() = _RestoreFailure;
+  const factory TrackerState.deletedBinsLoaded({required List<DeletedBin> bins}) =
+  _DeletedBinsLoaded;
+
+
 }
+

@@ -14,6 +14,7 @@ import 'package:maze_app/core/presentation/widget/custom_menu_items.dart';
 import 'package:maze_app/core/presentation/widget/menu_dialog_content.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
+import 'package:maze_app/feature/tracker/data/model/deleted_bins/deleted_bins_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
@@ -70,7 +71,7 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
           },
           sortingEntries: () {
             // You can add any UI updates here while sorting is in progress
-          }, binsCreated: () {  },
+          }, binsCreated: () {  }, deleteSuccess: () {  }, deleteFailure: () {  }, restoreSuccess: () {  }, restoreFailure: () {  }, deletedBinsLoaded: (List<DeletedBin> bins) {  },
         );
       },
       child: BasePageWidget(

@@ -1,17 +1,18 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
-import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/no_image.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
-class NewEntryDialogContent extends StatelessWidget {
-  const NewEntryDialogContent({
+class BinsList extends StatelessWidget {
+   const BinsList({
     super.key,
-    required this.bloc,
+    this.title,
+    required this.bins, this.titleStyle,
   });
 
-  final TrackerBloc bloc;
-
+  final String? title;
+  final List<Bin>? bins;
+  final TextStyle? titleStyle ;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,29 +22,27 @@ class NewEntryDialogContent extends StatelessWidget {
         children: [
           const ExitButton(),
           CustomText(
-            appStrings.newEntryFor,
-            style: context.titleTitle1,
+            title!,
+            style: titleStyle ?? context.titleTitle1,
           ),
           SizedBox(
             height: 20.h,
           ),
           ListView.separated(
-            itemCount: bloc.bins.length,
+            itemCount: bins!.length,
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
               return TrackerField(
-                  leadingIcon: bloc.bins[index].imageUrl == null
-                      ? const SizedBox(
-                    child: Text('no image'),
-                  )
+                  leadingIcon: bins![index].imageUrl == null
+                      ? const NoImage()
                       : Image.network(
-                    bloc.bins[index].imageUrl!,
+                    bins![index].imageUrl!,
                     fit: BoxFit.cover,
                   ),
-                  title: bloc.bins[index].nickName,
-                  subTitle: bloc.bins[index].type == BinType.landfill
+                  title: bins![index].nickName,
+                  subTitle: bins![index].type == BinType.landfill
                       ? appStrings.landfillWasteBin
-                      : bloc.bins[index].type == BinType.compost
+                      : bins![index].type == BinType.compost
                       ? appStrings.compostTumbler
                       : '',
                   onTap: (){

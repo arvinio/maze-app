@@ -17,4 +17,5 @@ class TrackerEvent with _$TrackerEvent {
     required String binId,
     required EntrySortOption sortOption,
   }) = _SortEntries;
+
 }

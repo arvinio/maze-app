@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/network/model/api_response.dart';
 import 'package:maze_app/feature/tracker/data/datasource/tracker_remote_data_source.dart';
+import 'package:maze_app/feature/tracker/data/model/success_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
 import 'package:maze_app/feature/tracker/domain/entity/chart_data.dart';
@@ -10,13 +11,13 @@ import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 
 @Injectable(as: TrackerRepository)
 class TrackerRepositoryImpl implements TrackerRepository {
-  final TrackerRemoteDataSource _trackerRemoteDataSource;
+  final TrackerRemoteDataSource _remoteDataSource;
 
   TrackerRepositoryImpl({required TrackerRemoteDataSource trackerRemoteDataSource})
-      : _trackerRemoteDataSource = trackerRemoteDataSource;
+      : _remoteDataSource = trackerRemoteDataSource;
   @override
   Future<ApiResponse<List<Bin>>> getBinsList() async {
-    final resp = await _trackerRemoteDataSource.getBinsList();
+    final resp = await _remoteDataSource.getBinsList();
     return resp.when(
       completed: (data, statusCode) {
         var bins = <Bin>[];
@@ -66,44 +67,56 @@ class TrackerRepositoryImpl implements TrackerRepository {
 
   @override
   Future<ApiResponse> createBin({required Bin bin}) async {
-    final resp = await _trackerRemoteDataSource.createBin(bin);
-    return resp;
+    return await _remoteDataSource.createBin(bin);
   }
 
   @override
   Future<ApiResponse> createBinEntry({required Entry entry}) async {
-    final resp = await _trackerRemoteDataSource.createBinEntry(entry);
-    return resp;
+    return await _remoteDataSource.createBinEntry(entry);
   }
 
   @override
   Future<ApiResponse> deleteBin({required String binId}) async {
-    final resp = await _trackerRemoteDataSource.deleteBin(binId);
-    return resp;
+    return await _remoteDataSource.deleteBin(binId);
   }
 
   @override
+  Future<ApiResponse> deleteBinPermanently({required String binId}) async{
+    return await _remoteDataSource.deleteBinPermanently(binId);
+  }
+  @override
+  Future<ApiResponse> restoreDeletedBin({required String binId}) async{
+    return await _remoteDataSource.restoreDeletedBin(binId);
+  }
+
+  @override
+  Future<ApiResponse> getDeletedBins() async{
+    return await _remoteDataSource.getDeletedBins();
+  }
+
+
+  @override
   Future<ApiResponse> deleteBinEntry({required String entryId}) async {
-    final resp = await _trackerRemoteDataSource.deleteBinEntry(entryId);
+    final resp = await _remoteDataSource.deleteBinEntry(entryId);
     return resp;
   }
 
   @override
   Future<ApiResponse> editBin({required Bin bin}) async {
-    final resp = await _trackerRemoteDataSource.editbin(bin);
+    final resp = await _remoteDataSource.editBin(bin);
     return resp;
   }
 
   @override
   Future<ApiResponse> editBinEntry({required EditEntry entry}) async {
-    final resp = await _trackerRemoteDataSource.editBinEntry(entry);
+    final resp = await _remoteDataSource.editBinEntry(entry);
     return resp;
   }
 
   @override
   Future<ApiResponse<List<EditEntry>>> getBinEntryList(
       {required String binId}) async {
-    final resp = await _trackerRemoteDataSource.getBinEntryList(binId);
+    final resp = await _remoteDataSource.getBinEntryList(binId);
     return resp.when(
       completed: (data, statusCode) {
         final List<EditEntry> entries = [];
@@ -133,7 +146,7 @@ class TrackerRepositoryImpl implements TrackerRepository {
 
   @override
   Future<ApiResponse<Bin>> getBinDetails({required String binId}) async {
-    final resp = await _trackerRemoteDataSource.getBinDetails(binId);
+    final resp = await _remoteDataSource.getBinDetails(binId);
     return resp.when(
       completed: (data, statusCode) {
         var e = data.result;
@@ -177,7 +190,7 @@ class TrackerRepositoryImpl implements TrackerRepository {
   @override
   Future<ApiResponse<BinChartData>> getBinChartData(
       {required String binId}) async {
-    final result = await _trackerRemoteDataSource.getBinChartData(binId);
+    final result = await _remoteDataSource.getBinChartData(binId);
     return result.when(
       completed: (data, statusCode) {
         var chartData = BinChartData(
@@ -223,5 +236,10 @@ class TrackerRepositoryImpl implements TrackerRepository {
     // } catch (e) {
     //   return ApiResponse.error(ApiError(message: e.toString()));
     // }
+  }
+
+  @override
+  Future<ApiResponse<SuccessResponse>> transferBinData(String sourceBinId, String targetBinId) async{
+    return await _remoteDataSource.transferBinData(sourceBinId,targetBinId);
   }
 }
