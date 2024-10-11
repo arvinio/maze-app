@@ -324,7 +324,7 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
                             height: sizeType == SizeType.dimensions ?  heightController.text.trim(): null,
                             typeOfCompostBin: typeOfController.text,
                             is2Compostement:
-                                twoCompartmentController.text == 'Yes',
+                                twoCompartmentController.text == appStrings.yes,
                           ),
                         ),
                       );
