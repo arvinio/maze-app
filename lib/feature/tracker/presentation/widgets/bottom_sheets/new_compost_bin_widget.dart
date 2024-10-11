@@ -17,6 +17,7 @@ import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/help_header.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/tab_content_view.dart';
 
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/two_compartment_dialog.dart';
@@ -42,9 +43,18 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
       TextEditingController();
   final TextEditingController amountController = TextEditingController();
 
+  final TextEditingController widthController = TextEditingController();
+  final TextEditingController heightController = TextEditingController();
+  final TextEditingController lengthController = TextEditingController();
+
   final focusNodeNickName = FocusNode();
   final focusNodePickUpDate = FocusNode();
   final focusNodeAmount = FocusNode();
+
+  final widthFocusNode = FocusNode();
+  final heightFocusNode = FocusNode();
+  final lengthFocusNode = FocusNode();
+
   final focusNodeTypeOf = FocusNode();
   final focusNodeTwoCompartment = FocusNode();
 
@@ -169,12 +179,51 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
                 SizedBox(
                   height: 20.h,
                 ),
-                CustomTextField.outline(
-                  textEditingController: amountController,
-                  label: appStrings.amountLitres,
-                  focusNode: focusNodeAmount,
-                  labelTextColor: context.scheme().secondaryText,
+                TabContentView(
+                  controller: tabController,
+                  children: [
+                    CustomTextField.outline(
+                      textEditingController: amountController,
+                      label: appStrings.amountLitres,
+                      focusNode: focusNodeAmount,
+                      labelTextColor: context
+                          .scheme()
+                          .secondaryText,
+                    ),
+                    SizedBox(
+                      height: 210.h,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomTextField.outline(
+                            textEditingController: widthController,
+                            label: appStrings.width,
+                            focusNode: widthFocusNode,
+                            labelTextColor: context
+                                .scheme()
+                                .secondaryText,
+                          ),
+                          CustomTextField.outline(
+                            textEditingController: heightController,
+                            label: appStrings.height,
+                            focusNode: heightFocusNode,
+                            labelTextColor: context
+                                .scheme()
+                                .secondaryText,
+                          ),
+                          CustomTextField.outline(
+                            textEditingController: lengthController,
+                            label: appStrings.length,
+                            focusNode: lengthFocusNode,
+                            labelTextColor: context
+                                .scheme()
+                                .secondaryText,
+                          ),
+                        ],),
+                    )
+                  ],
                 ),
+
                 SizedBox(
                   height: 20.h,
                 ),
@@ -270,9 +319,9 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
                             isShare: false,
                             imageUrl: file!.path,
                             pickUpDate: null,
-                            width: sizeType == SizeType.dimensions ? '20' : null,
-                            length: sizeType == SizeType.dimensions ? '20' : null,
-                            height: sizeType == SizeType.dimensions ? '20' : null,
+                            width: sizeType == SizeType.dimensions ?  widthController.text.trim() : null,
+                            length: sizeType == SizeType.dimensions ?  lengthController.text.trim() : null,
+                            height: sizeType == SizeType.dimensions ?  heightController.text.trim(): null,
                             typeOfCompostBin: typeOfController.text,
                             is2Compostement:
                                 twoCompartmentController.text == 'Yes',

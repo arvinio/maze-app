@@ -228,6 +228,9 @@ class StringsBase {
   String get litres=>'Litres';
   String get dimensions=>'Dimensions';
   String get amountLitres=>'Amount of litres';
+  String get width=>'Width';
+  String get height=>'Height';
+  String get length=>'Length';
   String get photo=>'Photo';
   String get photos=>'Photos';
   String get landfillBinTitle=>'Landfill bin';

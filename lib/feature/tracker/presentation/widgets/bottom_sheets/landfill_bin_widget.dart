@@ -15,6 +15,7 @@ import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/help_header.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/tab_content_view.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
 class LandfillBinWidget extends StatefulWidget {
@@ -33,10 +34,17 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
   final TextEditingController nickNameController = TextEditingController();
   final TextEditingController pickupDateController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
+  final TextEditingController widthController = TextEditingController();
+  final TextEditingController heightController = TextEditingController();
+  final TextEditingController lengthController = TextEditingController();
 
   final focusNodeNickName = FocusNode();
   final focusNodePickUpDate = FocusNode();
   final focusNodeAmount = FocusNode();
+
+  final widthFocusNode = FocusNode();
+  final heightFocusNode = FocusNode();
+  final lengthFocusNode = FocusNode();
 
   late final TabController tabController;
 
@@ -65,7 +73,7 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.only(top: 24,bottom: 24),
+        padding: const EdgeInsets.only(top: 24, bottom: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -78,7 +86,7 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
               height: 10.h,
             ),
             CustomText(
-            appStrings.landfillBinSubTitle,
+              appStrings.landfillBinSubTitle,
               style: context.bodyBody,
             ),
             SizedBox(
@@ -93,9 +101,11 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
             ),
             CustomTextField.outline(
               textEditingController: nickNameController,
-              label:  appStrings.nickname,
+              label: appStrings.nickname,
               focusNode: focusNodeNickName,
-              labelTextColor: context.scheme().secondaryText,
+              labelTextColor: context
+                  .scheme()
+                  .secondaryText,
             ),
             SizedBox(
               height: 10.h,
@@ -110,7 +120,9 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
                   appStrings.size,
                   style: context.titleHeadline,
                 ),
-                IconButton(onPressed: () {ShowDialog.sizeInfo(context); },
+                IconButton(onPressed: () {
+                  ShowDialog.sizeInfo(context);
+                },
                     icon: appAssets.infoSize.svg())
               ],
             ),
@@ -125,12 +137,51 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
             SizedBox(
               height: 20.h,
             ),
-            CustomTextField.outline(
-              textEditingController: amountController,
-              label: appStrings.amountLitres,
-              focusNode: focusNodeAmount,
-              labelTextColor: context.scheme().secondaryText,
+            TabContentView(
+             controller: tabController,
+              children: [
+                CustomTextField.outline(
+                  textEditingController: amountController,
+                  label: appStrings.amountLitres,
+                  focusNode: focusNodeAmount,
+                  labelTextColor: context
+                      .scheme()
+                      .secondaryText,
+                ),
+                SizedBox(
+                  height: 210.h,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                    CustomTextField.outline(
+                      textEditingController: widthController,
+                      label: appStrings.width,
+                      focusNode: widthFocusNode,
+                      labelTextColor: context
+                          .scheme()
+                          .secondaryText,
+                    ),
+                    CustomTextField.outline(
+                      textEditingController: heightController,
+                      label: appStrings.height,
+                      focusNode: heightFocusNode,
+                      labelTextColor: context
+                          .scheme()
+                          .secondaryText,
+                    ),
+                    CustomTextField.outline(
+                      textEditingController: lengthController,
+                      label: appStrings.length,
+                      focusNode: lengthFocusNode,
+                      labelTextColor: context
+                          .scheme()
+                          .secondaryText,
+                    ),
+                  ],),
+                )
+              ],
             ),
+
             SizedBox(
               height: 20.h,
             ),
@@ -147,10 +198,12 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
                   onPressed: () async {
                     showModalBottomSheet(
                         context: context,
-                        builder: (context) => SizedBox(
+                        builder: (context) =>
+                            SizedBox(
                               height: 150.h,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceAround,
                                 children: [
                                   SizedBox(
                                     height: 70.h,
@@ -160,7 +213,7 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
                                         onPressed: () async {
                                           XFile? result = await ImagePicker()
                                               .pickImage(
-                                                  source: ImageSource.camera);
+                                              source: ImageSource.camera);
                                           if (result != null) {
                                             setState(() {
                                               file = File(result.path);
@@ -175,7 +228,8 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
                                   IconButton(
                                     onPressed: () async {
                                       XFile? result = await ImagePicker()
-                                          .pickImage(source: ImageSource.gallery);
+                                          .pickImage(
+                                          source: ImageSource.gallery);
                                       if (result != null) {
                                         setState(() {
                                           file = File(result.path);
@@ -223,9 +277,9 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
                         isShare: false,
                         imageUrl: file!.path,
                         pickUpDate: pickupDateController.text,
-                        width: sizeType == SizeType.dimensions ? '20' : null,
-                        length: sizeType == SizeType.dimensions ? '20' : null,
-                        height: sizeType == SizeType.dimensions ? '20' : null,
+                        width: sizeType == SizeType.dimensions ?  widthController.text.trim() : null,
+                        length: sizeType == SizeType.dimensions ?  lengthController.text.trim() : null,
+                        height: sizeType == SizeType.dimensions ?  heightController.text.trim(): null,
                         typeOfCompostBin: '',
                         is2Compostement: null,
                       ),
@@ -238,3 +292,4 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
     );
   }
 }
+
