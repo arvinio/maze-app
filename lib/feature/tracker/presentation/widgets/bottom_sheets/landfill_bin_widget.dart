@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/strings.dart';
-import 'package:maze_app/core/presentation/widget/app_arrow.dart';
 import 'package:maze_app/core/presentation/widget/custom_add_photo.dart';
 import 'package:maze_app/core/presentation/widget/custom_button.dart';
 import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
@@ -275,12 +274,12 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
                             ? int.parse(amountController.text)
                             : null,
                         isShare: false,
-                        imageUrl: file!.path,
+                        imageUrl: (file != null) ? file!.path : null,
                         pickUpDate: pickupDateController.text,
                         width: sizeType == SizeType.dimensions ?  widthController.text.trim() : null,
                         length: sizeType == SizeType.dimensions ?  lengthController.text.trim() : null,
                         height: sizeType == SizeType.dimensions ?  heightController.text.trim(): null,
-                        typeOfCompostBin: '',
+                        typeOfCompostBin: null,
                         is2Compostement: null,
                       ),
                     ),

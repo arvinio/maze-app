@@ -33,7 +33,7 @@ class ShowDialog {
   }
 
   static Future<dynamic> openModalBottomSheet(BuildContext context,
-      {Widget? child}) {
+      {Widget? child,double? height}) {
     return showModalBottomSheet(
       isScrollControlled: true,
       backgroundColor: context
@@ -42,7 +42,7 @@ class ShowDialog {
       context: context,
       builder: (context) {
         return Container(
-          height: 780.h,
+          height: height ?? 780.h,
           padding: const EdgeInsets.symmetric(
             horizontal: Dimen.pagePaddingHorizontal,
           ),

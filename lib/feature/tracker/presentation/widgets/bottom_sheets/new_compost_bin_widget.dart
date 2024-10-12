@@ -1,19 +1,18 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
-import 'package:maze_app/core/config/dimen.dart';
 import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/widget/custom_add_photo.dart';
 import 'package:maze_app/core/presentation/widget/custom_button.dart';
 import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
 import 'package:maze_app/core/presentation/widget/custom_view_photo.dart';
-import 'package:maze_app/core/presentation/widget/menu_dialog_content.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
+import 'package:maze_app/feature/tracker/data/model/bin_list/bin_list_response.dart';
 
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/view/compost_bin_types/presentation/view/compost_bin_types_dialog_content.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/help_header.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
@@ -21,7 +20,6 @@ import 'package:maze_app/feature/tracker/presentation/widgets/tab_content_view.d
 
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/two_compartment_dialog.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/type_of_compost_widget.dart';
 
 class NewCompostBinWidget extends StatefulWidget {
   const NewCompostBinWidget({
@@ -36,13 +34,11 @@ class NewCompostBinWidget extends StatefulWidget {
 
 class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
     with SingleTickerProviderStateMixin {
-  final TextEditingController nickNameController = TextEditingController();
-  final TextEditingController typeOfController =
-      TextEditingController(text: 'Compost Tumbler');
-  final TextEditingController twoCompartmentController =
-      TextEditingController();
-  final TextEditingController amountController = TextEditingController();
 
+  final TextEditingController nickNameController = TextEditingController();
+  final TextEditingController typeOfController =TextEditingController();
+  final TextEditingController twoCompartmentController =TextEditingController();
+  final TextEditingController amountController = TextEditingController();
   final TextEditingController widthController = TextEditingController();
   final TextEditingController heightController = TextEditingController();
   final TextEditingController lengthController = TextEditingController();
@@ -50,11 +46,9 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
   final focusNodeNickName = FocusNode();
   final focusNodePickUpDate = FocusNode();
   final focusNodeAmount = FocusNode();
-
   final widthFocusNode = FocusNode();
   final heightFocusNode = FocusNode();
   final lengthFocusNode = FocusNode();
-
   final focusNodeTypeOf = FocusNode();
   final focusNodeTwoCompartment = FocusNode();
 
@@ -63,6 +57,8 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
   final sizeType = SizeType.litres;
 
   File? file;
+  String? typeOfCompostBinId;
+  TypeOfCompostBin? typeOfCompostBin;
 
   @override
   void initState() {
@@ -114,7 +110,7 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
                 ),
                 CustomTextField.outline(
                   textEditingController: typeOfController,
-                  label: appStrings.councilBin,
+                  label: appStrings.typeOfCompostBin,
                   focusNode: focusNodeTypeOf,
                   readOnly: true,
                   suffixIcon: Padding(
@@ -122,9 +118,7 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
                       child: appAssets.dropDown.svg(width: 10, height: 10)),
                   labelTextColor: context.scheme().secondaryText,
                   onTap: () {
-                    _showCouncilBinDialog(context, (result) {
-                      typeOfController.text = result;
-                    });
+                    _showTypeOfCompostBinDialog(context);
                   },
                 ),
                 SizedBox(
@@ -317,12 +311,12 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
                                 ? int.parse(amountController.text)
                                 : null,
                             isShare: false,
-                            imageUrl: file!.path,
+                            imageUrl: (file != null) ? file!.path : null,
                             pickUpDate: null,
                             width: sizeType == SizeType.dimensions ?  widthController.text.trim() : null,
                             length: sizeType == SizeType.dimensions ?  lengthController.text.trim() : null,
                             height: sizeType == SizeType.dimensions ?  heightController.text.trim(): null,
-                            typeOfCompostBin: typeOfController.text,
+                            typeOfCompostBin: typeOfCompostBin,
                             is2Compostement:
                                 twoCompartmentController.text == appStrings.yes,
                           ),
@@ -340,18 +334,19 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
     );
   }
 
-  Future<void> _showCouncilBinDialog(
-      BuildContext context, Function(String strResult) onSelectResult) async {
-    FocusScope.of(context).unfocus();
-    String? result = await showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        backgroundColor: Colors.transparent,
-        builder: (builder) {
-          return const TypeOfCompostContent();
-        });
-    if (result != null) onSelectResult(result);
+  void _showTypeOfCompostBinDialog(BuildContext context) {
+       Future<dynamic> future = ShowDialog.openModalBottomSheet(context,
+        child:const CompostBinTypesDialogContent().wrappedRoute(context),
+        height: 300.h
+    ) ;
+    future.then((result) {
+      typeOfController.text = result.name;
+      typeOfCompostBinId=result.id;
+      typeOfCompostBin= TypeOfCompostBin(id: result.id,name: result.name);
+
+    });
   }
+
 
   Future<void> _showTwoCompartmentsDialog(
       BuildContext context, Function(String strResult) onSelectResult) async {

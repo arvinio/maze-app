@@ -260,7 +260,7 @@ class _ManageBinsDialogContentState extends State<ManageBinsDialogContent>  with
                       context,
                       child: BinsList(title: appStrings.transferData,
                         bins: bins,
-                        titleStyle: context.titleTitle2,)
+                        titleStyle: context.titleTitle2,).wrappedRoute(context)
                   );
 
                   future.then((index) {

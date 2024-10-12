@@ -35,7 +35,7 @@ class TrackerRepositoryImpl implements TrackerRepository {
 
           List<ChartData> charts = e.chartData!.map(
             (e) {
-              return ChartData(name: e.name, value: e.value);
+              return ChartData(name: e.name.toString(), value: e.value!);
             },
           ).toList();
           bins.add(
@@ -120,15 +120,15 @@ class TrackerRepositoryImpl implements TrackerRepository {
     return resp.when(
       completed: (data, statusCode) {
         final List<EditEntry> entries = [];
-        for (var element in data.result) {
+        for (var element in data.result!) {
           entries.add(EditEntry(
-            element.id,
+            element.id!,
             whatRecycled: element.whatRecycle,
             whatDidAdd: element.whatDidAdd,
             compostUsed: element.compostUsed,
-            entryDate: element.entryDate,
+            entryDate: element.entryDate!,
             binId: binId,
-            type: EntryType.fromString(element.type),
+            type: EntryType.fromString(element.type!),
             mixed: element.isMixed,
             note: element.note ?? "",
             photo: element.photos ?? [],
@@ -176,7 +176,7 @@ class TrackerRepositoryImpl implements TrackerRepository {
           width: e.width.toString(),
           length: e.length.toString(),
           height: e.height.toString(),
-          totalAmount: e.totalAmount,
+          //totalAmount: e.totalAmount,
         );
 
         return ApiResponse.completed(data: bin);
@@ -241,5 +241,11 @@ class TrackerRepositoryImpl implements TrackerRepository {
   @override
   Future<ApiResponse<SuccessResponse>> transferBinData(String sourceBinId, String targetBinId) async{
     return await _remoteDataSource.transferBinData(sourceBinId,targetBinId);
+  }
+
+  @override
+  Future<ApiResponse> getListOfCompostBinTypes() async{
+    return await _remoteDataSource.getListOfCompostBinTypes();
+
   }
 }

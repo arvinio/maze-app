@@ -93,7 +93,7 @@ class _TrackerPageState extends State<TrackerPage>
                         ? () {
                       Future<dynamic> future = openModalBottomSheet(
                           context,
-                          BinsList(title:appStrings.newEntryFor,bins: bloc.bins));
+                          BinsList(title:appStrings.newEntryFor,bins: bloc.bins).wrappedRoute(context));
 
                       future.then((index) {
                         if (context.mounted) {

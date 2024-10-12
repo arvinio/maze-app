@@ -5,10 +5,12 @@ import 'package:maze_app/core/network/model/api_response.dart';
 import 'package:maze_app/di/di_const.dart';
 import 'package:maze_app/feature/knowledge/data/model/resp_empty_model.dart';
 import 'package:maze_app/feature/tracker/data/datasource/tracker_remote_data_source.dart';
+import 'package:maze_app/feature/tracker/data/model/bin_entry_list/bin_entry_list_response.dart';
+import 'package:maze_app/feature/tracker/data/model/bin_list/bin_list_response.dart';
+import 'package:maze_app/feature/tracker/data/model/bin_response/bin_response.dart';
+import 'package:maze_app/feature/tracker/data/model/compost_bin_types/compost_bin_types_response.dart';
 import 'package:maze_app/feature/tracker/data/model/deleted_bins/deleted_bins_response.dart';
 import 'package:maze_app/feature/tracker/data/model/get_bin_chart_data_resp.dart';
-import 'package:maze_app/feature/tracker/data/model/get_bin_entry_list_resp.dart';
-import 'package:maze_app/feature/tracker/data/model/get_bins_list_resp.dart';
 import 'package:maze_app/feature/tracker/data/model/success_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
@@ -30,7 +32,7 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
       'amountOfLitres': bin.amountOfLiters ?? 0,
       'isShare': bin.isShare,
       'pickupDate': 'every seconds, monthly',
-      'typeOfCompostBin': bin.typeOfCompostBin ?? 'compost thumbler',
+      'typeOfCompostBinId':bin.typeOfCompostBin!=null? bin.typeOfCompostBin!.id:null,
       'is2Compostement': bin.is2Compostement ?? 'false',
       'width': bin.width ?? '23',
       'height': bin.height ?? '3',
@@ -44,8 +46,8 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse<GetBinsListResp>> getBinsList() async {
-    return await dioCaller.get('api/bin', fromJson: GetBinsListResp.fromJson);
+  Future<ApiResponse<BinListResponse>> getBinsList() async {
+    return await dioCaller.get('api/bin', fromJson: BinListResponse.fromJson);
   }
 
   @override
@@ -171,15 +173,15 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse<GetBinEntryListResponse>> getBinEntryList(
+  Future<ApiResponse<BinEntryListResponse>> getBinEntryList(
       String binId) async {
     return await dioCaller.get('api/bin/entry?binId=$binId&sort=desc&page=1',
-        fromJson: GetBinEntryListResponse.fromJson);
+        fromJson: BinEntryListResponse.fromJson);
   }
 
   @override
-  Future<ApiResponse<GetBinResp>> getBinDetails(String binId) async {
-    return await dioCaller.get('api/bin/$binId', fromJson: GetBinResp.fromJson);
+  Future<ApiResponse<BinResponse>> getBinDetails(String binId) async {
+    return await dioCaller.get('api/bin/$binId', fromJson: BinResponse.fromJson);
   }
 
   @override
@@ -199,5 +201,8 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
     );
   }
 
-
+  @override
+  Future<ApiResponse> getListOfCompostBinTypes() async{
+    return await dioCaller.get('api/typeofcompostbin', fromJson: CompostBinTypesResponse.fromJson);
+  }
 }

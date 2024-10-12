@@ -292,7 +292,7 @@ class _CouncilLandfillBinWidgetState extends State<CouncilLandfillBinWidget>
                         width: sizeType == SizeType.dimensions ?  widthController.text.trim() : null,
                         length: sizeType == SizeType.dimensions ?  lengthController.text.trim() : null,
                         height: sizeType == SizeType.dimensions ?  heightController.text.trim(): null,
-                        typeOfCompostBin: '',
+                        typeOfCompostBin: null,
                         is2Compostement: null,
                       ),
                     ),

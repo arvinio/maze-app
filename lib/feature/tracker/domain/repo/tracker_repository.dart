@@ -24,6 +24,7 @@ abstract interface class TrackerRepository {
     required EntrySortOption sortOption,
   });
   Future<ApiResponse<SuccessResponse>> transferBinData(String sourceBinId,String targetBinId);
+  Future<ApiResponse> getListOfCompostBinTypes();
 
 
 }

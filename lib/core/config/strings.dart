@@ -294,6 +294,7 @@ class StringsBase {
   String get permanentDeleteDialog2=>'This is permanent and can’t be undone';
   String get noImage=>'No image';
   String get restoredMsg=>'It was restored';
+  String get typeOfCompostBin=>'Type of compost bin';
 
 
 

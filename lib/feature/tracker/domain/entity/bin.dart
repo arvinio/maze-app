@@ -1,3 +1,4 @@
+import 'package:maze_app/feature/tracker/data/model/bin_list/bin_list_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/chart_data.dart';
 
 class Bin {
@@ -12,7 +13,7 @@ class Bin {
   // if type == (landfill || recycling)
   final String? pickUpDate;
   // if type == compost
-  final String? typeOfCompostBin;
+  final TypeOfCompostBin? typeOfCompostBin;
   final bool? is2Compostement;
   // if sizetype = dimensions
   final String? width;
