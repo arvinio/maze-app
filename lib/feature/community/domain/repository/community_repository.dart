@@ -10,6 +10,7 @@ import 'package:maze_app/feature/community/data/model/search/search_response.dar
 
 abstract class CommunityRepository {
   Future<ApiResponse<CreateCommunityResponse>> createCommunity({required Community request});
+  Future<ApiResponse<CreateCommunityResponse>> editCommunity({required Community request});
   Future<ApiResponse<CreatePostResponse>> createPost({required PostDataRequest request});
   Future<ApiResponse>  communityDetails({required String id});
   Future<ApiResponse>  myCommunities();
@@ -21,6 +22,7 @@ abstract class CommunityRepository {
   Future<ApiResponse>  communityPostList({required CommunityPostDataRequest request});
   Future<ApiResponse>  likePost({required String postId});
   Future<ApiResponse>  unLikePost({required String postId});
+  Future<ApiResponse>  getImageFile({required String imageUrl});
   Future<ApiResponse<Map<String, List<SearchResponse>>>> search(
       {required String query});
 
