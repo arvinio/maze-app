@@ -112,7 +112,7 @@ class _ViewCommunityDetailWidgetState extends State<ViewCommunityDetailWidget> {
         SizedBox(
           height: 12.h,
         ),
-        widget.communityDetails.isOwner == false
+        (widget.communityDetails.isOwner != true)
             ? CustomButton.outline(
                 borderRadius: 16,
                 minSize: 40.h,
