@@ -140,6 +140,8 @@ import 'package:maze_app/feature/community/presentation/view/view_community/pres
     as _i148;
 import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/community_post/bloc/community_post_bloc.dart'
     as _i833;
+import 'package:maze_app/feature/community/presentation/view/view_post/presentation/bloc/view_post_bloc.dart'
+    as _i611;
 import 'package:maze_app/feature/intro/data/datasource/intro_local_datasource.dart'
     as _i191;
 import 'package:maze_app/feature/intro/data/repo/intro_repo_impl.dart' as _i202;
@@ -413,20 +415,22 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i88.SignupRemoteDataSource>(() =>
         _i893.SignupRemoteDataSourceImpl(
             dioCaller: gh<_i874.DioCaller>(instanceName: 'maze')));
+    gh.factory<_i314.SearchCommunityBloc>(
+        () => _i314.SearchCommunityBloc(gh<_i343.CommunityRepository>()));
     gh.factory<_i245.CreateCommunityBloc>(
         () => _i245.CreateCommunityBloc(gh<_i343.CommunityRepository>()));
     gh.factory<_i16.CreatePostBloc>(
         () => _i16.CreatePostBloc(gh<_i343.CommunityRepository>()));
-    gh.factory<_i1011.ViewCommunityBloc>(
-        () => _i1011.ViewCommunityBloc(gh<_i343.CommunityRepository>()));
-    gh.factory<_i186.CommunityBloc>(
-        () => _i186.CommunityBloc(gh<_i343.CommunityRepository>()));
-    gh.factory<_i314.SearchCommunityBloc>(
-        () => _i314.SearchCommunityBloc(gh<_i343.CommunityRepository>()));
     gh.factory<_i833.CommunityPostBloc>(
         () => _i833.CommunityPostBloc(gh<_i343.CommunityRepository>()));
     gh.factory<_i148.CommunityLeaderboardBloc>(
         () => _i148.CommunityLeaderboardBloc(gh<_i343.CommunityRepository>()));
+    gh.factory<_i1011.ViewCommunityBloc>(
+        () => _i1011.ViewCommunityBloc(gh<_i343.CommunityRepository>()));
+    gh.factory<_i611.ViewPostBloc>(
+        () => _i611.ViewPostBloc(gh<_i343.CommunityRepository>()));
+    gh.factory<_i186.CommunityBloc>(
+        () => _i186.CommunityBloc(gh<_i343.CommunityRepository>()));
     gh.factory<_i278.TokenRepository>(
         () => _i179.TokenRepositoryImpl(gh<_i494.TokenRemoteDataSource>()));
     gh.factory<_i263.LoginBloc>(

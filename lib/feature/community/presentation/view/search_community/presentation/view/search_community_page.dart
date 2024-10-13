@@ -64,8 +64,8 @@ class _SearchCommunityPageState extends State<SearchCommunityPage> {
 
   void _debouncedSearch() {
     if (_previousText != _searchController.text) {
-      _searchCommunityBloc.add(
-          SearchCommunityWithQueryEvent(query: _searchController.text.trim()));
+      _searchCommunityBloc.add(SearchCommunityEvent.queryEvent(
+          query: _searchController.text.trim()));
     }
   }
 
@@ -117,6 +117,8 @@ class _SearchCommunityPageState extends State<SearchCommunityPage> {
                       textEditingController: _searchController,
                       autoFocus: true,
                       onSubmitted: (text) {
+                        _debounce?.cancel();
+                        _debounce = null;
                         _debouncedSearch();
                       },
                       borderRadius: 18.0,

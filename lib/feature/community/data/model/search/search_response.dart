@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../tracker/presentation/widgets/tracker_widgets.dart';
 import 'search_community_response.dart';
 import 'search_user_response.dart';
 
@@ -35,7 +34,6 @@ class SearchResponse with _$SearchResponse {
           .map<SearchResponse>((result) => SearchResponse.fromJson(result))
           .toList();
     }
-    debugPrint("deserialized parsed" + parsed.toString());
     return parsed;
   }
 }

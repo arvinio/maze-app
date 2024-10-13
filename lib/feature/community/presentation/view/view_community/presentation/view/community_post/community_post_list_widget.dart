@@ -87,7 +87,9 @@ class _CommunityPostListWidgetState extends State<CommunityPostListWidget>
         itemCount: postList!.length,
         padding: EdgeInsets.zero,
         itemBuilder: (context, index) {
-          return CommunityPostWidget(post: postList![index]);
+          return CommunityPostWidget(
+            post: postList![index],
+          );
         },
         separatorBuilder: (context, index) => Divider(
           thickness: 1,

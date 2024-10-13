@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/feature/community/domain/repository/community_repository.dart';
@@ -16,37 +15,38 @@ class SearchCommunityBloc
   final CommunityRepository repository;
 
   SearchCommunityBloc(this.repository) : super(const SearchCommunityState()) {
-    on<SearchCommunityEvent>((event, emit) async {
-      if (event is SearchCommunityWithQueryEvent) {
+    on<_QueryEvent>(_onQuery);
+  }
+
+  Future<void> _onQuery(
+      _QueryEvent event, Emitter<SearchCommunityState> emit) async {
+    emit(state.copyWith(
+      searchStatus: SearchCommunityStatus.loading,
+    ));
+    final apiResponse = await repository.search(query: event.query);
+    apiResponse.when(
+      completed: (data, int? statusCode) {
+        var isEmpty = true;
+        for (var key in data.keys) {
+          if (data[key]!.isNotEmpty) {
+            isEmpty = false;
+            break;
+          }
+        }
+
+        data.removeWhere((key, list) => list.isEmpty);
+
         emit(state.copyWith(
-          searchStatus: SearchCommunityStatus.loading,
+          searchResults: data,
+          searchStatus: SearchCommunityStatus.success,
+          isEmpty: isEmpty,
         ));
-        final apiResponse = await repository.search(query: event.query);
-        apiResponse.when(
-          completed: (data, int? statusCode) {
-            var isEmpty = true;
-            for (var key in data.keys) {
-              if (data[key]!.isNotEmpty) {
-                isEmpty = false;
-                break;
-              }
-            }
-
-            data.removeWhere((key, list) => list.isEmpty);
-
-            emit(state.copyWith(
-              searchResults: data,
-              searchStatus: SearchCommunityStatus.success,
-              isEmpty: isEmpty,
-            ));
-          },
-          error: (apiError) {
-            emit(state.copyWith(
-                searchStatus: SearchCommunityStatus.failure,
-                errorMessage: apiError.message));
-          },
-        );
-      }
-    });
+      },
+      error: (apiError) {
+        emit(state.copyWith(
+            searchStatus: SearchCommunityStatus.failure,
+            errorMessage: apiError.message));
+      },
+    );
   }
 }

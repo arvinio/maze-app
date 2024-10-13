@@ -250,7 +250,7 @@ class StringsBase {
   String get editCommunityProfile => 'Edit Community Profile';
   String get communityDeleted => 'Successfully Deleted';
   String get noResultsFound => 'No results found';
-
+  String get noCommentsYet => 'No comments yet';
 }
 
 StringsBase appStrings = inject<StringsBase>();

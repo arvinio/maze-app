@@ -246,8 +246,8 @@ class CustomTextField extends StatefulWidget {
   final ValueChanged<String>? onChanged;
   final VoidCallback? onTap;
   final VoidCallback? onEditingComplete;
-  final EdgeInsets? padding;
-  final EdgeInsets? mainPadding;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? mainPadding;
   final double? borderRadius;
   final bool readOnly;
   final TextAlignVertical? textAlignVertical;
