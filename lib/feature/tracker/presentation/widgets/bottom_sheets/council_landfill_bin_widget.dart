@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
-import 'package:maze_app/core/config/dimen.dart';
 import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/widget/bottom_sheet_header.dart';
 import 'package:maze_app/core/presentation/widget/custom_add_photo.dart';
@@ -14,7 +13,6 @@ import 'package:maze_app/core/presentation/widget/custom_view_photo.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/pickup_date_dialog_content.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/help_header.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
@@ -59,8 +57,6 @@ class _CouncilLandfillBinWidgetState extends State<CouncilLandfillBinWidget>
   final sizeType = SizeType.litres;
 
   File? file;
-  Uint8List? _image;
-
 
   @override
   void initState() {
