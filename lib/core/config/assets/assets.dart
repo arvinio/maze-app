@@ -125,6 +125,8 @@ class AssetsBase {
       const AssetSvg('assets/icons/tracker/transfer.svg');
   AssetSvg get restore =>
       const AssetSvg('assets/icons/tracker/restore.svg');
+  AssetSvg get check =>
+      const AssetSvg('assets/icons/tracker/check.svg');
 
 
 

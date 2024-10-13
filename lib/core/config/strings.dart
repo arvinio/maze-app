@@ -296,6 +296,19 @@ class StringsBase {
   String get restoredMsg=>'It was restored';
   String get typeOfCompostBin=>'Type of compost bin';
 
+  //Pickupdate
+  String get monday=>'Monday';
+  String get tuesday=>'Tuesday';
+  String get wednesday=>'Wednesday';
+  String get thursday=>'Thursday';
+  String get friday=>'Friday';
+  String get saturday=>'Saturday';
+  String get sunday=>'Sunday';
+  String get everyWeek=>'Every Week';
+  String get everySecond=>'Every Second';
+
+
+
 
 
 

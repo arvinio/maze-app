@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/dimen.dart';
 import 'package:maze_app/core/config/strings.dart';
+import 'package:maze_app/core/presentation/widget/bottom_sheet_header.dart';
 import 'package:maze_app/core/presentation/widget/custom_add_photo.dart';
 import 'package:maze_app/core/presentation/widget/custom_button.dart';
 import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
@@ -12,11 +14,14 @@ import 'package:maze_app/core/presentation/widget/custom_view_photo.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/pickup_date_dialog_content.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/help_header.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tab_content_view.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
+
+import 'custom_cupertino_picker.dart';
 
 class CouncilLandfillBinWidget extends StatefulWidget {
   const CouncilLandfillBinWidget({
@@ -55,6 +60,7 @@ class _CouncilLandfillBinWidgetState extends State<CouncilLandfillBinWidget>
 
   File? file;
   Uint8List? _image;
+
 
   @override
   void initState() {
@@ -120,6 +126,12 @@ class _CouncilLandfillBinWidgetState extends State<CouncilLandfillBinWidget>
               labelTextColor: context
                   .scheme()
                   .secondaryText,
+              readOnly: true,
+              suffixIcon: Padding(padding: const EdgeInsets.all(7),
+                  child: appAssets.dropDown.svg(width: 10, height: 10)),
+              onTap: () {
+                _showPickupDateDialog(context);
+              },
             ),
             SizedBox(
               height: 20.h,
@@ -262,10 +274,10 @@ class _CouncilLandfillBinWidgetState extends State<CouncilLandfillBinWidget>
                 if (file != null) ...[
                   CustomViewPhoto(child: Image.file(file!),
                       onPressed: () {
-                    setState(() {
-                      file = null;
-                    });
-                  })
+                        setState(() {
+                          file = null;
+                        });
+                      })
                 ]
               ],
             ),
@@ -289,9 +301,14 @@ class _CouncilLandfillBinWidgetState extends State<CouncilLandfillBinWidget>
                         isShare: false,
                         imageUrl: (file != null) ? file!.path : null,
                         pickUpDate: pickupDateController.text,
-                        width: sizeType == SizeType.dimensions ?  widthController.text.trim() : null,
-                        length: sizeType == SizeType.dimensions ?  lengthController.text.trim() : null,
-                        height: sizeType == SizeType.dimensions ?  heightController.text.trim(): null,
+                        width: sizeType == SizeType.dimensions ? widthController
+                            .text.trim() : null,
+                        length: sizeType == SizeType.dimensions
+                            ? lengthController.text.trim()
+                            : null,
+                        height: sizeType == SizeType.dimensions
+                            ? heightController.text.trim()
+                            : null,
                         typeOfCompostBin: null,
                         is2Compostement: null,
                       ),
@@ -302,5 +319,84 @@ class _CouncilLandfillBinWidgetState extends State<CouncilLandfillBinWidget>
         ),
       ),
     );
+  }
+
+
+  void _showPickupDateDialog(BuildContext context) {
+    List<String> periods = [appStrings.everyWeek, appStrings.everySecond];
+    List weekDays = [
+      appStrings.monday,
+      appStrings.tuesday,
+      appStrings.wednesday,
+      appStrings.thursday,
+      appStrings.friday,
+      appStrings.saturday,
+      appStrings.sunday
+    ];
+    int weekSelected = 3;
+    int periodsSelected = 0;
+    ValueNotifier<bool> obscureState = ValueNotifier(false);
+
+    ShowDialog.openModalBottomSheet(context,
+      height: 400.h,
+      child: ValueListenableBuilder(
+          valueListenable: obscureState,
+          builder: (BuildContext context, bool obscureValue,
+              Widget? child) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BottomSheetHeader(
+                  title: appStrings.councilPickupDates,
+                  closeIcon: appAssets.close.svg(),
+                  showDivider: false,
+                ),
+                SizedBox(
+                  height: 300,
+                  child: Row(
+                    children: [
+                      Flexible(
+                          child:
+                          CustomCupertinoPicker(
+                            onSelectedItemChanged: (int selectedItem) {
+                              setState(() {
+                                weekSelected = selectedItem;
+                                obscureState.value = !obscureState.value;
+                              });
+                            },
+                            initialItem: 3, children: List<Widget>.generate(
+                              weekDays.length, (int index) {
+                            return Center(
+                              child: CustomText(
+                                  weekDays[index], style: context.bodyBody),
+                            );
+                          }),
+                          )),
+
+                      Flexible(
+                          child:
+                          CustomCupertinoPicker(children: List<Widget>.generate(
+                              periods.length, (int index) {
+                            return Center(child: CustomText(
+                              periods[index], style: context.bodyBody,));
+                          }),
+                            onSelectedItemChanged: (int selectedItem) {
+                              setState(() {
+                                periodsSelected = selectedItem;
+                                obscureState.value = !obscureState.value;
+                              });
+                            },
+                          )),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          }
+      ),
+    ).then((value) {
+      pickupDateController.text =
+      '${periods[periodsSelected]}, ${weekDays[weekSelected]}';
+    });
   }
 }
