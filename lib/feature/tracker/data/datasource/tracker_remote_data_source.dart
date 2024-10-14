@@ -2,6 +2,7 @@ import 'package:maze_app/core/network/model/api_response.dart';
 import 'package:maze_app/feature/tracker/data/model/bin_entry_list/bin_entry_list_response.dart';
 import 'package:maze_app/feature/tracker/data/model/bin_list/bin_list_response.dart';
 import 'package:maze_app/feature/tracker/data/model/bin_response/bin_response.dart';
+import 'package:maze_app/feature/tracker/data/model/enum/create_bin_types.dart';
 import 'package:maze_app/feature/tracker/data/model/get_bin_chart_data_resp.dart';
 import 'package:maze_app/feature/tracker/data/model/success_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
@@ -9,7 +10,7 @@ import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
 
 abstract interface class TrackerRemoteDataSource {
   Future<ApiResponse<BinListResponse>> getBinsList();
-  Future<ApiResponse> createBin(Bin bin);
+  Future<ApiResponse> createBin(Bin bin,CreateBinTypes binType);
   Future<ApiResponse> editBin(Bin bin);
   Future<ApiResponse> deleteBin(String binId);
   Future<ApiResponse> deleteBinPermanently(String binId);

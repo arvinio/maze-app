@@ -1,4 +1,5 @@
 import 'package:maze_app/core/network/model/api_response.dart';
+import 'package:maze_app/feature/tracker/data/model/enum/create_bin_types.dart';
 import 'package:maze_app/feature/tracker/data/model/success_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
@@ -7,7 +8,7 @@ import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 
 abstract interface class TrackerRepository {
   Future<ApiResponse<List<Bin>>> getBinsList();
-  Future<ApiResponse> createBin({required Bin bin});
+  Future<ApiResponse> createBin({required Bin bin,required CreateBinTypes binType});
   Future<ApiResponse> editBin({required Bin bin});
   Future<ApiResponse> deleteBin({required String binId});
   Future<ApiResponse> deleteBinPermanently({required String binId});

@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/network/model/api_error.dart';
 import 'package:maze_app/core/network/model/api_response.dart';
 import 'package:maze_app/feature/tracker/data/model/deleted_bins/deleted_bins_response.dart';
+import 'package:maze_app/feature/tracker/data/model/enum/create_bin_types.dart';
 import 'package:maze_app/feature/tracker/data/model/success_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
@@ -61,7 +62,7 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
 
   _onAddBin(_AddBin event, Emitter<TrackerState> emit) async {
     emit(const TrackerState.loadInProgress());
-    final response = await repository.createBin(bin: event.bin);
+    final response = await repository.createBin(bin: event.bin,binType: event.binType);
     response.when(completed: (data, int? statusCode) {
       SuccessResponse response = data;
       emit(const TrackerState.binsCreated());

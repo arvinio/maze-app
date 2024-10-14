@@ -10,6 +10,7 @@ import 'package:maze_app/feature/tracker/data/model/bin_list/bin_list_response.d
 import 'package:maze_app/feature/tracker/data/model/bin_response/bin_response.dart';
 import 'package:maze_app/feature/tracker/data/model/compost_bin_types/compost_bin_types_response.dart';
 import 'package:maze_app/feature/tracker/data/model/deleted_bins/deleted_bins_response.dart';
+import 'package:maze_app/feature/tracker/data/model/enum/create_bin_types.dart';
 import 'package:maze_app/feature/tracker/data/model/get_bin_chart_data_resp.dart';
 import 'package:maze_app/feature/tracker/data/model/success_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
@@ -24,25 +25,34 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   });
 
   @override
-  Future<ApiResponse<SuccessResponse>> createBin(Bin bin) async {
-    final data = FormData.fromMap({
-      'type': bin.type.name,
-      'nickname': bin.nickName,
-      'sizeType': bin.sizeType.name,
-      'amountOfLitres': bin.amountOfLiters ?? 0,
-      'isShare': bin.isShare,
-      'pickupDate': bin.pickUpDate,
-      'typeOfCompostBinId':bin.typeOfCompostBin?.id,
-      'is2Compostement': bin.is2Compostement ?? 'false',
-      'width': bin.width ?? '23',
-      'height': bin.height ?? '3',
-      'length': bin.length ?? '33'
+  Future<ApiResponse<SuccessResponse>> createBin(Bin bin,CreateBinTypes binType) async {
+    FormData formData = FormData.fromMap({
+    'type': bin.type.name,
+    'nickname': bin.nickName,
+    'sizeType': bin.sizeType.name,
+    'amountOfLitres': bin.amountOfLiters ?? 0,
+    'width': bin.width ,
+    'height': bin.height ,
+    'length': bin.length ,
+    'isShare': bin.isShare,
     });
 
     if (bin.imageUrl != null) {
-      data.files.add(MapEntry("photo",await MultipartFile.fromFile(bin.imageUrl!, filename: bin.imageUrl)));
+      formData.files.add(MapEntry("photo",await MultipartFile.fromFile(bin.imageUrl!, filename: bin.imageUrl)));
     }
-    return await dioCaller.post<SuccessResponse>('api/bin', fromJson: SuccessResponse.fromJson, data: data);
+
+    if (binType==CreateBinTypes.councilLandfillBin ) {
+      formData.fields.add(MapEntry("pickupDate",bin.pickUpDate!));
+
+    }
+
+    if (binType==CreateBinTypes.compostBin) {
+      formData.fields.add(MapEntry("typeOfCompostBinId",bin.typeOfCompostBin!.id!));
+      formData.fields.add(MapEntry("is2Compostement",bin.is2Compostement.toString()));
+    }
+
+
+    return await dioCaller.post<SuccessResponse>('api/bin', fromJson: SuccessResponse.fromJson, data: formData);
   }
 
   @override

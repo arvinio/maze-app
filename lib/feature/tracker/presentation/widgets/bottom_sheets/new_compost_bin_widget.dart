@@ -9,6 +9,7 @@ import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
 import 'package:maze_app/core/presentation/widget/custom_view_photo.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/tracker/data/model/bin_list/bin_list_response.dart';
+import 'package:maze_app/feature/tracker/data/model/enum/create_bin_types.dart';
 
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
@@ -54,7 +55,7 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
 
   late final TabController tabController;
 
-  final sizeType = SizeType.litres;
+  SizeType sizeType = SizeType.litres;
 
   File? file;
   String? typeOfCompostBinId;
@@ -67,10 +68,10 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
       () {
         setState(() {
           if (tabController.index == 0) {
-            sizeType == SizeType.litres;
+            sizeType = SizeType.litres;
             return;
           }
-          sizeType == SizeType.dimensions;
+          sizeType = SizeType.dimensions;
         });
       },
     );
@@ -308,18 +309,26 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
                             nickName: nickNameController.text,
                             sizeType: sizeType,
                             amountOfLiters: sizeType == SizeType.litres
-                                ? int.parse(amountController.text)
+                                ? amountController.text.isNotEmpty ? int.parse(
+                                amountController.text) : null
                                 : null,
                             isShare: false,
                             imageUrl: (file != null) ? file!.path : null,
+                            width: sizeType == SizeType.dimensions ? widthController
+                                .text.trim() : null,
+                            length: sizeType == SizeType.dimensions
+                                ? lengthController.text.trim()
+                                : null,
+                            height: sizeType == SizeType.dimensions
+                                ? heightController.text.trim()
+                                : null,
                             pickUpDate: null,
-                            width: sizeType == SizeType.dimensions ?  widthController.text.trim() : null,
-                            length: sizeType == SizeType.dimensions ?  lengthController.text.trim() : null,
-                            height: sizeType == SizeType.dimensions ?  heightController.text.trim(): null,
                             typeOfCompostBin: typeOfCompostBin,
                             is2Compostement:
                                 twoCompartmentController.text == appStrings.yes,
                           ),
+                            binType: CreateBinTypes.compostBin
+
                         ),
                       );
                     }),

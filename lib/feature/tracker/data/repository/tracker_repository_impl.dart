@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/network/model/api_response.dart';
 import 'package:maze_app/feature/tracker/data/datasource/tracker_remote_data_source.dart';
+import 'package:maze_app/feature/tracker/data/model/enum/create_bin_types.dart';
 import 'package:maze_app/feature/tracker/data/model/success_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
@@ -66,8 +67,8 @@ class TrackerRepositoryImpl implements TrackerRepository {
   }
 
   @override
-  Future<ApiResponse> createBin({required Bin bin}) async {
-    return await _remoteDataSource.createBin(bin);
+  Future<ApiResponse> createBin({required Bin bin,required CreateBinTypes binType}) async {
+    return await _remoteDataSource.createBin(bin,binType);
   }
 
   @override

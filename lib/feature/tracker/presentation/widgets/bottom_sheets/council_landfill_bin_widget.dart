@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,6 +10,7 @@ import 'package:maze_app/core/presentation/widget/custom_button.dart';
 import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
 import 'package:maze_app/core/presentation/widget/custom_view_photo.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
+import 'package:maze_app/feature/tracker/data/model/enum/create_bin_types.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/help_header.dart';
@@ -54,7 +54,7 @@ class _CouncilLandfillBinWidgetState extends State<CouncilLandfillBinWidget>
 
   late final TabController tabController;
 
-  final sizeType = SizeType.litres;
+  SizeType sizeType = SizeType.litres;
 
   File? file;
 
@@ -65,10 +65,10 @@ class _CouncilLandfillBinWidgetState extends State<CouncilLandfillBinWidget>
           () {
         setState(() {
           if (tabController.index == 0) {
-            sizeType == SizeType.litres;
+            sizeType = SizeType.litres;
             return;
           }
-          sizeType == SizeType.dimensions;
+          sizeType = SizeType.dimensions;
         });
       },
     );
@@ -292,11 +292,10 @@ class _CouncilLandfillBinWidgetState extends State<CouncilLandfillBinWidget>
                         sizeType: sizeType,
                         amountOfLiters: sizeType == SizeType.litres
                             ? amountController.text.isNotEmpty ? int.parse(
-                            amountController.text) : 0
+                            amountController.text) : null
                             : null,
                         isShare: false,
                         imageUrl: (file != null) ? file!.path : null,
-                        pickUpDate: pickupDateController.text,
                         width: sizeType == SizeType.dimensions ? widthController
                             .text.trim() : null,
                         length: sizeType == SizeType.dimensions
@@ -305,9 +304,12 @@ class _CouncilLandfillBinWidgetState extends State<CouncilLandfillBinWidget>
                         height: sizeType == SizeType.dimensions
                             ? heightController.text.trim()
                             : null,
+                        pickUpDate: pickupDateController.text,
                         typeOfCompostBin: null,
                         is2Compostement: null,
                       ),
+                        binType: CreateBinTypes.councilLandfillBin
+
                     ),
                   );
                 })
