@@ -1,5 +1,8 @@
 import 'dart:io';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/strings.dart';
@@ -8,12 +11,14 @@ import 'package:maze_app/core/presentation/widget/custom_button.dart';
 import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
 import 'package:maze_app/core/presentation/widget/custom_view_photo.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
+import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/tracker/data/model/bin_list/bin_list_response.dart';
 import 'package:maze_app/feature/tracker/data/model/enum/create_bin_types.dart';
 
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/compost_bin_types/presentation/view/compost_bin_types_dialog_content.dart';
+import 'package:maze_app/feature/tracker/presentation/view/create_bin_types/bloc/create_bins_type_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/help_header.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
@@ -22,7 +27,7 @@ import 'package:maze_app/feature/tracker/presentation/widgets/tab_content_view.d
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/two_compartment_dialog.dart';
 
-class NewCompostBinWidget extends StatefulWidget {
+class NewCompostBinWidget extends StatefulWidget  implements AutoRouteWrapper{
   const NewCompostBinWidget({
     super.key,
     required this.bloc,
@@ -31,6 +36,11 @@ class NewCompostBinWidget extends StatefulWidget {
 
   @override
   State<NewCompostBinWidget> createState() => _NewCompostBinWidgetState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(create: (_) => inject<CreateBinsTypeBloc>(), child: this);
+  }
 }
 
 class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
@@ -80,7 +90,23 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return  BlocConsumer<CreateBinsTypeBloc, CreateBinsTypeState>(
+      listener: (context, state) async {
+        if (state.status.isSuccess) {
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        } else if (state.status.isFailure) {
+          Fluttertoast.showToast(
+              msg: state.errorMessage!,
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+        }
+      },
+      builder: (context, state) {
+        return Padding(
     padding: const EdgeInsets.only(top: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,6 +207,7 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
                       textEditingController: amountController,
                       label: appStrings.amountLitres,
                       focusNode: focusNodeAmount,
+                      keyboardType: TextInputType.number,
                       labelTextColor: context
                           .scheme()
                           .secondaryText,
@@ -194,6 +221,7 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
                             textEditingController: widthController,
                             label: appStrings.width,
                             focusNode: widthFocusNode,
+                            keyboardType: TextInputType.number,
                             labelTextColor: context
                                 .scheme()
                                 .secondaryText,
@@ -202,6 +230,7 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
                             textEditingController: heightController,
                             label: appStrings.height,
                             focusNode: heightFocusNode,
+                            keyboardType: TextInputType.number,
                             labelTextColor: context
                                 .scheme()
                                 .secondaryText,
@@ -210,6 +239,7 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
                             textEditingController: lengthController,
                             label: appStrings.length,
                             focusNode: lengthFocusNode,
+                            keyboardType: TextInputType.number,
                             labelTextColor: context
                                 .scheme()
                                 .secondaryText,
@@ -300,9 +330,10 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
                 ),
                 CustomButton.submit(
                     text: appStrings.addBinTitle,
+                    showLoading: state.status.isLoading,
                     onPressed: () {
-                      widget.bloc.add(
-                        TrackerEvent.addBin(
+                      context.read<CreateBinsTypeBloc>().add(
+                        CreateBinsTypeEvent.createBin(
                           bin: Bin(
                             type: BinType.compost,
                             id: null,
@@ -341,6 +372,8 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
         ],
       ),
     );
+  },
+);
   }
 
   void _showTypeOfCompostBinDialog(BuildContext context) {

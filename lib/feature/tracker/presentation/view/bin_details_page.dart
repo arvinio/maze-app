@@ -71,7 +71,7 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
           },
           sortingEntries: () {
             // You can add any UI updates here while sorting is in progress
-          }, binsCreated: () {  }, deleteSuccess: () {  }, deleteFailure: () {  }, restoreSuccess: () {  }, restoreFailure: () {  }, deletedBinsLoaded: (List<DeletedBin> bins) {  },
+          },
         );
       },
       child: BasePageWidget(

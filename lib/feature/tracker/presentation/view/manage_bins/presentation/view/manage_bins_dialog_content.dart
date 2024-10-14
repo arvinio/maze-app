@@ -90,12 +90,6 @@ class _ManageBinsDialogContentState extends State<ManageBinsDialogContent>  with
                 },
                 navigateToAddNewEntryPage: (bin) {},
                 sortingEntries: () {},
-                binsCreated: () {},
-                deleteSuccess: () {},
-                deleteFailure: () {},
-                restoreSuccess: () {},
-                restoreFailure: () {},
-                deletedBinsLoaded: (List<DeletedBin> bins) {},
               );
             },
             builder: (context, state) {

@@ -48,12 +48,16 @@ class _TrackerPageState extends State<TrackerPage>
 
   @override
   void initState() {
-    context.read<TrackerBloc>().add(const TrackerEvent.getBinsList());
+    getBinsList();
 
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
 
     bloc = context.read<TrackerBloc>();
+  }
+
+  void getBinsList() {
+     context.read<TrackerBloc>().add(const TrackerEvent.getBinsList());
   }
 
   @override
@@ -172,14 +176,6 @@ class _TrackerPageState extends State<TrackerPage>
                 );
               },
               sortingEntries: () {},
-              binsCreated: () {
-                context.pushRoute(
-                    const TrackerPageRoute());
-              },
-              deleteSuccess: () {  },
-              deleteFailure: () {  },
-              restoreSuccess: () {  },
-              restoreFailure: () {  }, deletedBinsLoaded: (List<DeletedBin> bins) {  },
             );
           },
           builder: (context, state) {
@@ -289,7 +285,7 @@ class _TrackerPageState extends State<TrackerPage>
                                                                       context,
                                                                       CouncilLandfillBinWidget(
                                                                           bloc:
-                                                                          bloc),
+                                                                          bloc).wrappedRoute(context),
                                                                     );
                                                                   },
                                                                   dontHaveBin:
@@ -298,7 +294,7 @@ class _TrackerPageState extends State<TrackerPage>
                                                                         context,
                                                                         LandfillBinWidget(
                                                                             bloc:
-                                                                            bloc));
+                                                                            bloc).wrappedRoute(context));
                                                                   },
                                                                 ),
                                                               );
@@ -315,7 +311,7 @@ class _TrackerPageState extends State<TrackerPage>
                                                                     context,
                                                                     NewCompostBinWidget(
                                                                         bloc:
-                                                                        bloc));
+                                                                        bloc).wrappedRoute(context));
                                                               },
                                                               doNotHaveBinFunc:
                                                                   () {
@@ -420,27 +416,6 @@ class _TrackerPageState extends State<TrackerPage>
               sortingEntries: () {
                 return const PageLoading(); // Or any other appropriate widget to show while sorting
               },
-              binsCreated: () {
-                return BasePageWidget(
-                  child: Center(
-                    child: CustomText('success'),
-                  ),
-                );
-              }, deleteSuccess: () {
-              return const SizedBox.shrink();
-
-            }, deleteFailure: () {
-              return const SizedBox.shrink();
-
-            }, restoreSuccess: () {
-              return const SizedBox.shrink();
-
-            }, restoreFailure: () {
-              return const SizedBox.shrink();
-
-            }, deletedBinsLoaded: (List<DeletedBin> bins) {
-              return const SizedBox.shrink();
-            },
             );
           },
         ),

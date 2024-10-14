@@ -35,7 +35,6 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
     on<_FetchBinDetails>(_onFetchBinDetails);
     on<_initEvent>(_onInit);
     on<_GetBinsList>(_onGetBinsList);
-    on<_AddBin>(_onAddBin);
     on<_NavigateToAddNewEntryPage>(_onNavigateToAddNewEntryPage);
   }
 
@@ -59,17 +58,6 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
       },
     );
   }
-
-  _onAddBin(_AddBin event, Emitter<TrackerState> emit) async {
-    emit(const TrackerState.loadInProgress());
-    final response = await repository.createBin(bin: event.bin,binType: event.binType);
-    response.when(completed: (data, int? statusCode) {
-      SuccessResponse response = data;
-      emit(const TrackerState.binsCreated());
-    }, error: (apiError) {
-      emit(TrackerState.loadingError(error: apiError));
-    });
-}
 
   _onAddEntryToBin(_AddEntryToBin event, Emitter<TrackerState> emit) async {
     // emit(const TrackerState.loadInProgress());

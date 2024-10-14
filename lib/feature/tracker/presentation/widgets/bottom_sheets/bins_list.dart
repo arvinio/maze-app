@@ -63,12 +63,6 @@ class _BinsListState extends State<BinsList> {
           },
           navigateToAddNewEntryPage: (bin) {},
           sortingEntries: () {},
-          binsCreated: () {},
-          deleteSuccess: () {},
-          deleteFailure: () {},
-          restoreSuccess: () {},
-          restoreFailure: () {},
-          deletedBinsLoaded: (List<DeletedBin> bins) {},
         );
       },
       builder: (context, state) {

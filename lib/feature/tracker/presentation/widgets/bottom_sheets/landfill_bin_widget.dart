@@ -1,24 +1,32 @@
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/strings.dart';
+import 'package:maze_app/core/network/model/api_error.dart';
 import 'package:maze_app/core/presentation/widget/custom_add_photo.dart';
 import 'package:maze_app/core/presentation/widget/custom_button.dart';
 import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
 import 'package:maze_app/core/presentation/widget/custom_view_photo.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
+import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/tracker/data/model/enum/create_bin_types.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
+import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
+import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/view/create_bin_types/bloc/create_bins_type_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/help_header.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tab_content_view.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
-class LandfillBinWidget extends StatefulWidget {
+class LandfillBinWidget extends StatefulWidget  implements AutoRouteWrapper{
   const LandfillBinWidget({
     super.key,
     required this.bloc,
@@ -27,6 +35,11 @@ class LandfillBinWidget extends StatefulWidget {
 
   @override
   State<LandfillBinWidget> createState() => _LandfillBinWidgetState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(create: (_) => inject<CreateBinsTypeBloc>(), child: this);
+  }
 }
 
 class _LandfillBinWidgetState extends State<LandfillBinWidget>
@@ -70,7 +83,23 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return  BlocConsumer<CreateBinsTypeBloc, CreateBinsTypeState>(
+      listener: (context, state) async {
+        if (state.status.isSuccess) {
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        } else if (state.status.isFailure) {
+          Fluttertoast.showToast(
+              msg: state.errorMessage!,
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+        }
+      },
+      builder: (context, state) {
+        return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(top: 24, bottom: 24),
         child: Column(
@@ -143,6 +172,7 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
                   textEditingController: amountController,
                   label: appStrings.amountLitres,
                   focusNode: focusNodeAmount,
+                  keyboardType: TextInputType.number,
                   labelTextColor: context
                       .scheme()
                       .secondaryText,
@@ -156,6 +186,7 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
                       textEditingController: widthController,
                       label: appStrings.width,
                       focusNode: widthFocusNode,
+                      keyboardType: TextInputType.number,
                       labelTextColor: context
                           .scheme()
                           .secondaryText,
@@ -164,6 +195,7 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
                       textEditingController: heightController,
                       label: appStrings.height,
                       focusNode: heightFocusNode,
+                      keyboardType: TextInputType.number,
                       labelTextColor: context
                           .scheme()
                           .secondaryText,
@@ -172,6 +204,7 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
                       textEditingController: lengthController,
                       label: appStrings.length,
                       focusNode: lengthFocusNode,
+                      keyboardType: TextInputType.number,
                       labelTextColor: context
                           .scheme()
                           .secondaryText,
@@ -262,9 +295,10 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
             ),
             CustomButton.submit(
                 text: appStrings.addBinTitle,
+                showLoading: state.status.isLoading,
                 onPressed: () {
-                  widget.bloc.add(
-                    TrackerEvent.addBin(
+                  context.read<CreateBinsTypeBloc>().add(
+                    CreateBinsTypeEvent.createBin(
                       bin: Bin(
                         type: BinType.landfill,
                         id: null,
@@ -296,6 +330,8 @@ class _LandfillBinWidgetState extends State<LandfillBinWidget>
         ),
       ),
     );
+  },
+);
   }
 }
 
