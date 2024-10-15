@@ -62,14 +62,20 @@ class _WasteState extends State<Waste> {
                           context,
                           child: const CouncilLandfillBinWidget().wrappedRoute(
                               context),
-                        );
+                        ).then((value){
+                          widget.bloc.add(
+                          const TrackerEvent.getBinsList());
+                        });
                       },
                       dontHaveBin:
                           () {
                         ShowDialog.openModalBottomSheet(
                             context,
                             child: const LandfillBinWidget().wrappedRoute(
-                                context));
+                                context)).then((value){
+                          widget.bloc.add(
+                              const TrackerEvent.getBinsList());
+                        });
                       },
                     ),
                   );

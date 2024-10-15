@@ -64,7 +64,10 @@ final List<Bin> bins=[];
                       haveBinFunc: () {
                         ShowDialog.openModalBottomSheet(
                             context,
-                            child: const NewCompostBinWidget().wrappedRoute(context));
+                            child: const NewCompostBinWidget().wrappedRoute(context)).then((value){
+                          widget.bloc.add(
+                              const TrackerEvent.getBinsList());
+                        });
                       },
                       doNotHaveBinFunc:
                           () {
