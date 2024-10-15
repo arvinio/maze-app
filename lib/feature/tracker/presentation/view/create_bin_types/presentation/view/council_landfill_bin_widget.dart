@@ -387,42 +387,47 @@ class _CouncilLandfillBinWidgetState extends State<CouncilLandfillBinWidget>
                 ),
                 SizedBox(
                   height: 300,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 170,
-                            child: CustomCupertinoPicker(children: List<
-                                Widget>.generate(
-                                periods.length, (int index) {
-                              return Center(child: CustomText(
-                                periods[index], style: context.bodyBody,));
-                            }),
-                              onSelectedItemChanged: (int selectedItem) {
-                                setState(() {
-                                  periodsSelected = selectedItem;
-                                  obscureState.value = !obscureState.value;
-                                });
-                              },
-                            )),
-                        Flexible(
-                            child:
-                            CustomCupertinoPicker(
-                              onSelectedItemChanged: (int selectedItem) {
-                                setState(() {
-                                  weekSelected = selectedItem;
-                                  obscureState.value = !obscureState.value;
-                                });
-                              },
-                              initialItem: 3, children: List<Widget>.generate(
-                                weekDays.length, (int index) {
-                              return Center(
-                                child: CustomText(
-                                    weekDays[index], style: context.bodyBody),
-                              );
-                            }),
-                            ))
-                      ]
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.of(context).pop();
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 170,
+                              child: CustomCupertinoPicker(children: List<
+                                  Widget>.generate(
+                                  periods.length, (int index) {
+                                return Center(child: CustomText(
+                                  periods[index], style: context.bodyBody,));
+                              }),
+                                onSelectedItemChanged: (int selectedItem) {
+                                  setState(() {
+                                    periodsSelected = selectedItem;
+                                    obscureState.value = !obscureState.value;
+                                  });
+                                },
+                              )),
+                          Flexible(
+                              child:
+                              CustomCupertinoPicker(
+                                onSelectedItemChanged: (int selectedItem) {
+                                  setState(() {
+                                    weekSelected = selectedItem;
+                                    obscureState.value = !obscureState.value;
+                                  });
+                                },
+                                initialItem: 3, children: List<Widget>.generate(
+                                  weekDays.length, (int index) {
+                                return Center(
+                                  child: CustomText(
+                                      weekDays[index], style: context.bodyBody),
+                                );
+                              }),
+                              ))
+                        ]
+                    ),
                   ),
                 ),
               ],
