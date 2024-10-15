@@ -44,18 +44,14 @@ class Waste extends StatelessWidget {
                             haveBin: () {
                               ShowDialog.openModalBottomSheet(
                                 context,
-                                child: CouncilLandfillBinWidget(
-                                    bloc:
-                                    bloc),
+                                child: const CouncilLandfillBinWidget().wrappedRoute(context),
                               );
                             },
                             dontHaveBin:
                                 () {
                                   ShowDialog.openModalBottomSheet(
                                   context,
-                                      child: LandfillBinWidget(
-                                      bloc:
-                                      bloc));
+                                      child: const LandfillBinWidget().wrappedRoute(context));
                             },
                           ),
                         );

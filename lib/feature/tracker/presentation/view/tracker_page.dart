@@ -282,18 +282,14 @@ class _TrackerPageState extends State<TrackerPage>
                                                                   haveBin: () {
                                                                     openModalBottomSheet(
                                                                       context,
-                                                                      CouncilLandfillBinWidget(
-                                                                          bloc:
-                                                                          bloc).wrappedRoute(context),
+                                                                      const CouncilLandfillBinWidget().wrappedRoute(context),
                                                                     );
                                                                   },
                                                                   dontHaveBin:
                                                                       () {
                                                                     openModalBottomSheet(
                                                                         context,
-                                                                        LandfillBinWidget(
-                                                                            bloc:
-                                                                            bloc).wrappedRoute(context));
+                                                                        const LandfillBinWidget().wrappedRoute(context));
                                                                   },
                                                                 ),
                                                               );
@@ -308,9 +304,7 @@ class _TrackerPageState extends State<TrackerPage>
                                                               haveBinFunc: () {
                                                                 openModalBottomSheet(
                                                                     context,
-                                                                    NewCompostBinWidget(
-                                                                        bloc:
-                                                                        bloc).wrappedRoute(context));
+                                                                    const NewCompostBinWidget().wrappedRoute(context));
                                                               },
                                                               doNotHaveBinFunc:
                                                                   () {
@@ -323,7 +317,9 @@ class _TrackerPageState extends State<TrackerPage>
                                                             ));
                                                       },
                                                     ),
-                                                  );
+                                                  ).then((value){
+                                                    getBinsList();
+                                                  });
                                                 },
                                                 title: appStrings.addNewBin,
                                                 leading: appAssets.addBin.svg(),

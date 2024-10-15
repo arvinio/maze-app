@@ -49,9 +49,7 @@ class Compost extends StatelessWidget {
                       haveBinFunc: () {
                         ShowDialog.openModalBottomSheet(
                             context,
-                            child: NewCompostBinWidget(
-                                bloc:
-                                bloc));
+                            child: const NewCompostBinWidget().wrappedRoute(context));
                       },
                       doNotHaveBinFunc:
                           () {

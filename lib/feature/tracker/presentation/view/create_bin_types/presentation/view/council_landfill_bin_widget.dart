@@ -29,9 +29,7 @@ import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.da
 class CouncilLandfillBinWidget extends StatefulWidget  implements AutoRouteWrapper{
   const CouncilLandfillBinWidget({
     super.key,
-    required this.bloc,
   });
-  final TrackerBloc bloc;
 
   @override
   State<CouncilLandfillBinWidget> createState() =>
