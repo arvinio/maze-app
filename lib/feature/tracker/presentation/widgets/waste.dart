@@ -15,14 +15,26 @@ import 'package:maze_app/feature/tracker/presentation/widgets/tracker_preview.da
 import 'bottom_sheets/add_waste_bin_widget.dart';
 import 'bottom_sheets/new_landfill_waste_bin_widget.dart';
 
-class Waste extends StatelessWidget {
-  const Waste({
-    super.key,
-    required this.bloc,
-  });
-
+class Waste extends StatefulWidget {
+  const Waste({super.key, required this.bloc});
   final TrackerBloc bloc;
 
+  @override
+  State<Waste> createState() => _WasteState();
+}
+
+class _WasteState extends State<Waste> {
+  final List<Bin> bins=[];
+
+
+  @override
+  void initState() {
+    if(widget.bloc.hasLandfill)
+    {
+      bins.clear();
+      bins.addAll(widget.bloc.bins.where((element) => element.type == BinType.landfill));
+    }
+  }
   @override
   Widget build(BuildContext context) {
     double h=MediaQuery
@@ -31,7 +43,7 @@ class Waste extends StatelessWidget {
         .height;
     return Column(
       children: [
-        !bloc.hasLandfill
+        !widget.bloc.hasLandfill
             ? TrackerField(
           leadingIcon: Image.asset(appAssets.landfillIcon.path),
           title: appStrings.addLandfillBinTitle,
@@ -69,17 +81,15 @@ class Waste extends StatelessWidget {
             : SizedBox(height:h * 0.5,
                       child: ListView.separated(
               shrinkWrap: true,
-              itemCount: bloc.bins
-                  .where((element) => element.type == BinType.landfill)
-                  .length,
+              itemCount: bins.length,
               itemBuilder: (context, index) {
                 return TrackerPreview(
                   onTap: () {
                     context.read<TrackerBloc>().add(
                         TrackerEvent.fetchBinDetails(
-                            binId: bloc.bins[index].id!));
+                            binId: bins[index].id!));
                   },
-                  bin: bloc.bins[index],
+                  bin: bins[index],
                 );
               },
               separatorBuilder: (context, index) {

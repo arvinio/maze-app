@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
-import 'package:maze_app/core/config/dimen.dart';
 import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/widget/app_arrow.dart';
 import 'package:maze_app/core/presentation/widget/custom_text.dart';
@@ -18,17 +17,29 @@ import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_field.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_preview.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'bottom_sheets/have_compost_bin_widget.dart';
 
-class Compost extends StatelessWidget {
-   Compost({
-    super.key,
-    required this.bloc,
-  });
-
+class Compost extends StatefulWidget {
+  const Compost({super.key, required this.bloc});
   final TrackerBloc bloc;
+
+  @override
+  State<Compost> createState() => _CompostState();
+}
+
+class _CompostState extends State<Compost> {
+
   final Uri _url = Uri.parse('https://mazeproducts.com.au/product-category/composting/compost-bins/');
+final List<Bin> bins=[];
+
+@override
+  void initState() {
+  if(widget.bloc.hasCompost)
+    {
+      bins.clear();
+      bins.addAll(widget.bloc.bins.where((element) => element.type == BinType.compost));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +49,7 @@ class Compost extends StatelessWidget {
         .height;
     return Column(
       children: [
-        !bloc.hasCompost
+        !widget.bloc.hasCompost
             ? Column(
           children: [
             TrackerField(
@@ -59,7 +70,7 @@ class Compost extends StatelessWidget {
                           () {
                             ShowDialog.openModalBottomSheet(
                               context,
-                                child: DoNotHaveCompostBinWidget(bloc: bloc,));},
+                                child: DoNotHaveCompostBinWidget(bloc: widget.bloc,));},
                     ));
               },
             ),
@@ -71,17 +82,15 @@ class Compost extends StatelessWidget {
             : SizedBox(height:h * 0.5,
           child: ListView.separated(
               shrinkWrap: true,
-              itemCount: bloc.bins
-                  .where((element) => element.type == BinType.compost)
-                  .length,
+              itemCount: bins.length,
               itemBuilder: (context, index) {
                 return TrackerPreview(
                   onTap: () {
                     context.read<TrackerBloc>().add(
                         TrackerEvent.fetchBinDetails(
-                            binId: bloc.bins[index].id!));
+                            binId: bins[index].id!));
                   },
-                  bin: bloc.bins[index],
+                  bin: bins[index],
                 );
               },
               separatorBuilder: (context, index) {
