@@ -77,7 +77,7 @@ class Waste extends StatelessWidget {
                   onTap: () {
                     context.read<TrackerBloc>().add(
                         TrackerEvent.fetchBinDetails(
-                            binId: bloc.bins.first.id!));
+                            binId: bloc.bins[index].id!));
                   },
                   bin: bloc.bins[index],
                 );
