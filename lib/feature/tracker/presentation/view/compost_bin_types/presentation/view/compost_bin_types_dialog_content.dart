@@ -84,17 +84,27 @@ class _CompostBinTypesDialogContentState extends State<CompostBinTypesDialogCont
                     itemCount: compostBinTypes!.length,
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context, int index) {
-                      return CustomMenuItems(
-                          title: compostBinTypes![index].name!,
-                          trailing: appAssets.rightArrow.svg(),
-                          padding:const  EdgeInsets.fromLTRB(0,8,15,8),
-                          onTap: () {
-                           _onSelect(context, compostBinTypes![index]);
-                          }
+                      return InkWell(
+                        child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 30, left: 20),
+                            child: Column(
+                                mainAxisAlignment:
+                                MainAxisAlignment.center,
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  CustomText(
+                                      compostBinTypes![index].name!),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                ])),
+                        onTap: () =>   _onSelect(context, compostBinTypes![index]),
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {
-                      return const CustomDivider();
+                      return  CustomDivider(indent: 20.w,endIndent: 20.w,);
                     },
                   ),
                 )

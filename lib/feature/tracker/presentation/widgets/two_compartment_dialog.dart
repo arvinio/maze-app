@@ -25,8 +25,8 @@ class _TwoCompartmentDialogState extends State<TwoCompartmentDialog> {
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     List<String> measurementSystem = [
-      "Yes",
-      "No",
+     appStrings.yes,
+      appStrings.no,
     ];
 
     return ScrollConfiguration(
