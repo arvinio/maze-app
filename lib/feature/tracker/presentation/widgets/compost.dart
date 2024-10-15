@@ -12,6 +12,7 @@ import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/view/create_bin_types/presentation/view/new_compost_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/do_not_have_compost_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_field.dart';
@@ -19,7 +20,6 @@ import 'package:maze_app/feature/tracker/presentation/widgets/tracker_preview.da
 import 'package:url_launcher/url_launcher.dart';
 
 import 'bottom_sheets/have_compost_bin_widget.dart';
-import 'bottom_sheets/new_compost_bin_widget.dart';
 
 class Compost extends StatelessWidget {
    Compost({

@@ -14,18 +14,17 @@ import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
 import 'package:maze_app/core/presentation/widget/custom_view_photo.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
-import 'package:maze_app/feature/auth/login/presentation/bloc/login_bloc.dart';
 import 'package:maze_app/feature/tracker/data/model/enum/create_bin_types.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
-import 'package:maze_app/feature/tracker/presentation/view/create_bin_types/bloc/create_bins_type_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/view/create_bin_types/presentation/bloc/create_bins_type_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/view/create_bin_types/presentation/widgets/custom_cupertino_picker.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/help_header.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tab_content_view.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
-import 'custom_cupertino_picker.dart';
 
 class CouncilLandfillBinWidget extends StatefulWidget  implements AutoRouteWrapper{
   const CouncilLandfillBinWidget({
@@ -340,6 +339,8 @@ class _CouncilLandfillBinWidgetState extends State<CouncilLandfillBinWidget>
                         pickUpDate: pickupDateController.text,
                         typeOfCompostBin: null,
                         is2Compostement: null,
+                        isCouncil:true
+
                       ),
                         binType: CreateBinTypes.councilLandfillBin
 

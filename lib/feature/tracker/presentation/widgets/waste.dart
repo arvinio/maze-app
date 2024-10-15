@@ -3,19 +3,16 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
-import 'package:maze_app/core/config/dimen.dart';
 import 'package:maze_app/core/config/strings.dart';
-import 'package:maze_app/core/style/app_theme.dart';
-import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/view/create_bin_types/presentation/view/council_landfill_bin_widget.dart';
+import 'package:maze_app/feature/tracker/presentation/view/create_bin_types/presentation/view/landfill_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_field.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_preview.dart';
 
 import 'bottom_sheets/add_waste_bin_widget.dart';
-import 'bottom_sheets/council_landfill_bin_widget.dart';
-import 'bottom_sheets/landfill_bin_widget.dart';
 import 'bottom_sheets/new_landfill_waste_bin_widget.dart';
 
 class Waste extends StatelessWidget {

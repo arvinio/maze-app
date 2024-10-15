@@ -14,11 +14,10 @@ import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/tracker/data/model/bin_list/bin_list_response.dart';
 import 'package:maze_app/feature/tracker/data/model/enum/create_bin_types.dart';
-
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/compost_bin_types/presentation/view/compost_bin_types_dialog_content.dart';
-import 'package:maze_app/feature/tracker/presentation/view/create_bin_types/bloc/create_bins_type_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/view/create_bin_types/presentation/bloc/create_bins_type_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/help_header.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
@@ -357,6 +356,8 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
                             typeOfCompostBin: typeOfCompostBin,
                             is2Compostement:
                                 twoCompartmentController.text == appStrings.yes,
+                              isCouncil:false
+
                           ),
                             binType: CreateBinTypes.compostBin
 

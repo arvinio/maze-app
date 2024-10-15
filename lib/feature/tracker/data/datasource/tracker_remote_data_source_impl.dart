@@ -35,15 +35,18 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
     'height': bin.height ,
     'length': bin.length ,
     'isShare': bin.isShare,
+    'isCouncil': bin.isCouncil,
     });
 
     if (bin.imageUrl != null) {
       formData.files.add(MapEntry("photo",await MultipartFile.fromFile(bin.imageUrl!, filename: bin.imageUrl)));
     }
 
-    if (binType==CreateBinTypes.councilLandfillBin ) {
-      formData.fields.add(MapEntry("pickupDate",bin.pickUpDate!));
+    if (binType==CreateBinTypes.councilLandfillBin || binType==CreateBinTypes.landfillBin ) {
 
+      if(bin.isCouncil!) {
+        formData.fields.add(MapEntry("pickupDate", bin.pickUpDate!));
+      }
     }
 
     if (binType==CreateBinTypes.compostBin) {

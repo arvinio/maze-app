@@ -21,6 +21,7 @@ class Bin {
   final String? height;
   final int? totalAmount;
   final List<ChartData>? chartData;
+  final bool? isCouncil;
 
   const Bin({
     required this.type,
@@ -38,6 +39,8 @@ class Bin {
     required this.height,
     this.totalAmount,
     this.chartData,
+    this.isCouncil
+
   });
 }
 

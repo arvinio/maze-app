@@ -15,22 +15,21 @@ import 'package:maze_app/core/presentation/widget/page_loading.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
-import 'package:maze_app/feature/tracker/data/model/deleted_bins/deleted_bins_response.dart';
-
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/manage_bins/presentation/bloc/manage_bins_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/add_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/add_waste_bin_widget.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/council_landfill_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/have_compost_bin_widget.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/landfill_bin_widget.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/new_compost_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/new_landfill_waste_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/do_not_have_compost_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/view/manage_bins/presentation/view/manage_bins_dialog_content.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/bottom_sheets/bins_list.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
+
+import 'create_bin_types/presentation/view/council_landfill_bin_widget.dart';
+import 'create_bin_types/presentation/view/landfill_bin_widget.dart';
+import 'create_bin_types/presentation/view/new_compost_bin_widget.dart';
 
 @RoutePage()
 class TrackerPage extends StatefulWidget {
