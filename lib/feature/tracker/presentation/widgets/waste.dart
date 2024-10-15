@@ -25,52 +25,69 @@ class Waste extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double h=MediaQuery
+        .of(context)
+        .size
+        .height;
     return Column(
       children: [
         !bloc.hasLandfill
             ? TrackerField(
-                leadingIcon: Image.asset(appAssets.landfillIcon.path),
-                title: appStrings.addLandfillBinTitle,
-                subTitle:appStrings.addLandfillBinSubTitle,
-                horizontalTitleGap: 14,
-                onTap: () {
+          leadingIcon: Image.asset(appAssets.landfillIcon.path),
+          title: appStrings.addLandfillBinTitle,
+          subTitle: appStrings.addLandfillBinSubTitle,
+          horizontalTitleGap: 14,
+          onTap: () {
+            ShowDialog.openModalBottomSheet(
+              context,
+              child: AddWasteBinWidget(
+                func: () {
                   ShowDialog.openModalBottomSheet(
                     context,
-                    child:AddWasteBinWidget(
-                      func: () {
+                    child: NewLandfillWasteBinWidget(
+                      haveBin: () {
                         ShowDialog.openModalBottomSheet(
                           context,
-                          child: NewLandfillWasteBinWidget(
-                            haveBin: () {
-                              ShowDialog.openModalBottomSheet(
-                                context,
-                                child: const CouncilLandfillBinWidget().wrappedRoute(context),
-                              );
-                            },
-                            dontHaveBin:
-                                () {
-                                  ShowDialog.openModalBottomSheet(
-                                  context,
-                                      child: const LandfillBinWidget().wrappedRoute(context));
-                            },
-                          ),
+                          child: const CouncilLandfillBinWidget().wrappedRoute(
+                              context),
                         );
+                      },
+                      dontHaveBin:
+                          () {
+                        ShowDialog.openModalBottomSheet(
+                            context,
+                            child: const LandfillBinWidget().wrappedRoute(
+                                context));
                       },
                     ),
                   );
                 },
-              )
-            : TrackerPreview(
-                onTap: () {
-                  context.read<TrackerBloc>().add(
-                      TrackerEvent.fetchBinDetails(binId: bloc.bins.first.id!));
-                },
-                bin: bloc.bins.firstWhere(
-                  (element) => element.type == BinType.landfill,
-                )),
-        SizedBox(
-          height: 15.h,
-        ),
+              ),
+            );
+          },
+        )
+            : SizedBox(height:h * 0.5,
+                      child: ListView.separated(
+              shrinkWrap: true,
+              itemCount: bloc.bins
+                  .where((element) => element.type == BinType.landfill)
+                  .length,
+              itemBuilder: (context, index) {
+                return TrackerPreview(
+                  onTap: () {
+                    context.read<TrackerBloc>().add(
+                        TrackerEvent.fetchBinDetails(
+                            binId: bloc.bins.first.id!));
+                  },
+                  bin: bloc.bins[index],
+                );
+              },
+              separatorBuilder: (context, index) {
+                return SizedBox(height: 15.h);
+              }
+                      ),
+                    ),
+
         // !bloc.hasOrganic
         //     ? TrackerField(
         //         leadingIcon: Image.asset(
@@ -98,6 +115,5 @@ class Waste extends StatelessWidget {
       ],
     );
   }
-
 
 }

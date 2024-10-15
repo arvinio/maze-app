@@ -32,6 +32,10 @@ class Compost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double h=MediaQuery
+        .of(context)
+        .size
+        .height;
     return Column(
       children: [
         !bloc.hasCompost
@@ -64,17 +68,27 @@ class Compost extends StatelessWidget {
             _buildCheckOutMazeCompostBin(context)
           ],
         )
-            : TrackerPreview(
-            onTap: () {
-              context.read<TrackerBloc>().add(
-                  TrackerEvent.fetchBinDetails(binId: bloc.bins.first.id!));
-            },
-            bin: bloc.bins.firstWhere(
-                  (element) => element.type == BinType.compost,
-            )),
-        SizedBox(
-          height: 15.h,
-        ),
+            : SizedBox(height:h * 0.5,
+          child: ListView.separated(
+              shrinkWrap: true,
+              itemCount: bloc.bins
+                  .where((element) => element.type == BinType.compost)
+                  .length,
+              itemBuilder: (context, index) {
+                return TrackerPreview(
+                  onTap: () {
+                    context.read<TrackerBloc>().add(
+                        TrackerEvent.fetchBinDetails(
+                            binId: bloc.bins[index].id!));
+                  },
+                  bin: bloc.bins[index],
+                );
+              },
+              separatorBuilder: (context, index) {
+                return SizedBox(height: 15.h);
+              }
+          ),
+        )
       ],
     );
   }
