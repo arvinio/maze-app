@@ -47,7 +47,7 @@ class TrackerPreview extends StatelessWidget {
                   style: context.footnoteFootnote
                       .copyWith(color: context.scheme().secondaryText),
                 ),
-                leading: Container(
+                leading:Container(
                   decoration: BoxDecoration(
                     color: context.scheme().neutralsBackground,
                     border: Border.all(
@@ -57,19 +57,16 @@ class TrackerPreview extends StatelessWidget {
                   ),
                   height: 50.sp,
                   width: 50.sp,
-                  margin: EdgeInsets.only(right: 15.w),
+                  padding: bin.imageUrl != null ?EdgeInsets.zero:EdgeInsets.only(top:6.sp),
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(
                         Radius.circular(Dimen.defaultRadius)),
                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: FittedBox(
-                        fit: BoxFit.cover,
-                        child: bin.imageUrl == null
-                            ? const NoImage()
-                            : Image.network(
-                          bin.imageUrl!,
-                          fit: BoxFit.cover,
-                        ),
+                    child: bin.imageUrl == null
+                        ? const NoImage()
+                        : Image.network(
+                      bin.imageUrl!,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
