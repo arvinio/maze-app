@@ -4,14 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/strings.dart';
-import 'package:maze_app/core/presentation/widget/app_loading.dart';
+import 'package:maze_app/core/presentation/widget/custom_loading.dart';
 import 'package:maze_app/core/presentation/widget/custom_menu_items.dart';
 import 'package:maze_app/core/presentation/widget/menu_dialog_content.dart';
 import 'package:maze_app/core/presentation/widget/page_loading.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/tracker/data/model/deleted_bins/deleted_bins_response.dart';
-import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/manage_bins/presentation/bloc/manage_bins_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/no_image.dart';
@@ -63,20 +62,22 @@ class DeletedBinsContent extends StatelessWidget implements AutoRouteWrapper {
                   }
                   else   if (state.status.isRestored) {
                     deletedBinsEvent(context);
-                    Fluttertoast.showToast(
-                      msg:appStrings.restoredMsg,
-                      toastLength: Toast.LENGTH_LONG,
-                      gravity: ToastGravity.CENTER,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.black,
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    );
+                    // Fluttertoast.showToast(
+                    //   msg:appStrings.restoredMsg,
+                    //   toastLength: Toast.LENGTH_LONG,
+                    //   gravity: ToastGravity.CENTER,
+                    //   timeInSecForIosWeb: 1,
+                    //   backgroundColor: Colors.black,
+                    //   textColor: Colors.white,
+                    //   fontSize: 16.0,
+                    // );
                   }
                 },
                 builder: (context, state) {
                   return state.status.isLoading
-                      ? const PageLoading()
+                      ?loadingWidget(context)/* const Center(
+                    child: CircularProgressIndicator(),
+                  )*/
                       : ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: deletedBins.length,
@@ -180,6 +181,23 @@ class DeletedBinsContent extends StatelessWidget implements AutoRouteWrapper {
             ],)
         );
       },
+    );
+  }
+
+
+  loadingWidget(BuildContext context) {
+    return  Padding(
+      padding:  EdgeInsets.only(top:MediaQuery.of(context).size.height * 0.3),
+      child: Center(
+        child: SizedBox(
+          width: 38,
+          height: 38,
+          child: CircularProgressIndicator(
+              strokeWidth: 3.8,
+              valueColor:
+              AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
+        ),
+      ),
     );
   }
 }

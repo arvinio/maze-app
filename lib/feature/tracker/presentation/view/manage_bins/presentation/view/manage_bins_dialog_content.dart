@@ -11,7 +11,6 @@ import 'package:maze_app/core/presentation/widget/menu_dialog_content.dart';
 import 'package:maze_app/core/presentation/widget/page_loading.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
-import 'package:maze_app/feature/tracker/data/model/deleted_bins/deleted_bins_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/manage_bins/presentation/bloc/manage_bins_bloc.dart';
@@ -49,8 +48,9 @@ class _ManageBinsDialogContentState extends State<ManageBinsDialogContent>  with
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
-    context.read<TrackerBloc>().add(TrackerEvent.getBinsList());
+    getBinsEvent();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +71,9 @@ class _ManageBinsDialogContentState extends State<ManageBinsDialogContent>  with
             listener: (context, state) {
               state.when(
                 initial: () {},
-                loadInProgress: () {},
+                loadInProgress: () {
+                  return loadingWidget(context);
+                },
                 binsLoaded: (value) {
                   bins.clear();
                   bins.addAll(value);
@@ -174,13 +176,15 @@ class _ManageBinsDialogContentState extends State<ManageBinsDialogContent>  with
     );
   }
 
+  void getBinsEvent() => context.read<TrackerBloc>().add(const TrackerEvent.getBinsList());
+  
   SingleChildScrollView binsType(BuildContext context,
       {List<Bin>? bins, String? subtitle,required ManageBinsState state, TrackerBloc? bloc}) {
     return SingleChildScrollView(
         child: Column(
             children: [
               state.status.isLoading
-              ?const PageLoading()
+              ?loadingWidget(context)
              : ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: bins!.length,
@@ -228,7 +232,8 @@ class _ManageBinsDialogContentState extends State<ManageBinsDialogContent>  with
         onTap: () {
           ShowDialog.openModalBottomSheet(context,
             child: DeletedBinsContent(bloc: bloc).wrappedRoute(context),
-          );
+          ).then((value){
+            getBinsEvent();});
         });
   }
 
@@ -295,6 +300,22 @@ class _ManageBinsDialogContentState extends State<ManageBinsDialogContent>  with
             ],)
         );
       },
+    );
+  }
+
+  loadingWidget(BuildContext context) {
+    return  Padding(
+      padding:  EdgeInsets.only(top:MediaQuery.of(context).size.height * 0.3),
+      child: Center(
+        child: SizedBox(
+          width: 38,
+          height: 38,
+          child: CircularProgressIndicator(
+              strokeWidth: 3.8,
+              valueColor:
+              AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
+        ),
+      ),
     );
   }
 }

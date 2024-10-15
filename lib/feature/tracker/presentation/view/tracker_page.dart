@@ -73,7 +73,9 @@ class _TrackerPageState extends State<TrackerPage>
                   BorderSide(color: context
                       .scheme()
                       .neutralsBorderDivider))),
-          onPressed: () {ShowDialog.needHelpContent(context);},
+          onPressed: () {
+            ShowDialog.needHelpContent(context);
+          },
           label: CustomText(appStrings.needHelp),
           iconAlignment: IconAlignment.start,
           icon: appAssets.messageQuestion.svg(),
@@ -96,7 +98,8 @@ class _TrackerPageState extends State<TrackerPage>
                         ? () {
                       Future<dynamic> future = openModalBottomSheet(
                           context,
-                          BinsList(title:appStrings.newEntryFor,bins: bloc.bins).wrappedRoute(context));
+                          BinsList(title: appStrings.newEntryFor, bins: bloc
+                              .bins).wrappedRoute(context));
 
                       future.then((index) {
                         if (context.mounted) {
@@ -134,7 +137,7 @@ class _TrackerPageState extends State<TrackerPage>
       ),
       child: BlocProvider(
         create: (_) =>
-          inject<ManageBinsBloc>(),
+            inject<ManageBinsBloc>(),
         child: BlocConsumer<TrackerBloc, TrackerState>(
           listener: (context, state) {
             state.when(
@@ -282,14 +285,18 @@ class _TrackerPageState extends State<TrackerPage>
                                                                   haveBin: () {
                                                                     openModalBottomSheet(
                                                                       context,
-                                                                      const CouncilLandfillBinWidget().wrappedRoute(context),
+                                                                      const CouncilLandfillBinWidget()
+                                                                          .wrappedRoute(
+                                                                          context),
                                                                     );
                                                                   },
                                                                   dontHaveBin:
                                                                       () {
                                                                     openModalBottomSheet(
                                                                         context,
-                                                                        const LandfillBinWidget().wrappedRoute(context));
+                                                                        const LandfillBinWidget()
+                                                                            .wrappedRoute(
+                                                                            context));
                                                                   },
                                                                 ),
                                                               );
@@ -304,7 +311,9 @@ class _TrackerPageState extends State<TrackerPage>
                                                               haveBinFunc: () {
                                                                 openModalBottomSheet(
                                                                     context,
-                                                                    const NewCompostBinWidget().wrappedRoute(context));
+                                                                    const NewCompostBinWidget()
+                                                                        .wrappedRoute(
+                                                                        context));
                                                               },
                                                               doNotHaveBinFunc:
                                                                   () {
@@ -317,46 +326,34 @@ class _TrackerPageState extends State<TrackerPage>
                                                             ));
                                                       },
                                                     ),
-                                                  ).then((value){
-                                                    getBinsList();
-                                                  });
+                                                  );
                                                 },
                                                 title: appStrings.addNewBin,
                                                 leading: appAssets.addBin.svg(),
                                               ),
                                               const CustomDivider(),
-                                    MultiBlocProvider(
-                                      providers: [
-                                        BlocProvider(create: (_) => inject<TrackerBloc>(), child: BottomSheetItem(
-                                          onTap: () {
-                                            ShowDialog.openModalBottomSheet(context,
-                                                child:ManageBinsDialogContent(bloc: bloc).wrappedRoute(context));
-                                          },
-                                          title: appStrings.manageBins,
-                                          leading:
-                                          appAssets.trashIcon2.svg(),
-                                        )),
-                                        BlocProvider(create: (_) => inject<ManageBinsBloc>(),
-                                          child: BottomSheetItem(
-                                            onTap: () {
-                                              ShowDialog.openModalBottomSheet(context,
-                                                  child:ManageBinsDialogContent(bloc: bloc).wrappedRoute(context));
-                                            },
-                                            title: appStrings.manageBins,
-                                            leading:
-                                            appAssets.trashIcon2.svg(),
-                                          ),),
-                                      ], child: BottomSheetItem(
-                                      onTap: () {
-                                        ShowDialog.openModalBottomSheet(context,
-                                            child:ManageBinsDialogContent(bloc: bloc).wrappedRoute(context));
-                                      },
-                                      title: appStrings.manageBins,
-                                      leading:
-                                      appAssets.trashIcon2.svg(),
-                                    ),
-                                      
-),
+                                              MultiBlocProvider(
+                                                  providers: [
+                                                    BlocProvider(create: (_) =>
+                                                        inject<TrackerBloc>()),
+                                                    BlocProvider(create: (_) =>
+                                                        inject<
+                                                            ManageBinsBloc>(),
+                                                    ),
+                                                  ], child: BottomSheetItem(
+                                                onTap: () {
+                                                  ShowDialog
+                                                      .openModalBottomSheet(
+                                                      context,
+                                                      child: ManageBinsDialogContent(
+                                                          bloc: bloc)
+                                                          .wrappedRoute(
+                                                          context));
+                                                },
+                                                title: appStrings.manageBins,
+                                                leading:
+                                                appAssets.trashIcon2.svg(),
+                                              )),
                                             ],
                                           ),
                                         ),
@@ -364,7 +361,9 @@ class _TrackerPageState extends State<TrackerPage>
                                     ),
                                   );
                                 },
-                              );
+                              ).then((value) {
+                                getBinsList();
+                              });
                             },
                             icon: const Icon(Icons.more_vert_outlined),
                           ),

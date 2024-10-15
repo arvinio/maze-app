@@ -51,6 +51,7 @@ class ManageBinsBloc extends Bloc<ManageBinsEvent, ManageBinsState> {
   }
 
   _onRestoreBin(_RestoreBin event, Emitter<ManageBinsState> emit) async {
+    emit(state.copyWith(status: ManageBinsStatus.loading));
     final response = await repository.restoreDeletedBin(binId: event.id);
     response.when(completed: (data, int? statusCode) {
       emit(state.copyWith(status: ManageBinsStatus.restored));
