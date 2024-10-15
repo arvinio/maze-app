@@ -241,6 +241,7 @@ class StringsBase {
   String get info=>'Info';
   String get infoMsg=>'The estimated weight is based on the bins\nsize and fullness combined. If you measure\nyour bins, feel free to replace this number.';
   String get compostTumbler=>'Compost Tumbler';
+  String get landfillWaste=>'Landfill waste';
   String get landfillWasteBin=>'Landfill waste bin';
   String get noDataAddedYet=>'No data added yet';
   String get entries=>'Entries';
@@ -295,6 +296,8 @@ class StringsBase {
   String get noImage=>'No image';
   String get restoredMsg=>'It was restored';
   String get typeOfCompostBin=>'Type of compost bin';
+  String get daysAgo=>'days ago';
+  String get addedToLandfill=>'Added to landfill';
 
   //Pickupdate
   String get monday=>'Monday';

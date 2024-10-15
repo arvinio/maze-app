@@ -55,6 +55,7 @@ class TrackerRepositoryImpl implements TrackerRepository {
                 length: e.length.toString(),
                 height: e.height.toString(),
                 totalAmount: e.totalAmount,
+                lastEntry: e.lastEntry,
                 chartData: charts),
           );
         }

@@ -22,8 +22,9 @@ class Bin {
   final int? totalAmount;
   final List<ChartData>? chartData;
   final bool? isCouncil;
+  final DateTime? lastEntry;
 
-  const Bin({
+  const Bin( {
     required this.type,
     required this.id,
     required this.nickName,
@@ -39,7 +40,8 @@ class Bin {
     required this.height,
     this.totalAmount,
     this.chartData,
-    this.isCouncil
+    this.isCouncil,
+    this.lastEntry
 
   });
 }
