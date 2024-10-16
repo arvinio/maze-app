@@ -35,7 +35,7 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
     'height': bin.height ,
     'length': bin.length ,
     'isShare': bin.isShare,
-    'isCouncil': bin.isCouncil,
+
     });
 
     if (bin.imageUrl != null) {
@@ -44,6 +44,7 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
 
     if (binType==CreateBinTypes.councilLandfillBin || binType==CreateBinTypes.landfillBin ) {
 
+      formData.fields.add(MapEntry("isCouncil", bin.isCouncil.toString()));
       if(bin.isCouncil!) {
         formData.fields.add(MapEntry("pickupDate", bin.pickUpDate!));
       }
