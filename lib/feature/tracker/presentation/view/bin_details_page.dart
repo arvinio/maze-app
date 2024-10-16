@@ -21,6 +21,7 @@ import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/custom_container_list.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/get_entry_type_icon.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/no_image.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/custom_bottom_sheet.dart';
@@ -151,13 +152,25 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
           SizedBox(
             height: 10.h,
           ),
-          SizedBox(
-            height: 80.dg,
-            width: 80.dg,
+          Container(
+              decoration: BoxDecoration(
+                color: context.scheme().neutralsBackground,
+                border: Border.all(
+                    color: context.scheme().neutralsBorderDivider),
+                borderRadius: const BorderRadius.all(
+                    Radius.circular(Dimen.defaultRadius)),
+              ),
+              height: 80.dg,
+              width:  80.dg,
+              padding: widget.bin.imageUrl != null ?EdgeInsets.zero:EdgeInsets.only(top:20.sp,left:10.sp,right:10.sp),
             child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(20.r)),
-                child: Image.network(
-                  widget.bin.imageUrl ?? '',
+              borderRadius: const BorderRadius.all(
+                  Radius.circular(Dimen.defaultRadius)),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+                child: widget.bin.imageUrl==null
+              ? NoImage(fontSize: 15,color: context.scheme().disabledText)
+             : Image.network(
+                  widget.bin.imageUrl!,
                   fit: BoxFit.cover,
                 )),
           ),
