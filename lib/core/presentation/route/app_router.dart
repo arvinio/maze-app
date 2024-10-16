@@ -8,7 +8,7 @@ import 'package:maze_app/feature/chatbot/presentation/view/chat/presentation/vie
 import 'package:maze_app/feature/profile/presentation/view/about/about_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/change_password/change_password_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/change_password/current_password_page.dart';
-import 'package:maze_app/feature/profile/presentation/view/edit_profile/edit_profile_page.dart';
+import 'package:maze_app/feature/profile/presentation/view/edit_profile/presentation/view/edit_profile_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/profile_home_page.dart';
 import 'package:maze_app/feature/account_info/presentation/view/account_household_info/account_household_info_page.dart';
 import 'package:maze_app/feature/account_info/presentation/view/account_notification/account_notification_page.dart';

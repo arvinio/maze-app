@@ -68,4 +68,10 @@ class ProfileRepositoryImpl implements ProfileRepository
     return remoteDataSource.deleteAccount();
   }
 
+  @override
+  Future<ApiResponse> getCommunityProfile() async{
+    return await remoteDataSource.getCommunityProfile();
+
+  }
+
 }

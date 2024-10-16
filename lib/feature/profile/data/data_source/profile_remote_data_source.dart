@@ -19,4 +19,6 @@ abstract class ProfileRemoteDataSource {
   Future<ApiResponse> deleteAvatar();
   Future<ApiResponse> deleteCover();
   Future<ApiResponse> deleteAccount();
+  Future<ApiResponse> getCommunityProfile();
+
 }

@@ -18,4 +18,6 @@ abstract class ProfileRepository {
   Future<ApiResponse> deleteAvatar();
   Future<ApiResponse> deleteCover();
   Future<ApiResponse> deleteAccount();
+  Future<ApiResponse> getCommunityProfile();
+
 }

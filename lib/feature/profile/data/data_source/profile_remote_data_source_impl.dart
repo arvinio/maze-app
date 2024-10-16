@@ -8,6 +8,7 @@ import 'package:maze_app/feature/profile/data/data_source/profile_remote_data_so
 import 'package:maze_app/feature/profile/data/model/%20profile_response/profile_response.dart';
 import 'package:maze_app/feature/profile/data/model/change_email_response/change_email_response.dart';
 import 'package:maze_app/feature/profile/data/model/change_password_request/change_password_request.dart';
+import 'package:maze_app/feature/profile/data/model/community_profile_response/community_profile_response.dart';
 import 'package:maze_app/feature/profile/data/model/edit_details_request/edit_details_request.dart';
 import 'package:maze_app/feature/profile/data/model/edit_household_request/edit_household_request.dart';
 import 'package:maze_app/feature/profile/data/model/edit_profile_request/edit_profile_request.dart';
@@ -151,4 +152,9 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     return dioCaller.delete('api/user', fromJson: EditProfileResponse.fromJson);
   }
 
+  @override
+  Future<ApiResponse> getCommunityProfile() async{
+    return await dioCaller.get('api/user/profile', fromJson: CommunityProfileResponse.fromJson);
+
+  }
 }

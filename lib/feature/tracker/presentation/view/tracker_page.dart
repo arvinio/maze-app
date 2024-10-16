@@ -197,9 +197,9 @@ class _TrackerPageState extends State<TrackerPage>
                           ? ShadowTooltip(
                         message:
                         appStrings.tooltipMsg,
-                        child: TrackerInfoWidget(bloc: bloc),
+                        child: TrackerInfoWidget(bloc: bloc).wrappedRoute(context),
                       )
-                          : TrackerInfoWidget(bloc: bloc),
+                          : TrackerInfoWidget(bloc: bloc).wrappedRoute(context),
                       SizedBox(
                         height: 10.h,
                       ),
