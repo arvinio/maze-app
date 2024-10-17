@@ -35,6 +35,11 @@ abstract class CommunityRepository {
   Future<ApiResponse> communityPostList(
       {required CommunityPostDataRequest request});
 
+  Future<ApiResponse<CreateCommunityResponse>> editCommunity(
+      {required Community request});
+
+  Future<ApiResponse> getImageFile({required String imageUrl});
+
   Future<ApiResponse> likePost({required String postId});
 
   Future<ApiResponse> unLikePost({required String postId});

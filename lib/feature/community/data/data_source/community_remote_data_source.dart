@@ -41,6 +41,11 @@ abstract class CommunityRemoteDataSource {
 
   Future<ApiResponse> unLikeComment({required String commentId});
 
+  Future<ApiResponse<CreateCommunityResponse>> editCommunity(
+      {required Community request});
+
+  Future<ApiResponse> getImageFile({required String imageUrl});
+
   Future<ApiResponse> unLikePost({required String postId});
 
   Future<ApiResponse<Map<String, List<SearchResponse>>>> search(

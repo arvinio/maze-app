@@ -132,6 +132,8 @@ import 'package:maze_app/feature/community/presentation/view/create_community/pr
     as _i245;
 import 'package:maze_app/feature/community/presentation/view/create_post/presentation/bloc/create_post_bloc.dart'
     as _i16;
+import 'package:maze_app/feature/community/presentation/view/edit_community/presention/bloc/edit_community_bloc.dart'
+    as _i255;
 import 'package:maze_app/feature/community/presentation/view/search_community/presentation/bloc/search_community_bloc.dart'
     as _i314;
 import 'package:maze_app/feature/community/presentation/view/view_community/presentation/bloc/view_community_bloc.dart'
@@ -289,9 +291,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i253.AccountInfoRemoteRemoteDataSource>(() =>
         _i501.AccountInfoRemoteRemoteDataSourceImpl(
             dioCaller: gh<_i874.DioCaller>(instanceName: 'token')));
-    gh.factory<_i1061.CommunityRemoteDataSource>(() =>
-        _i1024.CommunityRemoteDataSourceImpl(
-            dioCaller: gh<_i874.DioCaller>(instanceName: 'token')));
     gh.factory<_i283.AppTheme>(
         () => _i283.AppTheme(appColors: gh<_i751.AppColorsBase>()));
     gh.factory<_i675.ReportRepository>(
@@ -346,8 +345,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1072.SplashBloc(gh<_i547.UserManager>()));
     gh.factory<_i1012.TrackerRepo>(() => _i536.TrackerRepoImpl(
         trackerRemoteDataSource: gh<_i446.TrackerRemoteDataSource>()));
-    gh.factory<_i343.CommunityRepository>(() =>
-        _i91.CommunityRepositoryImpl(gh<_i1061.CommunityRemoteDataSource>()));
     gh.factory<_i1046.ForgotPassRemoteDataSource>(() =>
         _i23.ForgotPassRemoteDataSourceImpl(
             dioCaller: gh<_i874.DioCaller>(instanceName: 'maze')));
@@ -362,6 +359,11 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i613.AccountInfoBloc(gh<_i691.AccountInfoRepository>()));
     gh.factory<_i529.CharBotRepository>(() =>
         _i589.CharBotRepositoryImpl(gh<_i211.ChatBotRemoteRemoteDataSource>()));
+    gh.factory<_i1061.CommunityRemoteDataSource>(
+        () => _i1024.CommunityRemoteDataSourceImpl(
+              dioCaller: gh<_i874.DioCaller>(instanceName: 'token'),
+              imageDioCaller: gh<_i874.DioCaller>(instanceName: 'maze'),
+            ));
     gh.factory<_i557.ForgotPassRepository>(() => _i404.ForgotPassRepositoryImpl(
         gh<_i1046.ForgotPassRemoteDataSource>()));
     gh.factory<_i178.IntroRepo>(() =>
@@ -415,6 +417,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i88.SignupRemoteDataSource>(() =>
         _i893.SignupRemoteDataSourceImpl(
             dioCaller: gh<_i874.DioCaller>(instanceName: 'maze')));
+    gh.factory<_i343.CommunityRepository>(() =>
+        _i91.CommunityRepositoryImpl(gh<_i1061.CommunityRemoteDataSource>()));
+    gh.factory<_i278.TokenRepository>(
+        () => _i179.TokenRepositoryImpl(gh<_i494.TokenRemoteDataSource>()));
+    gh.factory<_i263.LoginBloc>(
+        () => _i263.LoginBloc(gh<_i268.LoginRepository>()));
+    gh.factory<_i358.ChatBloc>(() => _i358.ChatBloc(gh<_i63.ChatRepository>()));
+    gh.factory<_i468.SignupRepository>(
+        () => _i145.SignupRepositoryImpl(gh<_i88.SignupRemoteDataSource>()));
     gh.factory<_i314.SearchCommunityBloc>(
         () => _i314.SearchCommunityBloc(gh<_i343.CommunityRepository>()));
     gh.factory<_i245.CreateCommunityBloc>(
@@ -431,13 +442,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i611.ViewPostBloc(gh<_i343.CommunityRepository>()));
     gh.factory<_i186.CommunityBloc>(
         () => _i186.CommunityBloc(gh<_i343.CommunityRepository>()));
-    gh.factory<_i278.TokenRepository>(
-        () => _i179.TokenRepositoryImpl(gh<_i494.TokenRemoteDataSource>()));
-    gh.factory<_i263.LoginBloc>(
-        () => _i263.LoginBloc(gh<_i268.LoginRepository>()));
-    gh.factory<_i358.ChatBloc>(() => _i358.ChatBloc(gh<_i63.ChatRepository>()));
-    gh.factory<_i468.SignupRepository>(
-        () => _i145.SignupRepositoryImpl(gh<_i88.SignupRemoteDataSource>()));
+    gh.factory<_i255.EditCommunityBloc>(
+        () => _i255.EditCommunityBloc(gh<_i343.CommunityRepository>()));
     gh.factory<_i118.SignupBloc>(
         () => _i118.SignupBloc(gh<_i468.SignupRepository>()));
     gh.factory<_i265.TokenManager>(() => _i265.TokenManager(
