@@ -82,6 +82,16 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }
 
   @override
+  Future<ApiResponse> likeComment({required String commentId}) {
+    return remoteDataSource.likeComment(commentId: commentId);
+  }
+
+  @override
+  Future<ApiResponse> unLikeComment({required String commentId}) {
+    return remoteDataSource.unLikeComment(commentId: commentId);
+  }
+
+  @override
   Future<ApiResponse<Map<String, List<SearchResponse>>>> search(
       {required String query}) {
     return remoteDataSource.search(query: query);

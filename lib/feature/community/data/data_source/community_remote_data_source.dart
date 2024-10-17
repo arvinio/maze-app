@@ -37,6 +37,10 @@ abstract class CommunityRemoteDataSource {
 
   Future<ApiResponse> likePost({required String postId});
 
+  Future<ApiResponse> likeComment({required String commentId});
+
+  Future<ApiResponse> unLikeComment({required String commentId});
+
   Future<ApiResponse> unLikePost({required String postId});
 
   Future<ApiResponse<Map<String, List<SearchResponse>>>> search(

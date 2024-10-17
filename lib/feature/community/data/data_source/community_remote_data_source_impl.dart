@@ -173,6 +173,28 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
   }
 
   @override
+  Future<ApiResponse> likeComment({required String commentId}) async {
+    Map<String, dynamic> mapData = {
+      "element": "comment", // post,comment,comment-reply
+      "elementId": commentId,
+      "action": "like" //like,unlike
+    };
+    return await dioCaller.post(
+        data: mapData, '/api/like', fromJson: CommunityPostResponse.fromJson);
+  }
+
+  @override
+  Future<ApiResponse> unLikeComment({required String commentId}) async {
+    Map<String, dynamic> mapData = {
+      "element": "comment", // post,comment,comment-reply
+      "elementId": commentId,
+      "action": "unlike"
+    };
+    return await dioCaller.post(
+        data: mapData, '/api/like', fromJson: CommunityPostResponse.fromJson);
+  }
+
+  @override
   Future<ApiResponse<Map<String, List<SearchResponse>>>> search(
       {required String query}) async {
     return await dioCaller.get('api/community/search?query=$query',

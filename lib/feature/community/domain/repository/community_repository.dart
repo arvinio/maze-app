@@ -39,6 +39,10 @@ abstract class CommunityRepository {
 
   Future<ApiResponse> unLikePost({required String postId});
 
+  Future<ApiResponse> likeComment({required String commentId});
+
+  Future<ApiResponse> unLikeComment({required String commentId});
+
   Future<ApiResponse<Map<String, List<SearchResponse>>>> search(
       {required String query});
 
