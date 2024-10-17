@@ -5,8 +5,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/feature/community/data/model/community_post/community_post_response.dart';
 import 'package:maze_app/feature/community/data/model/post_comments/post_comment.dart';
+import 'package:maze_app/feature/community/domain/repository/community_repository.dart';
 
-import '../../../../../domain/repository/community_repository.dart';
 
 part 'view_post_bloc.freezed.dart';
 part 'view_post_event.dart';

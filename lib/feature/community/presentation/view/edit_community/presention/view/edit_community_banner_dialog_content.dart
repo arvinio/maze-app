@@ -17,7 +17,7 @@ import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/community/data/model/community_details_response/community_details_response.dart';
 import 'package:maze_app/feature/community/presentation/view/edit_community/presention/bloc/edit_community_bloc.dart';
-import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/circle_avatar_widget.dart';
+import 'package:maze_app/feature/community/presentation/view/view_community/presentation/widgets/circle_avatar_widget.dart';
 
 
 class EditCommunityBannerDialogContent extends StatefulWidget implements AutoRouteWrapper{

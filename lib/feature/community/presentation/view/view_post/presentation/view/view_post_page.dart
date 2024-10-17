@@ -19,9 +19,9 @@ import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/community/data/model/community_details_response/community_details_response.dart';
 import 'package:maze_app/feature/community/presentation/view/view_post/presentation/bloc/view_post_bloc.dart';
-import 'package:maze_app/feature/community/presentation/view/view_post/presentation/view/widget/comment.dart';
-import 'package:maze_app/feature/community/presentation/view/view_post/presentation/view/widget/comments_header.dart';
-import 'package:maze_app/feature/community/presentation/view/widgets/community_actions.dart';
+import 'package:maze_app/feature/community/presentation/view/view_post/presentation/widgets/comment.dart';
+import 'package:maze_app/feature/community/presentation/view/view_post/presentation/widgets/comments_header.dart';
+import 'package:maze_app/feature/community/presentation/view/view_post/presentation/widgets/community_actions.dart';
 
 @RoutePage()
 class ViewPostPage extends StatefulWidget {
@@ -74,16 +74,16 @@ class _ViewPostPageState extends State<ViewPostPage> {
         child: BlocConsumer<ViewPostBloc, ViewPostState>(
           bloc: _viewPostBloc,
           listener: (context, state) {
-            if (state.postStatus == PostStatus.success) {
+            if (state.postStatus.isSuccess) {
               _viewPostBloc
                   .add(ViewPostEvent.getComments(postId: widget.postId));
-            } else if (state.postStatus == PostStatus.failure ||
-                state.postStatus == PostStatus.commentsFailure) {
+            } else if (state.postStatus.isFailure ||
+                state.postStatus.isCommentsFailure) {
               _logger.e("error: ${state.errorMessage}");
             }
           },
           builder: (context, state) {
-            if (state.postStatus == PostStatus.loading) {
+            if (state.postStatus.isLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
@@ -190,7 +190,7 @@ class _ViewPostPageState extends State<ViewPostPage> {
                   SliverContainer(
                     sliver: SliverMainAxisGroup(
                       slivers: [
-                        state.postStatus == PostStatus.commentsLoading
+                        state.postStatus.isCommentsLoading
                             ? const SliverToBoxAdapter(
                                 child: SizedBox(
                                   height: 300.0,

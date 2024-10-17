@@ -2,7 +2,7 @@ import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/style/app_color.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/community/data/model/community_leaderboard/community_leaderboard_response.dart';
-import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/circle_avatar_widget.dart';
+import 'package:maze_app/feature/community/presentation/view/view_community/presentation/widgets/circle_avatar_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
 class CommunityLeaderboardWidget extends StatefulWidget {

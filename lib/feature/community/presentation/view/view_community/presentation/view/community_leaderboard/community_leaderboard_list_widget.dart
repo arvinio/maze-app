@@ -9,7 +9,7 @@ import 'package:maze_app/feature/community/core/util/community_leaderboard_data_
 import 'package:maze_app/feature/community/data/model/community_leaderboard/community_leaderboard_response.dart';
 import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/community_leaderboard/bloc/community_leaderboard_bloc.dart';
 import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/community_leaderboard/community_leaderboard_widget.dart';
-import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/try_again_widget.dart';
+import 'package:maze_app/feature/community/presentation/view/view_community/presentation/widgets/try_again_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
 

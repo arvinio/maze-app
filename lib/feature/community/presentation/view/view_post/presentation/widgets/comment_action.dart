@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
-import 'package:maze_app/feature/community/presentation/view/widgets/community_action_item.dart';
+
+import 'community_action_item.dart';
 
 class CommentAction extends StatelessWidget {
   const CommentAction({

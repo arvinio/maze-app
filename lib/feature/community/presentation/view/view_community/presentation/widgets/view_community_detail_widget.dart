@@ -7,10 +7,11 @@ import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/community/data/model/community_details_response/community_details_response.dart';
 import 'package:maze_app/feature/community/presentation/view/edit_community/presention/view/edit_community_dialog_content.dart';
 import 'package:maze_app/feature/community/presentation/view/view_community/presentation/bloc/view_community_bloc.dart';
-import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/circle_avatar_widget.dart';
-import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/expandble_text_widget.dart';
-import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/loading_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
+
+import 'circle_avatar_widget.dart';
+import 'expandble_text_widget.dart';
+import 'loading_widget.dart';
 
 class ViewCommunityDetailWidget extends StatefulWidget {
   const ViewCommunityDetailWidget({

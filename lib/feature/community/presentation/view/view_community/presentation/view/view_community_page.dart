@@ -10,10 +10,10 @@ import 'package:maze_app/feature/community/presentation/bloc/community_bloc.dart
 import 'package:maze_app/feature/community/presentation/view/view_community/presentation/bloc/view_community_bloc.dart';
 import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/community_leaderboard/bloc/community_leaderboard_bloc.dart';
 import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/community_post/bloc/community_post_bloc.dart';
-import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/community_tabs_widget.dart';
-import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/try_again_widget.dart';
-import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/view_community_appbar_widget.dart';
-import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/view_community_detail_widget.dart';
+import 'package:maze_app/feature/community/presentation/view/view_community/presentation/widgets/community_tabs_widget.dart';
+import 'package:maze_app/feature/community/presentation/view/view_community/presentation/widgets/try_again_widget.dart';
+import 'package:maze_app/feature/community/presentation/view/view_community/presentation/widgets/view_community_appbar_widget.dart';
+import 'package:maze_app/feature/community/presentation/view/view_community/presentation/widgets/view_community_detail_widget.dart';
 
 @RoutePage()
 class ViewCommunityPage extends StatefulWidget implements AutoRouteWrapper {

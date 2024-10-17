@@ -8,7 +8,7 @@ import 'package:maze_app/core/presentation/widget/custom_Item_divider.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 
-import '../view_post/presentation/bloc/view_post_bloc.dart';
+import '../bloc/view_post_bloc.dart';
 import 'community_action_item.dart';
 
 class CommunityActions extends StatefulWidget {

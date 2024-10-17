@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../../../../core/style/app_theme.dart';
-import '../../../../../../../../core/util/extentsion/context_ext.dart';
-import '../../../../../../data/model/search/search_response.dart';
+import 'package:maze_app/core/style/app_theme.dart';
+import 'package:maze_app/core/util/extentsion/context_ext.dart';
+import 'package:maze_app/feature/community/data/model/search/search_response.dart';
 import 'search_result_item.dart';
 
 class SearchResultList extends StatelessWidget {

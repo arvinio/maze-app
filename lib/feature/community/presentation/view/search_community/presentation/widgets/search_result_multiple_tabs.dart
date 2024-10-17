@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../../data/model/search/search_response.dart';
+import 'package:maze_app/feature/community/data/model/search/search_response.dart';
 import 'search_result_list.dart';
 
 class SearchResultMultipleTabs extends StatelessWidget {

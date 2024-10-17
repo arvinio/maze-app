@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/dimen.dart';
 import 'package:maze_app/core/config/strings.dart';
+import 'package:maze_app/core/presentation/animated_widgets/animated_like.dart';
 import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
+import 'package:maze_app/feature/community/data/model/post_comments/post_comment.dart';
+import 'package:maze_app/feature/community/presentation/view/view_post/presentation/bloc/view_post_bloc.dart';
 
-import '../../../../../../../../core/presentation/animated_widgets/animated_like.dart';
-import '../../../../../../data/model/post_comments/post_comment.dart';
-import '../../bloc/view_post_bloc.dart';
 import 'comment_action.dart';
 
 class Comment extends StatefulWidget {
