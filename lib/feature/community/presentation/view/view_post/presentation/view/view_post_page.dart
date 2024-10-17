@@ -134,14 +134,14 @@ class _ViewPostPageState extends State<ViewPostPage> {
                                 height: 20,
                               ),
                               CustomText(
-                                state.post!.title ?? "NA",
+                                state.post!.title ?? " ",
                                 style: context.titleHeadline,
                               ),
                               const SizedBox(
                                 height: 20,
                               ),
                               CustomText(
-                                state.post!.content ?? "NA",
+                                state.post!.content ?? " ",
                                 style: context.subheadlineSubheadline,
                               ),
                               const SizedBox(
