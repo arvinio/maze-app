@@ -20,7 +20,7 @@ import 'package:maze_app/feature/account_info/presentation/widgets/household_siz
 import 'package:maze_app/feature/account_info/presentation/widgets/household_size_info_dialog_content.dart';
 import 'package:maze_app/feature/account_info/presentation/widgets/state_dialog_content.dart';
 import 'package:maze_app/feature/auth/signing_up/data/model/entry_mode.dart';
-import 'package:maze_app/feature/profile/data/model/edit_household_request/edit_household_request.dart';
+import 'package:maze_app/feature/profile/core/util/edit_household_request/edit_household_request.dart';
 import 'package:maze_app/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:maze_app/feature/profile/presentation/widgets/council_bin_dialog_content.dart';
 

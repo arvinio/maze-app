@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/network/model/api_response.dart';
+import 'package:maze_app/feature/profile/core/util/change_password_request/change_password_request.dart';
+import 'package:maze_app/feature/profile/core/util/edit_details_request/edit_details_request.dart';
+import 'package:maze_app/feature/profile/core/util/edit_household_request/edit_household_request.dart';
+import 'package:maze_app/feature/profile/core/util/edit_profile_request/edit_profile_request.dart';
 import 'package:maze_app/feature/profile/data/data_source/profile_remote_data_source.dart';
 import 'package:maze_app/feature/profile/data/model/change_email_response/change_email_response.dart';
-import 'package:maze_app/feature/profile/data/model/change_password_request/change_password_request.dart';
-import 'package:maze_app/feature/profile/data/model/edit_details_request/edit_details_request.dart';
-import 'package:maze_app/feature/profile/data/model/edit_household_request/edit_household_request.dart';
-import 'package:maze_app/feature/profile/data/model/edit_profile_request/edit_profile_request.dart';
 import 'package:maze_app/feature/profile/data/model/edit_profile_response/edit_profile_response.dart';
 import 'package:maze_app/feature/profile/domain/repository/profile_repository.dart';
 
@@ -66,6 +66,11 @@ class ProfileRepositoryImpl implements ProfileRepository
   @override
   Future<ApiResponse> deleteAccount() {
     return remoteDataSource.deleteAccount();
+  }
+
+  @override
+  Future<ApiResponse> getCommunityProfile() async{
+    return await remoteDataSource.getCommunityProfile();
   }
 
 }

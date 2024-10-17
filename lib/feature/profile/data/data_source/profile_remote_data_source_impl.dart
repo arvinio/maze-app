@@ -4,13 +4,14 @@ import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/network/dio_caller.dart';
 import 'package:maze_app/core/network/model/api_response.dart';
 import 'package:maze_app/di/di_const.dart';
+import 'package:maze_app/feature/profile/core/util/change_password_request/change_password_request.dart';
+import 'package:maze_app/feature/profile/core/util/edit_details_request/edit_details_request.dart';
+import 'package:maze_app/feature/profile/core/util/edit_household_request/edit_household_request.dart';
+import 'package:maze_app/feature/profile/core/util/edit_profile_request/edit_profile_request.dart';
 import 'package:maze_app/feature/profile/data/data_source/profile_remote_data_source.dart';
 import 'package:maze_app/feature/profile/data/model/%20profile_response/profile_response.dart';
 import 'package:maze_app/feature/profile/data/model/change_email_response/change_email_response.dart';
-import 'package:maze_app/feature/profile/data/model/change_password_request/change_password_request.dart';
-import 'package:maze_app/feature/profile/data/model/edit_details_request/edit_details_request.dart';
-import 'package:maze_app/feature/profile/data/model/edit_household_request/edit_household_request.dart';
-import 'package:maze_app/feature/profile/data/model/edit_profile_request/edit_profile_request.dart';
+import 'package:maze_app/feature/profile/data/model/community_profile_response/community_profile_response.dart';
 import 'package:maze_app/feature/profile/data/model/edit_profile_response/edit_profile_response.dart';
 
 @Injectable(as:ProfileRemoteDataSource)
@@ -151,4 +152,10 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     return dioCaller.delete('api/user', fromJson: EditProfileResponse.fromJson);
   }
 
+
+  @override
+  Future<ApiResponse> getCommunityProfile() async{
+    return await dioCaller.get('api/user/profile', fromJson: CommunityProfileResponse.fromJson);
+
+  }
 }

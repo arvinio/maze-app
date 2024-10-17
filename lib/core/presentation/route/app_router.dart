@@ -18,7 +18,9 @@ import 'package:maze_app/feature/chatbot/presentation/view/chat/presentation/vie
 import 'package:maze_app/feature/chatbot/presentation/view/chatBot_home_page.dart';
 import 'package:maze_app/feature/community/data/model/community_details_response/community_details_response.dart';
 import 'package:maze_app/feature/community/presentation/view/community_home_page.dart';
+import 'package:maze_app/feature/community/presentation/view/search_community/presentation/view/search_community_page.dart';
 import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/view_community_page.dart';
+import 'package:maze_app/feature/community/presentation/view/view_post/presentation/view/view_post_page.dart';
 import 'package:maze_app/feature/intro/presentation/view/intro_page.dart';
 import 'package:maze_app/feature/intro/presentation/view/splash_loading_page.dart';
 import 'package:maze_app/feature/knowledge/domain/entity/article.dart';
@@ -30,7 +32,7 @@ import 'package:maze_app/feature/profile/presentation/view/about/about_page.dart
 import 'package:maze_app/feature/profile/presentation/view/account_settings/account_settings_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/change_password/change_password_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/change_password/current_password_page.dart';
-import 'package:maze_app/feature/profile/presentation/view/edit_profile/edit_profile_page.dart';
+import 'package:maze_app/feature/profile/presentation/view/edit_profile/presentation/view/edit_profile_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/help_center/help_center_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/new_email_address/new_email_address_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/profile_home_page.dart';
@@ -44,8 +46,6 @@ import 'package:maze_app/feature/tracker/presentation/view/bin_details_page.dart
 import 'package:maze_app/feature/tracker/presentation/view/new_entry_page.dart';
 import 'package:maze_app/feature/tracker/presentation/view/tracker_page.dart';
 
-import '../../../feature/community/presentation/view/search_community/presentation/view/search_community_page.dart';
-import '../../../feature/community/presentation/view/view_post/presentation/view/view_post_page.dart';
 
 part 'app_router.gr.dart';
 
