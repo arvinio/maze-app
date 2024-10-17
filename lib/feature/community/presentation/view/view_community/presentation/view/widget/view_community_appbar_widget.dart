@@ -8,6 +8,8 @@ import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/widget/custom_menu_items.dart';
 import 'package:maze_app/core/presentation/widget/menu_dialog_content.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
+import 'package:maze_app/feature/community/data/model/community_details_response/community_details_response.dart';
+import 'package:maze_app/feature/community/presentation/view/edit_community/presention/view/edit_community_dialog_content.dart';
 import 'package:maze_app/feature/community/presentation/view/view_community/presentation/bloc/view_community_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 
@@ -15,12 +17,15 @@ class ViewCommunityAppbarWidget extends StatefulWidget {
   const ViewCommunityAppbarWidget(
       {super.key,
       required this.cover,
-      required this.communityId,
-      this.isOwnCommunity = false});
+      required this.communityDetails,
+      this.isOwnCommunity = false,
+      required this.onEditedCallback,
+      });
 
   final String? cover;
   final bool isOwnCommunity;
-  final String communityId;
+  final CommunityDetails communityDetails;
+  final Function onEditedCallback;
 
   @override
   State<ViewCommunityAppbarWidget> createState() =>
@@ -106,7 +111,7 @@ class _ViewCommunityAppbarWidgetState extends State<ViewCommunityAppbarWidget> {
                   onTap: () {
                     context.read<ViewCommunityBloc>().add(
                         ViewCommunityEvent.deleteCommunity(
-                            id: widget.communityId));
+                            id: widget.communityDetails.id!));
                   },
                 ),
                 Divider(
@@ -120,13 +125,25 @@ class _ViewCommunityAppbarWidgetState extends State<ViewCommunityAppbarWidget> {
                   title: appStrings.editCommunity,
                   leading: appAssets.editProfile.svg(),
                   titleColor: context.scheme().error,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pop(context);
+                    _showEditCommunity();
+                  },
                 ),
               ],
             ),
           );
         });
-    // else toast
+  }
+
+  void _showEditCommunity() async{
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (builder) {
+          return EditCommunityDialogContent(communityDetails: widget.communityDetails , onEditedCallback: widget.onEditedCallback,);
+        });
   }
 }
 

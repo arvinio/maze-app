@@ -5,6 +5,7 @@ import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/widget/custom_button.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/feature/community/data/model/community_details_response/community_details_response.dart';
+import 'package:maze_app/feature/community/presentation/view/edit_community/presention/view/edit_community_dialog_content.dart';
 import 'package:maze_app/feature/community/presentation/view/view_community/presentation/bloc/view_community_bloc.dart';
 import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/circle_avatar_widget.dart';
 import 'package:maze_app/feature/community/presentation/view/view_community/presentation/view/widget/expandble_text_widget.dart';
@@ -17,11 +18,13 @@ class ViewCommunityDetailWidget extends StatefulWidget {
     required this.communityDetails,
     required this.communityState,
     this.isFollowedCommunity = false,
+    required this.onEditedAction,
   });
 
   final CommunityDetails communityDetails;
   final ViewCommunityState communityState;
   final bool isFollowedCommunity;
+  final Function onEditedAction;
 
   @override
   State<ViewCommunityDetailWidget> createState() =>
@@ -61,7 +64,8 @@ class _ViewCommunityDetailWidgetState extends State<ViewCommunityDetailWidget> {
   void initState() {
     super.initState();
     isFollowing = widget.isFollowedCommunity;
-    showLockIcon = (widget.isFollowedCommunity && widget.communityDetails.isOwner == false);
+    showLockIcon = (widget.isFollowedCommunity &&
+        widget.communityDetails.isOwner == false);
     _updateStateBasedOnCommunityStatus(
         widget.communityState.viewCommunityStatus);
   }
@@ -82,8 +86,11 @@ class _ViewCommunityDetailWidgetState extends State<ViewCommunityDetailWidget> {
                 ),
                 Row(
                   children: [
-                   if(showLockIcon) appAssets.lockCircle.svg(),
-                    if(showLockIcon) SizedBox(width: 8.w,),
+                    if (showLockIcon) appAssets.lockCircle.svg(),
+                    if (showLockIcon)
+                      SizedBox(
+                        width: 8.w,
+                      ),
                     Text(
                       '${widget.communityDetails.memberCount.toString()} ${appStrings.members}',
                       style: context.subheadlineSubheadline,
@@ -105,7 +112,7 @@ class _ViewCommunityDetailWidgetState extends State<ViewCommunityDetailWidget> {
         SizedBox(
           height: 12.h,
         ),
-        widget.communityDetails.isOwner == false
+        (widget.communityDetails.isOwner != true)
             ? CustomButton.outline(
                 borderRadius: 16,
                 minSize: 40.h,
@@ -142,7 +149,9 @@ class _ViewCommunityDetailWidgetState extends State<ViewCommunityDetailWidget> {
                 textStyle: context.subheadlineSubheadlineSemibold.copyWith(
                   color: context.scheme().primary,
                 ),
-                onPressed: () {}),
+                onPressed: () {
+                  _showEditCommunity();
+                }),
         SizedBox(
           height: 12.h,
         ),
@@ -154,5 +163,18 @@ class _ViewCommunityDetailWidgetState extends State<ViewCommunityDetailWidget> {
         ),
       ],
     );
+  }
+
+  void _showEditCommunity() async {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (builder) {
+          return EditCommunityDialogContent(
+            communityDetails: widget.communityDetails,
+            onEditedCallback: widget.onEditedAction,
+          );
+        });
   }
 }
