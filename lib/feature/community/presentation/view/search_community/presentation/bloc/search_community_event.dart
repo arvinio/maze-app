@@ -1,17 +1,8 @@
 part of 'search_community_bloc.dart';
 
-sealed class SearchCommunityEvent extends Equatable {
-  const SearchCommunityEvent();
-
-  @override
-  List<Object> get props => [];
-}
-
-class SearchCommunityWithQueryEvent extends SearchCommunityEvent {
-  final String query;
-
-  const SearchCommunityWithQueryEvent({required this.query});
-
-  @override
-  List<Object> get props => [query];
+@freezed
+class SearchCommunityEvent with _$SearchCommunityEvent {
+  const factory SearchCommunityEvent.init() = _Init;
+  const factory SearchCommunityEvent.queryEvent({required String query}) =
+      _QueryEvent;
 }

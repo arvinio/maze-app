@@ -1,4 +1,3 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,15 +18,17 @@ import 'package:maze_app/feature/auth/signing_up/data/model/entry_mode.dart';
 import 'package:maze_app/feature/auth/signing_up/presentation/bloc/verify_bloc.dart';
 import 'package:timer_button_fork/timer_button_fork.dart';
 
-
 @RoutePage()
-class VerificationCodePage extends StatefulWidget implements AutoRouteWrapper{
-
+class VerificationCodePage extends StatefulWidget implements AutoRouteWrapper {
   final String userName;
   final String userId;
   final EntryMode entryMode;
 
-  const VerificationCodePage({super.key, required this.userId,required this.userName, required this.entryMode});
+  const VerificationCodePage(
+      {super.key,
+      required this.userId,
+      required this.userName,
+      required this.entryMode});
 
   @override
   State<VerificationCodePage> createState() => _VerificationCodePageState();
@@ -39,14 +40,14 @@ class VerificationCodePage extends StatefulWidget implements AutoRouteWrapper{
 }
 
 class _VerificationCodePageState extends State<VerificationCodePage> {
-
   @override
   void initState() {
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    double h=MediaQuery.of(context).size.height;
+    double h = MediaQuery.of(context).size.height;
     return BasePageWidget(
         appBar: Padding(
           padding: const EdgeInsets.fromLTRB(16, 40, 12, 16),
@@ -61,171 +62,140 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
             ],
           ),
         ),
+        child: BlocConsumer<VerifyBloc, VerifyState>(
+          listener: (context, state) {
+            if (state.verifyStatus.isSuccess) {
+              if (widget.entryMode.isChangeEmail) {
+                inject<SettingsManager>().setEmail(widget.userName);
 
-        child:BlocConsumer<VerifyBloc, VerifyState>(
-    listener: (context, state) {
-
-      if(state.verifyStatus.isSuccess) {
-
-        if(widget.entryMode.isChangeEmail)
-
-            {
-
-          inject<SettingsManager>().setEmail(widget.userName);
-
-          context.router.popUntilRouteWithName(
-          const AccountSettingsPageRoute().routeName);
-        }
-
-           else {
-          context.pushRoute(
-              CreatePasswordPageRoute(
-                  entryMode: widget.entryMode, email: widget.userName));
-        }
-      }
-      else if (state.verifyStatus.isFailure)
-        {
-          Fluttertoast.showToast(
-            msg:appStrings.invalidCode,
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: context.scheme().error,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-        }
-      else if(state.verifyStatus.isResendSuccess)
-      {
-        Fluttertoast.showToast(
-          msg:appStrings.resendMsg,
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-
-      }else if(state.verifyStatus.isResendFailure)
-      {
-        Fluttertoast.showToast(
-          msg:state.errorMessage!,
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: context.scheme().error,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-
-      }
-    },
-    builder: (context, state) {
-    return Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            ListTile(
-              title: CustomText(
-                  widget.entryMode.isChangeEmail ?appStrings.verifyNewEmail:appStrings.verificationCode,
-                  style: context.titleTitle1),
-              subtitle: Padding(
-                padding: const EdgeInsets.only(left: 10.0, top: 5),
-                child: CustomText(
-                    "${appStrings.codeSend}\n ${widget.userName}",
-                    style: context.bodyBody),
-              ),
-              contentPadding: EdgeInsets.zero,
-              minVerticalPadding: 5,
-            ),
-            const SizedBox(height: 35,),
-
-            OtpTextField(
-              numberOfFields: 5,
-              showFieldAsBox: true,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              filled: true,
-              autoFocus: true,
-              textStyle: context.titleTitle2,
-              contentPadding: const EdgeInsets.all(10),
-              fillColor: context
-                  .scheme()
-                  .neutralsFieldsTags,
-              borderRadius: const BorderRadius.all(
-                  Radius.circular(Dimen.defaultRadius)),
-              focusedBorderColor: context
-                  .scheme()
-                  .primary,
-              enabledBorderColor: context
-                  .scheme()
-                  .neutralsFieldsTags,
-             /* fieldHeight: 54,
-              fieldWidth: 54,*/
-              fieldHeight: 50,
-              fieldWidth: 50,
-              onCodeChanged: (String code) {},
-              onSubmit: (String code) {
-
-          context.read<VerifyBloc>().add(
-          VerifyEvent.verifyCode(userId: widget.userId, code: code));
-
-              }, // end onSubmit
-            ),
-            Visibility( visible:state.verifyStatus.isLoading ,
-                child: Padding(
-                    padding: EdgeInsets.only(top: h/8),
-                    child: const Center(child: AppLoading()))),
-            const Spacer(),
-            Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child:TimerButton.builder(
-                  onPressed: () {
-                          //resend api
-                    context.read<VerifyBloc>().add(
-                        VerifyEvent.resend(userId: widget.userId));
-                    },
-
-                  timeOutInSeconds: 60,
-                  timeBuilder: (BuildContext context, int sec) {
-                    return Container(
-                      padding: const EdgeInsets.all(10.0),
-                      width:  MediaQuery
-                          .of(context)
-                          .size
-                          .width,
-                      height:56 ,
-                      decoration: BoxDecoration(
-                        borderRadius:
-                        BorderRadius.circular(16),
-                        border: Border.all(color: context
-                            .scheme()
-                            .neutralsBorderDivider,),
-                        color: context
-                            .scheme()
-                            .neutralsBackground,
-
-                      ),
-                      child: CustomText(
-                        textAlign: TextAlign.center,sec > 0
-                            ? "${appStrings.resendCode}${sec<10 ? "0$sec ": sec }"
-                            : appStrings.resend,
-                        style: context.titleHeadline.copyWith(
-                            color: sec > 0
-                                ? context
-                                .scheme()
-                                .disabledText
-                                : context
-                                .scheme()
-                                .primary),
-                      ),
-                    );
-                  },
+                context.router.popUntilRouteWithName(
+                    const AccountSettingsPageRoute().routeName);
+              } else {
+                context.pushRoute(CreatePasswordPageRoute(
+                    entryMode: widget.entryMode, email: widget.userName));
+              }
+            } else if (state.verifyStatus.isFailure) {
+              Fluttertoast.showToast(
+                msg: appStrings.invalidCode,
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: context.scheme().error,
+                textColor: Colors.white,
+                fontSize: 16.0,
+              );
+            } else if (state.verifyStatus.isResendSuccess) {
+              Fluttertoast.showToast(
+                msg: appStrings.resendMsg,
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.black,
+                textColor: Colors.white,
+                fontSize: 16.0,
+              );
+            } else if (state.verifyStatus.isResendFailure) {
+              Fluttertoast.showToast(
+                msg: state.errorMessage!,
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: context.scheme().error,
+                textColor: Colors.white,
+                fontSize: 16.0,
+              );
+            }
+          },
+          builder: (context, state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                ListTile(
+                  title: CustomText(
+                      widget.entryMode.isChangeEmail
+                          ? appStrings.verifyNewEmail
+                          : appStrings.verificationCode,
+                      style: context.titleTitle1),
+                  subtitle: Padding(
+                    padding: const EdgeInsets.only(left: 10.0, top: 5),
+                    child: CustomText(
+                        "${appStrings.codeSend}\n ${widget.userName}",
+                        style: context.bodyBody),
+                  ),
+                  contentPadding: EdgeInsets.zero,
+                  minVerticalPadding: 5,
                 ),
-            ),
-          ],);
-  },
-)
-
-    );
+                const SizedBox(
+                  height: 35,
+                ),
+                OtpTextField(
+                  numberOfFields: 5,
+                  showFieldAsBox: true,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  filled: true,
+                  autoFocus: true,
+                  textStyle: context.titleTitle2,
+                  contentPadding: const EdgeInsets.all(10),
+                  fillColor: context.scheme().neutralsFieldsTags,
+                  borderRadius: const BorderRadius.all(
+                      Radius.circular(Dimen.defaultRadius)),
+                  focusedBorderColor: context.scheme().primary,
+                  enabledBorderColor: context.scheme().neutralsFieldsTags,
+                  /* fieldHeight: 54,
+              fieldWidth: 54,*/
+                  fieldHeight: 50,
+                  fieldWidth: 50,
+                  onCodeChanged: (String code) {},
+                  onSubmit: (String code) {
+                    context.read<VerifyBloc>().add(VerifyEvent.verifyCode(
+                        userId: widget.userId, code: code));
+                  }, // end onSubmit
+                ),
+                Visibility(
+                    visible: state.verifyStatus.isLoading,
+                    child: Padding(
+                        padding: EdgeInsets.only(top: h / 8),
+                        child: const Center(child: AppLoading()))),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: TimerButton.builder(
+                    onPressed: () {
+                      //resend api
+                      context
+                          .read<VerifyBloc>()
+                          .add(VerifyEvent.resend(userId: widget.userId));
+                    },
+                    timeOutInSeconds: 60,
+                    timeBuilder: (BuildContext context, int sec) {
+                      return Container(
+                        padding: const EdgeInsets.all(10.0),
+                        width: MediaQuery.of(context).size.width,
+                        height: 56,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: context.scheme().neutralsBorderDivider,
+                          ),
+                          color: context.scheme().neutralsBackground,
+                        ),
+                        child: CustomText(
+                          textAlign: TextAlign.center,
+                          sec > 0
+                              ? "${appStrings.resendCode}${sec < 10 ? "0$sec " : sec}"
+                              : appStrings.resend,
+                          style: context.titleHeadline.copyWith(
+                              color: sec > 0
+                                  ? context.scheme().disabledText
+                                  : context.scheme().primary),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
+          },
+        ));
   }
 }

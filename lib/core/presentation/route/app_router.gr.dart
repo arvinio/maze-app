@@ -286,9 +286,14 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     ViewPostPageRoute.name: (routeData) {
+      final args = routeData.argsAs<ViewPostPageRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ViewPostPage(),
+        child: ViewPostPage(
+          key: args.key,
+          postId: args.postId,
+          communityName: args.communityName,
+        ),
       );
     },
     WelcomeAccountSetupPageRoute.name: (routeData) {
@@ -1162,16 +1167,45 @@ class ViewCommunityPageRouteArgs {
 
 /// generated route for
 /// [ViewPostPage]
-class ViewPostPageRoute extends PageRouteInfo<void> {
-  const ViewPostPageRoute({List<PageRouteInfo>? children})
-      : super(
+class ViewPostPageRoute extends PageRouteInfo<ViewPostPageRouteArgs> {
+  ViewPostPageRoute({
+    Key? key,
+    required String postId,
+    required String communityName,
+    List<PageRouteInfo>? children,
+  }) : super(
           ViewPostPageRoute.name,
+          args: ViewPostPageRouteArgs(
+            key: key,
+            postId: postId,
+            communityName: communityName,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'ViewPostPageRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<ViewPostPageRouteArgs> page =
+      PageInfo<ViewPostPageRouteArgs>(name);
+}
+
+class ViewPostPageRouteArgs {
+  const ViewPostPageRouteArgs({
+    this.key,
+    required this.postId,
+    required this.communityName,
+  });
+
+  final Key? key;
+
+  final String postId;
+
+  final String communityName;
+
+  @override
+  String toString() {
+    return 'ViewPostPageRouteArgs{key: $key, postId: $postId, communityName: $communityName}';
+  }
 }
 
 /// generated route for

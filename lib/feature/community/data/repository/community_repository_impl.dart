@@ -1,12 +1,14 @@
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/network/model/api_response.dart';
 import 'package:maze_app/feature/community/core/util/Post_data_request/post_data_request.dart';
+import 'package:maze_app/feature/community/core/util/community_data_request/comunity.dart';
 import 'package:maze_app/feature/community/core/util/community_leaderboard_data_request/community_leaderboard_data_request.dart';
 import 'package:maze_app/feature/community/core/util/community_post_data_request/community_post_data_request.dart';
 import 'package:maze_app/feature/community/data/data_source/community_remote_data_source.dart';
+import 'package:maze_app/feature/community/data/model/community_post/community_post_response.dart';
 import 'package:maze_app/feature/community/data/model/create_community/create_community_response.dart';
-import 'package:maze_app/feature/community/core/util/community_data_request/comunity.dart';
 import 'package:maze_app/feature/community/data/model/create_post/create_post_response.dart';
+import 'package:maze_app/feature/community/data/model/post_comments/post_comment.dart';
 import 'package:maze_app/feature/community/data/model/search/search_response.dart';
 import 'package:maze_app/feature/community/domain/repository/community_repository.dart';
 
@@ -64,29 +66,61 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }
 
   @override
-  Future<ApiResponse> communityLeaderboardList({required CommunityLeaderboardDataRequest request}) {
+  Future<ApiResponse> communityLeaderboardList(
+      {required CommunityLeaderboardDataRequest request}) {
     return remoteDataSource.communityLeaderboardList(request: request);
   }
+
   @override
-  Future<ApiResponse> communityPostList({required CommunityPostDataRequest request}) {
+  Future<ApiResponse> communityPostList(
+      {required CommunityPostDataRequest request}) {
     return remoteDataSource.communityPostList(request: request);
   }
+
   @override
   Future<ApiResponse> likePost({required String postId}) {
     return remoteDataSource.likePost(postId: postId);
   }
+
   @override
   Future<ApiResponse> unLikePost({required String postId}) {
     return remoteDataSource.unLikePost(postId: postId);
   }
+  
+  @override
+  Future<ApiResponse> likeComment({required String commentId}) {
+    return remoteDataSource.likeComment(commentId: commentId);
+  }
+
+  @override
+  Future<ApiResponse> unLikeComment({required String commentId}) {
+    return remoteDataSource.unLikeComment(commentId: commentId);
+  }
+  
   @override
   Future<ApiResponse> getImageFile({required String imageUrl}) {
     return remoteDataSource.getImageFile(imageUrl: imageUrl);
   }
-   @override
+  
+  @override
   Future<ApiResponse<Map<String, List<SearchResponse>>>> search(
       {required String query}) {
     return remoteDataSource.search(query: query);
   }
-}
 
+  @override
+  Future<ApiResponse<CommunityPost>> getPost({required String postId}) {
+    return remoteDataSource.getPost(postId: postId);
+  }
+
+  @override
+  Future<ApiResponse<List<PostCommentResponse>>> getComments(
+      {required String postId}) {
+    return remoteDataSource.getComments(postId);
+  }
+
+  @override
+  Future<ApiResponse> leaveComment({required CommentRequest body}) {
+    return remoteDataSource.leaveComment(body: body);
+  }
+}

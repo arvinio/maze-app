@@ -41,7 +41,7 @@ class _ViewCommunityAppbarWidgetState extends State<ViewCommunityAppbarWidget> {
       pinned: false,
       leading: AppbarActionIconWidget(
         assetSvg: appAssets.backIcon,
-        onTap: () => context.back(),
+        onTap: () => context.router.maybePop(),
       ),
       actions: [
         // AppbarActionIconWidget(assetSvg: appAssets.searchIcon,edgeInsets: const EdgeInsets.only(top: 12 , right: 16), onTap: (){},),
