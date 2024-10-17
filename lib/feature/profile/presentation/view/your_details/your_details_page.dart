@@ -15,7 +15,7 @@ import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
-import 'package:maze_app/feature/profile/data/model/edit_details_request/edit_details_request.dart';
+import 'package:maze_app/feature/profile/core/util/edit_details_request/edit_details_request.dart';
 import 'package:maze_app/feature/profile/presentation/bloc/profile_bloc.dart';
 
 @RoutePage()
