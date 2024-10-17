@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maze_app/core/presentation/widget/animated_color_filter.dart';
+import 'package:maze_app/core/presentation/widget/ignore_overflow.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 
@@ -309,7 +310,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return IgnoreOverflow(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
