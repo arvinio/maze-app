@@ -52,17 +52,20 @@ class _ViewPostPageState extends State<ViewPostPage> {
   late Logger _logger;
 
   late ViewPostBloc _viewPostBloc;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _viewPostBloc = inject<ViewPostBloc>();
     _viewPostBloc.add(ViewPostEvent.getPost(postId: widget.postId));
+    _scrollController = ScrollController();
     _logger = inject<Logger>();
   }
 
   @override
   void dispose() {
+    _scrollController.dispose();
     _commentFocusNode.dispose();
     _viewPostBloc.close();
     super.dispose();
@@ -95,6 +98,7 @@ class _ViewPostPageState extends State<ViewPostPage> {
             }
             if (state.post != null) {
               return CustomScrollView(
+                controller: _scrollController,
                 slivers: [
                   SliverToBoxAdapter(
                     child: Column(
