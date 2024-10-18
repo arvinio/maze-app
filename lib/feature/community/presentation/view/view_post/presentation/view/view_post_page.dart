@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:boxy/slivers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logger/logger.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/dimen.dart';
@@ -24,6 +25,8 @@ import 'package:maze_app/feature/community/presentation/view/view_post/presentat
 import 'package:maze_app/feature/community/presentation/view/view_post/presentation/widgets/comment.dart';
 import 'package:maze_app/feature/community/presentation/view/view_post/presentation/widgets/comments_header.dart';
 import 'package:maze_app/feature/community/presentation/view/view_post/presentation/widgets/community_actions.dart';
+
+import '../../../view_community/presentation/view/community_post/photos_carousel_widget.dart';
 
 @RoutePage()
 class ViewPostPage extends StatefulWidget {
@@ -150,20 +153,13 @@ class _ViewPostPageState extends State<ViewPostPage> {
                                 height: 20,
                               ),
                               // Post Image
-                              Container(
-                                height: 220,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color:
-                                      context.scheme().disableButtonBackground,
-                                  borderRadius: BorderRadius.circular(16),
+                              if (state.post != null &&
+                                  state.post!.photos != null &&
+                                  state.post!.photos!.isNotEmpty)
+                                PhotoCarouselWidget(
+                                  photoUrls: state.post!.photos!,
+                                  height: 220.h,
                                 ),
-                                clipBehavior: Clip.antiAlias,
-                                child: Image.network(
-                                  state.post!.photos?.first,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
                               const SizedBox(
                                 height: 20,
                               ),
