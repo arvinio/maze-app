@@ -196,6 +196,8 @@ import 'package:maze_app/feature/profile/domain/repository/profile_repository.da
     as _i30;
 import 'package:maze_app/feature/profile/presentation/bloc/profile_bloc.dart'
     as _i491;
+import 'package:maze_app/feature/profile/presentation/view/edit_profile/presentation/bloc/community_profile_bloc.dart'
+    as _i965;
 import 'package:maze_app/feature/profile/presentation/view/report/data/data_source/report_remote_data_source.dart'
     as _i17;
 import 'package:maze_app/feature/profile/presentation/view/report/data/data_source/report_remote_data_source_impl.dart'
@@ -332,6 +334,8 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i491.ProfileBloc>(
         () => _i491.ProfileBloc(gh<_i30.ProfileRepository>()));
+    gh.factory<_i965.CommunityProfileBloc>(
+        () => _i965.CommunityProfileBloc(gh<_i30.ProfileRepository>()));
     gh.factory<_i591.ArticleCubit>(() => _i591.ArticleCubit(
           setBookmark: gh<_i672.SetBookmark>(),
           removeBookmark: gh<_i1021.RemoveBookmark>(),

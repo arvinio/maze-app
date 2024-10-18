@@ -37,87 +37,90 @@ class _CommentState extends State<Comment> {
   Widget build(BuildContext context) {
     final viewPostBloc = context.read<ViewPostBloc>();
     return Container(
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(Dimen.defaultRadius),
-            border: Border.all(color: context.scheme().neutralsBorderDivider)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ListTile(
-              leading: CircleAvatar(
-                backgroundImage:
-                    ExactAssetImage(appAssets.profile.path) /* NetworkImage()*/,
-              ),
-              title: CustomText(
-                widget.username,
-                style: context.subheadlineSubheadlineMedium,
-              ),
-              // trailing:
-              //     IconButton(onPressed: onPressed, icon: appAssets.more.svg()),
-              contentPadding: EdgeInsets.zero,
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(Dimen.defaultRadius),
+          border: Border.all(color: context.scheme().neutralsBorderDivider)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ListTile(
+            leading: CircleAvatar(
+              backgroundImage:
+                  ExactAssetImage(appAssets.profile.path) /* NetworkImage()*/,
             ),
-            const SizedBox(
-              height: 10,
+            title: CustomText(
+              widget.username,
+              style: context.subheadlineSubheadlineMedium,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: CustomText(
-                widget.comment.content ?? " ",
-                style: context.subheadlineSubheadline,
-              ),
+            trailing: IconButton(
+              onPressed: widget.onPressed,
+              icon: appAssets.more.svg(),
             ),
-            const SizedBox(
-              height: 10,
+            contentPadding: EdgeInsets.zero,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: CustomText(
+              widget.comment.content ?? " ",
+              style: context.subheadlineSubheadline,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CommentAction(
-                  icon: BlocBuilder<ViewPostBloc, ViewPostState>(
-                    bloc: viewPostBloc,
-                    builder: (context, state) {
-                      return AnimatedLike(
-                        key: _animatedLikeKey,
-                        animatingChildren: [
-                          appAssets.heart.svg(color: context.scheme().error),
-                        ],
-                        animateOnTap: false,
-                        child: appAssets
-                            .heartIcon(
-                              isLiked: (state.comments![widget.index].isLiked ??
-                                  false),
-                            )
-                            .svg(
-                              width: 16.0,
-                              height: 16.0,
-                            ),
-                      );
-                    },
-                  ),
-                  title: (widget.comment.likesCount ?? 0).toString(),
-                  onTap: () {
-                    if (viewPostBloc.state.comments![widget.index].isLiked ??
-                        false) {
-                      viewPostBloc.add(ViewPostEvent.unLikeComment(
-                        commentIndex: widget.index,
-                      ));
-                    } else {
-                      _animatedLikeKey.currentState?.animate();
-                      viewPostBloc.add(ViewPostEvent.likeComment(
-                        commentIndex: widget.index,
-                      ));
-                    }
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              CommentAction(
+                icon: BlocBuilder<ViewPostBloc, ViewPostState>(
+                  bloc: viewPostBloc,
+                  builder: (context, state) {
+                    return AnimatedLike(
+                      key: _animatedLikeKey,
+                      animatingChildren: [
+                        appAssets.heart.svg(color: context.scheme().error),
+                      ],
+                      animateOnTap: false,
+                      child: appAssets
+                          .heartIcon(
+                            isLiked: (state.comments![widget.index].isLiked ??
+                                false),
+                          )
+                          .svg(
+                            width: 16.0,
+                            height: 16.0,
+                          ),
+                    );
                   },
                 ),
-                CommentAction(
-                  icon: appAssets.share.svg(width: 16, height: 16),
-                  title: appStrings.share,
-                )
-              ],
-            )
-          ],
-        ));
+                title: (widget.comment.likesCount ?? 0).toString(),
+                onTap: () {
+                  if (viewPostBloc.state.comments![widget.index].isLiked ??
+                      false) {
+                    viewPostBloc.add(ViewPostEvent.unLikeComment(
+                      commentIndex: widget.index,
+                    ));
+                  } else {
+                    _animatedLikeKey.currentState?.animate();
+                    viewPostBloc.add(ViewPostEvent.likeComment(
+                      commentIndex: widget.index,
+                    ));
+                  }
+                },
+              ),
+              CommentAction(
+                icon: appAssets.share.svg(width: 16, height: 16),
+                title: appStrings.share,
+              )
+            ],
+          )
+        ],
+      ),
+    );
   }
 }
