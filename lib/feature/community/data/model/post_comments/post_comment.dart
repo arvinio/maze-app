@@ -50,3 +50,14 @@ class CommentRequest with _$CommentRequest {
   factory CommentRequest.fromJson(Map<String, dynamic> json) =>
       _$CommentRequestFromJson(json);
 }
+
+@freezed
+class EditCommentRequest with _$EditCommentRequest {
+  const factory EditCommentRequest({
+    @JsonKey(name: "content") final String? content,
+    @JsonKey(name: "commentId") final String? commentId,
+  }) = _editCommentRequest;
+
+  factory EditCommentRequest.fromJson(Map<String, dynamic> json) =>
+      _$EditCommentRequestFromJson(json);
+}

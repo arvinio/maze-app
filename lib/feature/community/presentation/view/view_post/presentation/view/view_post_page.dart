@@ -12,6 +12,8 @@ import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart'
 import 'package:maze_app/core/presentation/widget/custom_menu_items.dart';
 import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/presentation/widget/custom_text_field.dart';
+import 'package:maze_app/core/presentation/widget/dismissible_focus.dart';
+import 'package:maze_app/core/presentation/widget/ignore_overflow.dart';
 import 'package:maze_app/core/presentation/widget/menu_dialog_content.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/date_utils.dart';
@@ -221,7 +223,10 @@ class _ViewPostPageState extends State<ViewPostPage> {
                                                 "${comment.user?.firstName ?? ""}${comment.user?.lastName ?? ""}",
                                             comment: comment,
                                             onPressed: () {
-                                              _showOtherCommentsDialog(context);
+                                              _showOtherCommentsDialog(
+                                                context,
+                                                index: index,
+                                              );
                                             },
                                             index: index,
                                           ),
@@ -239,39 +244,77 @@ class _ViewPostPageState extends State<ViewPostPage> {
                     ),
                     foreground: Align(
                       alignment: Alignment.bottomCenter,
-                      child: Container(
+                      child: AnimatedContainer(
+                        duration: const Duration(
+                          milliseconds: 200,
+                        ),
                         color: context.scheme().mainBackground,
-                        height: 58.0,
+                        height: state.editingComment == null ? 58.0 : 106.0,
+                        alignment: Alignment.bottomCenter,
                         child: Center(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                               horizontal: Dimen.pagePaddingHorizontal,
                             ),
-                            child: CustomTextField.slim(
-                              textEditingController: _commentController,
-                              hint: appStrings.comment,
-                              padding: const EdgeInsetsDirectional.only(
-                                start: 12.0,
-                              ),
-                              borderColor: context.scheme().neutralsFieldsTags,
-                              maxLines: 1,
-                              suffixIcon: InkWell(
-                                onTap: () {
-                                  final text = _commentController.text.trim();
-                                  if (text.isNotEmpty) {
-                                    _viewPostBloc
-                                        .add(ViewPostEvent.leaveComment(
-                                      postId: widget.postId,
-                                      content: text,
-                                    ));
-                                    _commentController.clear();
-                                  }
-                                },
-                                child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        5.0, 5.0, 0.0, 5.0),
-                                    child: appAssets.sendMsgActive
-                                        .svg(width: 20, height: 20)),
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: IgnoreOverflow(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    const SizedBox(
+                                      height: 8.0,
+                                    ),
+                                    if (state.editingComment != null) ...[
+                                      _buildEditContainer(),
+                                    ],
+                                    CustomTextField.slim(
+                                      textEditingController: _commentController,
+                                      hint: appStrings.comment,
+                                      padding: const EdgeInsetsDirectional.only(
+                                        start: 12.0,
+                                      ),
+                                      borderColor:
+                                          context.scheme().neutralsFieldsTags,
+                                      maxLines: 1,
+                                      suffixIcon: InkWell(
+                                        onTap: () {
+                                          final text =
+                                              _commentController.text.trim();
+                                          if (text.isNotEmpty) {
+                                            if (state.editingComment != null) {
+                                              _viewPostBloc.add(
+                                                  ViewPostEvent.editComment(
+                                                commentId:
+                                                    state.editingComment!.id!,
+                                                content: text,
+                                              ));
+                                              dismissFocus(context);
+                                            } else {
+                                              _viewPostBloc.add(
+                                                  ViewPostEvent.leaveComment(
+                                                postId: widget.postId,
+                                                content: text,
+                                              ));
+                                            }
+                                            _commentController.clear();
+                                          }
+                                        },
+                                        child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                5.0, 5.0, 0.0, 5.0),
+                                            child: appAssets.sendMsgActive
+                                                .svg(width: 20, height: 20)),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 8.0,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -325,42 +368,7 @@ class _ViewPostPageState extends State<ViewPostPage> {
     // else toast
   }
 
-  void _showOtherCommentsDialog(BuildContext context) {
-    showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        backgroundColor: Colors.transparent,
-        builder: (builder) {
-          return MenuDialogContent(
-            header: appStrings.options,
-            dialogHeightPercent: 0.32,
-            child: Column(
-              children: [
-                CustomMenuItems(
-                  title: appStrings.muteUser,
-                  leading: appAssets.mute.svg(),
-                  onTap: () {},
-                ),
-                Divider(
-                  height: 1,
-                  thickness: 1,
-                  color: context.scheme().neutralsBorderDivider,
-                  indent: 60,
-                  endIndent: 30,
-                ),
-                CustomMenuItems(
-                  title: appStrings.reportUser,
-                  leading: appAssets.report.svg(),
-                  onTap: () {},
-                ),
-              ],
-            ),
-          );
-        });
-    // else toast
-  }
-
-  void _showMyCommentsDialog(BuildContext context) {
+  void _showOtherCommentsDialog(BuildContext context, {required int index}) {
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -374,7 +382,11 @@ class _ViewPostPageState extends State<ViewPostPage> {
                 CustomMenuItems(
                   title: appStrings.delete,
                   leading: appAssets.delete.svg(),
-                  onTap: () {},
+                  onTap: () {
+                    _viewPostBloc
+                        .add(ViewPostEvent.deleteComment(index: index));
+                    Navigator.of(context).pop();
+                  },
                 ),
                 Divider(
                   height: 1,
@@ -386,7 +398,13 @@ class _ViewPostPageState extends State<ViewPostPage> {
                 CustomMenuItems(
                   title: appStrings.edit,
                   leading: appAssets.editProfile.svg(),
-                  onTap: () {},
+                  onTap: () {
+                    _commentController.text =
+                        _viewPostBloc.state.comments![index].content ?? "";
+                    _viewPostBloc
+                        .add(ViewPostEvent.switchToEditMode(index: index));
+                    Navigator.of(context).pop();
+                  },
                 ),
               ],
             ),
@@ -394,6 +412,98 @@ class _ViewPostPageState extends State<ViewPostPage> {
         });
     // else toast
   }
+
+  Widget _buildEditContainer() {
+    return Container(
+      alignment: AlignmentDirectional.centerStart,
+      margin: const EdgeInsets.only(bottom: 8.0),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(
+            24.0,
+          ),
+        ),
+        border: Border.all(
+          color: context.scheme().dividerColor,
+        ),
+      ),
+      height: 44.0,
+      padding: const EdgeInsetsDirectional.only(
+        start: 16.0,
+        top: 2.0,
+        bottom: 2.0,
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: AlignmentDirectional.centerStart,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    appStrings.editComment,
+                    style: context.footnoteFootnoteBold,
+                  ),
+                  Text(
+                    _viewPostBloc.state.editingComment!.content ?? " ",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: context.footnoteFootnote,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              _commentController.clear();
+              dismissFocus(context);
+              _viewPostBloc.add(const ViewPostEvent.cancelEditMode());
+            },
+            icon: appAssets.close.svg(),
+          ),
+        ],
+      ),
+    );
+  }
+
+// void _showMyCommentsDialog(BuildContext context) {
+//   showModalBottomSheet(
+//       isScrollControlled: true,
+//       context: context,
+//       backgroundColor: Colors.transparent,
+//       builder: (builder) {
+//         return MenuDialogContent(
+//           header: appStrings.options,
+//           dialogHeightPercent: 0.32,
+//           child: Column(
+//             children: [
+//               CustomMenuItems(
+//                 title: appStrings.delete,
+//                 leading: appAssets.delete.svg(),
+//                 onTap: () {},
+//               ),
+//               Divider(
+//                 height: 1,
+//                 thickness: 1,
+//                 color: context.scheme().neutralsBorderDivider,
+//                 indent: 60,
+//                 endIndent: 30,
+//               ),
+//               CustomMenuItems(
+//                 title: appStrings.edit,
+//                 leading: appAssets.editProfile.svg(),
+//                 onTap: () {},
+//               ),
+//             ],
+//           ),
+//         );
+//       });
+//   // else toast
+// }
 }
 
 class PinnedFooterDelegate extends SliverPersistentHeaderDelegate {

@@ -21,4 +21,15 @@ class ViewPostEvent with _$ViewPostEvent {
 
   const factory ViewPostEvent.unLikeComment({required int commentIndex}) =
       _UnLikeComment;
+
+  const factory ViewPostEvent.editComment(
+      {required String commentId, required String content}) = _EditComment;
+
+  const factory ViewPostEvent.deleteComment({required int index}) =
+      _DeleteComment;
+
+  const factory ViewPostEvent.switchToEditMode({required int index}) =
+      _SwitchToEditMode;
+
+  const factory ViewPostEvent.cancelEditMode() = _CancelEditMode;
 }

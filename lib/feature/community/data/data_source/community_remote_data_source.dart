@@ -56,4 +56,8 @@ abstract class CommunityRemoteDataSource {
   Future<ApiResponse> leaveComment({required CommentRequest body});
 
   Future<ApiResponse<List<PostCommentResponse>>> getComments(String postId);
+
+  Future<ApiResponse> editComment({required EditCommentRequest body});
+
+  Future<ApiResponse> deleteComment({required String commentId});
 }

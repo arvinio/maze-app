@@ -57,4 +57,8 @@ abstract class CommunityRepository {
 
   Future<ApiResponse<List<PostCommentResponse>>> getComments(
       {required String postId});
+
+  Future<ApiResponse> editComment({required EditCommentRequest body});
+
+  Future<ApiResponse> deleteComment({required String commentId});
 }

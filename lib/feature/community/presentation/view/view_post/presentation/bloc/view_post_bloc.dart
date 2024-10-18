@@ -7,7 +7,6 @@ import 'package:maze_app/feature/community/data/model/community_post/community_p
 import 'package:maze_app/feature/community/data/model/post_comments/post_comment.dart';
 import 'package:maze_app/feature/community/domain/repository/community_repository.dart';
 
-
 part 'view_post_bloc.freezed.dart';
 part 'view_post_event.dart';
 part 'view_post_state.dart';
@@ -24,21 +23,33 @@ class ViewPostBloc extends Bloc<ViewPostEvent, ViewPostState> {
     on<_UnLike>(_onUnLike);
     on<_LikeComment>(_onLikeComment);
     on<_UnLikeComment>(_onUnLikeComment);
+    on<_EditComment>(_onEditComment);
+    on<_DeleteComment>(_onDeleteComment);
+    on<_SwitchToEditMode>(_onSwitchToEditMode);
+    on<_CancelEditMode>(_onCancelEditMode);
   }
 
   void _likeComment(int index, Emitter<ViewPostState> emit) {
     final hasComments = state.comments != null && state.comments!.isNotEmpty;
     if (hasComments) {
-      final comments = List<PostCommentResponse>.from(state.comments!);
-      final comment = comments[index];
-      comments[index] = comment.copyWith(
-        isLiked: true,
-        likesCount: (comment.likesCount ?? 0) + 1,
-      );
+      final comment = state.comments![index];
+      final comments = _editComment(
+          index,
+          comment.copyWith(
+            isLiked: true,
+            likesCount: (comment.likesCount ?? 0) + 1,
+          ));
       emit(state.copyWith(
         comments: comments,
       ));
     }
+  }
+
+  List<PostCommentResponse> _editComment(
+      int index, PostCommentResponse comment) {
+    final comments = List<PostCommentResponse>.from(state.comments!);
+    comments[index] = comment;
+    return comments;
   }
 
   void _unLikeComment(int index, Emitter<ViewPostState> emit) {
@@ -220,6 +231,104 @@ class ViewPostBloc extends Bloc<ViewPostEvent, ViewPostState> {
           errorMessage: error.message,
         ));
       },
+    );
+  }
+
+  FutureOr<void> _onEditComment(
+      _EditComment event, Emitter<ViewPostState> emit) async {
+    final index =
+        state.comments!.indexWhere((comment) => comment.id == event.commentId);
+    final comment = state.comments![index];
+    final comments = _editComment(
+      index,
+      comment.copyWith(
+        content: event.content,
+      ),
+    );
+
+    emit(
+      ViewPostState(
+        comments: comments,
+        postStatus: state.postStatus,
+        post: state.post,
+        errorMessage: state.errorMessage,
+        editingComment: null,
+      ),
+    );
+
+    final result = await repository.editComment(
+        body: EditCommentRequest(
+      content: event.content,
+      commentId: event.commentId,
+    ));
+
+    result.when(
+        completed: (_, __) {},
+        error: (error) {
+          final comments = _editComment(index, comment);
+          emit(state.copyWith(
+            comments: comments,
+            errorMessage: error.message,
+          ));
+        });
+  }
+
+  List<PostCommentResponse> _deleteComment(int index) {
+    final comments = List<PostCommentResponse>.from(state.comments!);
+    comments.removeAt(index);
+    return comments;
+  }
+
+  List<PostCommentResponse> _insertComment(
+      int index, PostCommentResponse comment) {
+    final comments = List<PostCommentResponse>.from(state.comments!);
+    comments.insert(index, comment);
+    return comments;
+  }
+
+  FutureOr<void> _onDeleteComment(
+      _DeleteComment event, Emitter<ViewPostState> emit) async {
+    final comment = state.comments![event.index];
+    final comments = _deleteComment(event.index);
+    emit(
+      state.copyWith(
+        comments: comments,
+      ),
+    );
+    final result = await repository.deleteComment(
+      commentId: comment.id!,
+    );
+
+    result.when(
+        completed: (_, __) {},
+        error: (error) {
+          final comments = _insertComment(event.index, comment);
+          emit(state.copyWith(
+            comments: comments,
+            errorMessage: error.message,
+          ));
+        });
+  }
+
+  FutureOr<void> _onSwitchToEditMode(
+      _SwitchToEditMode event, Emitter<ViewPostState> emit) {
+    emit(
+      state.copyWith(
+        editingComment: state.comments![event.index],
+      ),
+    );
+  }
+
+  FutureOr<void> _onCancelEditMode(
+      _CancelEditMode event, Emitter<ViewPostState> emit) {
+    emit(
+      ViewPostState(
+        comments: state.comments,
+        postStatus: state.postStatus,
+        post: state.post,
+        errorMessage: state.errorMessage,
+        editingComment: null,
+      ),
     );
   }
 }

@@ -27,10 +27,10 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
   final DioCaller dioCaller;
   final DioCaller imageDioCaller;
 
-  CommunityRemoteDataSourceImpl(
-      {@Named(DiConst.dioNamedToken) required this.dioCaller ,
-        @Named(DiConst.dioNamedMaze) required this.imageDioCaller,
-      });
+  CommunityRemoteDataSourceImpl({
+    @Named(DiConst.dioNamedToken) required this.dioCaller,
+    @Named(DiConst.dioNamedMaze) required this.imageDioCaller,
+  });
 
   @override
   Future<ApiResponse<CreateCommunityResponse>> createCommunity(
@@ -232,12 +232,14 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
   Future<ApiResponse> getImageFile({required String imageUrl}) async {
     Dio dio = Dio();
     try {
-      final response = await dio.get(imageUrl,);
+      final response = await dio.get(
+        imageUrl,
+      );
       return ApiResponse.completed(data: response);
-    } catch(e){
+    } catch (e) {
       return ApiResponse.error(apiError: ApiError(e.toString()));
     }
-    }
+  }
 
   @override
   Future<ApiResponse<Map<String, List<SearchResponse>>>> search(
@@ -245,7 +247,7 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
     return await dioCaller.get('api/community/search?query=$query',
         fromJson: SearchResponse.fromResultJson);
   }
-  
+
   @override
   Future<ApiResponse<CommunityPost>> getPost({required String postId}) async {
     return await dioCaller.get(
@@ -259,6 +261,23 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
     return await dioCaller.post(
       '/api/comment',
       data: body.toJson(),
+      fromJson: (data) => data,
+    );
+  }
+
+  @override
+  Future<ApiResponse> editComment({required EditCommentRequest body}) async {
+    return await dioCaller.put(
+      '/api/comment',
+      data: body.toJson(),
+      fromJson: (data) => data,
+    );
+  }
+
+  @override
+  Future<ApiResponse> deleteComment({required String commentId}) async {
+    return await dioCaller.delete(
+      '/api/comment/$commentId',
       fromJson: (data) => data,
     );
   }

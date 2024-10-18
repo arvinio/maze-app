@@ -30,5 +30,6 @@ class ViewPostState with _$ViewPostState {
       {@Default(PostStatus.init) PostStatus postStatus,
       CommunityPost? post,
       List<PostCommentResponse>? comments,
+      PostCommentResponse? editingComment,
       String? errorMessage}) = _ViewPostState;
 }

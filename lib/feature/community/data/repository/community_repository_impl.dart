@@ -86,7 +86,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   Future<ApiResponse> unLikePost({required String postId}) {
     return remoteDataSource.unLikePost(postId: postId);
   }
-  
+
   @override
   Future<ApiResponse> likeComment({required String commentId}) {
     return remoteDataSource.likeComment(commentId: commentId);
@@ -96,12 +96,12 @@ class CommunityRepositoryImpl implements CommunityRepository {
   Future<ApiResponse> unLikeComment({required String commentId}) {
     return remoteDataSource.unLikeComment(commentId: commentId);
   }
-  
+
   @override
   Future<ApiResponse> getImageFile({required String imageUrl}) {
     return remoteDataSource.getImageFile(imageUrl: imageUrl);
   }
-  
+
   @override
   Future<ApiResponse<Map<String, List<SearchResponse>>>> search(
       {required String query}) {
@@ -122,5 +122,15 @@ class CommunityRepositoryImpl implements CommunityRepository {
   @override
   Future<ApiResponse> leaveComment({required CommentRequest body}) {
     return remoteDataSource.leaveComment(body: body);
+  }
+
+  @override
+  Future<ApiResponse> deleteComment({required String commentId}) {
+    return remoteDataSource.deleteComment(commentId: commentId);
+  }
+
+  @override
+  Future<ApiResponse> editComment({required EditCommentRequest body}) {
+    return remoteDataSource.editComment(body: body);
   }
 }
