@@ -7,21 +7,19 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/dimen.dart';
 import 'package:maze_app/core/config/strings.dart';
-import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
 import 'package:maze_app/core/presentation/widget/custom_menu_items.dart';
 import 'package:maze_app/core/presentation/widget/menu_dialog_content.dart';
-import 'package:maze_app/core/presentation/widget/page_loading.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
-import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/bloc/chart/chart_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/bloc/edit_bin_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/view/edit_bin_details/edit_bin_details_dialog_content.dart';
 import 'package:maze_app/feature/tracker/presentation/view/manage_bins/presentation/bloc/manage_bins_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/custom_container_list.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/loading.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/no_image.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
@@ -37,14 +35,7 @@ class BinDetailsPage extends StatefulWidget implements AutoRouteWrapper {
   });
   @override
   Widget wrappedRoute(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => inject<ChartBloc>(), child: this),
-        BlocProvider(create: (_) => inject<ManageBinsBloc>(), child: this),
-      ],
-      child: this,
-    );
-
+    return  BlocProvider(create: (_) => inject<ChartBloc>(), child: this);
   }
 
   @override
@@ -311,7 +302,7 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
           ),
           const SizedBox(height: 20),
           state.status.isLoading
-              ?PageLoading()
+              ?const Loading()
           :SizedBox(
             height: 200,
             child: BarChart(

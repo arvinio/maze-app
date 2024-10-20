@@ -18,6 +18,7 @@ import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/bloc/edit_bin_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/compost_bin_types/presentation/view/compost_bin_types_dialog_content.dart';
 import 'package:maze_app/feature/tracker/presentation/view/create_bin_types/presentation/widgets/custom_cupertino_picker.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/loading.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tab_content_view.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
@@ -439,16 +440,7 @@ BinType? binType;
             child: ExitButton(),
           ),
           TextButton(child: state.status.isLoading
-    ?Center(
-            child: SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>( context.scheme().primary),
-                    backgroundColor: context.scheme().primariesShade03,
-                    strokeWidth: 2
-                )),
-          )
+    ?const Loading()
     :CustomText(appStrings.save,
               style: context.titleHeadline.copyWith(color: context
                   .scheme()
