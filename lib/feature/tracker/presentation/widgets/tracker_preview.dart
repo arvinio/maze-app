@@ -100,7 +100,8 @@ class _TrackerPreviewState extends State<TrackerPreview> {
             ),
             child: ListTile(
               title: CustomText(
-                '${widget.bin.totalAmount!.toDouble()}${appStrings.kg}',
+
+                '${ widget.bin.totalAmount!=null ?widget.bin.totalAmount!.toDouble():0}${appStrings.kg}',
                 style: context.subheadlineSubheadlineSemibold,
               ),
               subtitle: CustomText(

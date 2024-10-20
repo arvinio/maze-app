@@ -91,7 +91,6 @@ class _ManageBinsDialogContentState extends State<ManageBinsDialogContent>  with
 
                 },
                 navigateToAddNewEntryPage: (bin) {},
-                sortingEntries: () {},
               );
             },
             builder: (context, state) {

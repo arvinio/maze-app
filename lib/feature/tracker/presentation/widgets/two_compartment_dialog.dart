@@ -7,9 +7,10 @@ import 'package:maze_app/core/presentation/widget/bottom_sheet_header.dart';
 import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/style/app_theme.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
+import 'package:maze_app/feature/tracker/data/model/enum/create_bin_types.dart';
 
-class TwoCompartmentDialog extends StatefulWidget {
-  const TwoCompartmentDialog({super.key});
+class TwoCompartmentDialog extends StatefulWidget{
+   const TwoCompartmentDialog({super.key});
 
   @override
   State<TwoCompartmentDialog> createState() => _TwoCompartmentDialogState();
@@ -21,13 +22,14 @@ class _TwoCompartmentDialogState extends State<TwoCompartmentDialog> {
     super.initState();
   }
 
+  List<String> doesItHaveTwoCompartments=[
+      appStrings.yes,
+      appStrings.no];
+
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
-    List<String> measurementSystem = [
-     appStrings.yes,
-      appStrings.no,
-    ];
+
 
     return ScrollConfiguration(
       behavior: CustomScrollBehavior(),
@@ -57,7 +59,7 @@ class _TwoCompartmentDialogState extends State<TwoCompartmentDialog> {
                           child: Column(
                             children: [
                               BottomSheetHeader(
-                                title: appStrings.measurementSystem,
+                                title: appStrings.options,
                                 closeIcon: appAssets.close.svg(),
                                 showDivider: false,
                               ),
@@ -89,14 +91,13 @@ class _TwoCompartmentDialogState extends State<TwoCompartmentDialog> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   CustomText(
-                                                      measurementSystem[index]
-                                                          .toString()!),
+                                                      doesItHaveTwoCompartments[index]),
                                                   const SizedBox(
                                                     height: 20,
                                                   ),
                                                 ])),
                                         onTap: () => Navigator.pop(
-                                            context, measurementSystem[index]),
+                                            context, doesItHaveTwoCompartments[index]),
                                       );
                                     },
                                     separatorBuilder:
@@ -109,7 +110,7 @@ class _TwoCompartmentDialogState extends State<TwoCompartmentDialog> {
                                         endIndent: 20,
                                       );
                                     },
-                                    itemCount: measurementSystem.length,
+                                    itemCount: doesItHaveTwoCompartments.length,
                                   ),
                                 ),
                               ))

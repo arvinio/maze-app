@@ -62,7 +62,6 @@ class _BinsListState extends State<BinsList> {
 
           },
           navigateToAddNewEntryPage: (bin) {},
-          sortingEntries: () {},
         );
       },
       builder: (context, state) {

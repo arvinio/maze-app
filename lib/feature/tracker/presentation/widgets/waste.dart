@@ -1,17 +1,19 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/strings.dart';
+import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/bloc/edit_bin_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/create_bin_types/presentation/view/council_landfill_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/view/create_bin_types/presentation/view/landfill_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_field.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_preview.dart';
-
 import 'bottom_sheets/add_waste_bin_widget.dart';
 import 'bottom_sheets/new_landfill_waste_bin_widget.dart';
 
@@ -91,18 +93,19 @@ class _WasteState extends State<Waste> {
               itemBuilder: (context, index) {
                 return TrackerPreview(
                   onTap: () {
-                    context.read<TrackerBloc>().add(
-                        TrackerEvent.fetchBinDetails(
-                            binId: bins[index].id!));
+                    context.pushRoute(BinDetailsPageRoute(bin: bins[index])).then((value) {
+                      if(context.mounted) {
+                        context.read<TrackerBloc>().add(
+                            const TrackerEvent.getBinsList());
+                      }
+                    });
                   },
                   bin: bins[index],
                 );
               },
               separatorBuilder: (context, index) {
                 return SizedBox(height: 15.h);
-              }
-                      ),
-                    ),
+              })),
 
         // !bloc.hasOrganic
         //     ? TrackerField(

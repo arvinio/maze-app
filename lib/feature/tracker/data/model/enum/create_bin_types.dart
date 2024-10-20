@@ -1,22 +1,34 @@
-enum CreateBinTypes {
+import 'package:maze_app/core/config/strings.dart';
+
+enum BinTypesEnum {
   landfillBin,
   councilLandfillBin,
   compostBin
 }
 
-extension CreateBinTypesExtension on CreateBinTypes {
-  static CreateBinTypes getCreateBinTypesByName(String name) {
+extension CreateBinTypesExtension on BinTypesEnum {
+  static BinTypesEnum getCreateBinTypesByName(String name) {
     switch (name) {
       case 'Landfill Bin':
-        return CreateBinTypes.landfillBin;
+        return BinTypesEnum.landfillBin;
       case 'Council Landfill Bin':
-        return CreateBinTypes.councilLandfillBin;
+        return BinTypesEnum.councilLandfillBin;
       case 'Compost Bin':
-        return CreateBinTypes.compostBin;
+        return BinTypesEnum.compostBin;
 
       default:
-        return CreateBinTypes.landfillBin;
+        return BinTypesEnum.landfillBin;
     }
+  }
+}
+
+
+mixin Utility
+{
+  List<String> doesItHaveTwoCompartments() {
+    return [
+      appStrings.yes,
+      appStrings.no];
   }
 }
 

@@ -22,9 +22,7 @@ part 'tracker_bloc.freezed.dart';
 @injectable
 class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
   final TrackerRepository repository;
-  int wasteSaved = 0;
   int compostSaved = 0;
-  int wasteRecycled = 0;
   bool hasCompost = false;
   bool hasLandfill = false;
 
@@ -73,12 +71,12 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
   _onFetchBinDetails(_FetchBinDetails event, Emitter<TrackerState> emit) async {
     emit(const TrackerState.loadInProgress());
     var hasError = false;
-    final binDetailsFuture = repository.getBinDetails(binId: event.binId);
+    //final binDetailsFuture = repository.getBinDetails(binId: event.binId);
     final entriesFuture = repository.getBinEntryList(binId: event.binId);
     final chartDataFuture = repository.getBinChartData(binId: event.binId);
 
     final results = await Future.wait([
-      binDetailsFuture,
+     // binDetailsFuture,
       entriesFuture,
       chartDataFuture,
     ]);
@@ -132,4 +130,3 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
   }
 }
 
-enum EntrySortOption { dateNewest, dateOldest, type }

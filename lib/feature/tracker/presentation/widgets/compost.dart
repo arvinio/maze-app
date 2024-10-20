@@ -1,9 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/strings.dart';
+import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/core/presentation/widget/app_arrow.dart';
 import 'package:maze_app/core/presentation/widget/custom_text.dart';
 import 'package:maze_app/core/presentation/widget/info_icon.dart';
@@ -89,9 +91,12 @@ final List<Bin> bins=[];
               itemBuilder: (context, index) {
                 return TrackerPreview(
                   onTap: () {
-                    context.read<TrackerBloc>().add(
-                        TrackerEvent.fetchBinDetails(
-                            binId: bins[index].id!));
+                    context.pushRoute(BinDetailsPageRoute(bin: bins[index])).then((value) {
+                      if(context.mounted) {
+                        context.read<TrackerBloc>().add(
+                            const TrackerEvent.getBinsList());
+                      }
+                    });
                   },
                   bin: bins[index],
                 );

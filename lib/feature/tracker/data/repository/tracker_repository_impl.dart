@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/network/model/api_response.dart';
 import 'package:maze_app/feature/tracker/data/datasource/tracker_remote_data_source.dart';
+import 'package:maze_app/feature/tracker/data/model/bin_response/bin_response.dart';
 import 'package:maze_app/feature/tracker/data/model/enum/create_bin_types.dart';
 import 'package:maze_app/feature/tracker/data/model/success_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
@@ -8,7 +9,6 @@ import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
 import 'package:maze_app/feature/tracker/domain/entity/chart_data.dart';
 import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
 import 'package:maze_app/feature/tracker/domain/repo/tracker_repository.dart';
-import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 
 @Injectable(as: TrackerRepository)
 class TrackerRepositoryImpl implements TrackerRepository {
@@ -56,6 +56,7 @@ class TrackerRepositoryImpl implements TrackerRepository {
                 height: e.height.toString(),
                 totalAmount: e.totalAmount,
                 lastEntry: e.lastEntry,
+                isCouncil: e.isCouncil,
                 chartData: charts),
           );
         }
@@ -68,7 +69,7 @@ class TrackerRepositoryImpl implements TrackerRepository {
   }
 
   @override
-  Future<ApiResponse> createBin({required Bin bin,required CreateBinTypes binType}) async {
+  Future<ApiResponse> createBin({required Bin bin,required BinTypesEnum binType}) async {
     return await _remoteDataSource.createBin(bin,binType);
   }
 
@@ -147,9 +148,9 @@ class TrackerRepositoryImpl implements TrackerRepository {
   }
 
   @override
-  Future<ApiResponse<Bin>> getBinDetails({required String binId}) async {
-    final resp = await _remoteDataSource.getBinDetails(binId);
-    return resp.when(
+  Future<ApiResponse<BinResponse>> getBinDetails({required String binId}) async {
+    return  await _remoteDataSource.getBinDetails(binId);
+  /*  return resp.when(
       completed: (data, statusCode) {
         var e = data.result;
 
@@ -186,7 +187,7 @@ class TrackerRepositoryImpl implements TrackerRepository {
       error: (apiError) {
         return ApiResponse.error(apiError: apiError);
       },
-    );
+    );*/
   }
 
   @override
@@ -196,19 +197,19 @@ class TrackerRepositoryImpl implements TrackerRepository {
     return result.when(
       completed: (data, statusCode) {
         var chartData = BinChartData(
-          chartWeek: data.result.chartWeek.map(
+          chartWeek: data.chartDataResult!.chartWeek!.map(
             (e) {
-              return ChartData(name: e.name, value: e.value);
+              return ChartData(name: e.name!, value: e.value!);
             },
           ).toList(),
-          chartMonth: data.result.chartMonth.map(
+          chartMonth: data.chartDataResult!.chartMonth!.map(
             (e) {
-              return ChartData(name: e.name, value: e.value);
+              return ChartData(name: e.name!, value: e.value!);
             },
           ).toList(),
-          chartYear: data.result.chartYear.map(
+          chartYear: data.chartDataResult!.chartYear!.map(
             (e) {
-              return ChartData(name: e.name, value: e.value);
+              return ChartData(name: e.name!, value: e.value!);
             },
           ).toList(),
         );
@@ -218,26 +219,6 @@ class TrackerRepositoryImpl implements TrackerRepository {
         return ApiResponse.error(apiError: apiError);
       },
     );
-  }
-
-  @override
-  Future<ApiResponse<List<EditEntry>>> sortBinEntries({
-    required String binId,
-    required EntrySortOption sortOption,
-  }) async {
-    throw UnimplementedError();
-    // try {
-    //   // Implement the API call to sort entries
-    //   // For now, we'll simulate an API call with a delay
-    //   await Future.delayed(Duration(seconds: 1));
-
-    //   // Simulated sorted entries
-    //   List<EditEntry> sortedEntries = []; // Replace with actual sorted entries
-
-    //   return ApiResponse.completed(sortedEntries);
-    // } catch (e) {
-    //   return ApiResponse.error(ApiError(message: e.toString()));
-    // }
   }
 
   @override

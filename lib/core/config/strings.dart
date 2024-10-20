@@ -298,6 +298,9 @@ class StringsBase {
   String get typeOfCompostBin=>'Type of compost bin';
   String get daysAgo=>'days ago';
   String get addedToLandfill=>'Added to landfill';
+  String get totalSentToLandfill=>'Total sent to landfill';
+  String get editBin=>'Edit bin';
+  String get sentToLandfill=>'Sent to Landfill';
 
   //Pickupdate
   String get monday=>'Monday';

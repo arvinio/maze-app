@@ -57,6 +57,8 @@ class BinModel with _$BinModel {
     bool? is2Compostement,
     @JsonKey(name: "lastEntry")
     DateTime? lastEntry,
+    @JsonKey(name: "isCouncil")
+    bool? isCouncil,
   }) = _BinModel;
 
   factory BinModel.fromJson(Map<String, dynamic> json) => _$BinModelFromJson(json);

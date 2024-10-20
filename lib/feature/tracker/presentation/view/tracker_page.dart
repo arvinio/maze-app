@@ -154,30 +154,12 @@ class _TrackerPageState extends State<TrackerPage>
                     fontSize: 16.0);
               },
               binDetailsLoaded: (bin, details, chartData) {
-                context
-                    .pushRoute(
-                  BinDetailsPageRoute(
-                    bin: bin,
-                    entries: details,
-                    chartData: chartData,
-                  ),
-                )
-                    .then(
-                      (value) {
-                    if (context.mounted) {
-                      context
-                          .read<TrackerBloc>()
-                          .add(const TrackerEvent.getBinsList());
-                    }
-                  },
-                );
               },
               navigateToAddNewEntryPage: (bin) {
                 context.pushRoute(
                   NewEntryPageRoute(bin: bin),
                 );
               },
-              sortingEntries: () {},
             );
           },
           builder: (context, state) {
@@ -406,9 +388,6 @@ class _TrackerPageState extends State<TrackerPage>
               },
               navigateToAddNewEntryPage: (_) {
                 return const SizedBox.shrink();
-              },
-              sortingEntries: () {
-                return const PageLoading(); // Or any other appropriate widget to show while sorting
               },
             );
           },

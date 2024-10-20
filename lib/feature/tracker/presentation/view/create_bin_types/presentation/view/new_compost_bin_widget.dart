@@ -354,7 +354,7 @@ class _NewCompostBinWidgetState extends State<NewCompostBinWidget>
                             is2Compostement:
                                 twoCompartmentController.text == appStrings.yes,
                           ),
-                            binType: CreateBinTypes.compostBin
+                            binType: BinTypesEnum.compostBin
 
                         ),
                       );

@@ -8,10 +8,10 @@ import 'package:maze_app/feature/tracker/data/datasource/tracker_remote_data_sou
 import 'package:maze_app/feature/tracker/data/model/bin_entry_list/bin_entry_list_response.dart';
 import 'package:maze_app/feature/tracker/data/model/bin_list/bin_list_response.dart';
 import 'package:maze_app/feature/tracker/data/model/bin_response/bin_response.dart';
+import 'package:maze_app/feature/tracker/data/model/chart_data/chart_data_response.dart';
 import 'package:maze_app/feature/tracker/data/model/compost_bin_types/compost_bin_types_response.dart';
 import 'package:maze_app/feature/tracker/data/model/deleted_bins/deleted_bins_response.dart';
 import 'package:maze_app/feature/tracker/data/model/enum/create_bin_types.dart';
-import 'package:maze_app/feature/tracker/data/model/get_bin_chart_data_resp.dart';
 import 'package:maze_app/feature/tracker/data/model/success_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
@@ -25,7 +25,7 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   });
 
   @override
-  Future<ApiResponse<SuccessResponse>> createBin(Bin bin,CreateBinTypes binType) async {
+  Future<ApiResponse<SuccessResponse>> createBin(Bin bin,BinTypesEnum binType) async {
     FormData formData = FormData.fromMap({
     'type': bin.type.name,
     'nickname': bin.nickName,
@@ -42,7 +42,7 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
       formData.files.add(MapEntry("photo",await MultipartFile.fromFile(bin.imageUrl!, filename: bin.imageUrl)));
     }
 
-    if (binType==CreateBinTypes.councilLandfillBin || binType==CreateBinTypes.landfillBin ) {
+    if (binType==BinTypesEnum.councilLandfillBin || binType==BinTypesEnum.landfillBin ) {
 
       formData.fields.add(MapEntry("isCouncil", bin.isCouncil.toString()));
       if(bin.isCouncil!) {
@@ -50,13 +50,45 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
       }
     }
 
-    if (binType==CreateBinTypes.compostBin) {
+    if (binType==BinTypesEnum.compostBin) {
       formData.fields.add(MapEntry("typeOfCompostBinId",bin.typeOfCompostBin!.id!));
       formData.fields.add(MapEntry("is2Compostement",bin.is2Compostement.toString()));
     }
 
 
     return await dioCaller.post<SuccessResponse>('api/bin', fromJson: SuccessResponse.fromJson, data: formData);
+  }
+
+  @override
+  Future<ApiResponse> editBin(Bin bin) async{
+    FormData formData = FormData.fromMap({
+      'binId': bin.id,
+      'type': bin.type.name,
+      'nickname': bin.nickName,
+      'sizeType': bin.sizeType.name,
+      'amountOfLitres': bin.amountOfLiters ?? 0,
+      'width': bin.width ,
+      'height': bin.height ,
+      'length': bin.length ,
+      'isShare': bin.isShare,
+    });
+
+    if (bin.imageUrl != null) {
+
+        formData.files.add(MapEntry("photo", await MultipartFile.fromFile(bin.imageUrl!, filename: bin.imageUrl)));
+    }
+    if(bin.pickUpDate !=null) {
+    formData.fields.add(MapEntry("pickupDate", bin.pickUpDate!));
+    }
+       if(bin.typeOfCompostBin !=null) {
+         formData.fields.add(
+             MapEntry("typeOfCompostBinId", bin.typeOfCompostBin!.id!));
+       }
+    if(bin.is2Compostement !=null) {
+
+    formData.fields.add(MapEntry("is2Compostement",bin.is2Compostement.toString()));
+    }
+    return await dioCaller.put<SuccessResponse>('api/bin', fromJson: SuccessResponse.fromJson, data: formData);
   }
 
   @override
@@ -181,12 +213,6 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse> editBin(Bin bin) {
-    // TODO: implement editbin
-    throw UnimplementedError();
-  }
-
-  @override
   Future<ApiResponse<BinEntryListResponse>> getBinEntryList(
       String binId) async {
     return await dioCaller.get('api/bin/entry?binId=$binId&sort=desc&page=1',
@@ -199,9 +225,9 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse<GetBinChartDataResp>> getBinChartData(String binId) async {
+  Future<ApiResponse<ChartDataResponse>> getBinChartData(String binId) async {
     return await dioCaller.get('api/bin/chart?binId=$binId',
-        fromJson: GetBinChartDataResp.fromJson);
+        fromJson: ChartDataResponse.fromJson);
   }
 
   @override

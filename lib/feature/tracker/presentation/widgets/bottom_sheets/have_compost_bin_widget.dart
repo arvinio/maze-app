@@ -5,7 +5,7 @@ import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/widget/app_arrow.dart';
 import 'package:maze_app/core/presentation/widget/custom_button.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
-import 'package:maze_app/feature/tracker/presentation/view/bin_details_page.dart';
+import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/view/bin_details_page.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/help_header.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';

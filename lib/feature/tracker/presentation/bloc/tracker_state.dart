@@ -14,6 +14,5 @@ class TrackerState with _$TrackerState {
       required BinChartData binChartData}) = _BinDetailsLoaded;
   const factory TrackerState.navigateToAddNewEntryPage({required Bin bin}) =
       _NavigateToAddNewEntryPageState;
-  const factory TrackerState.sortingEntries() = _SortingEntries;
 }
 
