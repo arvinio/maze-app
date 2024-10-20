@@ -14,8 +14,8 @@ import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
+import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/bloc/bin_details/bin_details_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/bloc/chart/chart_bloc.dart';
-import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/bloc/edit_bin_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/view/edit_bin_details/edit_bin_details_dialog_content.dart';
 import 'package:maze_app/feature/tracker/presentation/view/manage_bins/presentation/bloc/manage_bins_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/custom_container_list.dart';
@@ -50,6 +50,7 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
   );
   TimeRange _selectedTimeRange = TimeRange.week;
   BinChartData? chartData;
+  bool isMuted=false;
 
   @override
   void initState() {
@@ -456,11 +457,10 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
     showModalBottomSheet(
       context: context,
       builder: (context) {
-
-        return  MultiBlocProvider(
+        return MultiBlocProvider(
           providers: [
             BlocProvider(create: (_) => inject<ManageBinsBloc>(),),
-            BlocProvider(create: (_) => inject<EditBinBloc>()),
+            BlocProvider(create: (_) => inject<BinDetailsBloc>()),
           ],
 
           child: MenuDialogContent(
@@ -479,22 +479,55 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
                         context,
                         child: EditBinDetailsDialogContent(bin: bin,)
                             .wrappedRoute(
-                            context)).then((value){
-                              context.read<EditBinBloc>().add(EditBinEvent.getBinDetails(binId: bin.id!));
-                    });
+                            context));
                   },
                 ),
                 Divider(color: context
                     .scheme()
                     .neutralsBorderDivider, indent: 55.w, endIndent: 15.w,),
-                CustomMenuItems(
-                  title: appStrings.muteNotifications,
-                  leading: appAssets.mute.svg(),
-                  trailing: appAssets.rightArrow.svg(color: context
-                      .scheme()
-                      .tertiaryText),
-                  padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
-                  onTap: () {},
+                BlocConsumer<BinDetailsBloc, BinDetailsState>(
+                  listener: (context, state) {
+                    if (state.status.isMuted) {
+                      Navigator.of(context).pop();
+                      isMuted = true;
+                    }
+                    else if (state.status.isUnMuted) {
+                      Navigator.of(context).pop();
+                      isMuted = false;
+                    }
+                    else if (state.status.isFailureMuted ||
+                        state.status.isFailureUnMuted) {
+                      Fluttertoast.showToast(
+                          msg: state.errorMessage!,
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                    }
+                  },
+                  builder: (context, state) {
+                    return CustomMenuItems(
+                      title: appStrings.muteNotifications,
+                      leading: isMuted ? appAssets.mute.svg() : appAssets.unMute
+                          .svg(),
+                      trailing: state.status.isLoading
+                          ? const Loading()
+                          : appAssets.rightArrow.svg(color: context
+                          .scheme()
+                          .tertiaryText),
+                      padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+                      onTap: () {
+                        (!isMuted) ?
+                        context.read<BinDetailsBloc>().add(
+                            BinDetailsEvent.muteNotification(binId: bin.id!))
+                            :
+                        context.read<BinDetailsBloc>().add(
+                            BinDetailsEvent.unMuteNotification(binId: bin.id!));
+                      },
+                    );
+                  },
                 ),
                 Divider(color: context
                     .scheme()
@@ -520,6 +553,7 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
                         ShowDialog.delete(context,
                             title: '${appStrings.deleteBinTitle}?',
                             subtitle: appStrings.deleteBinSubTitle,
+                            showLoading: state.status.isLoading,
                             onPressed: () {
                               context.read<ManageBinsBloc>().add(
                                   ManageBinsEvent.deleteBin(id: bin.id!));

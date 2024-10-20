@@ -20,6 +20,8 @@ abstract interface class TrackerRemoteDataSource {
   Future<ApiResponse<BinResponse>> getBinDetails(String binId);
   Future<ApiResponse<SuccessResponse>> transferBinData(String sourceBinId,String targetBinId);
   Future<ApiResponse> getListOfCompostBinTypes();
+  Future<ApiResponse> muteNotification({required String binId});
+  Future<ApiResponse> unMuteNotification({required String binId});
 
   ///
   Future<ApiResponse> createBinEntry(Entry entry);

@@ -231,4 +231,17 @@ class TrackerRepositoryImpl implements TrackerRepository {
     return await _remoteDataSource.getListOfCompostBinTypes();
 
   }
+
+  @override
+  Future<ApiResponse> muteNotification({required String binId}) async{
+    return await _remoteDataSource.muteNotification(binId: binId);
+
+  }
+
+  @override
+  Future<ApiResponse> unMuteNotification({required String binId}) async{
+    return await _remoteDataSource.unMuteNotification(binId: binId);
+
+  }
+
 }

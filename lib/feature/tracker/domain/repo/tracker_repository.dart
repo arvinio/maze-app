@@ -23,6 +23,8 @@ abstract interface class TrackerRepository {
   Future<ApiResponse<BinChartData>> getBinChartData({required String binId});
   Future<ApiResponse<SuccessResponse>> transferBinData(String sourceBinId,String targetBinId);
   Future<ApiResponse> getListOfCompostBinTypes();
+  Future<ApiResponse> muteNotification({required String binId});
+  Future<ApiResponse> unMuteNotification({required String binId});
 
 
 }

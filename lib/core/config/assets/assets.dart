@@ -111,7 +111,7 @@ class AssetsBase {
       const AssetSvg('assets/icons/tracker/sort.svg');
   AssetSvg get addEntry =>
       const AssetSvg('assets/icons/tracker/add-entry.svg');
-  AssetSvg get mute =>
+  AssetSvg get unMute =>
       const AssetSvg('assets/icons/tracker/notification.svg');
   AssetSvg get deleteBin =>
       const AssetSvg('assets/icons/tracker/delete_bin.svg');
@@ -127,6 +127,8 @@ class AssetsBase {
       const AssetSvg('assets/icons/tracker/restore.svg');
   AssetSvg get check =>
       const AssetSvg('assets/icons/tracker/check.svg');
+  AssetSvg get mute =>
+      const AssetSvg('assets/icons/tracker/mute.svg');
 
 
 

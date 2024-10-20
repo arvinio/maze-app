@@ -8,7 +8,6 @@ import 'package:maze_app/core/config/strings.dart';
 import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
-import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/bloc/edit_bin_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/create_bin_types/presentation/view/council_landfill_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/view/create_bin_types/presentation/view/landfill_bin_widget.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';

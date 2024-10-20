@@ -15,7 +15,7 @@ import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/tracker/data/model/bin_list/bin_list_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
-import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/bloc/edit_bin_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/bloc/bin_details/bin_details_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/compost_bin_types/presentation/view/compost_bin_types_dialog_content.dart';
 import 'package:maze_app/feature/tracker/presentation/view/create_bin_types/presentation/widgets/custom_cupertino_picker.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/loading.dart';
@@ -25,20 +25,20 @@ import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.da
 import 'package:maze_app/feature/tracker/presentation/widgets/two_compartment_dialog.dart';
 
 
-class EditBinDetailsDialogContent extends StatefulWidget  implements AutoRouteWrapper{
-  const EditBinDetailsDialogContent ({
+class EditBinDetailsDialogContent extends StatefulWidget  implements AutoRouteWrapper {
+  const EditBinDetailsDialogContent({
     super.key, required this.bin,
   });
+
   final Bin bin;
 
   @override
-  State<EditBinDetailsDialogContent > createState() =>
+  State<EditBinDetailsDialogContent> createState() =>
       _EditBinDetailsDialogContentState();
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(create: (_) => inject<EditBinBloc>(), child: this);
-
+    return BlocProvider(create: (_) => inject<BinDetailsBloc>(), child: this);
   }
 }
 
@@ -150,7 +150,7 @@ BinType? binType;
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<EditBinBloc, EditBinState>(
+    return BlocConsumer<BinDetailsBloc, BinDetailsState>(
       listener: (context, state) async {
         if (state.status.isSuccess) {
           Navigator.of(context).popUntil((route) => route.isFirst);
@@ -431,7 +431,7 @@ BinType? binType;
   }
 
 
-  Row buildHeader(BuildContext context,EditBinState state) {
+  Row buildHeader(BuildContext context,BinDetailsState state) {
     return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -440,14 +440,14 @@ BinType? binType;
             child: ExitButton(),
           ),
           TextButton(child: state.status.isLoading
-    ?const Loading()
-    :CustomText(appStrings.save,
+              ? const Loading()
+              : CustomText(appStrings.save,
               style: context.titleHeadline.copyWith(color: context
                   .scheme()
                   .primary)),
               onPressed: () {
-                context.read<EditBinBloc>().add(
-                  EditBinEvent.editBin(
+                context.read<BinDetailsBloc>().add(
+                  BinDetailsEvent.editBin(
                     bin: Bin(
                         type: binType!,
                         id: widget.bin.id,
@@ -460,7 +460,7 @@ BinType? binType;
                             : null
                             : null,
                         isShare: false,
-                      imageUrl: (file != null) ? file!.path :null,
+                        imageUrl: (file != null) ? file!.path : null,
                         width: sizeType == SizeType.dimensions ? widthController
                             .text.trim() : null,
                         length: sizeType == SizeType.dimensions

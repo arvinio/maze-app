@@ -25,70 +25,76 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   });
 
   @override
-  Future<ApiResponse<SuccessResponse>> createBin(Bin bin,BinTypesEnum binType) async {
+  Future<ApiResponse<SuccessResponse>> createBin(Bin bin,
+      BinTypesEnum binType) async {
     FormData formData = FormData.fromMap({
-    'type': bin.type.name,
-    'nickname': bin.nickName,
-    'sizeType': bin.sizeType.name,
-    'amountOfLitres': bin.amountOfLiters ?? 0,
-    'width': bin.width ,
-    'height': bin.height ,
-    'length': bin.length ,
-    'isShare': bin.isShare,
+      'type': bin.type.name,
+      'nickname': bin.nickName,
+      'sizeType': bin.sizeType.name,
+      'amountOfLitres': bin.amountOfLiters ?? 0,
+      'width': bin.width,
+      'height': bin.height,
+      'length': bin.length,
+      'isShare': bin.isShare,
 
     });
 
     if (bin.imageUrl != null) {
-      formData.files.add(MapEntry("photo",await MultipartFile.fromFile(bin.imageUrl!, filename: bin.imageUrl)));
+      formData.files.add(MapEntry("photo",
+          await MultipartFile.fromFile(bin.imageUrl!, filename: bin.imageUrl)));
     }
 
-    if (binType==BinTypesEnum.councilLandfillBin || binType==BinTypesEnum.landfillBin ) {
-
+    if (binType == BinTypesEnum.councilLandfillBin ||
+        binType == BinTypesEnum.landfillBin) {
       formData.fields.add(MapEntry("isCouncil", bin.isCouncil.toString()));
-      if(bin.isCouncil!) {
+      if (bin.isCouncil!) {
         formData.fields.add(MapEntry("pickupDate", bin.pickUpDate!));
       }
     }
 
-    if (binType==BinTypesEnum.compostBin) {
-      formData.fields.add(MapEntry("typeOfCompostBinId",bin.typeOfCompostBin!.id!));
-      formData.fields.add(MapEntry("is2Compostement",bin.is2Compostement.toString()));
+    if (binType == BinTypesEnum.compostBin) {
+      formData.fields.add(
+          MapEntry("typeOfCompostBinId", bin.typeOfCompostBin!.id!));
+      formData.fields.add(
+          MapEntry("is2Compostement", bin.is2Compostement.toString()));
     }
 
 
-    return await dioCaller.post<SuccessResponse>('api/bin', fromJson: SuccessResponse.fromJson, data: formData);
+    return await dioCaller.post<SuccessResponse>(
+        'api/bin', fromJson: SuccessResponse.fromJson, data: formData);
   }
 
   @override
-  Future<ApiResponse> editBin(Bin bin) async{
+  Future<ApiResponse> editBin(Bin bin) async {
     FormData formData = FormData.fromMap({
       'binId': bin.id,
       'type': bin.type.name,
       'nickname': bin.nickName,
       'sizeType': bin.sizeType.name,
       'amountOfLitres': bin.amountOfLiters ?? 0,
-      'width': bin.width ,
-      'height': bin.height ,
-      'length': bin.length ,
+      'width': bin.width,
+      'height': bin.height,
+      'length': bin.length,
       'isShare': bin.isShare,
     });
 
     if (bin.imageUrl != null) {
-
-        formData.files.add(MapEntry("photo", await MultipartFile.fromFile(bin.imageUrl!, filename: bin.imageUrl)));
+      formData.files.add(MapEntry("photo",
+          await MultipartFile.fromFile(bin.imageUrl!, filename: bin.imageUrl)));
     }
-    if(bin.pickUpDate !=null) {
-    formData.fields.add(MapEntry("pickupDate", bin.pickUpDate!));
+    if (bin.pickUpDate != null) {
+      formData.fields.add(MapEntry("pickupDate", bin.pickUpDate!));
     }
-       if(bin.typeOfCompostBin !=null) {
-         formData.fields.add(
-             MapEntry("typeOfCompostBinId", bin.typeOfCompostBin!.id!));
-       }
-    if(bin.is2Compostement !=null) {
-
-    formData.fields.add(MapEntry("is2Compostement",bin.is2Compostement.toString()));
+    if (bin.typeOfCompostBin != null) {
+      formData.fields.add(
+          MapEntry("typeOfCompostBinId", bin.typeOfCompostBin!.id!));
     }
-    return await dioCaller.put<SuccessResponse>('api/bin', fromJson: SuccessResponse.fromJson, data: formData);
+    if (bin.is2Compostement != null) {
+      formData.fields.add(
+          MapEntry("is2Compostement", bin.is2Compostement.toString()));
+    }
+    return await dioCaller.put<SuccessResponse>(
+        'api/bin', fromJson: SuccessResponse.fromJson, data: formData);
   }
 
   @override
@@ -140,19 +146,19 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse> deleteBinPermanently(String binId) async{
+  Future<ApiResponse> deleteBinPermanently(String binId) async {
     return await dioCaller.delete('api/bin/permanent/$binId',
         fromJson: SuccessResponse.fromJson);
   }
 
   @override
-  Future<ApiResponse> restoreDeletedBin(String binId) async{
+  Future<ApiResponse> restoreDeletedBin(String binId) async {
     return await dioCaller.put('api/bin/$binId',
         fromJson: SuccessResponse.fromJson);
   }
 
   @override
-  Future<ApiResponse> getDeletedBins() async{
+  Future<ApiResponse> getDeletedBins() async {
     return await dioCaller.get('api/bin/deleted',
         fromJson: DeletedBinsResponse.fromJson);
   }
@@ -165,8 +171,8 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse> deletebinEntryPhoto(
-      String binEntryId, String photo) async {
+  Future<ApiResponse> deletebinEntryPhoto(String binEntryId,
+      String photo) async {
     var data = FormData.fromMap({
       "binEntryId": binEntryId,
       "photo": photo,
@@ -221,7 +227,8 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
 
   @override
   Future<ApiResponse<BinResponse>> getBinDetails(String binId) async {
-    return await dioCaller.get('api/bin/$binId', fromJson: BinResponse.fromJson);
+    return await dioCaller.get(
+        'api/bin/$binId', fromJson: BinResponse.fromJson);
   }
 
   @override
@@ -231,7 +238,8 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse<SuccessResponse>> transferBinData(String sourceBinId, String targetBinId) async {
+  Future<ApiResponse<SuccessResponse>> transferBinData(String sourceBinId,
+      String targetBinId) async {
     return await dioCaller.put<SuccessResponse>('api/bin/transfer',
         fromJson: SuccessResponse.fromJson,
         data: {
@@ -242,7 +250,20 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse> getListOfCompostBinTypes() async{
-    return await dioCaller.get('api/typeofcompostbin', fromJson: CompostBinTypesResponse.fromJson);
+  Future<ApiResponse> getListOfCompostBinTypes() async {
+    return await dioCaller.get(
+        'api/typeofcompostbin', fromJson: CompostBinTypesResponse.fromJson);
+  }
+
+  @override
+  Future<ApiResponse> muteNotification({required String binId}) async {
+    return await dioCaller.put<SuccessResponse>('api/bin/mute/$binId',
+        fromJson: SuccessResponse.fromJson);
+  }
+
+  @override
+  Future<ApiResponse> unMuteNotification({required String binId}) async {
+    return await dioCaller.put<SuccessResponse>('api/bin/unmute/$binId',
+        fromJson: SuccessResponse.fromJson);
   }
 }
