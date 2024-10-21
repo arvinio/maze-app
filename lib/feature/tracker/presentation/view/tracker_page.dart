@@ -153,8 +153,6 @@ class _TrackerPageState extends State<TrackerPage>
                     textColor: Colors.white,
                     fontSize: 16.0);
               },
-              binDetailsLoaded: (bin, details, chartData) {
-              },
               navigateToAddNewEntryPage: (bin) {
                 context.pushRoute(
                   EntryPageRoute(bin: bin),
@@ -382,9 +380,6 @@ class _TrackerPageState extends State<TrackerPage>
                     child: Text(error.message),
                   ),
                 );
-              },
-              binDetailsLoaded: (_, __, ___) {
-                return const SizedBox.shrink();
               },
               navigateToAddNewEntryPage: (_) {
                 return const SizedBox.shrink();

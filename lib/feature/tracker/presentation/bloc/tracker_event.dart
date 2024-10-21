@@ -10,6 +10,4 @@ class TrackerEvent with _$TrackerEvent {
       _NavigateToBinDetailsPage;
   const factory TrackerEvent.addEntryToBin(
       {required String binId, required Entry entryDetails}) = _AddEntryToBin;
-  const factory TrackerEvent.fetchBinDetails({required String binId}) =
-      _FetchBinDetails;
 }

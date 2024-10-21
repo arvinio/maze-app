@@ -8,10 +8,6 @@ class TrackerState with _$TrackerState {
       _BinsLoaded;
   const factory TrackerState.loadingError({required ApiError error}) =
       _LoadingError;
-  const factory TrackerState.binDetailsLoaded(
-      {required Bin bin,
-      required List<EditEntry> entries,
-      required BinChartData binChartData}) = _BinDetailsLoaded;
   const factory TrackerState.navigateToAddNewEntryPage({required Bin bin}) =
       _NavigateToAddNewEntryPageState;
 }

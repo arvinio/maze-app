@@ -58,9 +58,6 @@ class _BinsListState extends State<BinsList> {
                 textColor: Colors.white,
                 fontSize: 16.0);
           },
-          binDetailsLoaded: (bin, details, chartData) {
-
-          },
           navigateToAddNewEntryPage: (bin) {},
         );
       },

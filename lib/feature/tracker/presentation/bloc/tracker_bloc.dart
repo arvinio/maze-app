@@ -30,7 +30,6 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
 
   TrackerBloc(this.repository) : super(const TrackerState.initial()) {
     on<_AddEntryToBin>(_onAddEntryToBin);
-    on<_FetchBinDetails>(_onFetchBinDetails);
     on<_initEvent>(_onInit);
     on<_GetBinsList>(_onGetBinsList);
     on<_NavigateToAddNewEntryPage>(_onNavigateToAddNewEntryPage);
@@ -66,62 +65,6 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
         emit(TrackerState.loadingError(error: apiError));
       },
     );
-  }
-
-  _onFetchBinDetails(_FetchBinDetails event, Emitter<TrackerState> emit) async {
-    emit(const TrackerState.loadInProgress());
-    var hasError = false;
-    //final binDetailsFuture = repository.getBinDetails(binId: event.binId);
-    final entriesFuture = repository.getBinEntryList(binId: event.binId);
-    final chartDataFuture = repository.getBinChartData(binId: event.binId);
-
-    final results = await Future.wait([
-     // binDetailsFuture,
-      entriesFuture,
-      chartDataFuture,
-    ]);
-
-    final binDetailsResult = results[0] as ApiResponse<Bin>;
-    final entriesResult = results[1] as ApiResponse<List<EditEntry>>;
-    final chartDataResult = results[2] as ApiResponse<BinChartData>;
-    late final Bin bin;
-    late final List<EditEntry> entries;
-    late final BinChartData chartData;
-    binDetailsResult.when(
-      completed: (data, statusCode) {
-        bin = data;
-      },
-      error: (apiError) {
-        hasError = true;
-        emit(TrackerState.loadingError(error: apiError));
-      },
-    );
-    entriesResult.when(
-      completed: (data, statusCode) {
-        entries = data;
-      },
-      error: (apiError) {
-        hasError = true;
-        emit(TrackerState.loadingError(error: apiError));
-      },
-    );
-    chartDataResult.when(
-      completed: (data, statusCode) {
-        chartData = data;
-      },
-      error: (apiError) {
-        hasError = true;
-        emit(TrackerState.loadingError(error: apiError));
-      },
-    );
-
-    if (!hasError) {
-      emit(TrackerState.binDetailsLoaded(
-        bin: bin,
-        entries: entries,
-        binChartData: chartData,
-      ));
-    }
   }
 
   FutureOr<void> _onNavigateToAddNewEntryPage(

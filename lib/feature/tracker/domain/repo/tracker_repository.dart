@@ -6,7 +6,6 @@ import 'package:maze_app/feature/tracker/data/model/success_response.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
 import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
-import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
 
 abstract interface class TrackerRepository {
   Future<ApiResponse<List<Bin>>> getBinsList();
@@ -19,7 +18,6 @@ abstract interface class TrackerRepository {
   Future<ApiResponse> createBinEntry({required Entry entry});
   Future<ApiResponse> editBinEntry({required EditEntry entry});
   Future<ApiResponse> deleteBinEntry({required String entryId});
- // Future<ApiResponse<List<EditEntry>>> getBinEntryList({required String binId});
   Future<ApiResponse<BinEntryListResponse>> getBinEntryList({required String binId});
   Future<ApiResponse<BinResponse>> getBinDetails({required String binId});
   Future<ApiResponse<BinChartData>> getBinChartData({required String binId});

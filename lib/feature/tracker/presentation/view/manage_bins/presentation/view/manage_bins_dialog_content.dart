@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/strings.dart';
-import 'package:maze_app/core/presentation/route/app_router.dart';
-import 'package:maze_app/core/presentation/widget/custom_button.dart';
 import 'package:maze_app/core/presentation/widget/custom_menu_items.dart';
 import 'package:maze_app/core/presentation/widget/menu_dialog_content.dart';
 import 'package:maze_app/core/presentation/widget/page_loading.dart';
@@ -86,9 +84,6 @@ class _ManageBinsDialogContentState extends State<ManageBinsDialogContent>  with
                       backgroundColor: Colors.red,
                       textColor: Colors.white,
                       fontSize: 16.0);
-                },
-                binDetailsLoaded: (bin, details, chartData) {
-
                 },
                 navigateToAddNewEntryPage: (bin) {},
               );
