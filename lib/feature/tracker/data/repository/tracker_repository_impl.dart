@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:maze_app/core/network/model/api_response.dart';
 import 'package:maze_app/feature/tracker/data/datasource/tracker_remote_data_source.dart';
+import 'package:maze_app/feature/tracker/data/model/bin_entry_list/bin_entry_list_response.dart';
 import 'package:maze_app/feature/tracker/data/model/bin_response/bin_response.dart';
 import 'package:maze_app/feature/tracker/data/model/enum/create_bin_types.dart';
 import 'package:maze_app/feature/tracker/data/model/success_response.dart';
@@ -117,34 +118,8 @@ class TrackerRepositoryImpl implements TrackerRepository {
   }
 
   @override
-  Future<ApiResponse<List<EditEntry>>> getBinEntryList(
-      {required String binId}) async {
-    final resp = await _remoteDataSource.getBinEntryList(binId);
-    return resp.when(
-      completed: (data, statusCode) {
-        final List<EditEntry> entries = [];
-        for (var element in data.result!) {
-          entries.add(EditEntry(
-            element.id!,
-            whatRecycled: element.whatRecycle,
-            whatDidAdd: element.whatDidAdd,
-            compostUsed: element.compostUsed,
-            entryDate: element.entryDate!,
-            binId: binId,
-            type: EntryType.fromString(element.type!),
-            mixed: element.isMixed,
-            note: element.note ?? "",
-            photo: element.photos ?? [],
-            howFull: element.howFull,
-            amount: element.amount.toString(),
-          ));
-        }
-        return ApiResponse.completed(data: entries);
-      },
-      error: (apiError) {
-        return ApiResponse.error(apiError: apiError);
-      },
-    );
+  Future<ApiResponse<BinEntryListResponse>> getBinEntryList({required String binId}) async {
+    return await _remoteDataSource.getBinEntryList(binId);
   }
 
   @override

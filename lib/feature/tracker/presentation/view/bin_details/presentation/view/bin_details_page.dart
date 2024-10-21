@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/dimen.dart';
 import 'package:maze_app/core/config/strings.dart';
+import 'package:maze_app/core/presentation/route/app_router.dart';
 import 'package:maze_app/core/presentation/widget/base/base_page_widget.dart';
 import 'package:maze_app/core/presentation/widget/custom_menu_items.dart';
 import 'package:maze_app/core/presentation/widget/menu_dialog_content.dart';
@@ -17,8 +18,8 @@ import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
 import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/bloc/bin_details/bin_details_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/bloc/chart/chart_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/view/edit_bin_details/edit_bin_details_dialog_content.dart';
+import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/widgets/entry_summary_list.dart';
 import 'package:maze_app/feature/tracker/presentation/view/manage_bins/presentation/bloc/manage_bins_bloc.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/custom_container_list.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/loading.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/no_image.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
@@ -51,7 +52,9 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
   TimeRange _selectedTimeRange = TimeRange.week;
   BinChartData? chartData;
   bool isMuted=false;
-
+ List<double> chartWeek=[2,5,9,4,0.5,7,6];
+ List<double> chartMonth=[2,5,9,4,1,7,6,2,5,9,4,1,7,6,2,5,9,4,1,7,6,2,5,0,4,1,7,6,8,5];
+ List<double> chartYear=[2,5,9,4,1,7,6,2,5,0,4,1];
   @override
   void initState() {
     super.initState();
@@ -66,12 +69,12 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
           .neutralsFieldsTags,
       pagePaddingHorizontal: 0,
       appBar: ListTile(
-              leading: const PreviousButton(),
-              trailing: InkWell(child: appAssets.more.svg(), onTap: () {
-                showOptions(context, widget.bin);
-              },),
-              contentPadding: const EdgeInsets.fromLTRB(16, 40, 16, 10)
-          ),
+          leading: const PreviousButton(),
+          trailing: InkWell(child: appAssets.more.svg(), onTap: () {
+            showOptions(context, widget.bin);
+          },),
+          contentPadding: const EdgeInsets.fromLTRB(16, 40, 16, 10)
+      ),
 
       child: SingleChildScrollView(
         child: Column(
@@ -113,6 +116,8 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
                           const SizedBox(width: 8,),
                           InkWell(
                               onTap: () {
+                                context.pushRoute(
+                                    EntryPageRoute(bin: widget.bin));
                                 /*      context.read<TrackerBloc>().add(
                                       TrackerEvent.navigateToAddNewEntryPage(
                                           bin: widget.bin));*/
@@ -127,7 +132,7 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
                   SizedBox(
                     height: 20.h,
                   ),
-                  _buildEntriesList(context),
+                EntrySummaryList(binId: widget.bin.id!).wrappedRoute(context),
                 ],),
               ),
             ),
@@ -304,22 +309,39 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
           const SizedBox(height: 20),
           state.status.isLoading
               ?const Loading()
-          :SizedBox(
+          : (_selectedTimeRange == TimeRange.week )
+          ?SizedBox(
             height: 200,
             child: BarChart(
               BarChartData(
                 alignment: BarChartAlignment.spaceAround,
-                maxY: _calculateMaxY(),
+                maxY:
+                _calculateMaxY(),
                 minY: 0,
-                barTouchData: BarTouchData(enabled: false),
+                barTouchData:  BarTouchData(
+                enabled: true,
+                touchTooltipData: BarTouchTooltipData(
+                  tooltipPadding: EdgeInsets.zero,
+                  tooltipMargin: 8,
+                  getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                    return BarTooltipItem(
+                      '${rod.toY.toInt()}kg',
+                      TextStyle(
+                        color: context.scheme().primaryText,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  },
+                ),
+              ),
                 titlesData: FlTitlesData(
                   show: true,
                   topTitles:
-                      AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                     const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                   rightTitles:
-                      AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                   leftTitles:
-                      AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  const  AxisTitles(sideTitles: SideTitles(showTitles: false)),
                   bottomTitles: AxisTitles(
                     sideTitles: SideTitles(
                       showTitles: true,
@@ -343,30 +365,129 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
                     ),
                   ),
                 ),
-                gridData: FlGridData(show: false),
+                gridData: const FlGridData(show: false),
                 borderData: FlBorderData(show: false),
-                barGroups: List.generate(7, (index) {
+              /*  barGroups: List.generate(7, (index) {
                   double value =chartData!=null ? index < chartData!.chartWeek.length
                       ? chartData!.chartWeek[index].value.toDouble()
                       : 0
-                  :0;
+                  :0;*/
+
+    barGroups: List.generate(7, (index) {
+      double value=chartWeek[index];
                   return BarChartGroupData(
                     x: index,
                     barRods: [
                       BarChartRodData(
                         toY: value,
-                        color: value > 0
-                            ? context.scheme().primary
-                            : Colors.grey[300],
+                        color:context.scheme().neutralsFieldsTags,
                         width: 30,
                         borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(4)),
+                            const BorderRadius.vertical(top: Radius.circular(8)),
                         rodStackItems: [
                           BarChartRodStackItem(0, value, Colors.transparent),
                         ],
+
                       ),
                     ],
-                    showingTooltipIndicators: [0],
+                   // showingTooltipIndicators: [0],
+
+                    groupVertically: true
+                  );
+                }),
+
+            ),
+          ))
+              : (_selectedTimeRange == TimeRange.month ) ?
+          SizedBox(
+            height: 200,
+            child: BarChart(
+              BarChartData(
+                alignment: BarChartAlignment.spaceAround,
+                maxY:
+                _calculateMaxY(),
+                minY: 0,
+                barTouchData: BarTouchData(enabled: false,),
+                titlesData: FlTitlesData(
+                  show: true,
+                  topTitles:
+                 const  AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  rightTitles:
+                  const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  leftTitles:
+                  const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      getTitlesWidget: (value, meta) => Padding(
+                        padding: const EdgeInsets.only(top: 8.0,left: 1,right: 1),
+                        child: Text(
+                          [
+                            '1',
+                            '',
+                            '',
+                            '',
+                            '5',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '10',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '15',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '20',
+                            ' ',
+                            ' ',
+                            ' ',
+                            ' ',
+                            '25',
+                            ' ',
+                            ' ',
+                            ' ',
+                            ' ',
+                            '30'
+                          ][value.toInt()],
+                          style:
+                          TextStyle(fontSize: 12, color: Colors.grey[600]),
+                        ),
+                      ),
+                      reservedSize: 30,
+                    ),
+                  ),
+                ),
+                gridData: const FlGridData(show: false),
+                borderData: FlBorderData(show: false),
+                /*  barGroups: List.generate(7, (index) {
+                  double value =chartData!=null ? index < chartData!.chartWeek.length
+                      ? chartData!.chartWeek[index].value.toDouble()
+                      : 0
+                  :0;*/
+
+                barGroups: List.generate(30, (index) {
+                  double value=chartMonth[index];
+                  return BarChartGroupData(
+                      x: index,
+                      barRods: [
+                        BarChartRodData(
+                          toY: value,
+                          color:context.scheme().neutralsFieldsTags,
+                          width: 5,
+                          borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(8)),
+                          rodStackItems: [
+                            BarChartRodStackItem(0, value, Colors.transparent),
+                          ],
+
+                        ),
+                      ],
+                      groupVertically: true
                   );
                 }),
                 // barTouchData: BarTouchData(
@@ -388,7 +509,102 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
                 // ),
               ),
             ),
-          ),
+          )
+              :SizedBox(
+            height: 200,
+            child: BarChart(
+              BarChartData(
+                alignment: BarChartAlignment.spaceAround,
+                maxY:
+                _calculateMaxY(),
+                minY: 0,
+                barTouchData: BarTouchData(enabled: false),
+                titlesData: FlTitlesData(
+                  show: true,
+                  topTitles:
+                  const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  rightTitles:
+                  const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  leftTitles:
+                  const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      getTitlesWidget: (value, meta) => Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          [
+                            '1',
+                            '2',
+                            '3',
+                            '4',
+                            '5',
+                            '6',
+                            '7',
+                             '8',
+                            '9',
+                            '10',
+                            '11',
+                            '12'
+                          ][value.toInt()],
+                          style:
+                          TextStyle(fontSize: 12, color: Colors.grey[600]),
+                        ),
+                      ),
+                      reservedSize: 30,
+                    ),
+                  ),
+                ),
+                gridData: const FlGridData(show: false),
+                borderData: FlBorderData(show: false),
+                /*  barGroups: List.generate(7, (index) {
+                  double value =chartData!=null ? index < chartData!.chartWeek.length
+                      ? chartData!.chartWeek[index].value.toDouble()
+                      : 0
+                  :0;*/
+
+                barGroups: List.generate(12, (index) {
+                  double value=chartYear[index];
+                  return BarChartGroupData(
+                      x: index,
+                      barRods: [
+                        BarChartRodData(
+                          toY: value,
+                          color:context.scheme().neutralsFieldsTags,
+                          width: 20,
+                          borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(8)),
+                          rodStackItems: [
+                            BarChartRodStackItem(0, value, Colors.transparent),
+                          ],
+
+                        ),
+                      ],
+                    //  showingTooltipIndicators: [0],
+
+                      groupVertically: true
+                  );
+                }),
+                // barTouchData: BarTouchData(
+                //   enabled: false,
+                //   touchTooltipData: BarTouchTooltipData(
+                //     // tooltipBgColor: Colors.transparent,
+                //     tooltipPadding: EdgeInsets.zero,
+                //     tooltipMargin: 8,
+                //     getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                //       return BarTooltipItem(
+                //         '${rod.toY.toInt()}kg',
+                //         TextStyle(
+                //           color: context.scheme().primaryText,
+                //           fontWeight: FontWeight.bold,
+                //         ),
+                //       );
+                //     },
+                //   ),
+                // ),
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -431,27 +647,7 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
     );
   }
 
-  Widget _buildEntriesList(BuildContext context) {
-    var children = <Widget>[];
-  /*  for (var element in widget.entries) {
-      children.add(ListTile(
-        leading: GetEntryTypeIcon(entryType: element.type),
-        title: CustomText(element.entryDate.day <10 ?DateFormat('d MM yyyy').format(element.entryDate):DateFormat('dd MM yyyy').format(element.entryDate),style: context.bodyBody,),
-        subtitle: CustomText(element.type.toDisplayString(),style: context.footnoteFootnote.copyWith(color: context.scheme().secondaryText)),
-        onTap: () {
-         *//* context
-              .read<TrackerBloc>()
-              .add(TrackerEvent.navigateToAddNewEntryPage(bin: widget.bin));*//*
-        },
-        trailing: const AppArrow(),
-      ));
-    }*/
-    return CustomContainerList(
-      height: 300.h,
-        indent:53.w, endIndent:20.w,
-      children: children
-    );
-  }
+
 
   void showOptions(BuildContext context,Bin bin) {
     showModalBottomSheet(

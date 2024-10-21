@@ -219,13 +219,6 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse<BinEntryListResponse>> getBinEntryList(
-      String binId) async {
-    return await dioCaller.get('api/bin/entry?binId=$binId&sort=desc&page=1',
-        fromJson: BinEntryListResponse.fromJson);
-  }
-
-  @override
   Future<ApiResponse<BinResponse>> getBinDetails(String binId) async {
     return await dioCaller.get(
         'api/bin/$binId', fromJson: BinResponse.fromJson);
@@ -265,5 +258,12 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   Future<ApiResponse> unMuteNotification({required String binId}) async {
     return await dioCaller.put<SuccessResponse>('api/bin/unmute/$binId',
         fromJson: SuccessResponse.fromJson);
+  }
+
+  @override
+  Future<ApiResponse<BinEntryListResponse>> getBinEntryList(
+      String binId) async {
+    return await dioCaller.get('api/bin/entry?binId=$binId&sort=desc&page=1',
+        fromJson: BinEntryListResponse.fromJson);
   }
 }

@@ -1,6 +1,5 @@
 part of 'bin_details_bloc.dart';
 
-
 enum BinDetailsStatus {
   init,
   loading,

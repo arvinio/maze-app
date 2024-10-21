@@ -21,22 +21,23 @@ import 'package:maze_app/feature/tracker/domain/entity/compost_use.dart';
 import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
 import 'package:maze_app/feature/tracker/domain/entity/what_did_add.dart';
 import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/view/entry_page/presentation/widgets/custom_container_list.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/compost_use_sheet.dart';
-import 'package:maze_app/feature/tracker/presentation/widgets/custom_container_list.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/custom_item.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/get_entry_type_icon.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/no_image.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/what_did_add_selection_sheet.dart';
 
 @RoutePage()
-class NewEntryPage extends StatefulWidget implements AutoRouteWrapper {
-  const NewEntryPage({super.key, required this.bin});
+class EntryPage extends StatefulWidget implements AutoRouteWrapper {
+  const EntryPage({super.key, required this.bin});
   // const NewEntryPage.edit({super.key, required this.bin});
   final Bin bin;
 
   @override
-  State<NewEntryPage> createState() => _NewEntryPageState();
+  State<EntryPage> createState() => _EntryPageState();
 
   @override
   Widget wrappedRoute(BuildContext context) {
@@ -44,7 +45,7 @@ class NewEntryPage extends StatefulWidget implements AutoRouteWrapper {
   }
 }
 
-class _NewEntryPageState extends State<NewEntryPage> {
+class _EntryPageState extends State<EntryPage> {
   late Entry _entry;
 
   late List<DateTime?> _dialogCalendarPickerValue;
@@ -55,6 +56,20 @@ class _NewEntryPageState extends State<NewEntryPage> {
   var _radioAmount = 100;
   var _entryType = EntryType.generalNote;
   List<File?> photos = [];
+  final List<String> monthList = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
 
   void fillEntry() {
     _entry = Entry(
@@ -91,9 +106,9 @@ class _NewEntryPageState extends State<NewEntryPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
            InkWell(child: appAssets.arrowLeft.svg(width: 24,height: 24),onTap: (){
-             context.maybePop();
+            Navigator.of(context).pop();
            },),
-          CustomText('5 Jan 2024', style: context.titleHeadline),
+          CustomText('${DateTime.now().day} ${monthList[DateTime.now().month]} ${DateTime.now().year}', style: context.titleHeadline),
           TextButton(
             onPressed: (() {
               fillEntry();
@@ -122,11 +137,11 @@ class _NewEntryPageState extends State<NewEntryPage> {
               TrackerField(
                 title: widget.bin.nickName,
                 titleStyle: context.titleHeadline,
-                subTitle: '${120} ${appStrings.litres}',
+                subTitle: '${widget.bin.amountOfLiters ?? 0 } ${appStrings.litres}',
                 subTitleStyle: context.captionCaption.copyWith(color: context.scheme().secondaryText),
                 onTap: null,
                 leadingIcon: widget.bin.imageUrl == null
-                    ? null
+                    ? const NoImage()
                     : SizedBox(
                   height: 80.dg,
                   width: 80.dg,
@@ -134,8 +149,8 @@ class _NewEntryPageState extends State<NewEntryPage> {
                    borderRadius: BorderRadius.all(Radius.circular(15.sp)),
                     child: Image.network(widget.bin.imageUrl!,fit: BoxFit.cover,)),
                 ),
-                containerPadding: EdgeInsets.zero,
-                trailing: SizedBox(width: 24,height: 24 ,child: appAssets.dropDown.svg()),
+               // containerPadding: EdgeInsets.zero,
+                trailing: const SizedBox.shrink(),
               ),
               SizedBox(
                 height: 15.h,

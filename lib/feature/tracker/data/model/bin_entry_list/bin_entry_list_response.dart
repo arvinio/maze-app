@@ -81,6 +81,8 @@ class ApiBin with _$ApiBin {
     bool? is2Compostement,
     @JsonKey(name: "isShare")
     bool? isShare,
+    @JsonKey(name: "isCouncil")
+    bool? isCouncil,
     @JsonKey(name: "createdDate")
     DateTime? createdDate,
   }) = _ApiBin;

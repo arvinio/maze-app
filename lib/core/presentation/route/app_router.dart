@@ -35,10 +35,8 @@ import 'package:maze_app/feature/profile/presentation/view/report/presentation/v
 import 'package:maze_app/feature/profile/presentation/view/your_details/your_details_page.dart';
 import 'package:maze_app/feature/profile/presentation/view/your_household/your_household_page.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
-import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
-import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
 import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/view/bin_details_page.dart';
-import 'package:maze_app/feature/tracker/presentation/view/new_entry_page.dart';
+import 'package:maze_app/feature/tracker/presentation/view/entry_page/presentation/view/entry_page.dart';
 import 'package:maze_app/feature/tracker/presentation/view/tracker_page.dart';
 
 part 'app_router.gr.dart';
@@ -92,7 +90,7 @@ class AppRouter extends _$AppRouter {
     AutoRoute(path: '/ChatBotHomePage', page: ChatBotHomePageRoute.page),
     AutoRoute(path: '/ChatPage', page: ChatPageRoute.page),
     AutoRoute(path: '/BinDetailsPage', page: BinDetailsPageRoute.page),
-    AutoRoute(path: '/NewEntryPage', page: NewEntryPageRoute.page),
+    AutoRoute(path: '/EntryPage', page: EntryPageRoute.page),
     AutoRoute(path: '/KnowledgePage', page: KnowledgePageRoute.page),
   ];
 }

@@ -1,4 +1,5 @@
 import 'package:maze_app/core/network/model/api_response.dart';
+import 'package:maze_app/feature/tracker/data/model/bin_entry_list/bin_entry_list_response.dart';
 import 'package:maze_app/feature/tracker/data/model/bin_response/bin_response.dart';
 import 'package:maze_app/feature/tracker/data/model/enum/create_bin_types.dart';
 import 'package:maze_app/feature/tracker/data/model/success_response.dart';
@@ -18,7 +19,8 @@ abstract interface class TrackerRepository {
   Future<ApiResponse> createBinEntry({required Entry entry});
   Future<ApiResponse> editBinEntry({required EditEntry entry});
   Future<ApiResponse> deleteBinEntry({required String entryId});
-  Future<ApiResponse<List<EditEntry>>> getBinEntryList({required String binId});
+ // Future<ApiResponse<List<EditEntry>>> getBinEntryList({required String binId});
+  Future<ApiResponse<BinEntryListResponse>> getBinEntryList({required String binId});
   Future<ApiResponse<BinResponse>> getBinDetails({required String binId});
   Future<ApiResponse<BinChartData>> getBinChartData({required String binId});
   Future<ApiResponse<SuccessResponse>> transferBinData(String sourceBinId,String targetBinId);

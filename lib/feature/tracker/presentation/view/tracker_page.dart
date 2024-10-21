@@ -157,7 +157,7 @@ class _TrackerPageState extends State<TrackerPage>
               },
               navigateToAddNewEntryPage: (bin) {
                 context.pushRoute(
-                  NewEntryPageRoute(bin: bin),
+                  EntryPageRoute(bin: bin),
                 );
               },
             );
