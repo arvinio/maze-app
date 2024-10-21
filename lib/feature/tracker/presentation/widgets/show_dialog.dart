@@ -61,7 +61,7 @@ class ShowDialog {
           .neutralsBackground,
       context: context,
       builder: (builder) {
-        return ManageBinsDialogContent(bloc: bloc).wrappedRoute(context);
+        return const ManageBinsDialogContent().wrappedRoute(context);
 
       },
     );

@@ -135,10 +135,10 @@ class _TrackerPageState extends State<TrackerPage>
           ],
         ),
       ),
-      child: BlocProvider(
+      child:/* BlocProvider(
         create: (_) =>
             inject<ManageBinsBloc>(),
-        child: BlocConsumer<TrackerBloc, TrackerState>(
+        child:*/ BlocConsumer<TrackerBloc, TrackerState>(
           listener: (context, state) {
             state.when(
               initial: () {},
@@ -312,28 +312,19 @@ class _TrackerPageState extends State<TrackerPage>
                                                 leading: appAssets.addBin.svg(),
                                               ),
                                               const CustomDivider(),
-                                              MultiBlocProvider(
-                                                  providers: [
-                                                    BlocProvider(create: (_) =>
-                                                        inject<TrackerBloc>()),
-                                                    BlocProvider(create: (_) =>
-                                                        inject<
-                                                            ManageBinsBloc>(),
-                                                    ),
-                                                  ], child: BottomSheetItem(
+                                              BottomSheetItem(
                                                 onTap: () {
                                                   ShowDialog
                                                       .openModalBottomSheet(
                                                       context,
-                                                      child: ManageBinsDialogContent(
-                                                          bloc: bloc)
+                                                      child: const ManageBinsDialogContent()
                                                           .wrappedRoute(
                                                           context));
                                                 },
                                                 title: appStrings.manageBins,
                                                 leading:
                                                 appAssets.trashIcon2.svg(),
-                                              )),
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -387,7 +378,7 @@ class _TrackerPageState extends State<TrackerPage>
             );
           },
         ),
-      ),
+     // ),
     );
   }
 

@@ -1,17 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
 import 'package:maze_app/core/config/strings.dart';
-import 'package:maze_app/core/presentation/widget/custom_loading.dart';
 import 'package:maze_app/core/presentation/widget/custom_menu_items.dart';
 import 'package:maze_app/core/presentation/widget/menu_dialog_content.dart';
-import 'package:maze_app/core/presentation/widget/page_loading.dart';
 import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/tracker/data/model/deleted_bins/deleted_bins_response.dart';
-import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/presentation/view/manage_bins/presentation/bloc/manage_bins_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/no_image.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
@@ -19,10 +16,9 @@ import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.da
 
 class DeletedBinsContent extends StatelessWidget implements AutoRouteWrapper {
   DeletedBinsContent({
-    super.key, required this.bloc,
+    super.key
   });
 
-  final TrackerBloc bloc;
 
   //List<DeletedBin>? bins=[];
   var deletedBins = <DeletedBin>[];
@@ -31,7 +27,7 @@ class DeletedBinsContent extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(create: (_) =>
     inject<ManageBinsBloc>()
-      ..add(ManageBinsEvent.getDeletedBins()), child: this);
+      ..add(const ManageBinsEvent.getDeletedBins()), child: this);
   }
 
   @override
@@ -62,22 +58,11 @@ class DeletedBinsContent extends StatelessWidget implements AutoRouteWrapper {
                   }
                   else   if (state.status.isRestored) {
                     deletedBinsEvent(context);
-                    // Fluttertoast.showToast(
-                    //   msg:appStrings.restoredMsg,
-                    //   toastLength: Toast.LENGTH_LONG,
-                    //   gravity: ToastGravity.CENTER,
-                    //   timeInSecForIosWeb: 1,
-                    //   backgroundColor: Colors.black,
-                    //   textColor: Colors.white,
-                    //   fontSize: 16.0,
-                    // );
                   }
                 },
                 builder: (context, state) {
                   return state.status.isLoading
-                      ?loadingWidget(context)/* const Center(
-                    child: CircularProgressIndicator(),
-                  )*/
+                      ?loadingWidget(context)
                       : ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: deletedBins.length,
@@ -92,7 +77,9 @@ class DeletedBinsContent extends StatelessWidget implements AutoRouteWrapper {
                             fit: BoxFit.cover,
                           ),
                           title: bins[index].nickname!,
-                          subTitle: appStrings.compostTumbler,
+                          subTitle: bins[index].type ==  BinType.compost.name
+                              ? appStrings.compostTumbler
+                              : appStrings.landfillWaste,
                           trailing: IconButton(
                               icon: appAssets.more.svg(color: context
                                   .scheme()
