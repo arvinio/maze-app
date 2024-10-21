@@ -767,14 +767,14 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
 
   double _calculateMaxY() {
     if(chartData!=null) {
-      if (chartData!.chartWeek.isEmpty) return 10; // Default max if no data
+      if (chartData!.chartWeek.isEmpty) return 0; // Default max if no data
       double maxValue =
       chartData!.chartWeek.map((e) => e.value.toDouble()).reduce(max);
       return maxValue > 0
-          ? maxValue * 1.2
-          : 10; // Add 20% padding, or use 10 if all values are 0
+          ? maxValue *4.2
+          : 0; // Add 20% padding, or use 10 if all values are 0
     }
-    return 10;
+    return 0;
   }
 }
 enum TimeRange { month, year, week }
