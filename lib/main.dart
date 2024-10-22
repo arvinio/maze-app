@@ -1,15 +1,17 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:logging/logging.dart'; // import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:maze_app/core/util/shared_preferences_helper.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:sentry_logging/sentry_logging.dart';
 
 import 'core/presentation/app.dart';
 import 'di/injection_container.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:sentry_logging/sentry_logging.dart';
-import 'package:logging/logging.dart';
+import 'firebase_options.dart';
 
 /*
 Build output files using these commands:
@@ -34,6 +36,10 @@ Future<void> main() async {
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Globals.setSharedPreferences();
 
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   configureDependencies(environment: 'dev');
   const dsn =
       'https://d18530a5bcef0dacb949a11a71803aff@o4507613419929600.ingest.us.sentry.io/4507613422551040';
@@ -47,4 +53,8 @@ Future<void> main() async {
             appRouter: inject(),
             appTheme: inject(),
           )));
+}
+
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  debugPrint('Message received in background!');
 }

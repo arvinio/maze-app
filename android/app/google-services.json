@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "334087447937",
+    "project_id": "maze-4fbc8",
+    "storage_bucket": "maze-4fbc8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334087447937:android:1d79441a47a2851a21b480",
+        "android_client_info": {
+          "package_name": "app.idealtech.maze"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmHfU9907lLtZndkt59ATBb22W7fvhzE0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
