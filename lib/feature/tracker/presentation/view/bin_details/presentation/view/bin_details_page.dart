@@ -221,7 +221,7 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
                       endIndent: 13.w,
                     ),
                     _buildDetailCard(context,
-                        '${ '0'} ${appStrings.kg}',
+                        '${ widget.bin.totalAmount} ${appStrings.kg}',
                         ( widget.bin.type == BinType.landfill)
                         ?appStrings.totalSentToLandfill
                         :appStrings.compostMade
@@ -589,11 +589,9 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
                 BlocConsumer<BinDetailsBloc, BinDetailsState>(
                   listener: (context, state) {
                     if (state.status.isMuted) {
-                      Navigator.of(context).pop();
                       isMuted = true;
                     }
                     else if (state.status.isUnMuted) {
-                      Navigator.of(context).pop();
                       isMuted = false;
                     }
                     else if (state.status.isFailureMuted ||
