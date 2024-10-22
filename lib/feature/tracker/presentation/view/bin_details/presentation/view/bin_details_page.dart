@@ -296,7 +296,7 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
                           : appStrings.compostMade
                           , style: context.footnoteFootnoteBold),
                       CustomText(
-                        '7-14 January',
+                        '',
                         style: context.footnoteFootnote.copyWith(color: context
                             .scheme()
                             .tertiaryText),
