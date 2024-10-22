@@ -1,4 +1,4 @@
-package com.example.maze_app
+package app.idealtech.maze
 
 import io.flutter.embedding.android.FlutterActivity
 
