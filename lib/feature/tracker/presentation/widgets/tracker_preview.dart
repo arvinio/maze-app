@@ -26,26 +26,31 @@ class TrackerPreview extends StatefulWidget {
 class _TrackerPreviewState extends State<TrackerPreview> {
   final DateTime now = DateTime.now();
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
-   String? lastEntry;
+  String? lastEntry;
 
   @override
   void initState() {
-    lastEntry= widget.bin.lastEntry!=null
-        ? widget.bin.lastEntry.toString().substring(0, 10) == formatter.format(now)
+    lastEntry = widget.bin.lastEntry != null
+        ? widget.bin.lastEntry.toString().substring(0, 10) ==
+        formatter.format(now)
         ? appStrings.today
-        :  widget.bin.lastEntry.toString() == formatter.format(
+        : widget.bin.lastEntry.toString() == formatter.format(
         now.subtract(const Duration(days: 1)))
         ? appStrings.yesterday
-        :now.difference(widget.bin.lastEntry!).inDays.toString()
-        :'';
+        : now
+        .difference(widget.bin.lastEntry!)
+        .inDays
+        .toString()
+        : '';
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: context.scheme().neutralsBorderDivider),
+        border: Border.all(color: context
+            .scheme()
+            .neutralsBorderDivider),
         borderRadius: BorderRadius.circular(15.sp),
       ),
       height: 155.h,
@@ -57,27 +62,35 @@ class _TrackerPreviewState extends State<TrackerPreview> {
               child: ListTile(
                 onTap: widget.onTap,
                 title: CustomText(
-                  widget.bin.nickName,
-                  style: context.titleHeadline
+                    widget.bin.nickName,
+                    style: context.titleHeadline
                 ),
                 subtitle: CustomText(
-                  widget.bin.type ==BinType.landfill
-                  ?appStrings.landfillWaste
-                  :appStrings.compostTumbler,
+                  widget.bin.type == BinType.landfill
+                      ? appStrings.landfillWaste
+                      : appStrings.compostTumbler,
                   style: context.footnoteFootnote
-                      .copyWith(color: context.scheme().secondaryText),
+                      .copyWith(color: context
+                      .scheme()
+                      .secondaryText),
                 ),
-                leading:Container(
+                leading: Container(
                   decoration: BoxDecoration(
-                    color: context.scheme().neutralsBackground,
+                    color: context
+                        .scheme()
+                        .neutralsBackground,
                     border: Border.all(
-                        color: context.scheme().neutralsBorderDivider),
+                        color: context
+                            .scheme()
+                            .neutralsBorderDivider),
                     borderRadius: const BorderRadius.all(
                         Radius.circular(Dimen.defaultRadius)),
                   ),
                   height: 50.sp,
                   width: 50.sp,
-                  padding: widget.bin.imageUrl != null ?EdgeInsets.zero:EdgeInsets.only(top:6.sp),
+                  padding: widget.bin.imageUrl != null
+                      ? EdgeInsets.zero
+                      : EdgeInsets.only(top: 6.sp),
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(
                         Radius.circular(Dimen.defaultRadius)),
@@ -101,38 +114,53 @@ class _TrackerPreviewState extends State<TrackerPreview> {
             child: ListTile(
               title: CustomText(
 
-                '${ widget.bin.totalAmount!=null ?widget.bin.totalAmount!.toDouble():0}${appStrings.kg}',
+                '${ widget.bin.totalAmount != null ? widget.bin.totalAmount!
+                    .toDouble() : 0}${appStrings.kg}',
                 style: context.subheadlineSubheadlineSemibold,
               ),
               subtitle: CustomText(
-                widget.bin.totalAmount==0
+                widget.bin.totalAmount == 0
                     ? appStrings.noDataAddedYet
-                :widget.bin.type ==BinType.landfill
-                    ?appStrings.addedToLandfill
-                :'${appStrings.compostMade}, $lastEntry ${appStrings.daysAgo}',
+                    : widget.bin.type == BinType.landfill
+                    ? appStrings.addedToLandfill
+                    : '${appStrings.compostMade}, $lastEntry ${appStrings
+                    .daysAgo}',
                 style: context.captionCaption
-                    .copyWith(color: context.scheme().tertiaryText),
+                    .copyWith(color: context
+                    .scheme()
+                    .tertiaryText),
               ),
-              trailing: SizedBox(
-                width: 60.w,
-                height: 30.h,
+              trailing: Container(
+                width: 75.w,
+                 padding:widget.bin.totalAmount==0?const EdgeInsets.only(top: 15):null,
+                 height: widget.bin.totalAmount==0?4.h:35.h,
                 child: BarChart(
                   BarChartData(
-                    alignment: BarChartAlignment.spaceAround,
-                    titlesData: const FlTitlesData(show: false),
-                    borderData: FlBorderData(show: false),
-                    barGroups: [
-                      BarChartGroupData(
-                        x: 0,
-                        barRods: widget.bin.chartData!.map(
-                          (e) {
-                            return BarChartRodData(
-                                color: context.scheme().neutralsBorderDivider,
-                                toY: e.value.toDouble() + 0.1);
-                          },
-                        ).toList(),
-                      )
-                    ],
+                      alignment: BarChartAlignment.spaceAround,
+                      titlesData: const FlTitlesData(show: false),
+                      borderData: FlBorderData(show: false),
+                      barGroups: List.generate(
+                          widget.bin.chartData!.length, (index) {
+                        double value = widget.bin.chartData![index].value
+                            .toDouble();
+                        return BarChartGroupData(
+                            x: index,
+                            barsSpace: 4,
+                            barRods: [
+                              BarChartRodData(
+                                  toY: value == 0 ? value + 0.1 : value,
+                                  color: context
+                                      .scheme()
+                                      .neutralsBorderDivider,
+                                  borderRadius: value == 0
+                                      ? BorderRadius.circular(8)
+                                      : const BorderRadius.vertical(
+                                      top: Radius.circular(8))
+
+                              )
+                            ]
+                        );
+                      }).toList()
                   ),
                 ),
               ),
