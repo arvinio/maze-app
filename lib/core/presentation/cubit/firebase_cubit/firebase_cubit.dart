@@ -32,6 +32,7 @@ class FirebaseCubit extends Cubit<FirebaseState> {
   void configureCloudMessaging() {
     messaging = FirebaseMessaging.instance;
     askNotificationPermission();
+    getFCMToken();
     onFcmTokenRefresh();
     enableForegroundNotifications();
     listenToMessages();
@@ -48,6 +49,10 @@ class FirebaseCubit extends Cubit<FirebaseState> {
   void onFcmTokenRefresh() {
     messaging.onTokenRefresh.listen((token) async {
       _latestToken = token;
+      emit(state.copyWith(
+        fcmToken: token,
+      ));
+      debugPrint("FCMToken=$token");
       sendFCMTokenIfLoggedIn(token: token);
     });
   }
@@ -93,5 +98,11 @@ class FirebaseCubit extends Cubit<FirebaseState> {
 
   void sendFCMTokenIfLoggedIn({String? token}) async {
     // TODO: send fcm token to server here
+  }
+
+  void getFCMToken() async {
+    final token = await messaging.getToken();
+    emit(state.copyWith(fcmToken: token));
+    debugPrint("FCMToken=$token");
   }
 }

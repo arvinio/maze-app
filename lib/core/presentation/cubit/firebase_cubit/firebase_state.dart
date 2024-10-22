@@ -9,6 +9,16 @@ class FirebaseState extends Equatable {
   final FirebaseStatus status;
   final String? fcmToken;
 
+  FirebaseState copyWith({
+    FirebaseStatus? status,
+    String? fcmToken,
+  }) {
+    return FirebaseState(
+      status: status ?? this.status,
+      fcmToken: fcmToken ?? this.fcmToken,
+    );
+  }
+
   @override
   List<Object?> get props => [
         status,
