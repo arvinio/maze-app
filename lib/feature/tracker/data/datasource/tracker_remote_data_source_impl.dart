@@ -102,42 +102,6 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
     return await dioCaller.get('api/bin', fromJson: BinListResponse.fromJson);
   }
 
-  @override
-  Future<ApiResponse> createBinEntry(Entry entry) async {
-    var data = FormData.fromMap({
-      'binId': entry.binId,
-      'entryDate': DateTime.now(),
-      'type': entry.type.toString(),
-
-      if (entry.type == EntryType.emptiedBin ||
-          entry.type == EntryType.emptiedCompost) ...{
-        'howFull': entry.howFull,
-        'amount': entry.amount,
-      },
-      // 'emptiedInto': '6683ca81b779145b4ba30503',
-      'note': entry.note,
-      if (entry.type == EntryType.emptiedBin) 'whatRecycle': 'glass, plastic',
-      if (entry.type == EntryType.addedWaste) 'whatDidAdd': 'fruit',
-      if (entry.type == EntryType.emptiedCompost)
-        'compostUsed': 'for garden, for yard',
-      // if (entry.type == EntryType.addedWaste)
-      'isMixed': entry.mixed
-    });
-
-    for (int i = 0; i < entry.photo!.length; i++) {
-      data.files.addAll([
-        MapEntry("photos", await MultipartFile.fromFile(entry.photo![i],
-            filename: entry.photo![i]))
-
-      ]);
-    }
-
-    return await dioCaller.post(
-      'api/bin/entry',
-      fromJson: RespEmptyModel.fromJson,
-      data: data,
-    );
-  }
 
   @override
   Future<ApiResponse> deleteBin(String binId) async {
@@ -262,8 +226,65 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
 
   @override
   Future<ApiResponse<BinEntryListResponse>> getBinEntryList(
-      String binId) async {
-    return await dioCaller.get('api/bin/entry?binId=$binId&sort=desc&page=1',
+      {required String binId, required String sort}) async {
+    return await dioCaller.get('api/bin/entry?binId=$binId&sort=$sort&page=1',
         fromJson: BinEntryListResponse.fromJson);
+  }
+
+
+  @override
+  Future<ApiResponse<SuccessResponse>> createBinEntry(Entry entry) async {
+    var formData = FormData.fromMap({
+      'binId': entry.binId,
+      'entryDate': entry.entryDate,
+      'type': entry.type.toString(),
+      'note': entry.note
+    });
+
+    if (entry.type == EntryType.emptiedBin ||
+        entry.type == EntryType.emptiedCompost) {
+      formData.fields.add(
+          MapEntry("howFull", entry.howFull!));
+      formData.fields.add(
+          MapEntry("amount", entry.amount!));
+    }
+
+    if (entry.type == EntryType.addedWaste) {
+      if(entry.whatDidAdd!.isNotEmpty) {
+        formData.fields.add(
+            MapEntry("whatDidAdd", entry.whatDidAdd!.map((e) => e).toString()
+                .replaceAll("(", "")
+                .replaceAll(")", ""))
+
+        );
+      }
+
+        formData.fields.add(
+            MapEntry("isMixed", entry.mixed.toString()));
+    }
+
+    if (entry.type == EntryType.emptiedCompost && entry.compostUsed!.isNotEmpty ) {
+      formData.fields.add(
+          MapEntry("compostUsed", entry.compostUsed!.map((e) => e).toString()
+              .replaceAll("(", "")
+              .replaceAll(")", ""))
+
+      );
+    }
+
+
+    for (int i = 0; i < entry.photo!.length; i++) {
+      formData.files.addAll([
+        MapEntry("photos", await MultipartFile.fromFile(entry.photo![i],
+            filename: entry.photo![i]))
+
+      ]);
+    }
+
+    return await dioCaller.post(
+      'api/bin/entry',
+      fromJson: SuccessResponse.fromJson,
+      data: formData,
+    );
   }
 }

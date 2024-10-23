@@ -15,11 +15,13 @@ import 'package:maze_app/core/util/extentsion/context_ext.dart';
 import 'package:maze_app/di/injection_container.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/bin_chart_data.dart';
+import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
 import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/bloc/bin_details/bin_details_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/bloc/chart/chart_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/view/edit_bin_details/edit_bin_details_dialog_content.dart';
 import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/widgets/custom_bar_chart.dart';
 import 'package:maze_app/feature/tracker/presentation/view/bin_details/presentation/widgets/entry_summary_list.dart';
+import 'package:maze_app/feature/tracker/presentation/view/entry_page/presentation/bloc/entry_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/manage_bins/presentation/bloc/manage_bins_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/loading.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/no_image.dart';
@@ -36,7 +38,11 @@ class BinDetailsPage extends StatefulWidget implements AutoRouteWrapper {
   });
   @override
   Widget wrappedRoute(BuildContext context) {
-    return  BlocProvider(create: (_) => inject<ChartBloc>(), child: this);
+    return MultiBlocProvider(providers: [
+        BlocProvider(create: (_) => inject<ChartBloc>()),
+      BlocProvider(create: (_) => inject<EntryBloc>()),
+    ], child: this);
+
   }
 
   @override
@@ -50,95 +56,131 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
     end: DateTime.now(),
   );
   TimeRange _selectedTimeRange = TimeRange.week;
+  Sort _selectedSort = Sort.desc;
   BinChartData? chartData;
   bool isMuted=false;
+  List<EditEntry> entries = [];
 
   @override
   void initState() {
     super.initState();
-    context.read<ChartBloc>().add(ChartEvent.getBinChartData(binId: widget.bin.id!));
+    getBinChartDataEvent();
+    getBinEntries();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BasePageWidget(
-      backgroundColor: context
-          .scheme()
-          .neutralsFieldsTags,
-      pagePaddingHorizontal: 0,
-      appBar: ListTile(
-          leading: const PreviousButton(),
-          trailing: InkWell(child: appAssets.more.svg(), onTap: () {
-            showOptions(context, widget.bin);
-          },),
-          contentPadding: const EdgeInsets.fromLTRB(16, 40, 16, 10)
-      ),
+    return   BasePageWidget(
+          backgroundColor: context
+              .scheme()
+              .neutralsFieldsTags,
+          pagePaddingHorizontal: 0,
+          appBar: ListTile(
+              leading: const PreviousButton(),
+              trailing: InkWell(child: appAssets.more.svg(), onTap: () {
+                showOptions(context, widget.bin);
+              },),
+              contentPadding: const EdgeInsets.fromLTRB(16, 40, 16, 10)
+          ),
 
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            _buildBinDetails(context),
-            SizedBox(
-              height: 20.h,
-            ),
-            _buildCompostChart(context),
-            SizedBox(
-              height: 20.h,
-            ),
-            Divider(color: context
-                .scheme()
-                .neutralsBorderDivider, thickness: 0.5,),
-            Container(
-              color: context
-                  .scheme()
-                  .neutralsBackground,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 16, vertical: 16),
-                child: Column(children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomText(
-                        appStrings.entries,
-                        style: context.titleTitle3,
-                      ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                _buildBinDetails(context),
+                SizedBox(
+                  height: 20.h,
+                ),
+                _buildCompostChart(context),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Divider(color: context
+                    .scheme()
+                    .neutralsBorderDivider, thickness: 0.5,),
+                Container(
+                  color: context
+                      .scheme()
+                      .neutralsBackground,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
+                    child: Column(children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          InkWell(
-                              onTap: () {},
-                              child: appAssets.sort.svg(color: context
-                                  .scheme()
-                                  .primaryText)
+                          CustomText(
+                            appStrings.entries,
+                            style: context.titleTitle3,
                           ),
-                          const SizedBox(width: 8,),
-                          InkWell(
-                              onTap: () {
-                                context.pushRoute(
-                                    EntryPageRoute(bin: widget.bin));
-                                /*      context.read<TrackerBloc>().add(
+                          Row(
+                            children: [
+                              InkWell(
+                                  onTap: () async{
+                                      setState(() {
+                                  ( _selectedSort==Sort.desc)
+                                      ?_selectedSort=Sort.asc
+                                      :_selectedSort=Sort.desc;
+
+                                  getBinEntries();
+
+                                });
+                                  },
+                                  child: appAssets.sort.svg(color: context
+                                      .scheme()
+                                      .primaryText)
+                              ),
+                              const SizedBox(width: 8,),
+                              InkWell(
+                                  onTap: () {
+                                    context.pushRoute(
+                                        EntryPageRoute(bin: widget.bin)).then((
+                                        val) {
+                                      getBinChartDataEvent();
+                                      getBinEntries();
+
+                                    /*  context.read<BinDetailsBloc>().add(
+                                          const BinDetailsEvent.refreshPage());*/
+                                    });
+                                    /*      context.read<TrackerBloc>().add(
                                       TrackerEvent.navigateToAddNewEntryPage(
                                           bin: widget.bin));*/
-                              },
-                              child: appAssets.addEntry.svg(
-                                  width: 24, height: 24)
+                                  },
+                                  child: appAssets.addEntry.svg(
+                                      width: 24, height: 24)
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                EntrySummaryList(binId: widget.bin.id!).wrappedRoute(context),
-                ],),
-              ),
-            ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                    BlocConsumer<EntryBloc, EntryState>(
+                      listener: (context, state) {
+                        if (state.status.isSuccess) {
+                          entries.clear();
+                          entries.addAll(state.entries!.toList());
+                        }
+                      },
+                      builder: (context, state) {
+                        return  EntrySummaryList(
+                     entries: entries,
+                            state:state
+                        );
+                      },
+                    )
 
-          ],
-        ),
-      ),
-    );
+
+                    ],),
+                  ),
+                ),
+
+              ],
+            ),
+          )
+
+      );
+
   }
 
   Widget _buildBinDetails(BuildContext context) {
@@ -668,7 +710,15 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
     );
   }
 
+  void getBinChartDataEvent() {
+    context.read<ChartBloc>().add(ChartEvent.getBinChartData(binId: widget.bin.id!));
+  }
+  void getBinEntries() {
+    context.read<EntryBloc>().add(EntryEvent.getBinEntries(binId: widget.bin.id!,sort: _selectedSort.name));
+  }
+
 }
 
 enum TimeRange { month, year, week }
+enum Sort { asc, desc}
 

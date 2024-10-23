@@ -9,6 +9,7 @@ import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
 
 abstract interface class TrackerRemoteDataSource {
+  //bin
   Future<ApiResponse<BinListResponse>> getBinsList();
   Future<ApiResponse> createBin(Bin bin,BinTypesEnum binType);
   Future<ApiResponse> editBin(Bin bin);
@@ -23,10 +24,10 @@ abstract interface class TrackerRemoteDataSource {
   Future<ApiResponse> muteNotification({required String binId});
   Future<ApiResponse> unMuteNotification({required String binId});
 
-  ///
-  Future<ApiResponse> createBinEntry(Entry entry);
+  //bin_entry
+  Future<ApiResponse<SuccessResponse>> createBinEntry(Entry entry);
   Future<ApiResponse> editBinEntry(EditEntry entry);
   Future<ApiResponse> deleteBinEntry(String entryId);
-  Future<ApiResponse<BinEntryListResponse>> getBinEntryList(String binId);
+  Future<ApiResponse<BinEntryListResponse>> getBinEntryList({required String binId,required String sort});
   Future<ApiResponse> deletebinEntryPhoto(String binEntryId, String photo);
 }

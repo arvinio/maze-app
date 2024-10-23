@@ -263,7 +263,7 @@ class StringsBase {
   String get amountOfCompost=>'Amount of compost emptied out';
   String get amountOfWaste=>'Amount of waste emptied';
   String get estimatedWeight=>'Estimated Weight';
-  String get howFullCompost=>'How full was bin/compartment\nbefore emptying it?';
+  String get howFullCompost=>'How full was the bin compartment\nbefore emptying it?';
   String get howFullPickedUp=>'How full was the bin\nbefore the council picked it up?';
   String get greens=>'Greens';
   String get kitchenScraps=>'Kitchenscraps';
@@ -301,6 +301,10 @@ class StringsBase {
   String get totalSentToLandfill=>'Total sent to landfill';
   String get editBin=>'Edit bin';
   String get sentToLandfill=>'Sent to Landfill';
+  String get aFullBinSize=>'A full bin size';
+  String get aHalfOfTheBinSize=>'A half of the bin size';
+  String get aQuarterOfTheBinSize=>'A quarter of the bin size';
+
 
   //Pickupdate
   String get monday=>'Monday';

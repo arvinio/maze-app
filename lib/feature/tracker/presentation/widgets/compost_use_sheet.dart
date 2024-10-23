@@ -147,8 +147,7 @@ class _CompostUseSheetState extends State<CompostUseSheet> {
     for (var item in items) {
       if (item.isSelected) {
         if (item.name == appStrings.other) {
-          // Save the note if "Other" is selected
-          item.note = _noteController.text;
+          item.name=_noteController.text;
         }
         selectedItems.add(item);
       }

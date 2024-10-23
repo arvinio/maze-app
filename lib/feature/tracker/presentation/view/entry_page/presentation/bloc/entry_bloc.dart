@@ -16,6 +16,7 @@ class EntryBloc extends Bloc<EntryEvent, EntryState> {
   EntryBloc(this.repository) : super(const EntryState()) {
     on<_Init>(_onInit);
     on<_GetBinEntries>(_onGetBinEntries);
+    on<_AddEntryToBin>(_onAddEntryToBin);
   }
 
   _onInit(_Init event, Emitter<EntryState> emit) async {
@@ -23,12 +24,12 @@ class EntryBloc extends Bloc<EntryEvent, EntryState> {
 
   _onGetBinEntries(_GetBinEntries event, Emitter<EntryState> emit) async {
     emit(state.copyWith(status: EntryStatus.loading));
-    final response = await repository.getBinEntryList(binId: event.binId);
+    final response = await repository.getBinEntryList(binId: event.binId,sort:event.sort);
     response.when(completed: (data, int? statusCode) {
+      entries.clear();
       for (var element in data.result!) {
         entries.add(EditEntry(
           element.id!,
-          whatRecycled: element.whatRecycle,
           whatDidAdd: element.whatDidAdd,
           compostUsed: element.compostUsed,
           entryDate: element.entryDate!,
@@ -47,4 +48,16 @@ class EntryBloc extends Bloc<EntryEvent, EntryState> {
           errorMessage: apiError.message));
     });
   }
+
+  _onAddEntryToBin(_AddEntryToBin event, Emitter<EntryState> emit) async {
+    emit(state.copyWith(status: EntryStatus.loading));
+    final response = await repository.createBinEntry(entry: event.entryDetails);
+    response.when(completed: (data, int? statusCode) {
+      emit(state.copyWith(status: EntryStatus.success));
+    }, error: (apiError) {
+      emit(state.copyWith(status: EntryStatus.failure,
+          errorMessage: apiError.message));
+    });
+  }
+
 }

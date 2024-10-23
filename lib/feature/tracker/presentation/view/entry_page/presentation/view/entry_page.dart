@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:maze_app/core/config/assets/assets.dart';
@@ -20,12 +21,14 @@ import 'package:maze_app/feature/tracker/domain/entity/bin.dart';
 import 'package:maze_app/feature/tracker/domain/entity/compost_use.dart';
 import 'package:maze_app/feature/tracker/domain/entity/entry.dart';
 import 'package:maze_app/feature/tracker/domain/entity/what_did_add.dart';
-import 'package:maze_app/feature/tracker/presentation/bloc/tracker_bloc.dart';
+import 'package:maze_app/feature/tracker/presentation/view/entry_page/presentation/bloc/entry_bloc.dart';
 import 'package:maze_app/feature/tracker/presentation/view/entry_page/presentation/widgets/custom_container_list.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/compost_use_sheet.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/custom_item.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/get_entry_type_icon.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/loading.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/no_image.dart';
+import 'package:maze_app/feature/tracker/presentation/widgets/previous_button.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/show_dialog.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/tracker_widgets.dart';
 import 'package:maze_app/feature/tracker/presentation/widgets/what_did_add_selection_sheet.dart';
@@ -33,7 +36,6 @@ import 'package:maze_app/feature/tracker/presentation/widgets/what_did_add_selec
 @RoutePage()
 class EntryPage extends StatefulWidget implements AutoRouteWrapper {
   const EntryPage({super.key, required this.bin});
-  // const NewEntryPage.edit({super.key, required this.bin});
   final Bin bin;
 
   @override
@@ -41,7 +43,7 @@ class EntryPage extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(create: (_) => inject<TrackerBloc>(), child: this);
+    return BlocProvider(create: (_) => inject<EntryBloc>(), child: this);
   }
 }
 
@@ -57,257 +59,389 @@ class _EntryPageState extends State<EntryPage> {
   var _entryType = EntryType.generalNote;
   List<File?> photos = [];
   final List<String> monthList = [
-    "January",
-    "February",
-    "March",
-    "April",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
     "May",
     "June",
     "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec"
   ];
+  String? _birthDate;
+  List<WhatDidAddItem> _selectedItems = [];
+  List<CompostUseItem> _selectedCompostUseItems = [];
+  bool _didYouMixit = false;
+  String _selectedFullness = appStrings.aFullBinSize;
 
   void fillEntry() {
-    _entry = Entry(
-      whatRecycled: [],
-      whatDidAdd: [],
-      compostUsed: [],
-      entryDate: _dialogCalendarPickerValue[0]!,
-      binId: widget.bin.id!,
-      type: _entryType,
-      mixed: false,
-      note: _noteController.text,
-      photo: photos.map(
-        (e) {
-          return e!.path;
-        },
-      ).toList(),
-      howFull: _radioAmount.toString(),
-      amount: _amountController.text,
-    );
+    switch (_entryType) {
+      case EntryType.emptiedBin:
+        _entry = Entry(
+          binId: widget.bin.id!,
+          type: _entryType,
+          entryDate: _dialogCalendarPickerValue != null
+              ? _dialogCalendarPickerValue[0]!
+              : DateTime.now(),
+          note: _noteController.text,
+          photo: photos.map(
+                (e) {
+              return e!.path;
+            },
+          ).toList(),
+          howFull:_selectedFullness,
+          amount:  _amountController.text,
+
+          whatDidAdd:[],
+          compostUsed: [],
+          mixed: _didYouMixit,
+
+        );
+        break;
+      case EntryType.emptiedCompost:
+        _entry = Entry(
+          binId: widget.bin.id!,
+          type: _entryType,
+          entryDate: _dialogCalendarPickerValue != null
+              ? _dialogCalendarPickerValue[0]!
+              : DateTime.now(),
+          note: _noteController.text,
+          photo: photos.map(
+                (e) {
+              return e!.path;
+            },
+          ).toList(),
+          compostUsed: _selectedCompostUseItems.isNotEmpty ?
+              _selectedCompostUseItems.map((e)=>e.name).toList()
+              :[],
+          howFull:'$_radioAmount%',
+          amount: _amountController.text,
+          mixed: _didYouMixit,
+          whatDidAdd: [],
+
+        );
+        break;
+      case EntryType.addedWaste:
+        _entry = Entry(
+            binId: widget.bin.id!,
+            type: _entryType,
+            entryDate: _dialogCalendarPickerValue != null
+                ? _dialogCalendarPickerValue[0]!
+                : DateTime.now(),
+            note: _noteController.text,
+            photo: photos.map(
+                  (e) {
+                return e!.path;
+              },
+            ).toList(),
+            whatDidAdd: [],
+            mixed: _didYouMixit,
+            compostUsed: _selectedItems.isNotEmpty ?
+            _selectedItems.map((e)=>e.name).toList()
+                :[],
+            howFull:null,
+            amount:null
+        );
+        break;
+
+
+      default:
+        _entry = Entry(
+          binId: widget.bin.id!,
+          type: _entryType,
+          entryDate: _dialogCalendarPickerValue != null
+              ? _dialogCalendarPickerValue[0]!
+              : DateTime.now(),
+          note: _noteController.text,
+          photo: photos.map(
+                (e) {
+              return e!.path;
+            },
+          ).toList(),
+          whatDidAdd: [],
+          compostUsed: [],
+          mixed: _didYouMixit,
+          howFull: null,
+          amount: null,
+
+        );
+    }
   }
 
   @override
   void initState() {
     _dialogCalendarPickerValue = [DateTime.now()];
+    _amountController.text =
+        ((_radioAmount / 100) * widget.bin.amountOfLiters!).toString();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BasePageWidget(
-      appBar: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 40, 16, 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-           InkWell(child: appAssets.arrowLeft.svg(width: 24,height: 24),onTap: (){
-            Navigator.of(context).pop();
-           },),
-          CustomText('${DateTime.now().day} ${monthList[DateTime.now().month]} ${DateTime.now().year}', style: context.titleHeadline),
-          TextButton(
-            onPressed: (() {
-              fillEntry();
-              context.read<TrackerBloc>().add(TrackerEvent.addEntryToBin(
-                  binId: widget.bin.id!, entryDetails: _entry)
-              );
-              context.maybePop();
-            }),
-            child: CustomText(
-              appStrings.save,
-              style: context.titleHeadline.copyWith(
-                color: context
-                    .scheme()
-                    .primary,
+    return BlocConsumer<EntryBloc, EntryState>(
+      listener: (context, state) {
+        if (state.status.isSuccess) {
+          context.maybePop();
+        } else if (state.status.isFailure) {
+          Fluttertoast.showToast(
+              msg: state.errorMessage!,
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+        }
+      },
+      builder: (context, state) {
+        return BasePageWidget(
+          appBar: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 40, 16, 10),
+            child: Row(
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const PreviousButton(padding: EdgeInsets.all(8),),
+                SizedBox(width: 88.w,),
+                CustomText('${DateTime
+                    .now()
+                    .day} ${monthList[DateTime
+                    .now()
+                    .month - 1]} ${DateTime
+                    .now()
+                    .year}', style: context.titleHeadline),
+                SizedBox(width: 55.w,),
+                state.status.isLoading
+                    ? const Loading()
+                    : TextButton(
+                  onPressed: (() {
+                    fillEntry();
+                    context.read<EntryBloc>().add(
+                        EntryEvent.addEntryToBin(entryDetails: _entry));
+                  }),
+                  child: CustomText(
+                    appStrings.save,
+                    style: context.titleHeadline.copyWith(
+                      color: context
+                          .scheme()
+                          .primary,
+                    ),
+                  ),
+                )
+              ],),
+          ),
+          child: BasePageWidget(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TrackerField(
+                    title: widget.bin.nickName,
+                    titleStyle: context.titleHeadline,
+                    subTitle: '${widget.bin.amountOfLiters ?? 0 } ${appStrings
+                        .litres}',
+                    subTitleStyle: context.captionCaption.copyWith(
+                        color: context
+                            .scheme()
+                            .secondaryText),
+                    onTap: null,
+                    leadingIcon: widget.bin.imageUrl == null
+                        ? const NoImage()
+                        : SizedBox(
+                      height: 80.dg,
+                      width: 80.dg,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(
+                              15.sp)),
+                          child: Image.network(widget.bin.imageUrl!,
+                            fit: BoxFit.cover,)),
+                    ),
+                    // containerPadding: EdgeInsets.zero,
+                    trailing: const SizedBox.shrink(),
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  CustomText(
+                    appStrings.date,
+                    style: context.titleHeadline,
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  buildSelectDate(context),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  CustomText(
+                    appStrings.entry,
+                    style: context.titleHeadline,
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  CustomContainerList(
+                      height: _getEntrySelectionHeight,
+                      children: [
+                        CustomItem(
+                          title: _entryType.displayText,
+                          height: 60.h,
+                          func: () {
+                            openModalBottomSheet(
+                                context, entrySelection(context).$1,
+                                height: entrySelection(context).$2);
+                          },
+                          trailing: appAssets.dropDown.svg(),
+                          leading: GetEntryTypeIcon(entryType: _entryType),
+                        ),
+                        ...showEntryRelatedWidgets()
+                      ]),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  if (_entryType == EntryType.emptiedCompost ||
+                      _entryType == EntryType.emptiedBin) ...[
+                    CustomText(
+                      _entryType==EntryType.emptiedBin
+                      ? appStrings.howFullPickedUp
+                      :appStrings.howFullCompost,
+                      style: context.titleHeadline,
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    _entryType==EntryType.emptiedBin
+                   ? CustomContainerList(
+                        children: [
+                          _buildFullnessOption(appStrings.aFullBinSize, '100%'),
+                          _buildFullnessOption(appStrings.aHalfOfTheBinSize, '50%'),
+                          _buildFullnessOption(appStrings.aQuarterOfTheBinSize, '25%'),
+                        ],
+                      )
+                    :  _entryType==EntryType.emptiedCompost
+                   ? CustomContainerList(children: [
+                      amountPercentage(100),
+                      amountPercentage(75),
+                      amountPercentage(50),
+                      amountPercentage(25),
+                    ])
+                    :const Center(),
+
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    CustomText(
+                      _entryType==EntryType.emptiedBin
+                      ? appStrings.amountOfWaste
+                        :appStrings.amountOfCompost,
+                        style: context.titleHeadline
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    CustomTextField.outline(
+                        textEditingController: _amountController,
+                        label: appStrings.estimatedWeight,
+                        labelTextColor: context
+                            .scheme()
+                            .secondaryText,
+                        suffixIcon: IconButton(iconSize: 20,
+                          padding: EdgeInsets.zero,
+                          highlightColor: Colors.transparent,
+                          constraints: const BoxConstraints(
+                              maxHeight: 24, maxWidth: 24),
+                          icon: appAssets.infoSize.svg(),
+                          onPressed: () {
+                            ShowDialog.sizeInfo(context);
+                          },)
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                  ],
+                  CustomText(
+                    appStrings.note,
+                    style: context.titleHeadline,
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  CustomTextField.outline(
+                    textEditingController: _noteController,
+                    hint: appStrings.noteDesc,
+                    maxLines: 5,
+                    padding: const EdgeInsets.all(16),
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  CustomText(
+                    appStrings.photos,
+                    style: context.titleHeadline,
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+
+                  photosSection(context),
+                ],
               ),
             ),
-          )
-        ],),
-      ),
-
-      child: BasePageWidget(
-        child: SingleChildScrollView(
-          child: Column(
-             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TrackerField(
-                title: widget.bin.nickName,
-                titleStyle: context.titleHeadline,
-                subTitle: '${widget.bin.amountOfLiters ?? 0 } ${appStrings.litres}',
-                subTitleStyle: context.captionCaption.copyWith(color: context.scheme().secondaryText),
-                onTap: null,
-                leadingIcon: widget.bin.imageUrl == null
-                    ? const NoImage()
-                    : SizedBox(
-                  height: 80.dg,
-                  width: 80.dg,
-                  child: ClipRRect(
-                   borderRadius: BorderRadius.all(Radius.circular(15.sp)),
-                    child: Image.network(widget.bin.imageUrl!,fit: BoxFit.cover,)),
-                ),
-               // containerPadding: EdgeInsets.zero,
-                trailing: const SizedBox.shrink(),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              CustomText(
-                appStrings.date,
-                style: context.titleHeadline,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              InkWell(
-                onTap: () {
-                  _selectDate(context, (date) {
-                    _dialogCalendarPickerValue = date!;
-                    setState(() {
-                      _dateController.text =
-                          DateFormat('dd MMM yyyy').format(date[0]!).toString();
-                    });
-          
-                    // '${date![0]!.day} ${monthList[date![0]!.month -
-                    //     1]} ${date![0]!.year}';
-                  });
-                },
-                child: Container(
-                  height: 60.h,
-                  padding: EdgeInsets.symmetric(horizontal: 10.w),
-                  decoration: BoxDecoration(
-                    border:
-                    Border.all(color: context
-                        .scheme()
-                        .neutralsBorderDivider),
-                    borderRadius: BorderRadius.circular(15.sp),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        _dateController.text,
-                        style: context.subheadlineSubheadline.copyWith(
-                          color: context
-                              .scheme()
-                              .primaryText,
-                        ),
-                      ),
-                      SizedBox(
-                        child: appAssets.calendarIcon.svg(),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              CustomText(
-                appStrings.entry,
-                style: context.titleHeadline,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              CustomContainerList(height: _getEntrySelectionHeight, children: [
-                CustomItem(
-                  title: _entryType.displayText,
-                  height: 60.h,
-                  func: () {
-                    openModalBottomSheet(context, entrySelection(context).$1,
-                        height: entrySelection(context).$2);
-                  },
-                  trailing: appAssets.dropDown.svg(),
-                  leading: GetEntryTypeIcon(entryType: _entryType),
-                ),
-                ...showEntryRelatedWidgets()
-              ]),
-              // if (_entryType == EntryType.emptiedCompost ||
-              //     _entryType == EntryType.emptiedBin)
-              SizedBox(
-                height: 15.h,
-              ),
-              if (_entryType == EntryType.emptiedCompost ||
-                  _entryType == EntryType.emptiedBin) ...[
-                CustomText(
-               // appStrings.howFullPickedUp,
-                 appStrings.howFullCompost,
-                  style: context.titleHeadline,
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
-                CustomContainerList(children: [
-                  amountPercentage(100),
-                  amountPercentage(75),
-                  amountPercentage(50),
-                  amountPercentage(25),
-                ]),
-                SizedBox(
-                  height: 15.h,
-                ),
-                CustomText(
-                 // appStrings.amountOfWaste,
-                 appStrings.amountOfCompost,
-                  style: context.titleHeadline
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
-                CustomTextField.outline(
-                  textEditingController: _amountController,
-                  label: appStrings.estimatedWeight,
-                  labelTextColor: context
-                      .scheme()
-                      .secondaryText,
-                    suffixIcon: IconButton(iconSize: 20,
-                      padding: EdgeInsets.zero,
-                      highlightColor: Colors.transparent,
-                      constraints: const BoxConstraints(
-                          maxHeight: 24, maxWidth: 24),
-                      icon: appAssets.infoSize.svg(),
-                      onPressed: () {
-                        ShowDialog.sizeInfo(context);
-                      },)
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
-              ],
-              CustomText(
-               appStrings.note,
-                style: context.titleHeadline,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              CustomTextField.outline(
-                textEditingController: _noteController,
-                hint: appStrings.noteDesc,
-                maxLines: 5,
-                padding: const EdgeInsets.all(16),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-          
-              CustomText(
-                appStrings.photos,
-                style: context.titleHeadline,
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              photosSection(context),
-            ],
           ),
-        ),
-      ),
+        );
+      },
     );
+  }
+
+  InkWell buildSelectDate(BuildContext context) {
+    return InkWell(
+              onTap: () {
+                _selectDate(context, (date) {
+                  _dialogCalendarPickerValue = date!;
+                  setState(() {
+                    _dateController.text =
+                    /* DateFormat('dd MMM yyyy').format(date[0]!).toString();*/
+                    '${date![0]!.day} ${monthList[date![0]!.month -
+                        1]} ${date![0]!.year}';
+                    _birthDate =
+                    '${date![0]!.year}/${date![0]!.month}/${date![0]!
+                        .day}';
+
+                  });
+
+                });
+              },
+              child: Container(
+                height: 60.h,
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                decoration: BoxDecoration(
+                  border:
+                  Border.all(color: context
+                      .scheme()
+                      .neutralsBorderDivider),
+                  borderRadius: BorderRadius.circular(15.sp),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      _dateController.text,
+                      style: context.subheadlineSubheadline.copyWith(
+                        color: context
+                            .scheme()
+                            .primaryText,
+                      ),
+                    ),
+                    SizedBox(
+                      child: appAssets.calendarIcon.svg(),
+                    )
+                  ],
+                ),
+              ),
+            );
   }
 
   Row photosSection(BuildContext context) {
@@ -410,60 +544,92 @@ class _EntryPageState extends State<EntryPage> {
     );
   }
 
-// Example function to open the CompostSelectionSheet and handle the result
-
-// Define _selectedItems to store the result
-  List<WhatDidAddItem> _selectedItems = [];
-  List<CompostUseItem> _selectedCompostUseItems = [];
-  bool _didYouMixit = false;
+  Widget _buildFullnessOption(String label, String percentage) {
+    return CustomItem(
+      height: 50.h,
+      title: label,
+      titleStyle: context.bodyBodyMedium,
+      trailing: Radio<String>(
+        value: label,
+        groupValue: _selectedFullness,
+        activeColor: context.scheme().primary,
+        onChanged: (value) {
+          setState(() {
+            _selectedFullness = value!;
+            _radioAmount = int.parse(percentage.replaceAll('%', ''));
+            _amountController.text = ((_radioAmount / 100) * widget.bin.amountOfLiters!).toString();
+          });
+        },
+      ),
+    );
+  }
 
   List<Widget> showEntryRelatedWidgets() {
     if (widget.bin.type == BinType.compost) {
       switch (_entryType) {
         case EntryType.emptiedCompost:
           return [
-            CustomItem(
-              title: appStrings.compostUse,
-              height: 60.h,
-              func: () async {
-                final List<CompostUseItem>? result = await openModalBottomSheet(
-                    context,
-                    CompostUseSheet(
-                      selectedItems: _selectedCompostUseItems,
-                    ),
-                    height: 500.h,
-                    hasHeader: false);
-                if (result != null) {
-                  // Handle the selected items
-                  setState(() {
-                    _selectedCompostUseItems = result;
-                  });
-                }
-              },
-              trailing:appAssets.dropDown.svg(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomItem(
+                  title: appStrings.compostUse,
+                  height: 60.h,
+                  func: () async {
+                    final List<CompostUseItem>? result = await openModalBottomSheet(
+                        context,
+                        CompostUseSheet(
+                          selectedItems: _selectedCompostUseItems,
+                        ),
+                        height: 500.h,
+                        hasHeader: false);
+                    if (result != null) {
+                      setState(() {
+                        _selectedCompostUseItems = result;
+                      });
+                    }
+                  },
+                  trailing:appAssets.dropDown.svg(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left:16.0,bottom: 16),
+                  child: CustomText(_selectedCompostUseItems.isNotEmpty?_selectedCompostUseItems.map((e)=>e.name).toString():""
+                  ),
+                )
+              ],
             ),
           ];
         case EntryType.addedWaste:
           return [
-            CustomItem(
-              title: appStrings.whatDidYouAdd,
-              height: 60.h,
-              func: () async {
-                final List<WhatDidAddItem>? result = await openModalBottomSheet(
-                    context,
-                    WhatDidYouAddSheet(
-                      selectedItems: _selectedItems,
-                    ),
-                    height: 650.h,
-                    hasHeader: false);
-                if (result != null) {
-                  // Handle the selected items
-                  setState(() {
-                    _selectedItems = result;
-                  });
-                }
-              },
-              trailing: const Icon(Icons.arrow_drop_down_rounded),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomItem(
+                  title: appStrings.whatDidYouAdd,
+                  height: 50.h,
+                  func: () async {
+                    final List<WhatDidAddItem>? result = await openModalBottomSheet(
+                        context,
+                        WhatDidYouAddSheet(
+                          selectedItems: _selectedItems,
+                        ),
+                        height: 650.h,
+                        hasHeader: false);
+                    if (result != null) {
+                      // Handle the selected items
+                      setState(() {
+                        _selectedItems = result;
+                      });
+                    }
+                  },
+                  trailing: const Icon(Icons.arrow_drop_down_rounded),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left:16.0,bottom: 16),
+                  child: CustomText(_selectedItems.isNotEmpty?_selectedItems.map((e)=>e.name).toString():""
+                  ),
+                )
+              ],
             ),
             Padding(
               padding: EdgeInsets.only(left: 5.dg),
@@ -647,7 +813,7 @@ class _EntryPageState extends State<EntryPage> {
 
   double get _getEntrySelectionHeight {
     if (widget.bin.type == BinType.compost) {
-      if (_entryType == EntryType.addedWaste) return 200.h;
+      if (_entryType == EntryType.addedWaste) return 250.h;
       if (_entryType == EntryType.emptiedCompost) return 150.h;
     }
 

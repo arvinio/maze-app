@@ -1,5 +1,5 @@
 class CompostUseItem {
-  final String name;
+   String name;
   bool isSelected;
   String? note;
 

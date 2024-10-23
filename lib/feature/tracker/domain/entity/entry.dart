@@ -2,7 +2,6 @@ class Entry {
   final String binId;
   final EntryType type;
   final String? howFull;
-  final List<String>? whatRecycled;
   final List<String>? whatDidAdd;
   final List<String>? compostUsed;
   final bool? mixed;
@@ -12,7 +11,6 @@ class Entry {
   final DateTime entryDate;
 
   Entry({
-    required this.whatRecycled,
     required this.whatDidAdd,
     required this.compostUsed,
     required this.entryDate,
@@ -31,7 +29,6 @@ class EditEntry extends Entry {
 
   EditEntry(
     this.entryId, {
-    required super.whatRecycled,
     required super.whatDidAdd,
     required super.compostUsed,
     required super.entryDate,

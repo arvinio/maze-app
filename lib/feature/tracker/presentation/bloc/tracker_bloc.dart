@@ -29,7 +29,6 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
   var bins = <Bin>[];
 
   TrackerBloc(this.repository) : super(const TrackerState.initial()) {
-    on<_AddEntryToBin>(_onAddEntryToBin);
     on<_initEvent>(_onInit);
     on<_GetBinsList>(_onGetBinsList);
     on<_NavigateToAddNewEntryPage>(_onNavigateToAddNewEntryPage);
@@ -50,17 +49,6 @@ class TrackerBloc extends Bloc<TrackerEvent, TrackerState> {
         bins.addAll(data);
         emit(TrackerState.binsLoaded(bins: data));
       },
-      error: (apiError) {
-        emit(TrackerState.loadingError(error: apiError));
-      },
-    );
-  }
-
-  _onAddEntryToBin(_AddEntryToBin event, Emitter<TrackerState> emit) async {
-    // emit(const TrackerState.loadInProgress());
-    final updatedBin = await repository.createBinEntry(entry: event.entryDetails);
-    updatedBin.when(
-      completed: (data, statusCode) {},
       error: (apiError) {
         emit(TrackerState.loadingError(error: apiError));
       },

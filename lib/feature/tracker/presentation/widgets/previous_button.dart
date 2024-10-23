@@ -5,8 +5,10 @@ import 'package:maze_app/core/config/assets/assets.dart';
 
 class PreviousButton extends StatelessWidget {
   const PreviousButton({
-    super.key,
+    super.key, this.padding,
   });
+
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +16,8 @@ class PreviousButton extends StatelessWidget {
       onPressed: () {
         context.maybePop();
       },
-      icon:appAssets.arrowLeft.svg(width: 24,height: 24),
-      padding: EdgeInsets.zero,alignment: Alignment.topLeft,
+      icon: appAssets.arrowLeft.svg(width: 24, height: 24),
+      padding: padding ?? EdgeInsets.zero, alignment: Alignment.topLeft,
     );
   }
 }
