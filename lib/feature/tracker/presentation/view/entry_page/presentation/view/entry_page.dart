@@ -138,11 +138,11 @@ class _EntryPageState extends State<EntryPage> {
                 return e!.path;
               },
             ).toList(),
-            whatDidAdd: [],
-            mixed: _didYouMixit,
-            compostUsed: _selectedItems.isNotEmpty ?
+            whatDidAdd: _selectedItems.isNotEmpty ?
             _selectedItems.map((e)=>e.name).toList()
                 :[],
+            mixed: _didYouMixit,
+            compostUsed: [],
             howFull:null,
             amount:null
         );
