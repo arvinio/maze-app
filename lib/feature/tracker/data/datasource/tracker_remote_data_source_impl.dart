@@ -128,11 +128,7 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
   }
 
 
-  @override
-  Future<ApiResponse> deleteBinEntry(String entryId) async {
-    return await dioCaller.delete('api/bin/entry/$entryId',
-        fromJson: RespEmptyModel.fromJson);
-  }
+
 
   @override
   Future<ApiResponse> deletebinEntryPhoto(String binEntryId,
@@ -286,5 +282,11 @@ class TrackerRemoteDataSourceImpl implements TrackerRemoteDataSource {
       fromJson: SuccessResponse.fromJson,
       data: formData,
     );
+  }
+
+  @override
+  Future<ApiResponse> deleteBinEntry(String entryId) async {
+    return await dioCaller.delete('api/bin/entry/$entryId',
+        fromJson: SuccessResponse.fromJson);
   }
 }

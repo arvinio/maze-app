@@ -186,7 +186,6 @@ class TrackerRepositoryImpl implements TrackerRepository {
 
   @override
   Future<ApiResponse> deleteBinEntry({required String entryId}) async {
-    final resp = await _remoteDataSource.deleteBinEntry(entryId);
-    return resp;
+    return await _remoteDataSource.deleteBinEntry(entryId);
   }
 }

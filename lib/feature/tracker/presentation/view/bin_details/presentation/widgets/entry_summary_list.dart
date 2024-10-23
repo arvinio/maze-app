@@ -63,15 +63,33 @@ class _EntrySummaryListState extends State<EntrySummaryList> {
                 final dateString = '${widget.entries[index].entryDate
                     .day} ${month[widget.entries[index].entryDate.month - 1]} '
                     ' ${widget.entries[index].entryDate.year}';
-                return ListTile(
-                  leading: GetEntryTypeIcon(entryType: widget.entries[index].type),
-                  title: CustomText(dateString, style: context.bodyBody,),
-                  subtitle: CustomText(widget.entries[index].type.toDisplayString(),
-                      style: context.footnoteFootnote.copyWith(color: context
+                return Dismissible(
+                  key: ValueKey(widget.entries[index].entryId),
+                  background: Container(
+                    color: context
+                        .scheme()
+                        .error,
+                    child:  Icon(
+                      Icons.delete,
+                      color: context
                           .scheme()
-                          .secondaryText)),
-                  onTap: () {},
-                  trailing: const AppArrow(),
+                          .neutralsBackground,
+                    ),
+                  ),
+                  confirmDismiss: (isConfirmed) async {
+                    context.read<EntryBloc>().add(EntryEvent.deleteBinEntry(entryId: widget.entries[index].entryId));
+                    return Future(() => true);
+                  },
+                  child: ListTile(
+                    leading: GetEntryTypeIcon(entryType: widget.entries[index].type),
+                    title: CustomText(dateString, style: context.bodyBody,),
+                    subtitle: CustomText(widget.entries[index].type.toDisplayString(),
+                        style: context.footnoteFootnote.copyWith(color: context
+                            .scheme()
+                            .secondaryText)),
+                    onTap: () {},
+                    trailing: const AppArrow(),
+                  ),
                 );
               },
               separatorBuilder: (context, index) {

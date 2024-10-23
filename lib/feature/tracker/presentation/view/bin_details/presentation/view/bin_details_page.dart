@@ -60,12 +60,15 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
   BinChartData? chartData;
   bool isMuted=false;
   List<EditEntry> entries = [];
+  int totalAmount=0;
+  ValueNotifier<bool> obscureStateTotalAmount = ValueNotifier(true);
 
   @override
   void initState() {
     super.initState();
     getBinChartDataEvent();
-    getBinEntries();
+    getBinEntriesEvent();
+    totalAmount=widget.bin.totalAmount!;
   }
 
   @override
@@ -121,7 +124,8 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
                                       ?_selectedSort=Sort.asc
                                       :_selectedSort=Sort.desc;
 
-                                  getBinEntries();
+
+                                  getBinEntriesEvent();
 
                                 });
                                   },
@@ -134,16 +138,10 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
                                   onTap: () {
                                     context.pushRoute(
                                         EntryPageRoute(bin: widget.bin)).then((
-                                        val) {
+                                        val) async{
                                       getBinChartDataEvent();
-                                      getBinEntries();
-
-                                    /*  context.read<BinDetailsBloc>().add(
-                                          const BinDetailsEvent.refreshPage());*/
+                                      getBinEntriesEvent();
                                     });
-                                    /*      context.read<TrackerBloc>().add(
-                                      TrackerEvent.navigateToAddNewEntryPage(
-                                          bin: widget.bin));*/
                                   },
                                   child: appAssets.addEntry.svg(
                                       width: 24, height: 24)
@@ -160,6 +158,23 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
                         if (state.status.isSuccess) {
                           entries.clear();
                           entries.addAll(state.entries!.toList());
+                           totalAmount=state.totalAmount!;
+                          obscureStateTotalAmount.value=!obscureStateTotalAmount.value;
+
+                        }
+                        else if (state.status.isDeleted) {
+                         getBinEntriesEvent();
+                         getBinChartDataEvent();
+                        }
+                        else if (state.status.isFailure || state.status.isDeleteFailure) {
+                          Fluttertoast.showToast(
+                              msg: state.errorMessage!,
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
                         }
                       },
                       builder: (context, state) {
@@ -262,11 +277,17 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
                       indent: 13.w,
                       endIndent: 13.w,
                     ),
-                    _buildDetailCard(context,
-                        '${ widget.bin.totalAmount} ${appStrings.kg}',
-                        ( widget.bin.type == BinType.landfill)
-                        ?appStrings.totalSentToLandfill
-                        :appStrings.compostMade
+                    ValueListenableBuilder(
+                        valueListenable: obscureStateTotalAmount,
+                        builder:
+                            (BuildContext context, bool obscureValue, Widget? child) {
+                          return _buildDetailCard(context,
+                            '$totalAmount ${appStrings.kg}',
+                            ( widget.bin.type == BinType.landfill)
+                            ?appStrings.totalSentToLandfill
+                            :appStrings.compostMade
+                        );
+                      }
                     ),
                   ],
                 ),
@@ -713,7 +734,7 @@ class _BinDetailsPageState extends State<BinDetailsPage> {
   void getBinChartDataEvent() {
     context.read<ChartBloc>().add(ChartEvent.getBinChartData(binId: widget.bin.id!));
   }
-  void getBinEntries() {
+  void getBinEntriesEvent() {
     context.read<EntryBloc>().add(EntryEvent.getBinEntries(binId: widget.bin.id!,sort: _selectedSort.name));
   }
 

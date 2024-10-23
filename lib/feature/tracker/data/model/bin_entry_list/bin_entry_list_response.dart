@@ -85,6 +85,8 @@ class ApiBin with _$ApiBin {
     bool? isCouncil,
     @JsonKey(name: "createdDate")
     DateTime? createdDate,
+    @JsonKey(name: "totalAmount")
+    int? totalAmount,
   }) = _ApiBin;
 
   factory ApiBin.fromJson(Map<String, dynamic> json) => _$ApiBinFromJson(json);

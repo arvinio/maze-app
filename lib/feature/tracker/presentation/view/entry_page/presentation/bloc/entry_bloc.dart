@@ -17,6 +17,7 @@ class EntryBloc extends Bloc<EntryEvent, EntryState> {
     on<_Init>(_onInit);
     on<_GetBinEntries>(_onGetBinEntries);
     on<_AddEntryToBin>(_onAddEntryToBin);
+    on<_DeleteBinEntry>(_onDeleteBinEntry);
   }
 
   _onInit(_Init event, Emitter<EntryState> emit) async {
@@ -26,6 +27,7 @@ class EntryBloc extends Bloc<EntryEvent, EntryState> {
     emit(state.copyWith(status: EntryStatus.loading));
     final response = await repository.getBinEntryList(binId: event.binId,sort:event.sort);
     response.when(completed: (data, int? statusCode) {
+      int totalAmount=data.result!.isNotEmpty ?data.result![0].bin!.totalAmount!:0;
       entries.clear();
       for (var element in data.result!) {
         entries.add(EditEntry(
@@ -42,7 +44,7 @@ class EntryBloc extends Bloc<EntryEvent, EntryState> {
           amount: element.amount.toString(),
         ));
       }
-      emit(state.copyWith(status: EntryStatus.success,entries: entries));
+      emit(state.copyWith(status: EntryStatus.success,entries: entries,totalAmount:totalAmount));
     }, error: (apiError) {
       emit(state.copyWith(status: EntryStatus.failure,
           errorMessage: apiError.message));
@@ -56,6 +58,17 @@ class EntryBloc extends Bloc<EntryEvent, EntryState> {
       emit(state.copyWith(status: EntryStatus.success));
     }, error: (apiError) {
       emit(state.copyWith(status: EntryStatus.failure,
+          errorMessage: apiError.message));
+    });
+  }
+
+  _onDeleteBinEntry(_DeleteBinEntry event, Emitter<EntryState> emit) async {
+    emit(state.copyWith(status: EntryStatus.loading));
+    final response = await repository.deleteBinEntry(entryId: event.entryId);
+    response.when(completed: (data, int? statusCode) {
+      emit(state.copyWith(status: EntryStatus.deleted));
+    }, error: (apiError) {
+      emit(state.copyWith(status: EntryStatus.deleteFailure,
           errorMessage: apiError.message));
     });
   }
