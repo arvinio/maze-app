@@ -96,19 +96,14 @@ class _TrackerPageState extends State<TrackerPage>
                 return ElevatedButton.icon(
                     onPressed: (bloc.hasCompost || bloc.hasLandfill)
                         ? () {
-                      Future<dynamic> future = openModalBottomSheet(
-                          context,
+                    openModalBottomSheet(context,
                           BinsList(title: appStrings.newEntryFor, bins: bloc
-                              .bins).wrappedRoute(context));
-
-                      future.then((index) {
+                              .bins).wrappedRoute(context)).then((index) {
                         if (context.mounted) {
-                          context.read<TrackerBloc>()
-                              .add(TrackerEvent.navigateToAddNewEntryPage(
-                              bin: bloc.bins[index]));
-                          /* context.read<TrackerBloc>().add(
-                          TrackerEvent.fetchBinDetails(
-                              binId: bloc.bins[index].id!));*/
+                          context.pushRoute(
+                              EntryPageRoute(bin: bloc.bins[index])).then((val){
+                                getBinsList();
+                          });
                         }
                       });
                     } : null,
